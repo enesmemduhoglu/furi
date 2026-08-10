@@ -1,0 +1,14 @@
+# Ortam degiskenleri / API anahtarlari — repo public, asla commit edilmez
+.env
+.env.*
+*.key
+*.pem
+
+# Ara ciktilar
+_raw*.jpg
+prompts.json
+
+# Isletim sistemi
+Thumbs.db
+desktop.ini
+.DS_Store
