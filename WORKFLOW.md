@@ -1,11 +1,19 @@
 ---
 name: insta-ingilizce
-description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusmesi, slayt metni, Gemini 3.1 Pro ile gorsel promptu uretimi, fal.ai seedream/mai ile gorsel uretimi, yazim denetimi ve caption. Kullanici post, karusel, slayt, gonderi, "ne paylassak" gibi seylerden bahsettiginde calisir.
+description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusmesi, slayt metni, Gemini ile gorsel promptu uretimi, fal.ai seedream/mai ile gorsel uretimi, yazim denetimi ve caption. Kullanici post, karusel, slayt, gonderi, "ne paylassak" gibi seylerden bahsettiginde calisir.
 ---
 
 # Instagram Ingilizce Sayfasi — Post Uretim Akisi
 
-Bu akis 7 fazdan olusur. Fazlar sirayla islenir, **Faz 2 ve Faz 4 kullanici onayi olmadan gecilmez.**
+Bu akis 7 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 7 (commit)**.
+
+## ⚠️ Her PowerShell cagrisinda gecerli iki kural
+
+1. **Shell state cagrilar arasinda korunmuyor.** Degiskenler ve `$env:` degerleri bir sonraki komutta yok. Her PowerShell komutunun ilk satiri `.env` yuklemesi olmali:
+   ```powershell
+   Get-Content "C:\Users\enesm\visual studio\furi1\.env" | Where-Object { $_ -match '^\s*[A-Za-z_]+\s*=' } | ForEach-Object { $k,$v = $_ -split '=',2; Set-Item -Path "env:$($k.Trim())" -Value $v.Trim() }
+   ```
+2. **`Invoke-RestMethod` kullanma.** PS 5.1'de bu API'lerde `NullReferenceException` firlatiyor ve hata mesaji hicbir sey soylemiyor. Bunun yerine `& "$env:SystemRoot\System32\curl.exe"` kullan; govdeyi gecici bir dosyaya yazip `--data-binary "@dosya"` ile gonder (UTF-8 ve tirnak sorunlarini bu cozuyor).
 
 Uretim yeri: `C:\Users\enesm\visual studio\furi1\<konu-slug>\`
 Referans arsiv: ayni repodaki `A1/`, `A2/`, `B1/`, `B2/`, `otel/`, `durumsal ingilizce/`, `Sık Karıştırılanlar/`, `Günün Phrasal Verb'ü/` klasorleri — 52 gorsel, marka sisteminin canli ornegi. Emin olmadigin bir tasarim kararinda bunlardan birini `Read` ile ac ve bak.
@@ -27,6 +35,15 @@ if (Test-Path $envFile) {
 "GEMINI_API_KEY: " + $(if ($env:GEMINI_API_KEY) { "var" } else { "YOK" })
 "FAL_KEY: " + $(if ($env:FAL_KEY) { "var" } else { "YOK" })
 ```
+
+Gemini modelini de dogrula — plan degisirse hangi modelin acik oldugu degisir:
+
+```powershell
+$m = (& "$env:SystemRoot\System32\curl.exe" -s "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200" -H "x-goog-api-key: $env:GEMINI_API_KEY") -join "" | ConvertFrom-Json
+$m.models | Where-Object { $_.supportedGenerationMethods -contains "generateContent" } | ForEach-Object { $_.name }
+```
+
+**Not (2026-08 itibariyle):** `gemini-3.1-pro-preview` listede gorunuyor ama ucretsiz katmanda kotasi 0 — 429 doner. Ucretsiz katmanda calisan: `gemini-3.6-flash` (varsayilan), `gemini-3.5-flash`, `gemini-3-flash-preview`. Prompt yazma isi icin flash yeterli. Kullanici Google Cloud'da faturalandirmayi acarsa `gemini-3.1-pro-preview`'a gec.
 
 Eksikse kullanicidan `furi1\.env` dosyasina eklemesini iste:
 
@@ -123,15 +140,22 @@ $body = @{
   contents = @(@{ role = "user"; parts = @(@{ text = "$sistem`n`n---`n`nSLIDES:`n$slaytlar" }) })
   generationConfig = @{ responseMimeType = "application/json"; temperature = 0.4 }
 } | ConvertTo-Json -Depth 10
+$body | Out-File "$env:TEMP\gemini_req.json" -Encoding utf8 -NoNewline
 
-$resp = Invoke-RestMethod -Method Post `
-  -Uri "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent" `
-  -Headers @{ "x-goog-api-key" = $env:GEMINI_API_KEY; "Content-Type" = "application/json" } `
-  -Body ([System.Text.Encoding]::UTF8.GetBytes($body))
+$raw = & "$env:SystemRoot\System32\curl.exe" -s -X POST `
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent" `
+  -H "x-goog-api-key: $env:GEMINI_API_KEY" -H "Content-Type: application/json" `
+  --data-binary "@$env:TEMP\gemini_req.json"
 
-$promptlar = $resp.candidates[0].content.parts[0].text | ConvertFrom-Json
-$promptlar | ConvertTo-Json -Depth 5 | Out-File "$out\prompts.json" -Encoding utf8
+$parsed = ($raw -join "") | ConvertFrom-Json
+if ($parsed.error) { "API HATASI: " + $parsed.error.message } else {
+  $txt = $parsed.candidates[0].content.parts[0].text
+  $txt | Out-File "$out\prompts.json" -Encoding utf8
+  $txt
+}
 ```
+
+`$slaytlar` blogunu yazarken her metin ogesinin **dikey sirasini, rolunu ve goreli buyuklugunu** ayri satirda ver (bkz. [Ek A](#ek-a--marka-sistemi) dikey siralama semasi). Gemini bu yapiyi promptta birebir tekrarliyor ve sonuc tutarli oluyor.
 
 **Donen promptlari kontrol et:** her promptta slayt metni tirnak icinde birebir duruyor mu? Gemini metni degistirdiyse (ozellikle ASCII'yi "duzeltip" diyakritik eklediyse) o slaytin promptunu elle duzelt, yeniden istek atma.
 
@@ -150,6 +174,8 @@ Kural: **slaytta 5'ten fazla ayri metin satiri varsa mai kullan.** Seedream kucu
 
 ### seedream cagrisi
 
+> ⛔ **Status/result URL'ini elle kurma.** fal'da submit adresi tam endpoint yolu (`fal-ai/bytedance/seedream/v5/lite/text-to-image`) ama status/result adresi sadece **uygulama kimligi** (`fal-ai/bytedance`). Tam yolu kullanirsan HTTP 405 + bos govde doner ve polling sonsuza kadar bosa doner. Cozum: submit yanitindaki `status_url` ve `response_url` alanlarini oldugu gibi kullan.
+
 ```powershell
 $ep = "fal-ai/bytedance/seedream/v5/lite/text-to-image"
 $body = @{
@@ -157,25 +183,29 @@ $body = @{
   image_size = @{ width = 1920; height = 2400 }
   num_images = 1
 } | ConvertTo-Json -Depth 5
+$body | Out-File "$env:TEMP\fal_req.json" -Encoding utf8 -NoNewline
 
-$sub = Invoke-RestMethod -Method Post -Uri "https://queue.fal.run/$ep" `
-  -Headers @{ "Authorization" = "Key $env:FAL_KEY"; "Content-Type" = "application/json" } `
-  -Body ([System.Text.Encoding]::UTF8.GetBytes($body))
+$sub = (& "$env:SystemRoot\System32\curl.exe" -s -X POST "https://queue.fal.run/$ep" `
+  -H "Authorization: Key $env:FAL_KEY" -H "Content-Type: application/json" `
+  --data-binary "@$env:TEMP\fal_req.json") -join "" | ConvertFrom-Json
 
-$id = $sub.request_id
-$deadline = (Get-Date).AddSeconds(120)
+if (-not $sub.request_id) { "SUBMIT HATASI: " + ($sub | ConvertTo-Json -Depth 4 -Compress); return }
+"request_id: $($sub.request_id)"
+
+$deadline = (Get-Date).AddSeconds(150)
 do {
-  Start-Sleep -Seconds 3
-  $st = Invoke-RestMethod -Uri "https://queue.fal.run/$ep/requests/$id/status" `
-        -Headers @{ "Authorization" = "Key $env:FAL_KEY" }
+  Start-Sleep -Seconds 5
+  $st = (& "$env:SystemRoot\System32\curl.exe" -s $sub.status_url -H "Authorization: Key $env:FAL_KEY") -join "" | ConvertFrom-Json
+  "durum: $($st.status)"
 } while ($st.status -ne "COMPLETED" -and (Get-Date) -lt $deadline)
 
-$res = Invoke-RestMethod -Uri "https://queue.fal.run/$ep/requests/$id" `
-       -Headers @{ "Authorization" = "Key $env:FAL_KEY" }
-Invoke-WebRequest -Uri $res.images[0].url -OutFile "$out\$n.jpg"
+$res = (& "$env:SystemRoot\System32\curl.exe" -s $sub.response_url -H "Authorization: Key $env:FAL_KEY") -join "" | ConvertFrom-Json
+& "$env:SystemRoot\System32\curl.exe" -s -o "$out\$n.jpg" $res.images[0].url
 ```
 
 > `image_size` custom deger limiti: toplam piksel 2560×1440 ile 4096×4096 arasi olmali. 1920×2400 = 4.6 MP ✓ gecerli.
+>
+> Uretim ~35 saniye suruyor. PowerShell aracinin varsayilan zaman asimi 2 dakika — **cok slaytli karuselde her slaytin uretimini ayri komutta calistir**, hepsini tek komuta koyma yoksa timeout yersin.
 
 ### mai cagrisi + 4:5 duzeltmesi
 
@@ -340,6 +370,11 @@ if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
 
 | Tuzak | Sonuc | Kacinma |
 |---|---|---|
+| **Shell state korunmuyor** | `$env:FAL_KEY` bos gider, 403 "unregistered caller" | Her komutun basinda `.env` yukle |
+| **`Invoke-RestMethod` PS 5.1'de patliyor** | `NullReferenceException`, hicbir ipucu yok | `curl.exe` + `--data-binary "@dosya"` |
+| **fal status URL'i tam endpoint yolu degil** | HTTP 405, bos govde, sonsuz polling | Submit yanitindaki `status_url` / `response_url`'i kullan |
+| **`gemini-3.1-pro-preview` ucretsiz katmanda kotasi 0** | 429 | `gemini-3.6-flash` kullan veya faturalandirmayi ac |
+| **Uretim ~35 sn, arac timeout'u 2 dk** | Karuselde timeout | Her slayti ayri PowerShell komutunda uret |
 | mai-image-2.5-pro'da 4:5 yok | Kare cikti, karuselde kirpma (`A1/7.png` 1024×1024) | 3:4 uret + 80px simetrik kirp |
 | seedream custom boyut limiti | 400 hatasi | Toplam piksel 3.69 MP – 16.78 MP arasi kalsin; 1920×2400 guvenli |
 | Turkce diyakritik | `gónderiyi`, `değidlir` | ASCII-only + Faz 5 denetimi |
@@ -349,14 +384,18 @@ if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
 
 ## Ek E — Dogrulanmis API kunyesi
 
+2026-08-11'de canli olarak dogrulandi (break down dry-run).
+
 | | |
 |---|---|
-| Gemini model | `gemini-3.1-pro-preview` |
-| Gemini endpoint | `POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent` |
+| Gemini model (ucretsiz) | `gemini-3.6-flash` ✓ calisiyor |
+| Gemini model (ucretli) | `gemini-3.1-pro-preview` — free tier kotasi 0, 429 doner |
+| Gemini endpoint | `POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent` |
 | Gemini auth | header `x-goog-api-key: $GEMINI_API_KEY` |
-| fal ana model | `fal-ai/bytedance/seedream/v5/lite/text-to-image` |
+| fal ana model | `fal-ai/bytedance/seedream/v5/lite/text-to-image` ✓ |
 | fal yedek model | `microsoft/mai-image-2.5-pro` |
-| fal submit | `POST https://queue.fal.run/{endpoint_id}` |
-| fal durum | `GET https://queue.fal.run/{endpoint_id}/requests/{request_id}/status` |
-| fal sonuc | `GET https://queue.fal.run/{endpoint_id}/requests/{request_id}` |
+| fal submit | `POST https://queue.fal.run/fal-ai/bytedance/seedream/v5/lite/text-to-image` |
+| fal durum | submit yanitindaki `status_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}/status` |
+| fal sonuc | submit yanitindaki `response_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}` |
 | fal auth | header `Authorization: Key $FAL_KEY` |
+| seedream uretim suresi | ~35 sn (`metrics.inference_time`) |
