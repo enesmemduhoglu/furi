@@ -10,7 +10,13 @@ Yeniden uretim yapilacaksa: WORKFLOW.md Faz 4–5.
 
 **Esik notu:** Kucuk ve goze batmayan kusurlar (bas harf buyuk/kucuk, tirnak yonu, `•` yerine `-`, tek tuk harf hatasi) icin yeniden uretim yapilmiyor. Asagida bunlar listelense de birakilmalari bilincli bir karardir. Satir sonundaki `-` isareti "bu satir gecildi" demektir.
 
-**Model notu:** `fiil` / `fiili` kelimesini iki model de guvenilir basmiyor (`fil`, `fill`, `fili` cikiyor). Cozum promptu sikilastirmak degil, kelimeyi degistirmek: `fiil` → `verb` / `past participle`, `(Fiil)` → `(Eylem)`.
+**Model notu:** `fiil` / `fiili` kelimesini iki model de guvenilir basmiyor (`fil`, `fill`, `fili` cikiyor). Ayni sey `alabilir` icin de gecerli — arsivde 3, yeni uretimde 1 kez `alablir` oldu. Cozum promptu sikilastirmak degil, kelimeyi degistirmek: `fiil` → `verb` / `past participle`, `(Fiil)` → `(Eylem)`, `alabilir miyim` → `verir misiniz`.
+
+2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
+
+| Dosya | Hatali | Dogrusu |
+|---|---|---|
+| `hikayeli/doktorda/5.jpg` | `Yurt disiina` | Yurt disina | -
 
 ---
 
