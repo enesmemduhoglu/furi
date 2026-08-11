@@ -15,8 +15,10 @@ Bu akis 7 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 
    ```
 2. **`Invoke-RestMethod` kullanma.** PS 5.1'de bu API'lerde `NullReferenceException` firlatiyor ve hata mesaji hicbir sey soylemiyor. Bunun yerine `& "$env:SystemRoot\System32\curl.exe"` kullan; govdeyi gecici bir dosyaya yazip `--data-binary "@dosya"` ile gonder (UTF-8 ve tirnak sorunlarini bu cozuyor).
 
-Uretim yeri: `C:\Users\enesm\visual studio\furi1\<konu-slug>\`
-Referans arsiv: ayni repodaki `A1/`, `A2/`, `B1/`, `B2/`, `otel/`, `durumsal ingilizce/`, `Sık Karıştırılanlar/`, `Günün Phrasal Verb'ü/` klasorleri — 52 gorsel, marka sisteminin canli ornegi. Emin olmadigin bir tasarim kararinda bunlardan birini `Read` ile ac ve bak.
+Uretim yeri: `C:\Users\enesm\visual studio\furi1\<format>\<konu-slug>\`
+Referans arsiv: ayni repodaki `seviye-testi/`, `hikayeli/`, `durumsal/`, `phrasal/`, `karistirilan/` klasorleri — 60 gorsel, marka sisteminin canli ornegi. Emin olmadigin bir tasarim kararinda bunlardan birini `Read` ile ac ve bak.
+
+**Klasor duzeni:** her post kendi klasorunde durur, klasor de formatinin altinda. Bir post = bir klasor = `1.jpg … N.jpg` + `caption.md` (+ gitignore'lanan `prompts.json`).
 
 ---
 
@@ -70,11 +72,11 @@ Sonra `AskUserQuestion` ile format ve slayt sayisini onaylat.
 
 | Format | Slayt | Arsiv ornegi |
 |---|---|---|
-| Seviye testi (A1/A2/B1/B2) | 8 | `A1/`, `B2/` |
-| Durumsal Ingilizce — seri | 5 | `otel/` |
-| Durumsal Ingilizce — tekil kart | 1 | `durumsal ingilizce/` |
-| Gunun Phrasal Verb'u | 1 | `Günün Phrasal Verb'ü/` |
-| Sik Karistirilanlar (X vs Y) | 1 | `Sık Karıştırılanlar/` |
+| Seviye testi (A1/A2/B1/B2) | 8 | `seviye-testi/a1/`, `seviye-testi/b2/` |
+| Durumsal Ingilizce — seri | 5 | `hikayeli/otel/`, `hikayeli/havaalaninda/` |
+| Durumsal Ingilizce — tekil kart | 1 | `durumsal/on-the-side/` |
+| Gunun Phrasal Verb'u | 1 | `phrasal/figure-out/` |
+| Sik Karistirilanlar (X vs Y) | 1 | `karistirilan/make-vs-do/` |
 
 Slayt iskeletleri icin → [Ek B](#ek-b--format-iskeletleri).
 
@@ -170,7 +172,7 @@ if ($parsed.error) { "API HATASI: " + $parsed.error.message } else {
 | Varsayilan: baslik + 1-2 kisa cumle | `fal-ai/bytedance/seedream/v5/lite/text-to-image` | `image_size: {width:1920, height:2400}` |
 | Yogun/kucuk metin: cevap anahtari, 5+ satirli liste, skor tablosu | `microsoft/mai-image-2.5-pro` | `aspect_ratio: "3:4"` + kirpma |
 
-Kural: **slaytta 5'ten fazla ayri metin satiri varsa mai kullan.** Seedream kucuk puntoda harf hatasi yapiyor (arsivde `B2/7.jpg` → `conoditional`, `Kac dogrune var?`).
+Kural: **slaytta 5'ten fazla ayri metin satiri varsa mai kullan.** Seedream kucuk puntoda harf hatasi yapiyor (arsivde `seviye-testi/b2/7.jpg` → `conoditional`, `Kac dogrune var?`).
 
 ### seedream cagrisi
 
@@ -209,7 +211,7 @@ $res = (& "$env:SystemRoot\System32\curl.exe" -s $sub.response_url -H "Authoriza
 
 ### mai cagrisi + 4:5 duzeltmesi
 
-`microsoft/mai-image-2.5-pro`'nun `aspect_ratio` enum'unda **4:5 yok** (`auto, 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3`). Arsivdeki `A1/7.png`, `A2/7.png`, `B1/7.png` bu yuzden 1024×1024 kare kalmis ve karuselde kirpiliyor. Cozum: 3:4 uret, 1920 genislige olcekle, ustten ve alttan 80'er piksel simetrik kirp.
+`microsoft/mai-image-2.5-pro`'nun `aspect_ratio` enum'unda **4:5 yok** (`auto, 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3`). Arsivdeki `seviye-testi/a1/7.png`, `a2/7.png`, `b1/7.png` bu yuzden 1024×1024 kare kalmis ve karuselde kirpiliyor. Cozum: 3:4 uret, 1920 genislige olcekle, ustten ve alttan 80'er piksel simetrik kirp.
 
 ```powershell
 $ep = "microsoft/mai-image-2.5-pro"
@@ -237,7 +239,19 @@ Marka duzeni ortalanmis ve kenar bosluklari genis oldugu icin 80px kirpma icerik
 
 ### Dosya adlandirma
 
-`furi1\<konu-slug>\1.jpg`, `2.jpg`, ... — arsivdeki `A1/1.jpg`, `otel/1.jpg` kuralinin aynisi. Slug ASCII ve tireli olsun (`otelde-check-in`, `phrasal-break-down`).
+`furi1\<format>\<konu-slug>\1.jpg`, `2.jpg`, ... — arsivdeki `seviye-testi/a1/1.jpg`, `hikayeli/otel/1.jpg` kuralinin aynisi.
+
+`<format>` su besten biri:
+
+| `<format>` | Ne girer | Ornek |
+|---|---|---|
+| `seviye-testi` | 8 slaytlik CEFR testleri | `seviye-testi/b1/` |
+| `hikayeli` | Cok slaytli, bir yolculugu anlatan seriler | `hikayeli/havaalaninda/` |
+| `durumsal` | Durumsal Ingilizce tekil kartlari | `durumsal/on-the-side/` |
+| `phrasal` | Gunun Phrasal Verb'u kartlari | `phrasal/break-down/` |
+| `karistirilan` | Sik Karistirilanlar (X vs Y) kartlari | `karistirilan/make-vs-do/` |
+
+`<konu-slug>` ASCII ve tireli olsun, konuyu tarif etsin: `break-down`, `make-vs-do`, `hold-the-onions`.
 
 ---
 
@@ -260,7 +274,7 @@ Denetim sonucunu kisa bir tabloyla ozetle — hangi slayt kacinci denemede gecti
 
 ## Faz 6 — Caption
 
-`furi1\<konu-slug>\caption.md` dosyasina yaz. **Caption metin alani, gorsel degil — burada tam Turkce kullan** (ASCII kurali sadece gorsel icin gecerli).
+`furi1\<format>\<konu-slug>\caption.md` dosyasina yaz. **Caption metin alani, gorsel degil — burada tam Turkce kullan** (ASCII kurali sadece gorsel icin gecerli).
 
 ```markdown
 ## Aciklama
@@ -320,7 +334,7 @@ Dikey siralama (tekil kart):
 
 ## Ek B — Format iskeletleri
 
-### 1. Seviye testi — 8 slayt (`A1/`, `A2/`, `B1/`, `B2/`)
+### 1. Seviye testi — 8 slayt (`seviye-testi/a1/` … `b2/`)
 | # | Icerik |
 |---|---|
 | 1 | Kapak: `A1 • INGILIZCE TESTI` / `BU A1 TESTINI GECEBILIR MISIN?` / `5 soru • 1 dakika` / `BASLAMAK ICIN KAYDIR →` |
@@ -328,20 +342,20 @@ Dikey siralama (tekil kart):
 | 7 | **Cevap anahtari** (→ mai): `CEVAP ANAHTARI` + 5 madde (`01 — A) am` + tek satir Turkce aciklama, aralarinda ince turuncu ayrac) + `Kac dogrun var?` |
 | 8 | Skor yorumu: `SONUCUN` + `5/5`, `4/5`, `3/5`, `0-2/5` satirlari + `Bu kisa bir pratik testidir, resmi bir CEFR degerlendirmesi degildir.` + `Skorun ne? Asagiya yorum yap ⬇` |
 
-### 2. Durumsal Ingilizce — seri, 5 slayt (`otel/`)
+### 2. Durumsal Ingilizce — seri, 5 slayt (`hikayeli/otel/`, `hikayeli/havaalaninda/`)
 | # | Icerik |
 |---|---|
 | 1 | Kapak: `DURUMSAL INGILIZCE` / `OTELDE HAYAT KURTARAN CUMLELER` / `Check-in yapmak icin kaydir →` |
 | 2-4 | Cumle karti: etiket / `I HAVE A RESERVATION` / tam cumle / `(Turkce cevirisi)` / gecis CTA'si (`Odaya cikalim... Kaydir →`) |
 | 5 | Kapanis: son cumle + `Seyahat edeceklere gonder` |
 
-### 3. Durumsal Ingilizce — tekil kart (`durumsal ingilizce/`)
+### 3. Durumsal Ingilizce — tekil kart (`durumsal/<konu>/`)
 `DURUMSAL INGILIZCE` / `ON THE SIDE` / `Can I have the sauce on the side?` / `(Sosu yaninda alabilir miyim?)` / `Daha fazla kelime icin begen ⬇`
 
-### 4. Gunun Phrasal Verb'u (`Günün Phrasal Verb'ü/`)
+### 4. Gunun Phrasal Verb'u (`phrasal/<verb>/`)
 `GUNUN PHRASAL VERB'U` / `FIGURE OUT` / `To understand or solve something.` / ornek cumle / `(Turkce cevirisi)` / `Senin ornek cumlen nedir? 🥰`
 
-### 5. Sik Karistirilanlar (`Sık Karıştırılanlar/`)
+### 5. Sik Karistirilanlar (`karistirilan/<x>-vs-<y>/`)
 `SIK KARISTIRILANLAR` / `MAKE vs DO` / `MAKE: Ortaya cikarmak` + `Make a new Flutter app.` / `DO: Eylemi yapmak` + `Do some coding today.` / `Bu gonderiyi kaydet ⬇`
 
 ---
@@ -375,7 +389,7 @@ if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
 | **fal status URL'i tam endpoint yolu degil** | HTTP 405, bos govde, sonsuz polling | Submit yanitindaki `status_url` / `response_url`'i kullan |
 | **`gemini-3.1-pro-preview` ucretsiz katmanda kotasi 0** | 429 | `gemini-3.6-flash` kullan veya faturalandirmayi ac |
 | **Uretim ~35 sn, arac timeout'u 2 dk** | Karuselde timeout | Her slayti ayri PowerShell komutunda uret |
-| mai-image-2.5-pro'da 4:5 yok | Kare cikti, karuselde kirpma (`A1/7.png` 1024×1024) | 3:4 uret + 80px simetrik kirp |
+| mai-image-2.5-pro'da 4:5 yok | Kare cikti, karuselde kirpma (`seviye-testi/a1/7.png` 1024×1024) | 3:4 uret + 80px simetrik kirp |
 | seedream custom boyut limiti | 400 hatasi | Toplam piksel 3.69 MP – 16.78 MP arasi kalsin; 1920×2400 guvenli |
 | Turkce diyakritik | `gónderiyi`, `değidlir` | ASCII-only + Faz 5 denetimi |
 | Kucuk puntoda yogun metin | `conoditional`, `dogrune` | 5+ satirli slaytta mai kullan |
