@@ -394,6 +394,8 @@ if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
 | Turkce diyakritik | `gónderiyi`, `değidlir` | ASCII-only + Faz 5 denetimi |
 | Kucuk puntoda yogun metin | `conoditional`, `dogrune` | 5+ satirli slaytta mai kullan |
 | Gemini metni "duzeltir" | Diyakritik geri gelir, cumle degisir | Prompt'ta birebir tirnak sarti + donen prompt kontrolu |
+| mai `fiili` kelimesini basamiyor | `fili` / `fill` cikiyor, ust uste 2 denemede duzelmedi | Kelimeyi cumleden cikar. `"I" oznesi ile "am" yardimci fiili kullanilir` → `"I" oznesi her zaman "am" ile kullanilir`. Ayni promptu tekrar gondermek ise yaramiyor, metni kisaltmak yariyor |
+| mai 3:4'te 768×1024 donuyor | Kaynak cozunurluk dusuk, 1920'ye olceklerken 2.5x buyutme | Kacinilmaz — mai'de cozunurluk parametresi yok. IG zaten 1080'e indirdigi icin pratikte sorun cikarmiyor |
 | `.env` public repoda | Anahtar sizinti | `.gitignore`'da `.env`; commit oncesi `git status` kontrolu |
 
 ## Ek E — Dogrulanmis API kunyesi

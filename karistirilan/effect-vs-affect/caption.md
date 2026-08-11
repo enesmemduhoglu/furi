@@ -14,4 +14,4 @@ Bu ikisini ana dili İngilizce olanlar bile karıştırıyor — ama ayrım tek 
 
 ## Alt text
 
-1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "EFFECT vs AFFECT" başlığı. Altında iki blok: "EFFECT: Etki (İsim)" ve örnek "The thermal paste effect."; "AFFECT: Etkilemek (Fiil)" ve örnek "Ping affects the game." En altta "Öğrenmek için takipte kal 🤙" çağrısı.
+1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "EFFECT vs AFFECT" başlığı. Altında iki blok: "EFFECT: Etki (İsim)" ve örnek "The thermal paste had a big effect."; "AFFECT: Etkilemek (Eylem)" ve örnek "Ping affects the game." En altta "Öğrenmek için takipte kal" çağrısı.

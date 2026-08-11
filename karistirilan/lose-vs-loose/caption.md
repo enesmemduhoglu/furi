@@ -14,4 +14,4 @@ Farkları öğrendin mi? Kaydet 👇
 
 ## Alt text
 
-1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "LOSE vs LOOSE" başlığı. Altında iki blok: "LOSE: Kaybetmek" ve örnek "Don't lose the CS2 match."; "LOOSE: Gevşek" ve örnek "The monitor arm is loose." En altta "Farkları öğrendin mi? Kaydet ⬇" çağrısı.
+1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "LOSE vs LOOSE" başlığı. Altında iki blok: "LOSE: Kaybetmek" ve örnek "Don't lose the CS2 match."; "LOOSE: Gevşek" ve örnek "The monitor arm is loose." En altta "Farkları öğrendin mi? Kaydet" çağrısı.
