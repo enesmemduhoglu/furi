@@ -8,6 +8,10 @@
 _raw*.jpg
 prompts.json
 
+# Python
+__pycache__/
+*.pyc
+
 # Isletim sistemi
 Thumbs.db
 desktop.ini

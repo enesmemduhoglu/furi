@@ -1,0 +1,15 @@
+{
+  "bekleyen": null,
+  "yayin_denemesi": null,
+  "son_yayin": null,
+  "bugun": {
+    "tarih": null,
+    "yayinlanan": 0
+  },
+  "son_stok_uyarisi": null,
+  "atlananlar": [],
+  "token": {
+    "son_yenileme": null,
+    "gecerlilik_bitis": null
+  }
+}
