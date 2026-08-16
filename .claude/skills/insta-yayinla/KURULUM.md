@@ -12,10 +12,15 @@ Bu adimlari **sen** yapiyorsun — Instagram, Meta ve claude.ai hesabina giris g
 
 ---
 
-# A bolumu — Instagram token'i
+# A bolumu — Instagram token'i ve SaaS baglantisi
 
-Bu bolum `IG_ACCESS_TOKEN` ve `IG_USER_ID` uretir. Tahmini sure: **30-45 dakika**,
-cogu Meta panelinde tiklama.
+Adim 1-8 `IG_ACCESS_TOKEN` ve `IG_USER_ID` uretir, adim 9 bunlari SaaS'a baglar,
+adim 10 zamanlayiciyi kurar. Tahmini sure: **30-45 dakika**, cogu Meta panelinde
+tiklama.
+
+> Gmail'e "EVET" yazarak onaylama yolu **emekliye ayrildi**; onay artik SaaS'in
+> onay linkinden veriliyor. Eski zincirin belgesi ve geri donus adimlari
+> [`emekli/README.md`](emekli/README.md) altinda duruyor.
 
 ---
 
@@ -126,43 +131,76 @@ Beklenen: bir aday, tum gorsel URL'leri `ok`, caption dogru ayristirilmis.
 
 ---
 
-## 8. En-boy testi (canliya baglamadan once, 1 kez)
+## 8. En-boy testi — **yapildi, tekrarlanmasi gerekmiyor**
 
-Gorseller 1920x2400. Meta dokumaninda azami genislik 1440 piksel yaziyor; Instagram
-pratikte kendi kucultuyor ama **bunu varsaymak yerine olcmek gerekiyor.**
+Gorseller 1920x2400. Meta dokumaninda azami genislik 1440 piksel yaziyor, yani
+Instagram'in kirpip kirpmadigi varsayilmak yerine olculmustu:
 
-```powershell
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --isaretle dizi/my-bad
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --slug dizi/my-bad --tek-slayt
-```
+> https://www.instagram.com/p/DcGQsbviHtT/ — 1920x2400 kaynak, Instagram
+> 1440x1800'e kuculttu, **oran korundu, kirpma yok.**
 
-`--tek-slayt` sadece `1.jpg`'yi atar ve **yayin defterine yazmaz** — bu bir test postu.
+Sonuc: ek gorsel isleme adimi gerekmiyor, 4:5 oranli gorseller oldugu gibi
+gonderilebilir.
 
-Sonra Instagram'da gozle bak:
-
-- **Duzgun gorunuyorsa** -> postu elle sil,
-  `ig_yayinla.py --temizle-isaret` calistir, kuruluma devam.
-- **Kirpilmis / metin kesilmisse** -> gorselleri 1080x1350'ye kucultup
-  `otomasyon/pub/<kategori>/<slug>/` altina yazan bir adim eklemek gerekiyor
-  (`pip install pillow`), sonra `.env`'e `IG_RAW_BASE` ile o klasoru gosterirsin.
-  Bu durumda haber ver, adimi ekleyelim.
-- **API hata dondurduyse** -> hata mesajini paylas.
+Bu olcumu yeni bir gorsel boyutu icin tekrarlaman gerekirse, elle yayin
+komutlari duruyor (`ig_yayinla.py --isaretle` -> `--slug ... --tek-slayt`,
+`--tek-slayt` deftere yazmaz). Ama normal kurulumda **bu adimi atla** — SaaS
+yolunda gerekli degil ve gercek bir Instagram postu olusturur.
 
 ---
 
-## 9. Onay dongusunu ucdan uca dene
+## 9. SaaS baglantisini kur ve dogrula
+
+Onay ve yayin `content-approval-saas`'ta yapiliyor. Bu adim bir kez yapilir.
+
+**9a. SaaS tarafinda musteri kaydi.** Panelde bir `Client` olustur (`Furkan
+Teacher`, `eneshan034@gmail.com`) ve Instagram alanlarini doldur:
+
+| Alan | Deger |
+|---|---|
+| `instagramUserId` | adim 5'teki `IG_USER_ID` |
+| `instagramAccessToken` | adim 3'teki 60 gunluk token |
+
+> `instagramUserId` bos kalirsa onay calisir ama **yayin yapilmaz**:
+> `publishStatus = "skipped"` doner. Bu bilincli bir guvenli varsayilan,
+> hata degil.
+
+**9b. `.env`'i doldur.** `.env.example`'i kopyala, uc SaaS degiskenini yaz:
+
+```
+FURI_SAAS_URL=https://content-approval-saas.vercel.app
+FURI_CLIENT_ID=<9a'da olusan Client kaydinin id'si>
+FURI_API_KEY=<SaaS'in makine erisim anahtari>
+```
+
+`FURI_API_KEY`, SaaS tarafinda `FURI_API_KEY` + `FURI_API_AGENCY_ID` ortam
+degiskenleriyle eslesir. Ikisi de Vercel'de tanimli olmali.
+
+**9c. Kuru calistirma** — hicbir yere yazmadan ne gidecegini gor:
+
+```powershell
+python .claude\skills\insta-yayinla\scripts\saas_gonder.py --kuru
+```
+
+Beklenen: `durum: kuru`, `govde.imageUrls` hepsi
+`https://raw.githubusercontent.com/...`, `caption_uzunluk` 2000'in altinda.
+
+**9d. Ucdan uca** — gercek bir post siraya konur:
 
 ```
 /insta-yayinla
 ```
 
-1. Mail geldi mi, gorseller mailde gorunuyor mu?
-2. **"HAYIR"** diye yanitla, `/insta-yayinla` tekrar calistir.
-   Beklenen: post `atlananlar`'a dustu, yeni bir aday onerildi.
-3. Bu sefer **"EVET"** diye yanitla, `/insta-yayinla` tekrar calistir.
-   Beklenen: post gercekten yayinlandi, `otomasyon/yayinlananlar.json`'a permalink'i
-   ile yazildi.
-4. Hemen ardindan `/insta-yayinla` bir kez daha: ayni postu tekrar **atmamali**.
+1. `saas_gonder.py` -> `durum: gonderildi`, `onay_url` dolu
+2. Onay maili SaaS'tan geldi mi, gorseller mailde gorunuyor mu
+3. Linke gir, **Onayla** — sayfa "Yayinlaniyor..." gosterip permalink dondurmeli
+   (olculen sure ~11 saniye)
+4. `/insta-yayinla` tekrar calistir: `esitle.py` postu deftere islemeli,
+   `bekleyen` kapanmali
+5. Bir kez daha calistir: **ayni postu tekrar siraya koymamali**
+
+Reddi denemek istersen 3. adimda **Reddet**'e bas; `esitle.py` postu
+`atlananlar`'a yazar ve bir sonraki calisma yeni aday onerir.
 
 ---
 
@@ -174,23 +212,31 @@ Hepsi calistiktan sonra:
 /schedule
 ```
 
-- cron: `13 6-21 * * *` (06:00-21:00 arasi saat basi; :00 yigilmasindan kacinmak icin
-  13. dakika)
+- cron: `7 5,12 * * *` UTC = 08:07 / 15:07 Istanbul (gunde 2 post tempsosu)
 - komut: `/insta-yayinla`
-- secret olarak tanimla: `IG_ACCESS_TOKEN`, `IG_USER_ID`
+- ortam degiskenleri: `FURI_SAAS_URL`, `FURI_CLIENT_ID`, `FURI_API_KEY`
 
-Saat basi tetiklemek sorun degil — gunluk kota (2) ve yayinlar arasi minimum sure
-(4 saat) skill'in icinde.
+> **`IG_ACCESS_TOKEN` buluta KONMAZ.** Bulut ortamlarinda secrets store yok;
+> o token hesaba dogrudan post atabiliyor. Yayini SaaS yaptigi icin bulut
+> calismasinin token'a ihtiyaci da yok. Ayrinti: B bolumu, adim 1.
 
-**Bulutta Gmail'e erisilemiyorsa** zamanlayiciyi yerele al, skill'de degisiklik gerekmez:
+Ayrintili bulut kurulumu (ag izinleri dahil) icin **B bolumu**.
+
+Yerel zamanlayici da calisir, skill'de degisiklik gerekmez:
 
 ```powershell
 schtasks /create /tn "furi-insta" /tr "claude -p /insta-yayinla" /sc hourly
 ```
 
+Saat basi tetiklemek sorun degil — gunluk kota (2) ve yayinlar arasi minimum
+sure (4 saat) skill'in icinde.
+
 ---
 
 ## Ortam degiskenleri kunyesi
+
+Bos sablon: repo kokundeki [`.env.example`](../../../.env.example) — kopyala,
+`.env` adiyla kaydet, doldur. `.env` gitignored; repo public, asla commit etme.
 
 | Degisken | Nerede | Ne ise yarar |
 |---|---|---|

@@ -1,6 +1,9 @@
 # Ortam degiskenleri / API anahtarlari — repo public, asla commit edilmez
 .env
 .env.*
+# Istisna: .env.example yalnizca degisken ADLARINI tasir, deger tasimaz.
+# Negasyon .env.* satirindan SONRA gelmeli, yoksa etkisiz kalir.
+!.env.example
 *.key
 *.pem
 

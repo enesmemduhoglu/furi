@@ -24,6 +24,13 @@ MAX_HASHTAG = 30
 MAX_ALT_TEXT = 1000
 MAX_DOSYA_BAYT = 8 * 1024 * 1024
 
+# SaaS sinirlari — yayin yolu artik content-approval-saas uzerinden gittigi icin
+# gercekte baglayici olan limit budur, Instagram'inki degil.
+# Kaynak: content-approval-saas src/lib/validation.ts > CAPTION_MAX_LENGTH.
+# Instagram 2200'e izin verse de 2000'i asan caption SaaS'tan 400 doner; bunu
+# gozetimsiz calisan cron'da HTTP hatasi olarak degil, burada yakalamak gerekir.
+SAAS_MAX_CAPTION = 2000
+
 # Akis kurallari
 GUNLUK_KOTA = 2
 ONAY_SURESI_SAAT = 6
@@ -184,6 +191,7 @@ def durum_oku(kok: Path) -> dict:
             "bugun": {"tarih": None, "yayinlanan": 0},
             "son_stok_uyarisi": None,
             "atlananlar": [],
+            "sure_dolanlar": {},
         },
     )
     veri.setdefault("bekleyen", None)
@@ -191,6 +199,9 @@ def durum_oku(kok: Path) -> dict:
     veri.setdefault("son_yayin", None)
     veri.setdefault("son_stok_uyarisi", None)
     veri.setdefault("atlananlar", [])
+    # SKILL.md Faz 2 bu sozluge yaziyor; varsayilani burada olmasa cagiran
+    # tarafin once var mi diye bakmasi gerekirdi.
+    veri.setdefault("sure_dolanlar", {})
     bugun = veri.setdefault("bugun", {"tarih": None, "yayinlanan": 0})
     bugun.setdefault("tarih", None)
     bugun.setdefault("yayinlanan", 0)

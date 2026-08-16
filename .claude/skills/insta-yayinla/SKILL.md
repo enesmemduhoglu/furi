@@ -164,8 +164,18 @@ SaaS gonderir** — bu skill mail yazmaz.
 | Cikti `durum` | Ne yapilir |
 |---|---|
 | `gonderildi` | Faz 4'e gec |
-| `aday_yok` | Stok bitmis. Faz 5, sonra Faz 4 |
+| `aday_yok` | Stok gercekten bitmis. Faz 5, sonra Faz 4 |
+| `uygun_aday_yok` | Post var ama hicbiri dogrulamayi gecemedi. **Stok sorunu degil, hata.** `elenenler` listesini hata mailine koy, Faz 4, cik |
 | `hata` | State'e dokunulmadi. Hata mailini `yanit` alaniyla at, Faz 4, cik |
+
+> `gonderildi` ciktisinda **`elenenler` alani varsa** onu da hata mailine ekle:
+> gonderim basarili olsa bile o postlar bozuk ve duzeltilmezse havuz sessizce
+> erir.
+
+`uygun_aday_yok` en cok "dal push edilmemis" durumunda cikar — gorseller
+`raw.githubusercontent.com` uzerinden servis edildigi icin push edilmemis bir
+postun URL'leri 404 verir ve tum adaylar elenir. `elenenler` icinde toplu
+`HTTP 404` goruyorsan once Faz 0'daki `git pull`/dal durumunu kontrol et.
 
 ---
 
@@ -204,6 +214,11 @@ ayni postu tekrar siraya koyabilir. Push hatasini **hata maili ile bildir**.
 > bulut rutininde `mcp__Gmail__*`. Arac adini varsayma; `ToolSearch` ile
 > `gmail send_message` diye ara.
 
+> **Gmail bu skill'de yalnizca uyari kanali.** Onay maili SaaS'tan gidiyor ve
+> onay SaaS'ta veriliyor; Gmail'e "EVET" yazarak onaylama yolu emekliye
+> ayrildi (`emekli/README.md`). Buradan cikan tek sey stok ve hata bildirimi —
+> yani Gmail'e ulasilamamasi yayin akisini durdurmaz, sadece sessizlestirir.
+
 ---
 
 ## Komut kunyesi
@@ -239,7 +254,12 @@ phrasal ya da iki seviye testi cikmaz.
 
 Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar`
 icinde, `bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla
-slayt, 2200'den uzun caption, 30'dan fazla hashtag, erisilemeyen gorsel URL'i).
+slayt, 30'dan fazla hashtag, erisilemeyen gorsel URL'i, cok uzun caption).
+
+**Caption limiti iki tane.** Instagram 2200 karaktere izin veriyor ama yayin
+SaaS uzerinden gittigi icin baglayici olan **SaaS'in 2000 limiti**
+(`validation.ts > CAPTION_MAX_LENGTH`). `saas_gonder.py` gonderimden once
+2000'e gore eliyor; arada kalan bir caption SaaS'tan 400 donerdi.
 
 Gorseller `raw.githubusercontent.com` uzerinden servis edilir — Instagram public
 URL istiyor, repo public oldugu icin ek barindirma gerekmiyor. **Bu yuzden bir
@@ -252,6 +272,10 @@ kontrol eder ve erisilemeyeni eler.
 
 **`aday_yok`** — yayinlanmamis post kalmadi. `insta-ingilizce` ile yeni post
 uret, push et.
+
+**`uygun_aday_yok`** — post var, hepsi elendi. `elenenler` sebebi yaziyor. Toplu
+`HTTP 404` ise postlar push edilmemis ya da yanlis daldasin; `IG_RAW_BASE`
+elle ayarlanmissa yanlis yeri gosteriyor olabilir.
 
 **SaaS 401** — `FURI_API_KEY` yanlis ya da sonunda satir sonu var. Deploy
 sirasinda bir kez bu yasandi: `vercel env add`'e degeri pipe ile vermek sonuna
@@ -280,7 +304,9 @@ sonra yeni token SaaS'taki `Client.instagramAccessToken` alanina da yazilmali.
 
 - `otomasyon/README.md` — durum dosyalarinin semasi, elle mudahale
 - `SAAS-ENTEGRASYON-PLANI.md` — mimarinin neden boyle oldugu, SaaS tarafi
-- `KURULUM.md` — Instagram token'i uretimi (tek seferlik)
+- `KURULUM.md` — Instagram token'i + SaaS baglantisi (tek seferlik)
+- `emekli/README.md` — Gmail/Apps Script zinciri: neden birakildi, nasil geri alinir
+- `.env.example` — gereken ortam degiskenlerinin adlari (repo kokunde)
 - `WORKFLOW.md` — post uretim akisi (`insta-ingilizce` skill'i)
 
 ## Kunye
