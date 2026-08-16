@@ -1,5 +1,18 @@
 """Bir postu Instagram'a yayinlar ve durum dosyalarini gunceller.
 
+NORMAL AKISTA CAGRILMAZ. Yayin content-approval-saas'a tasindi: onay geldigi an
+ayni HTTP isteginde Instagram'a basiliyor. Bu script elle teshis ve kurtarma
+icin duruyor:
+
+    --kontrol   Instagram token'i / hesabi saglam mi
+    --dogrula   Yarida kalmis bir yayin gercekten atilmis mi (emniyet agi)
+    --slug      SaaS calismiyorken elle yayin — SON CARE
+    --paket     EMEKLI, bkz. ../emekli/README.md
+
+`--slug` ile elle yayin yaparsan SaaS bunu bilmez: o postun SaaS'taki kaydi
+`pending`/`idle` kalir. Cift yayin riskini kendin gozetmelisin — once SaaS
+tarafindaki postu reddet ya da sil.
+
 Cift yayin korumasi bu script'in en onemli isi. Sira su:
 
     1. --isaretle   durum.json'a "yayin denemesi" isareti yazilir
@@ -390,11 +403,20 @@ def komut_yayinla(kok, args) -> int:
 
 
 def komut_paket(kok, args) -> int:
-    """Apps Script'in yayin yapabilmesi icin hazir paket yazar.
+    """EMEKLI — Apps Script'in yayin yapabilmesi icin hazir paket yazardi.
 
-    Secim, rotasyon, caption ayristirma, dogrulama burada — Python'da, tek kopya.
-    Apps Script'e sadece "su URL'leri su caption ile yayinla" kaliyor.
+    Ciktisini yalnizca Gmail/Apps Script zinciri tuketiyordu; o zincir emekliye
+    ayrildi (bkz. ../emekli/README.md). Yayini artik SaaS yapiyor ve gerekli
+    veriyi `saas_gonder.py` dogrudan POST ediyor — araya dosya girmiyor.
+
+    Komut calisir halde birakildi (geri donus yolu acik kalsin diye) ama
+    cagirani uyarir.
     """
+    sys.stderr.write(
+        "UYARI: --paket emekli. Ciktisini tuketen Apps Script zinciri artik yok;\n"
+        "       yayin verisi SaaS'a saas_gonder.py ile dogrudan gidiyor.\n"
+        "       Ayrinti: .claude/skills/insta-yayinla/emekli/README.md\n"
+    )
     post = _post_bul(kok, args.paket)
     veri, sorunlar = veri_topla(kok, post, raw_taban(kok))
     if sorunlar:
@@ -444,7 +466,8 @@ def main() -> int:
     a.add_argument("--isaretle", metavar="SLUG", help="Yayin oncesi isaret yaz")
     a.add_argument("--slug", metavar="SLUG", help="YAYINLA (canli)")
     a.add_argument("--dogrula", metavar="SLUG", help="Yarida kalan deneme gercekten atilmis mi?")
-    a.add_argument("--paket", metavar="SLUG", help="Apps Script icin hazir yayin paketi yaz")
+    a.add_argument("--paket", metavar="SLUG",
+                   help="[EMEKLI] Apps Script icin hazir yayin paketi yaz")
     a.add_argument("--temizle-isaret", action="store_true", help="Yayin denemesi isaretini sil")
     a.add_argument("--tek-slayt", action="store_true", help="--slug ile: sadece 1.jpg, kayit tutmaz")
     a.add_argument("--zorla", action="store_true", help="--slug ile: isaret sarti aranmasin")
