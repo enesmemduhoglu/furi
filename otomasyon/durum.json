@@ -1,18 +1,10 @@
 {
-  "bekleyen": {
-    "slug": "dizi/long-story-short",
-    "kategori": "dizi",
-    "slayt": 1,
-    "saas_post_id": "cmsw1t4mv0001ky046csgssb5",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/7c37fa7e483f4000bd0bc78f32a87761",
-    "gonderim_zamani": "2026-08-16T19:57:51+03:00",
-    "son_gecerlilik": "2026-08-17T19:57:51+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": null,
+  "son_yayin": "2026-08-16T20:03:36+03:00",
   "bugun": {
     "tarih": "2026-08-16",
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "atlananlar": [],

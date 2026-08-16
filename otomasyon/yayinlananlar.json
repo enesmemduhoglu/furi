@@ -1,6 +1,15 @@
 {
-  "guncelleme": "2026-08-16T16:48:21+03:00",
+  "guncelleme": "2026-08-16T20:03:36+03:00",
   "kayitlar": [
+    {
+      "slug": "seviye-testi/b1",
+      "kategori": "seviye-testi",
+      "slayt": 8,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/Db-9h5gDbox/",
+      "yayin_zamani": "2026-08-13T00:00:00+03:00",
+      "not": "elle yayinlanmisti, geriye donuk islendi"
+    },
     {
       "slug": "phrasal/break-down",
       "kategori": "phrasal",
@@ -11,13 +20,13 @@
       "not": "elle yayinlanmisti, geriye donuk islendi"
     },
     {
-      "slug": "seviye-testi/b1",
-      "kategori": "seviye-testi",
-      "slayt": 8,
-      "ig_media_id": null,
-      "permalink": "https://www.instagram.com/p/Db-9h5gDbox/",
-      "yayin_zamani": "2026-08-13T00:00:00+03:00",
-      "not": "elle yayinlanmisti, geriye donuk islendi"
+      "slug": "dizi/long-story-short",
+      "kategori": "dizi",
+      "slayt": 1,
+      "ig_media_id": "18073015358411119",
+      "permalink": "https://www.instagram.com/p/DcG8i6oINaZ/",
+      "yayin_zamani": "2026-08-16T16:58:20+00:00",
+      "not": "esitleme ile eklendi (SaaS yayinladi)"
     }
   ]
 }
