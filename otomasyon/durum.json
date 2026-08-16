@@ -3,13 +3,13 @@
   "yayin_denemesi": null,
   "son_yayin": null,
   "bugun": {
-    "tarih": null,
+    "tarih": "2026-08-15",
     "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
   "atlananlar": [],
   "token": {
-    "son_yenileme": null,
-    "gecerlilik_bitis": null
+    "son_yenileme": "2026-08-16T01:02:34+03:00",
+    "gecerlilik_bitis": "2026-10-15T01:02:34+03:00"
   }
 }

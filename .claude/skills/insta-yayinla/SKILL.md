@@ -15,21 +15,36 @@ Hedef tempo: **gunde 2 post**.
 ## Bu skill'in calisma mantigi
 
 Bir agent calismasi saatlerce mail yaniti bekleyemez. Bu yuzden akis tek parca degil,
-**durum makinesi**: her tetiklemede tek bir is yapilir ve cikilir.
-
-```
-   tetikleme 1  ->  aday sec, onay maili at, CIK
-   tetikleme 2  ->  yanit gelmis mi? gelmemis. CIK          (hicbir sey yapma)
-   tetikleme 3  ->  yanit gelmis mi? "EVET". YAYINLA. CIK
-   tetikleme 4  ->  gunluk kota dolmus mu? dolmamis, 4 saat gecmis. Yeni aday. CIK
-```
+**durum makinesi**: her tetiklemede tek bir is yapilir ve cikilir. Ne yapilacagini
+`otomasyon/durum.json` belirler.
 
 Durum `otomasyon/durum.json` ve `otomasyon/yayinlananlar.json` icinde tutulur ve
 **her calismanin sonunda commit + push edilir**. Bulut calismasi her seferinde temiz
 klonla basladigi icin state'in hayatta kalmasinin tek yolu budur.
 
-Zamanlayici saat basi tetikleyebilir; kota mantigi bu skill'in icinde oldugu icin
-gunde en fazla 2 post cikar.
+## Iki tetikleme kaynagi
+
+```
+  1) ZAMANLANMIS                        2) ONAY GELDIGINDE
+     cron: 7 5,12 * * * (UTC)              Sen maile "EVET" yanitlarsin
+     = 08:07 ve 15:07 Istanbul                    |
+            |                                    v  <= 60 sn
+            v                             Gmail Apps Script
+     genelde: yeni aday oner                     |  GitHub issue #1'e yorum
+     onay maili at                               v
+                                          issue_comment webhook
+                                                 |
+                                                 v
+                                          genelde: bekleyen onayi isle,
+                                          YAYINLA
+```
+
+**Hangi yolla tetiklendigine bakma.** Ne yapacagina her zaman `durum.json` karar verir.
+GitHub yorumunun icerigi de olcut degildir — o sadece bir zil. Onayin kendisi Gmail'de
+ve onu bu skill bagimsiz olarak dogrular.
+
+Gunde en fazla 2 post cikar; kota ve yayinlar arasi minimum sure bu skill'in icinde,
+zamanlayicida degil. Webhook gunde 20 kez tetiklense de bu degismez.
 
 ---
 
@@ -38,9 +53,12 @@ gunde en fazla 2 post cikar.
 Bu kurallar canli bir hesaba yaziyor. Hicbiri "duruma gore" degil.
 
 1. **Onay yoksa yayin yok.** Mail thread'inde, onay maili gonderildikten SONRA gelmis,
-   acikca "EVET" diyen bir yanit olmadan hicbir post yayinlanmaz. Yanit yokluğu onay
-   degildir. Belirsiz yanit ("bence olur", "bakarim") onay degildir — onay sayilmaz,
+   acikca "EVET" diyen bir yanit olmadan hicbir post yayinlanmaz. Yanit gelmemis olmasi
+   onay degildir. Belirsiz yanit ("bence olur", "bakarim") onay degildir — onay sayilmaz,
    bekleyen olarak birakilir.
+   **Tetiklenmis olmak da onay degildir:** bu calisma GitHub webhook'uyla baslamis olsa
+   bile onayi Gmail'den kendin dogrula. Apps Script yanlis tetiklerse, biri issue'ya elle
+   yorum atarsa ya da webhook tekrar teslim edilirse tek koruma budur.
 2. **Ayni post iki kez atilmaz.** Yayin defteri + `yayin_denemesi` isareti + Instagram
    dogrulamasi bunu birlikte garanti eder. Isaret adimlarini asla atlama.
 3. **Calisma basina en fazla 1 yayin, takvim gunu basina en fazla 2.**
@@ -356,10 +374,33 @@ calismaz. Bu durumda zamanlayiciyi yerel makineye tasi:
 `schtasks /create /tn "furi-insta" /tr "claude -p /insta-yayinla" /sc hourly`
 Skill'de degisiklik gerekmez, iki ortamda da ayni calisir.
 
+**"EVET" yazdim ama post cikmadi** — zincir su sirayla kontrol edilir:
+1. Apps Script calisti mi? script.google.com > **Yurutme** panelinde son calismalar.
+2. GitHub'a yorum dustu mu? [issue #1](https://github.com/enesmemduhoglu/furi/issues/1)
+3. Rutin tetiklendi mi? [rutin sayfasi](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)
+   — rutin **enabled** mi, orayi da dogrula.
+4. Rutin calisti ama yayinlamadiysa: kota dolmus (gunde 2), son yayindan 4 saat
+   gecmemis, ya da yanit "EVET" olarak ayristirilamamis olabilir.
+
+**Ayni onay iki kez tetiklendi** — sorun degil. Ikinci calisma postu defterde bulur ve
+`zaten_yayinlandi` deyip cikar. Cift yayin olmaz.
+
 ---
 
 ## Ilgili dosyalar
 
 - `otomasyon/README.md` — durum dosyalarinin semasi, elle mudahale
-- `.claude/skills/insta-yayinla/KURULUM.md` — Meta app + token kurulumu (tek seferlik)
+- `KURULUM.md` — Meta app + Instagram token kurulumu (tek seferlik)
+- `apps-script/KURULUM-APPS-SCRIPT.md` — anlik onay tetikleyicisi kurulumu
+- `apps-script/onay-tetikleyici.gs` — Gmail'i izleyip rutini tetikleyen script
 - `WORKFLOW.md` — post uretim akisi (`insta-ingilizce` skill'i)
+
+## Kunye
+
+| Parca | Deger |
+|---|---|
+| Rutin | `trig_01TtprvNfdZd5DDEfR8uDCRj` ([panel](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)) |
+| Cron | `7 5,12 * * *` UTC = 08:07 / 15:07 Istanbul |
+| Webhook | GitHub `issue_comment` — scope `enesmemduhoglu/furi` |
+| Tetikleyici issue | [#1](https://github.com/enesmemduhoglu/furi/issues/1) — kapatilmamali |
+| Instagram hesabi | `furkanteacherteaching` (`17841441566401393`) |

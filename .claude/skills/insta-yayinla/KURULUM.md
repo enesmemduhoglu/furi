@@ -34,6 +34,12 @@ Kisisel hesaplarda API ile yayin yapilamiyor; bu adim zorunlu.
 4. Cikan token'i kopyala
 
 Bu paneldeki token dogrudan **60 gunluk (long-lived)** gelir; ayrica bir takas adimi yok.
+Token `IGAA...` veya `IGAG...` ile baslar ve 150-250 karakterdir.
+
+> **Graph API Explorer'dan token alma.** `Tools > Graph API Explorer` ekranindaki
+> "Generate Access Token" butonu `EAA...` ile baslayan, birkac saatlik ve Instagram
+> izni olmayan bir token verir — bu akista ise yaramaz. Token'i mutlaka yukaridaki
+> Instagram panelinden uret.
 
 Gereken izinler otomatik veriliyor: `instagram_business_basic`,
 `instagram_business_content_publish`.
@@ -115,7 +121,7 @@ Gorseller 1920x2400. Meta dokumaninda azami genislik 1440 piksel yaziyor; Instag
 pratikte kendi kucultuyor ama **bunu varsaymak yerine olcmek gerekiyor.**
 
 ```powershell
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --isaretle dizi\my-bad
+python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --isaretle dizi/my-bad
 python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --slug dizi/my-bad --tek-slayt
 ```
 
