@@ -8,10 +8,16 @@
     "gonderim_zamani": "2026-08-16T13:28:33+03:00",
     "son_gecerlilik": "2026-08-16T19:28:33+03:00"
   },
-  "yayin_denemesi": null,
+  "yayin_denemesi": {
+    "slug": "dizi/long-story-short",
+    "kategori": "dizi",
+    "slayt": 1,
+    "caption_izi": "uzun bir hikâyeyi kısa kesmek istediğinde i̇ngilizcede tek bir kalıp var: \"long s",
+    "baslangic": "2026-08-16T13:33:45+03:00"
+  },
   "son_yayin": null,
   "bugun": {
-    "tarih": "2026-08-15",
+    "tarih": "2026-08-16",
     "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
