@@ -90,15 +90,32 @@ Her calisma buradan baslar. Instagram tek dogruluk kaynagidir.
 python .claude/skills/insta-yayinla/scripts/esitle.py
 ```
 
-Script iki yonlu calisir ve gerekli state guncellemelerini kendi yapar:
+Script iki kaynaga birden bakar ve gerekli state guncellemelerini kendi yapar.
+
+**1. Bekleyen postun SaaS'taki durumu** (kesin bilgi — `bekleyen.onay_url`
+uzerinden, token yeterli, oturum gerekmiyor):
+
+| SaaS ne diyor | Ne olur |
+|---|---|
+| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, gunluk sayac artar |
+| `published` ama Instagram'da yok | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir ve kota sayilir |
+| `status: rejected` | `atlananlar`'a eklenir, `bekleyen` kapanir |
+| `publishStatus: failed` | **`bekleyen` KORUNUR** — onay sayfasindan tekrar denenebilir. Hata mailini at. |
+| `publishStatus: skipped` | Musteride Instagram bagli degil. `bekleyen` kapanir, post havuzda kalir, durumu mail ile bildir. |
+
+**2. Instagram ile defter karsilastirmasi** (caption eslestirmesi):
 
 | Durum | Ne olur |
 |---|---|
-| Instagram'da var, defterde yok | Deftere eklenir — SaaS yayinlamis demektir |
+| Instagram'da var, defterde yok | Deftere eklenir |
 | Defterde var, Instagram'da yok | Defterden dusurulur, icerik tekrar aday olur |
-| `bekleyen` post yayinlanmis | `bekleyen` kapanir, gunluk sayac artar |
 
-`durum: esit` ise fark yok, Faz 2'ye gec.
+`durum: esit` ve `bekleyen` alani yoksa yapacak is yok, Faz 2'ye gec.
+
+> SaaS sorgusu once gelir cunku **caption eslestirmesi bir cikarim, SaaS cevabi
+> kesin bilgi**. Ozellikle "yayinlandi ama sonra silindi" durumunu sadece SaaS
+> bilebilir; Instagram'a bakmak o postu hic yayinlanmamis gibi gosterir ve
+> `bekleyen` suresi dolana kadar asili kalir.
 
 ---
 
