@@ -210,10 +210,13 @@ Cikti `durum: secildi` ise onay mailini gonder — Gmail **send_message** araci:
 - **htmlBody:** asagidaki sablon — **bu alan zorunlu, atlanamaz**
 - **body:** ayni icerigin duz metin hali (gorseller yerine URL listesi)
 
-> **`htmlBody` olmadan mail gondermeyin.** Sadece `body` gonderirsen slaytlar mailde
-> gorunmez, sadece URL listesi olur — o zaman postu goremeden onaylamak zorunda
-> kalirsin ve onay adiminin butun anlami kaybolur. Her slayt icin sablondaki `<img>`
-> satirindan bir tane uret.
+> **`htmlBody` olmadan mail gondermeyin** ve icinde **slayt sayisi kadar `<img>`**
+> olsun. Bu mailin tek isi postu sana GOSTERMEK; gorsel yoksa goremeden onaylamak
+> zorunda kalirsin ve onay adiminin butun anlami kaybolur.
+>
+> Mail gonderdikten SONRA kendi urettigin `htmlBody` metnini kontrol et: icinde
+> `<img` gecen satir sayisi postun slayt sayisina esit mi? Degilse maili duzeltilmis
+> haliyle tekrar gonder.
 
 ```html
 <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;
@@ -226,7 +229,10 @@ Cikti `durum: secildi` ise onay mailini gonder — Gmail **send_message** araci:
     {kategori} &middot; {slayt} slayt &middot; kalan aday: {kalan_aday}
   </p>
 
-  <!-- her gorsel icin bir tane -->
+  <!-- AŞAĞIDAKİ img SATIRI ZORUNLU. aday_sec.py ciktisindaki HER gorsel icin
+       bir tane uret: 1 slaytlik postta 1 tane, 8 slaytlik postta 8 tane.
+       {url} = gorseller[i].url, {alt_text} = gorseller[i].alt_text.
+       Bu satirlari atlarsan mail ise yaramaz. -->
   <img src="{url}" alt="{alt_text}" width="260"
        style="display:block;width:260px;max-width:100%;border-radius:8px;
               margin:0 0 10px;border:1px solid #E5E0CF">

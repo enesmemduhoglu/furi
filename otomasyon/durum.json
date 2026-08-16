@@ -1,13 +1,5 @@
 {
-  "bekleyen": {
-    "slug": "dizi/long-story-short",
-    "kategori": "dizi",
-    "slayt": 1,
-    "mail_konu": "[FURI-ONAY] dizi/long-story-short - 16.08.2026 13:23",
-    "mail_thread_id": "1a00a19acb8ff594",
-    "gonderim_zamani": "2026-08-16T13:24:09+03:00",
-    "son_gecerlilik": "2026-08-16T19:24:09+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
   "son_yayin": null,
   "bugun": {
@@ -16,9 +8,7 @@
   },
   "son_stok_uyarisi": null,
   "atlananlar": [],
-  "sure_dolanlar": {
-    "dizi/long-story-short": 1
-  },
+  "sure_dolanlar": {},
   "token": {
     "son_yenileme": "2026-08-16T01:02:34+03:00",
     "gecerlilik_bitis": "2026-10-15T01:02:34+03:00"
