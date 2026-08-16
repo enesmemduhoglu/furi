@@ -1,24 +1,10 @@
 {
-  "bekleyen": {
-    "slug": "dizi/long-story-short",
-    "kategori": "dizi",
-    "slayt": 1,
-    "mail_konu": "[FURI-ONAY] dizi/long-story-short - 16.08.2026 13:28",
-    "mail_thread_id": "1a00a1e2483a7a40",
-    "gonderim_zamani": "2026-08-16T13:28:33+03:00",
-    "son_gecerlilik": "2026-08-16T19:28:33+03:00"
-  },
-  "yayin_denemesi": {
-    "slug": "dizi/long-story-short",
-    "kategori": "dizi",
-    "slayt": 1,
-    "caption_izi": "uzun bir hikâyeyi kısa kesmek istediğinde i̇ngilizcede tek bir kalıp var: \"long s",
-    "baslangic": "2026-08-16T13:33:45+03:00"
-  },
-  "son_yayin": null,
+  "bekleyen": null,
+  "yayin_denemesi": null,
+  "son_yayin": "2026-08-16T13:35:16+03:00",
   "bugun": {
     "tarih": "2026-08-16",
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "atlananlar": [],
