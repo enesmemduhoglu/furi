@@ -1,80 +1,68 @@
 ---
 name: insta-yayinla
-description: Repodaki hazir postlari @furkanteacherteaching Instagram hesabina otomatik yayinlar. Siradaki postu kategori rotasyonuyla secer, eneshan034@gmail.com adresine onay maili atar, mailde "EVET" yaniti gelirse Instagram Graph API ile yukler. Zamanlanmis calisma (cron / routine) icin tasarlandi; elle "/insta-yayinla" ile de calistirilabilir.
+description: Repodaki hazir postlari siraya koyup @furkanteacherteaching hesabina yayinlatir. Kategori rotasyonuyla siradaki postu secer ve content-approval-saas'a gonderir; onay maili oradan gider, kullanici telefondan onaylayinca yayin ~11 saniye icinde SaaS tarafindan yapilir. Bu skill yayin yapmaz, sadece siradakini secer ve defteri tutar. Zamanlanmis calisma icin tasarlandi; elle "/insta-yayinla" ile de calistirilabilir.
 ---
 
-# insta-yayinla — otomatik Instagram yayinlama
+# insta-yayinla — siradaki postu siraya koy
 
-Bu skill **post uretmez**. Uretim `insta-ingilizce` skill'inin isi. Bu skill sadece
-repoda hazir duran postlari sirayla, onay alarak Instagram'a tasir.
+Bu skill **iki sey yapmaz**: post uretmez (o `insta-ingilizce`'nin isi) ve
+**Instagram'a yayin yapmaz** (onu SaaS yapar).
+
+Yaptigi iki sey:
+
+1. Kategori rotasyonuyla siradaki postu secip onaya gonderir
+2. Yayin defterini Instagram ile esitler
 
 Hedef tempo: **gunde 2 post**.
 
 ---
 
-## Bu skill'in calisma mantigi
-
-Bir agent calismasi saatlerce mail yaniti bekleyemez. Bu yuzden akis tek parca degil,
-**durum makinesi**: her tetiklemede tek bir is yapilir ve cikilir. Ne yapilacagini
-`otomasyon/durum.json` belirler.
-
-Durum `otomasyon/durum.json` ve `otomasyon/yayinlananlar.json` icinde tutulur ve
-**her calismanin sonunda commit + push edilir**. Bulut calismasi her seferinde temiz
-klonla basladigi icin state'in hayatta kalmasinin tek yolu budur.
-
-## Iki tetikleme kaynagi
+## Akis
 
 ```
-  1) ZAMANLANMIS                        2) ONAY GELDIGINDE
-     cron: 7 5,12 * * * (UTC)              Sen maile "EVET" yanitlarsin
-     = 08:07 ve 15:07 Istanbul                    |
-            |                                    v  <= 60 sn
-            v                             Gmail Apps Script
-     genelde: yeni aday oner                     |  GitHub issue #1'e yorum
-     onay maili at                               v
-                                          issue_comment webhook
-                                                 |
-                                                 v
-                                          genelde: bekleyen onayi isle,
-                                          YAYINLA
+  BU SKILL (cron, gunde 2 kez)
+    aday sec  ->  POST /api/posts  ->  SaaS musteriye onay maili atar
+                                              |
+                                              v
+                                    Sen: telefondan ONAYLA
+                                              |
+                          SaaS ayni istekte Instagram'a basar
+                                    olculen sure: ~11 saniye
+                                              |
+  BU SKILL (sonraki calisma)                  v
+    esitle.py  <----  Instagram'a bakip defteri gunceller
 ```
 
-**Hangi yolla tetiklendigine bakma.** Ne yapacagina her zaman `durum.json` karar verir.
-GitHub yorumunun icerigi de olcut degildir — o sadece bir zil. Onayin kendisi Gmail'de
-ve onu bu skill bagimsiz olarak dogrular.
+Onaydan sonra bu skill devreye **hic girmiyor**. Yayin bittiginde de haberi
+olmuyor — bir sonraki calismasinda Instagram'a bakip ogreniyor.
 
-Gunde en fazla 2 post cikar; kota ve yayinlar arasi minimum sure bu skill'in icinde,
-zamanlayicida degil. Webhook gunde 20 kez tetiklense de bu degismez.
+### Neden yayin burada degil
+
+Onay geldigi an yayini tetikleyecek bir yol yoktu: Claude cloud routine'i
+webhook ile tetiklenemedi (dort yapilandirma denendi, hicbiri teslim edilmedi)
+ve zamanlanmis rutinlerin minimum araligi 1 saat. Yayin cagrisini onayin
+gerceklestigi yere tasiyinca tetikleme sorunu tamamen ortadan kalkti.
+
+Ayrinti: `SAAS-ENTEGRASYON-PLANI.md`
 
 ---
 
 ## DEGISMEZ KURALLAR
 
-Bu kurallar canli bir hesaba yaziyor. Hicbiri "duruma gore" degil.
-
-1. **Onay yoksa yayin yok.** Mail thread'inde, onay maili gonderildikten SONRA gelmis,
-   acikca "EVET" diyen bir yanit olmadan hicbir post yayinlanmaz. Yanit gelmemis olmasi
-   onay degildir. Belirsiz yanit ("bence olur", "bakarim") onay degildir — onay sayilmaz,
-   bekleyen olarak birakilir.
-   **Tetiklenmis olmak da onay degildir:** bu calisma GitHub webhook'uyla baslamis olsa
-   bile onayi Gmail'den kendin dogrula. Apps Script yanlis tetiklerse, biri issue'ya elle
-   yorum atarsa ya da webhook tekrar teslim edilirse tek koruma budur.
-2. **Ayni post iki kez atilmaz.** Yayin defteri + `yayin_denemesi` isareti + Instagram
-   dogrulamasi bunu birlikte garanti eder. Isaret adimlarini asla atlama.
-3. **Calisma basina en fazla 1 yayin, takvim gunu basina en fazla 2.**
-4. **Hata olursa state'e dokunma.** Hata maili at, oldugun yerde dur. Yarim durum yazma.
-5. **Sadece `otomasyon/*.json` commit edilir.** Gorseller, `caption.md`, skill dosyalari
-   bu akista asla degistirilmez. `--force` push yok.
-6. **`.env` asla commit edilmez.** Repo public. Token'i hicbir yere (mail, log, commit
-   mesaji, ekrana) yazma.
-7. **Kullaniciya sorma.** Bu skill gozetimsiz calisir. Karar veremedigin bir durumda
-   `AskUserQuestion` cagirma — mail at ve cik.
+1. **Bu skill Instagram'a yazmaz.** `ig_yayinla.py --slug` normal akista
+   **cagrilmaz**. O komut artik yalnizca elle teshis/kurtarma icin duruyor.
+2. **Ayni post iki kez siraya konmaz.** Defterde olan, `atlananlar`'da olan ve
+   `bekleyen` olan sluglar aday havuzunun disinda.
+3. **Calisma basina en fazla 1 oneri, takvim gunu basina en fazla 2 yayin.**
+4. **Hata olursa state'e dokunma.** Hata mailini at, oldugun yerde dur.
+5. **Sadece `otomasyon/*.json` commit edilir.** Gorseller, `caption.md`, skill
+   dosyalari bu akista asla degistirilmez. `--force` push yok.
+6. **`.env` asla commit edilmez.** Repo public. API anahtarini ve token'i
+   hicbir yere (mail, log, commit mesaji) yazma.
+7. **Kullaniciya sorma.** Gozetimsiz calisiyorsun. `AskUserQuestion` cagirma —
+   karar veremedigin durumda mail at ve cik.
 
 ---
-
-> **Gmail arac adlari ortama gore degisir.** Yerelde `mcp__claude_ai_Gmail__*`,
-> bulut rutininde `mcp__Gmail__*` olarak gorunur. Arac adini varsayma; gerekirse
-> `ToolSearch` ile `gmail send_message` / `gmail get_thread` diye ara.
 
 ## Faz 0 — Ortam
 
@@ -83,250 +71,89 @@ git checkout main 2>/dev/null || git checkout -B main origin/main
 git pull --ff-only origin main
 ```
 
-> **Bulut calismasi `detached HEAD` ile baslar.** Bu halde `git pull` de `git push` de
-> calismaz — yani Faz 4'te state'i kaydedemezsin ve bir sonraki calisma eski durumu
-> gorur. Yukaridaki iki satiri **atlamadan** calistir; `git status` ciktisinda
-> `On branch main` gordugunden emin ol.
+> **Bulut calismasi `detached HEAD` ile baslar.** Bu halde ne `git pull` ne
+> `git push` calisir — yani Faz 4'te state'i kaydedemezsin ve bir sonraki
+> calisma eski durumu gorur. Bu iki satiri atlamadan calistir; `git status`
+> ciktisinda `On branch main` gordugunden emin ol.
 
-**Instagram kimlik bilgisi ne zaman gerekli?** Sadece **yayin** yapan calismalarda.
-Aday secme ve onay maili gonderme Instagram API'sine hic dokunmaz (`aday_sec.py`
-yalnizca dosya sistemi + raw URL kontrolu yapar). Bu yuzden:
-
-- `bekleyen` bos ve yeni aday onerecekseniz -> `IG_ACCESS_TOKEN` **aranmaz**, Faz 2'ye
-  gec. Token yoksa da onay maili gonderilebilir.
-- Yayin yapilacaksa -> asagidaki saglik kontrolu zorunlu.
-
-```powershell
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --kontrol
-```
-
-- `durum: hata` -> **DUR.** Hata mailini at (asagidaki sablon), state'e dokunma, cik.
-- Token/`IG_USER_ID` eksik hatasi -> bu calisma yayin yapamaz. `bekleyen`'e DOKUNMA
-  (onay gecerli kalsin), durumu anlatan bir mail at ve cik. Bir sonraki webhook
-  tetiklemesi token'i tasiyorsa yayin oradan devam eder.
-
-Token omru (yalnizca token varsa):
-
-```powershell
-python .claude\skills\insta-yayinla\scripts\ig_token.py --kontrol
-```
-
-- `yenileme_gerekli: true` -> `ig_token.py --yenile` calistir.
-- `durum: yakinda_doluyor` veya `suresi_doldu` -> uyari maili at (gunde 1 kez yeter).
-- `durum: bilinmiyor` -> `ig_token.py --kaydet` calistir, devam et.
-
-**Yarida kalmis yayin kontrolu.** `otomasyon/durum.json` icinde `yayin_denemesi`
-dolu ise, bir onceki calisma yayin sirasinda kesilmis demektir:
-
-```powershell
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --dogrula <slug>
-```
-
-- `aslinda_yayinlanmis` -> post gercekten atilmis, script deftere isledi. Faz 4'e gec.
-- `yayinlanmamis` -> isaret duruyor, Faz 3'ten yayina devam edilebilir.
-- **Bu adimi atlayip dogrudan yayinlama.** Ayni postun ikinci kez atilmasini engelleyen
-  tek kontrol budur.
+Gerekli ortam degiskenleri: `FURI_SAAS_URL`, `FURI_API_KEY`, `FURI_CLIENT_ID`
+(oneri icin) ve `IG_ACCESS_TOKEN`, `IG_USER_ID` (esitleme icin). Eksikse
+script'ler anlasilir hatayla durur — hata mailini at ve cik.
 
 ---
 
-## Faz 1 — Bekleyen onay var mi?
+## Faz 1 — Defteri esitle
 
-`otomasyon/durum.json` > `bekleyen` bos ise Faz 2'ye gec.
+Her calisma buradan baslar. Instagram tek dogruluk kaynagidir.
 
-Dolu ise thread'i bul:
+```bash
+python .claude/skills/insta-yayinla/scripts/esitle.py
+```
 
-1. Gmail **search_threads** aracı
-   query: `subject:"<bekleyen.mail_konu>" newer_than:3d`
-   (`bekleyen.mail_thread_id` kayitliysa dogrudan onu kullan.)
-2. Gmail **get_thread** aracı
-   threadId: bulunan id, messageFormat: `PLAIN_TEXT`
+Script iki yonlu calisir ve gerekli state guncellemelerini kendi yapar:
 
-**Yanit ayristirma — dikkatli yap:**
-
-- Sadece `date` degeri `bekleyen.gonderim_zamani`'ndan **sonra** olan mesajlara bak.
-- Gonderdigin orijinal maili yanit sanma.
-- Govdede alinti bolumu (`On ... wrote:` satiri veya `>` ile baslayan satirlar)
-  baslamadan onceki kismi al.
-- O kismin ilk bos olmayan satirini buyuk/kucuk harf duyarsiz degerlendir:
-
-| Yanit | Karar |
+| Durum | Ne olur |
 |---|---|
-| `EVET`, `OK`, `TAMAM`, `YAYINLA`, `ONAY` | **onaylandi** -> Faz 3 |
-| `HAYIR`, `YOK`, `ATLA`, `IPTAL`, `GECE` | **reddedildi** |
-| Bunlarin disinda bir sey | **belirsiz** -> onay SAYMA, bekleyen kalsin, cik |
+| Instagram'da var, defterde yok | Deftere eklenir — SaaS yayinlamis demektir |
+| Defterde var, Instagram'da yok | Defterden dusurulur, icerik tekrar aday olur |
+| `bekleyen` post yayinlanmis | `bekleyen` kapanir, gunluk sayac artar |
 
-**Onaylandi** -> Faz 3.
-
-**Reddedildi** -> `durum.json` icinde:
-- `atlananlar` listesine `{slug, tarih, sebep: "mailde HAYIR"}` ekle
-- `bekleyen` -> `null`
-
-Sonra Faz 2'ye gec (ayni calismada yeni bir aday onerilebilir).
-
-**Yanit yok:**
-- `son_gecerlilik` gecmemisse -> hicbir sey yapma, **cik**. State'e dokunma.
-- `son_gecerlilik` gecmisse -> asagidaki "suresi dolma" kuralini uygula, sonra
-  **Faz 2'ye gec** (ayni calismada yeni aday onerilir).
-
-### Suresi dolan onay — post CÖPE ATILMAZ
-
-Sen uyuyorsan, toplantidaysan ya da o gun bakamadiysan bu postun kalici olarak
-elenmesi icin bir sebep yok. Suresi dolmak "bu post kotu" demek degil, "bu sefer
-denk gelmedi" demek.
-
-- `bekleyen` -> `null`
-- `durum.json` > `sure_dolanlar` sozlugunde bu slug'in sayacini bir artir
-  (`{"dizi/long-story-short": 1}`; alan yoksa olustur)
-- Sayac **3'e ulastiysa** -> `atlananlar`'a `sebep: "3 kez onay suresi doldu"` ile
-  ekle. Ucuncu kez de bakilmadiysa artik gercekten istenmiyor demektir.
-- Sayac 3'ten kucukse -> post havuzda kalir, sirasi tekrar geldiginde yeniden
-  onerilir.
-- Post basariyla yayinlandiginda o slug'in sayaci silinir.
-
-Bilgi maili atmaya gerek yok; zaten ayni calismada yeni bir onay maili gidecek.
+`durum: esit` ise fark yok, Faz 2'ye gec.
 
 ---
 
-## Faz 2 — Yeni aday oner
+## Faz 2 — Siradakini siraya koy
 
 Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 
 - `bugun.yayinlanan >= 2` (gunluk kota dolu)
 - `son_yayin` uzerinden 4 saatten az gecmis (iki post ayni saate yigilmasin)
-- `bekleyen` hala dolu (Faz 1'de temizlenmemis)
+- `bekleyen` dolu **ve** `son_gecerlilik` gecmemis (onay bekliyor, karistirma)
 
-Adayi sec:
+**`bekleyen` dolu ve suresi gecmisse** — post cope atilmaz:
 
-```powershell
-python .claude\skills\insta-yayinla\scripts\aday_sec.py
+- `bekleyen` -> `null`
+- `durum.json` > `sure_dolanlar` sozlugunde bu slug'in sayacini bir artir
+- Sayac **3'e ulastiysa** -> `atlananlar`'a `sebep: "3 kez onay suresi doldu"`
+  ile ekle. Ucuncu kez de bakilmadiysa artik gercekten istenmiyor demektir.
+- Sayac 3'ten kucukse post havuzda kalir, sirasi gelince tekrar onerilir.
+
+Sonra gonder:
+
+```bash
+python .claude/skills/insta-yayinla/scripts/saas_gonder.py
 ```
 
-Cikti `durum: aday_yok` ise: "post stogu bitti" maili at (gunde 1 kez), Faz 4'e gec.
+Script kategori rotasyonunu uygular, gorselleri ve caption'i dogrular, SaaS'a
+post olusturur ve `durum.json > bekleyen` alanini kendisi yazar. **Onay mailini
+SaaS gonderir** — bu skill mail yazmaz.
 
-Cikti `durum: secildi` ise onay mailini gonder — Gmail **send_message** araci:
-
-- **to:** `["eneshan034@gmail.com"]`
-- **subject:** `[FURI-ONAY] <slug> - <GG.AA.YYYY SS:DD>`
-- **htmlBody:** asagidaki sablon — **bu alan zorunlu, atlanamaz**
-- **body:** ayni icerigin duz metin hali (gorseller yerine URL listesi)
-
-> **`htmlBody` olmadan mail gondermeyin** ve icinde **slayt sayisi kadar `<img>`**
-> olsun. Bu mailin tek isi postu sana GOSTERMEK; gorsel yoksa goremeden onaylamak
-> zorunda kalirsin ve onay adiminin butun anlami kaybolur.
->
-> Mail gonderdikten SONRA kendi urettigin `htmlBody` metnini kontrol et: icinde
-> `<img` gecen satir sayisi postun slayt sayisina esit mi? Degilse maili duzeltilmis
-> haliyle tekrar gonder.
-
-```html
-<div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;
-            color:#0E2038;line-height:1.55">
-  <p style="margin:0 0 4px;font-size:13px;color:#6B7280">
-    <b style="color:#EF4A18">FURI</b> &middot; yayin onayi
-  </p>
-  <h2 style="margin:0 0 2px;font-size:19px">{slug}</h2>
-  <p style="margin:0 0 18px;font-size:13px;color:#6B7280">
-    {kategori} &middot; {slayt} slayt &middot; kalan aday: {kalan_aday}
-  </p>
-
-  <!-- AŞAĞIDAKİ img SATIRI ZORUNLU. aday_sec.py ciktisindaki HER gorsel icin
-       bir tane uret: 1 slaytlik postta 1 tane, 8 slaytlik postta 8 tane.
-       {url} = gorseller[i].url, {alt_text} = gorseller[i].alt_text.
-       Bu satirlari atlarsan mail ise yaramaz. -->
-  <img src="{url}" alt="{alt_text}" width="260"
-       style="display:block;width:260px;max-width:100%;border-radius:8px;
-              margin:0 0 10px;border:1px solid #E5E0CF">
-
-  <h3 style="margin:22px 0 6px;font-size:14px">Caption</h3>
-  <div style="white-space:pre-wrap;font-size:14px;background:#FAF6E9;
-              padding:14px 16px;border-radius:8px">{caption}</div>
-
-  <div style="margin:22px 0 0;padding:14px 16px;background:#FAF6E9;
-              border-left:3px solid #EF4A18;border-radius:4px;font-size:14px">
-    <b>Bu maili yanitla:</b><br>
-    <b>EVET</b> &rarr; Instagram'a yuklenir<br>
-    <b>HAYIR</b> &rarr; atlanir, sirada bir sonraki post secilir
-  </div>
-  <p style="margin:12px 0 0;font-size:12px;color:#6B7280">
-    {son_gecerlilik} tarihine kadar yanit gelmezse iptal olur.
-  </p>
-</div>
-```
-
-Gonderdikten hemen sonra thread id'yi yakala: `search_threads` ile
-`subject:"<gonderdigin konu>"` ara, donen `id`'yi kaydet.
-
-`durum.json` > `bekleyen` yaz:
-
-```json
-{
-  "slug": "<slug>",
-  "kategori": "<kategori>",
-  "slayt": <n>,
-  "mail_konu": "<gonderilen konu, birebir>",
-  "mail_thread_id": "<bulunduysa>",
-  "gonderim_zamani": "<simdi, ISO+03:00>",
-  "son_gecerlilik": "<simdi + 6 saat, ISO+03:00>"
-}
-```
-
-`aday_sec.py` ciktisinda `stok_dusuk: true` ise Faz 5'i de calistir. Faz 4'e gec.
+| Cikti `durum` | Ne yapilir |
+|---|---|
+| `gonderildi` | Faz 4'e gec |
+| `aday_yok` | Stok bitmis. Faz 5, sonra Faz 4 |
+| `hata` | State'e dokunulmadi. Hata mailini `yanit` alaniyla at, Faz 4, cik |
 
 ---
 
-## Faz 3 — Yayinla
+## Faz 3 — (yok)
 
-Sirayi bozma. Isaret **once** yazilir ve **push edilir**; boylece calisma yayin
-sirasinda kesilse bile bir sonraki calisma ne oldugunu anlayabilir.
-
-```powershell
-# 1) isaretle
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --isaretle <slug>
-
-# 2) isareti PUSH et  (bu adim atlanamaz)
-git add otomasyon/durum.json
-git commit -m "Yayin denemesi isareti: <slug>"
-git push
-
-# 3) yayinla
-python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --slug <slug>
-```
-
-Ciktiya gore:
-
-| `durum` | Ne yapilir |
-|---|---|
-| `yayinlandi` | Script defteri ve sayaci zaten guncelledi. Sonuc mailini at, Faz 4. |
-| `zaten_yayinlandi` | Post daha once atilmis. Tekrar deneme. Bilgi maili at, Faz 4. |
-| `hata` | State'e dokunma. Hata mailini `mesaj` + `ayrinti` ile at, Faz 4, **cik**. |
-| `isaret_yok` | 1. adim atlanmis. Basa don. |
-
-Yayin basariliysa **sonuc maili** at:
-
-- subject: `[FURI-YAYIN] <slug> yayinlandi`
-- govde: permalink, kategori, slayt sayisi, `bugun.yayinlanan` / 2, kalan aday sayisi
-
-Hata durumunda **hata maili**:
-
-- subject: `[FURI-HATA] <slug> yayinlanamadi`
-- govde: script ciktisindaki `mesaj` ve `ayrinti` **oldugu gibi** (Meta'nin hata kodu
-  teshis icin gerekli), ne yapildigi, ne yapilmadigi, `yayin_denemesi` isaretinin
-  durdugu ve bir sonraki calismanin `--dogrula` ile kontrol edecegi
+Yayin adimi bu skill'den kaldirildi. SaaS onay istegi icinde yayinliyor.
 
 ---
 
 ## Faz 4 — Kapanis (her cikista, istisnasiz)
 
-```powershell
+```bash
 git add otomasyon/durum.json otomasyon/yayinlananlar.json
-git commit -m "<yapilan is: aday onerildi / yayinlandi / atlandi / kota dolu>"
-git push
+git commit -m "<yapilan is: esitlendi / siraya kondu / kota dolu>"
+git push origin main
 ```
 
 Degisiklik yoksa commit atma, sorun degil. Baska hicbir dosyayi `git add` etme.
 
-Push basarisiz olursa: bu ciddidir — bir sonraki calisma eski state'i gorur ve ayni
-postu tekrar onerebilir. Push hatasini **hata maili ile bildir**.
+Push basarisiz olursa bu ciddidir — bir sonraki calisma eski state'i gorur ve
+ayni postu tekrar siraya koyabilir. Push hatasini **hata maili ile bildir**.
 
 ---
 
@@ -336,9 +163,13 @@ postu tekrar onerebilir. Push hatasini **hata maili ile bildir**.
 `son_stok_uyarisi` bugun degilse:
 
 - subject: `[FURI-STOK] N post kaldi`
-- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 2), `insta-ingilizce`
-  ile yeni post uretilmesi gerektigi
+- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 2), yeni post
+  uretilmesi gerektigi
 - sonra `son_stok_uyarisi` = bugunun tarihi, Faz 4'te commit et
+
+> Gmail arac adlari ortama gore degisir: yerelde `mcp__claude_ai_Gmail__*`,
+> bulut rutininde `mcp__Gmail__*`. Arac adini varsayma; `ToolSearch` ile
+> `gmail send_message` diye ara.
 
 ---
 
@@ -346,94 +177,77 @@ postu tekrar onerebilir. Push hatasini **hata maili ile bildir**.
 
 Tum komutlar repo kokunden calistirilir.
 
-| Komut | Ne yapar | API'ye yazar mi |
+| Komut | Ne yapar | Disariya yazar mi |
 |---|---|---|
-| `aday_sec.py` | Siradaki adayi secer, JSON basar | hayir |
-| `aday_sec.py --dry-run` | Ayni + okunakli ozet | hayir |
+| `esitle.py` | Defteri Instagram ile esitler | sadece yerel dosya |
+| `esitle.py --kuru` | Farki raporlar, dosyaya dokunmaz | hayir |
+| `saas_gonder.py` | Siradakini secip SaaS'a gonderir | **SaaS'a post olusturur** |
+| `saas_gonder.py --kuru` | Ne gonderilecegini basar | hayir |
+| `saas_gonder.py --slug K/S` | Belirli postu gonderir (rotasyonu atlar) | **evet** |
 | `aday_sec.py --durum` | Havuz istatistigi, stok durumu | hayir |
-| `aday_sec.py --slug K/S` | Belirli postun verisi | hayir |
-| `ig_yayinla.py --kontrol` | Hesap + yayin limiti + token saglik testi | hayir (okur) |
-| `ig_yayinla.py --onizle K/S` | Yayin hazirligini test eder | hayir |
-| `ig_yayinla.py --isaretle K/S` | Yayin oncesi isareti yazar | hayir |
-| `ig_yayinla.py --slug K/S` | **YAYINLAR** | **EVET** |
-| `ig_yayinla.py --dogrula K/S` | Yarida kalan deneme gercekten atilmis mi | hayir (okur) |
-| `ig_yayinla.py --tek-slayt K/S` | Sadece 1.jpg yayinlar, kayit tutmaz (en-boy testi) | **EVET** |
-| `ig_yayinla.py --temizle-isaret` | Isareti siler | hayir |
-| `ig_token.py --kontrol` | Token kac gun gecerli | hayir |
-| `ig_token.py --yenile` | Gerekiyorsa token yeniler | hayir |
-| `ig_token.py --kaydet` | 60 gunluk sayaci baslatir (kurulumda 1 kez) | hayir |
+| `aday_sec.py --dry-run` | Siradaki adayin okunakli ozeti | hayir |
 
-Cikis kodlari: `0` basarili · `1` hata · `2` yapilacak is yok (zaten yayinlanmis) ·
-`3` dikkat gerekiyor.
+**Elle teshis / kurtarma** (normal akista kullanilmaz):
+
+| Komut | Ne zaman |
+|---|---|
+| `ig_yayinla.py --kontrol` | Instagram token'i saglam mi |
+| `ig_yayinla.py --dogrula K/S` | Yarida kalmis bir yayin gercekten atilmis mi |
+| `ig_yayinla.py --slug K/S` | SaaS calismiyorken elle yayin (son care) |
+| `ig_token.py --kontrol` | Token kac gun gecerli |
 
 ---
 
-## Aday secimi nasil calisir
+## Aday secimi
 
-**Kategori rotasyonu.** En uzun suredir yayinlanmamis kategori once gelir; o kategori
-icinde repoya en once eklenmis post secilir. Boylece arka arkaya iki phrasal ya da iki
-seviye testi cikmaz.
+**Kategori rotasyonu.** En uzun suredir yayinlanmamis kategori once gelir; o
+kategori icinde repoya en once eklenmis post secilir. Boylece arka arkaya iki
+phrasal ya da iki seviye testi cikmaz.
 
-Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar` icinde,
-`bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla slayt, 2200'den
-uzun caption, 30'dan fazla hashtag, erisilemeyen gorsel URL'i).
+Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar`
+icinde, `bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla
+slayt, 2200'den uzun caption, 30'dan fazla hashtag, erisilemeyen gorsel URL'i).
 
-Gorseller `raw.githubusercontent.com` uzerinden servis edilir — Instagram API'si public
-URL istiyor, repo public oldugu icin ek bir barindirma gerekmiyor. **Bu yuzden bir post
-push edilmeden yayinlanamaz**; `aday_sec.py` her URL'i HEAD ile kontrol eder ve
-erisilemeyeni eler.
+Gorseller `raw.githubusercontent.com` uzerinden servis edilir — Instagram public
+URL istiyor, repo public oldugu icin ek barindirma gerekmiyor. **Bu yuzden bir
+post push edilmeden siraya konamaz**; `saas_gonder.py` her URL'i HEAD ile
+kontrol eder ve erisilemeyeni eler.
 
 ---
 
 ## Sorun giderme
 
-**`isaret_yok`** — `--isaretle` calistirilmadan `--slug` denendi. Sira: isaretle, push,
-yayinla.
+**`aday_yok`** — yayinlanmamis post kalmadi. `insta-ingilizce` ile yeni post
+uret, push et.
 
-**`yayin_denemesi` dolu kalmis** — bir calisma yayin sirasinda kesilmis.
-`--dogrula <slug>` calistir. Instagram'da varsa script deftere isler; yoksa yayin
-tekrar denenebilir. **Elle `--temizle-isaret` calistirmadan once mutlaka `--dogrula`.**
+**SaaS 401** — `FURI_API_KEY` yanlis ya da sonunda satir sonu var. Deploy
+sirasinda bir kez bu yasandi: `vercel env add`'e degeri pipe ile vermek sonuna
+`\n` ekliyor.
 
-**`Media ID is not available` / container hatasi** — Instagram gorseli cekemedi.
-Genelde URL sorunu: repo push edilmemis, dosya adi degismis, ya da branch farkli.
-`aday_sec.py --slug K/S` ile URL'lerin 200 dondugunu dogrula.
+**SaaS 403** — `FURI_CLIENT_ID` baska bir ajansa ait. IDOR korumasi calisiyor.
 
-**Gorsel reddedildi / kirpildi** — gorseller 1920x2400 (4:5). Meta dokumani azami
-genislik olarak 1440 piksel veriyor ve Instagram genelde kendi kucultuyor. Sorun
-cikarsa gorselleri 1080x1350'ye kucultup `otomasyon/pub/<kategori>/<slug>/` altina
-yazan bir adim eklenmeli ve `IG_RAW_BASE` oraya yonlendirilmeli.
+**`Gorsel URL'leri metin olmali`** — `imageUrls` duz string dizisi olmali,
+nesne sekli reddediliyor.
 
-**Token suresi doldu** — `ig_token.py --yenile` 24 saatten eski token'lari yeniler.
-Token tamamen olduyse yenileme calismaz; `KURULUM.md` ile yeni token uret.
+**Onayladim ama post cikmadi** — SaaS tarafina bak: musterinin
+`instagramUserId` alani dolu mu (bossa `publishStatus='skipped'` olur, sessizce
+yayinlanmaz), `publishStatus` ne durumda. **Toplu onay (`/batch`) su an yayin
+yapmiyor** — bilinen bosluk, tek tek onayla.
 
-**Mail yaniti okunamiyor** — `get_thread`'i `PLAIN_TEXT` ile cagir. Alinti bolumunu
-(`On ... wrote:` / `>` satirlari) ayikladigindan ve sadece gonderim zamanindan sonraki
-mesajlara baktigindan emin ol.
+**Defter ile Instagram ayrismis** — `esitle.py` iki yonlu duzeltir. Silinen bir
+post defterden dusurulup tekrar aday olur.
 
-**Bulutta Gmail'e erisilemiyor** — routine ortaminda Gmail baglantisi yoksa akis
-calismaz. Bu durumda zamanlayiciyi yerel makineye tasi:
-`schtasks /create /tn "furi-insta" /tr "claude -p /insta-yayinla" /sc hourly`
-Skill'de degisiklik gerekmez, iki ortamda da ayni calisir.
-
-**"EVET" yazdim ama post cikmadi** — zincir su sirayla kontrol edilir:
-1. Apps Script calisti mi? script.google.com > **Yurutme** panelinde son calismalar.
-2. GitHub'a yorum dustu mu? [issue #1](https://github.com/enesmemduhoglu/furi/issues/1)
-3. Rutin tetiklendi mi? [rutin sayfasi](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)
-   — rutin **enabled** mi, orayi da dogrula.
-4. Rutin calisti ama yayinlamadiysa: kota dolmus (gunde 2), son yayindan 4 saat
-   gecmemis, ya da yanit "EVET" olarak ayristirilamamis olabilir.
-
-**Ayni onay iki kez tetiklendi** — sorun degil. Ikinci calisma postu defterde bulur ve
-`zaten_yayinlandi` deyip cikar. Cift yayin olmaz.
+**Token suresi doluyor** — Instagram token'i 2026-10-15'te oluyor. SaaS
+panelinde uyari yok; o tarihte sessizce durur. `ig_token.py --yenile` yeniler,
+sonra yeni token SaaS'taki `Client.instagramAccessToken` alanina da yazilmali.
 
 ---
 
 ## Ilgili dosyalar
 
 - `otomasyon/README.md` — durum dosyalarinin semasi, elle mudahale
-- `KURULUM.md` — Meta app + Instagram token kurulumu (tek seferlik)
-- `apps-script/KURULUM-APPS-SCRIPT.md` — anlik onay tetikleyicisi kurulumu
-- `apps-script/onay-tetikleyici.gs` — Gmail'i izleyip rutini tetikleyen script
+- `SAAS-ENTEGRASYON-PLANI.md` — mimarinin neden boyle oldugu, SaaS tarafi
+- `KURULUM.md` — Instagram token'i uretimi (tek seferlik)
 - `WORKFLOW.md` — post uretim akisi (`insta-ingilizce` skill'i)
 
 ## Kunye
@@ -442,6 +256,6 @@ Skill'de degisiklik gerekmez, iki ortamda da ayni calisir.
 |---|---|
 | Rutin | `trig_01TtprvNfdZd5DDEfR8uDCRj` ([panel](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)) |
 | Cron | `7 5,12 * * *` UTC = 08:07 / 15:07 Istanbul |
-| Webhook | GitHub `issue_comment` — scope `enesmemduhoglu/furi` |
-| Tetikleyici issue | [#1](https://github.com/enesmemduhoglu/furi/issues/1) — kapatilmamali |
+| SaaS | https://content-approval-saas.vercel.app |
 | Instagram hesabi | `furkanteacherteaching` (`17841441566401393`) |
+| Onay -> yayin | ~11 saniye (production'da olculdu) |

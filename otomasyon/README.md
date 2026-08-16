@@ -15,9 +15,17 @@ state'in hayatta kalmasinin tek yolu bu.
 
 ### `yayinlananlar.json` — yayin defteri
 
-Instagram'a **gercekten yuklenmis** postlarin kalici kaydi. "Bu post daha once atildi mi?"
-sorusunun tek dogruluk kaynagi. Buradan bir kayit silmek, o postun tekrar yayinlanabilir
-hale gelmesi demektir.
+Instagram'a **gercekten yuklenmis** postlarin kaydi. "Bu post daha once atildi mi?"
+sorusunun cevabi burada.
+
+Yayini artik bu repo yapmiyor — `content-approval-saas` onay geldigi anda yayinliyor,
+yani defter yayin anini goremiyor. Bu yuzden defter **turetilmis** bir kayit: her
+calismanin basinda `esitle.py` Instagram'a bakip guncelliyor. Asil dogruluk kaynagi
+Instagram hesabinin kendisi.
+
+Elle bir kayit silersen `esitle.py` bir sonraki calismada geri ekler (post hala
+Instagram'da duruyorsa). Bir postu gercekten havuza dondurmek istiyorsan once
+Instagram'dan sil.
 
 ```json
 {
@@ -39,22 +47,24 @@ hale gelmesi demektir.
 
 | Alan | Anlami |
 |---|---|
-| `bekleyen` | Onay maili gonderilmis ama henuz yanit gelmemis post. Bosta iken `null`. |
-| `yayin_denemesi` | `media_publish` cagrisindan hemen once yazilir, basarili olunca silinir. Dolu kalmissa bir onceki calisma yayin sirasinda kesilmis demektir — bir sonraki calisma once Instagram'a sorup gercekten atilip atilmadigini kontrol eder. **Cift yayini engelleyen mekanizma budur, elle silinmemeli.** |
+| `bekleyen` | SaaS'a gonderilmis, onay bekleyen post. `saas_post_id` ve `onay_url` icerir. Bosta iken `null`. Post yayinlaninca `esitle.py` kapatir. |
+| `yayin_denemesi` | **Artik kullanilmiyor.** Yayin bu repodan yapilirken cift yayini engelliyordu; o is SaaS'a gecti ve orada veritabani seviyesinde kosullu UPDATE ile cozuluyor. Alan geriye donuk uyumluluk icin duruyor, `null` kalmali. Sadece `ig_yayinla.py --slug` ile elle yayin yapilirsa dolar. |
 | `son_yayin` | Son basarili yayinin zamani. Iki postun ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
 | `bugun` | Takvim gunu basina yayin sayaci. Tarih degisince sifirlanir. |
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
 | `sure_dolanlar` | Onay maili yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
-| `atlananlar` | Onay mailine "HAYIR" yaniti verilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
+| `atlananlar` | Onay sayfasinda reddedilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
 
 ## Elle mudahale
 
-**Bir postu tekrar yayinlanabilir yapmak** — `yayinlananlar.json` icindeki kaydi sil.
+**Bir postu tekrar yayinlanabilir yapmak** — Instagram'dan sil, sonra `esitle.py`
+calistir. Defterden kaydi kendisi dusurur ve post havuza doner. *Sadece defterden
+silmek yetmez: post hala Instagram'da duruyorsa `esitle.py` kaydi geri ekler.*
 
 **Atlanmis bir postu geri almak** — `durum.json` > `atlananlar` icindeki kaydi sil.
 
 **Bekleyen onayi iptal etmek** — `durum.json` > `bekleyen` degerini `null` yap.
+SaaS tarafindaki post kaydi durmaya devam eder; istersen orada da sil.
 
-**Kilitlenmis bir yayin denemesini temizlemek** — once Instagram'da postun gercekten atilip
-atilmadigina **bak**, sonra `yayin_denemesi` degerini `null` yap. Atilmissa ayrica
-`yayinlananlar.json`'a elle kayit ekle, yoksa post ikinci kez atilir.
+**Defter ile Instagram ayristiginda** — `esitle.py --kuru` ile once farki gor,
+sonra `esitle.py` ile uygula. Iki yonlu calisir.
