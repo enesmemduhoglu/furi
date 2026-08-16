@@ -72,6 +72,10 @@ Bu kurallar canli bir hesaba yaziyor. Hicbiri "duruma gore" degil.
 
 ---
 
+> **Gmail arac adlari ortama gore degisir.** Yerelde `mcp__claude_ai_Gmail__*`,
+> bulut rutininde `mcp__Gmail__*` olarak gorunur. Arac adini varsayma; gerekirse
+> `ToolSearch` ile `gmail send_message` / `gmail get_thread` diye ara.
+
 ## Faz 0 — Ortam
 
 ```powershell
@@ -81,17 +85,24 @@ git pull --ff-only
 
 Bulut calismasinda repo zaten taze klonlanmis olur; `git pull` hata verirse gec.
 
-Sonra saglik kontrolu:
+**Instagram kimlik bilgisi ne zaman gerekli?** Sadece **yayin** yapan calismalarda.
+Aday secme ve onay maili gonderme Instagram API'sine hic dokunmaz (`aday_sec.py`
+yalnizca dosya sistemi + raw URL kontrolu yapar). Bu yuzden:
+
+- `bekleyen` bos ve yeni aday onerecekseniz -> `IG_ACCESS_TOKEN` **aranmaz**, Faz 2'ye
+  gec. Token yoksa da onay maili gonderilebilir.
+- Yayin yapilacaksa -> asagidaki saglik kontrolu zorunlu.
 
 ```powershell
 python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --kontrol
 ```
 
 - `durum: hata` -> **DUR.** Hata mailini at (asagidaki sablon), state'e dokunma, cik.
-- Token/`IG_USER_ID` eksik hatasi -> kurulum yapilmamis. `KURULUM.md`'yi isaret eden
-  bir mail at ve cik.
+- Token/`IG_USER_ID` eksik hatasi -> bu calisma yayin yapamaz. `bekleyen`'e DOKUNMA
+  (onay gecerli kalsin), durumu anlatan bir mail at ve cik. Bir sonraki webhook
+  tetiklemesi token'i tasiyorsa yayin oradan devam eder.
 
-Token omru:
+Token omru (yalnizca token varsa):
 
 ```powershell
 python .claude\skills\insta-yayinla\scripts\ig_token.py --kontrol
@@ -121,10 +132,10 @@ python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --dogrula <slug>
 
 Dolu ise thread'i bul:
 
-1. `mcp__claude_ai_Gmail__search_threads`
+1. Gmail **search_threads** aracı
    query: `subject:"<bekleyen.mail_konu>" newer_than:3d`
    (`bekleyen.mail_thread_id` kayitliysa dogrudan onu kullan.)
-2. `mcp__claude_ai_Gmail__get_thread`
+2. Gmail **get_thread** aracı
    threadId: bulunan id, messageFormat: `PLAIN_TEXT`
 
 **Yanit ayristirma — dikkatli yap:**
@@ -173,7 +184,7 @@ python .claude\skills\insta-yayinla\scripts\aday_sec.py
 
 Cikti `durum: aday_yok` ise: "post stogu bitti" maili at (gunde 1 kez), Faz 4'e gec.
 
-Cikti `durum: secildi` ise onay mailini gonder — `mcp__claude_ai_Gmail__send_message`:
+Cikti `durum: secildi` ise onay mailini gonder — Gmail **send_message** araci:
 
 - **to:** `["eneshan034@gmail.com"]`
 - **subject:** `[FURI-ONAY] <slug> - <GG.AA.YYYY SS:DD>`
