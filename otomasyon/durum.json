@@ -1,5 +1,13 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "dizi/long-story-short",
+    "kategori": "dizi",
+    "slayt": 1,
+    "mail_konu": "[FURI-ONAY] dizi/long-story-short - 16.08.2026 13:28",
+    "mail_thread_id": "1a00a1e2483a7a40",
+    "gonderim_zamani": "2026-08-16T13:28:33+03:00",
+    "son_gecerlilik": "2026-08-16T19:28:33+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": null,
   "bugun": {
