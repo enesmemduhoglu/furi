@@ -52,8 +52,9 @@ Instagram'dan sil.
 | `son_yayin` | Son basarili yayinin zamani. Iki postun ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
 | `bugun` | Takvim gunu basina yayin sayaci. Tarih degisince sifirlanir. |
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
-| `sure_dolanlar` | Onay maili yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
+| `sure_dolanlar` | SaaS onay linki yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
 | `atlananlar` | Onay sayfasinda reddedilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
+| `token` | Instagram token'inin yenileme/bitis tarihleri (`ig_token.py` yazar). Yayini SaaS yaptigi icin **bu kayit SaaS'taki kopyayi takip etmez** — token yenilenince SaaS'taki `Client.instagramAccessToken` da elle guncellenmeli. |
 
 ## Elle mudahale
 

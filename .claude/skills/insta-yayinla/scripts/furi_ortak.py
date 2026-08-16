@@ -191,6 +191,7 @@ def durum_oku(kok: Path) -> dict:
             "bugun": {"tarih": None, "yayinlanan": 0},
             "son_stok_uyarisi": None,
             "atlananlar": [],
+            "sure_dolanlar": {},
         },
     )
     veri.setdefault("bekleyen", None)
@@ -198,6 +199,9 @@ def durum_oku(kok: Path) -> dict:
     veri.setdefault("son_yayin", None)
     veri.setdefault("son_stok_uyarisi", None)
     veri.setdefault("atlananlar", [])
+    # SKILL.md Faz 2 bu sozluge yaziyor; varsayilani burada olmasa cagiran
+    # tarafin once var mi diye bakmasi gerekirdi.
+    veri.setdefault("sure_dolanlar", {})
     bugun = veri.setdefault("bugun", {"tarih": None, "yayinlanan": 0})
     bugun.setdefault("tarih", None)
     bugun.setdefault("yayinlanan", 0)
