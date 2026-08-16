@@ -76,9 +76,25 @@ git pull --ff-only origin main
 > calisma eski durumu gorur. Bu iki satiri atlamadan calistir; `git status`
 > ciktisinda `On branch main` gordugunden emin ol.
 
-Gerekli ortam degiskenleri: `FURI_SAAS_URL`, `FURI_API_KEY`, `FURI_CLIENT_ID`
-(oneri icin) ve `IG_ACCESS_TOKEN`, `IG_USER_ID` (esitleme icin). Eksikse
-script'ler anlasilir hatayla durur — hata mailini at ve cik.
+### Ortam degiskenleri
+
+| Degisken | Bulutta gerekli mi | Ne icin |
+|---|---|---|
+| `FURI_SAAS_URL` | **evet** | SaaS adresi (sir degil) |
+| `FURI_CLIENT_ID` | **evet** | Hangi musteri (opak id) |
+| `FURI_API_KEY` | **evet** | SaaS'a post olusturma yetkisi |
+| `IG_ACCESS_TOKEN` | hayir | Sadece tam esitleme icin; yoksa atlanir |
+| `IG_USER_ID` | hayir | Ayni |
+
+**Instagram token'i buluta konmaz.** O token hesaba dogrudan post atabiliyor ve
+bulut ortamlarinda secrets store yok — degerleri ortami kullanan herkes
+okuyabiliyor. `FURI_API_KEY` ise dar kapsamli: sadece kendi SaaS'inda kendi
+ajansin adina post olusturabiliyor, yayin yapamiyor, Instagram'a dokunamiyor.
+
+Token'siz calisan bulut oturumunda `esitle.py` Instagram karsilastirmasini
+atlar ve **defteri oldugu gibi birakir** — bekleyen postun akibetini zaten
+SaaS'in public onay endpoint'inden kesin olarak ogreniyor. Tam esitleme
+(silinen postlarin yakalanmasi) token'in bulundugu yerel makinede yapilir.
 
 ---
 

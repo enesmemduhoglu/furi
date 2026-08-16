@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -36,7 +37,7 @@ from furi_ortak import (
     defter_yaz,
     durum_oku,
     durum_yaz,
-    gerekli_ortam,
+    ortam_yukle,
     gunluk_sayaci_tazele,
     iso,
     iso_oku,
@@ -90,17 +91,30 @@ def main() -> int:
     args = a.parse_args()
 
     kok = repo_kok(args.repo)
-    ortam = gerekli_ortam(kok, "IG_ACCESS_TOKEN", "IG_USER_ID")
+    ortam_yukle(kok)
+    ig_token = os.environ.get("IG_ACCESS_TOKEN")
+    ig_id = os.environ.get("IG_USER_ID")
 
-    try:
-        medyalar = ig_api.get(
-            f"{ortam['IG_USER_ID']}/media",
-            {"fields": "id,permalink,timestamp,media_type,caption", "limit": "50"},
-            ortam["IG_ACCESS_TOKEN"],
-        )["data"]
-    except ig_api.IGHatasi as hata:
-        json_bas({"durum": "hata", "mesaj": hata.rapor(), "ayrinti": hata.ayrinti})
-        return 1
+    # Instagram karsilastirmasi OPSIYONEL: bir emniyet agi, ana mekanizma degil.
+    # Bekleyen postun akibetini SaaS'in public onay endpoint'i kesin olarak
+    # soyluyor ve o kimlik bilgisi istemiyor. Boylece Instagram token'i bulut
+    # ortamina hic girmek zorunda kalmiyor — o token hesaba post atabiliyor,
+    # bulutta secrets store da yok.
+    medyalar: list[dict] = []
+    ig_atlandi = None
+    if ig_token and ig_id:
+        try:
+            medyalar = ig_api.get(
+                f"{ig_id}/media",
+                {"fields": "id,permalink,timestamp,media_type,caption", "limit": "50"},
+                ig_token,
+            )["data"]
+        except ig_api.IGHatasi as hata:
+            json_bas({"durum": "hata", "mesaj": hata.rapor(), "ayrinti": hata.ayrinti})
+            return 1
+    else:
+        ig_atlandi = ("IG_ACCESS_TOKEN/IG_USER_ID yok — Instagram karsilastirmasi "
+                      "atlandi, sadece SaaS durumu kontrol edildi.")
 
     # repo caption izi -> post
     repo = {}
@@ -132,12 +146,17 @@ def main() -> int:
         eklenen.append(kayit)
 
     # 2) Defterde var, Instagram'da yok -> dusur
-    kalan = []
-    for kayit in defter["kayitlar"]:
-        if _kod(kayit.get("permalink", "")) in canli_kodlar:
-            kalan.append(kayit)
-        else:
-            dusen.append(kayit)
+    #    Instagram sorgulanmadiysa BU ADIM ATLANIR. Yoksa canli_kodlar bos olur
+    #    ve defterdeki her kayit "silinmis" sayilip topluca dusurulur.
+    if ig_atlandi:
+        kalan = list(defter["kayitlar"])
+    else:
+        kalan = []
+        for kayit in defter["kayitlar"]:
+            if _kod(kayit.get("permalink", "")) in canli_kodlar:
+                kalan.append(kayit)
+            else:
+                dusen.append(kayit)
 
     # 3) Bekleyen postun SaaS'taki gercek durumu — caption eslestirmesinden once
     #    gelir cunku kesin bilgidir.
@@ -153,7 +172,9 @@ def main() -> int:
         if onay == "rejected":
             bekleyen_karari = {"sonuc": "reddedildi", "slug": bekleyen["slug"]}
         elif yayin == "published":
-            canli = _kod(link) in canli_kodlar
+            # Instagram sorgulanmadiysa "silinmis mi" bilinemez; yayinlanmis kabul
+            # edilir. Yanlissa bir sonraki tam esitleme kaydi dusurur.
+            canli = True if ig_atlandi else (_kod(link) in canli_kodlar)
             bekleyen_karari = {
                 "sonuc": "yayinlandi" if canli else "yayinlandi_sonra_silindi",
                 "slug": bekleyen["slug"],
@@ -189,6 +210,8 @@ def main() -> int:
     }
     if bekleyen_karari:
         rapor["bekleyen"] = bekleyen_karari
+    if ig_atlandi:
+        rapor["instagram"] = ig_atlandi
 
     yazilacak = fark or bool(bekleyen_karari)
     if yazilacak and not args.kuru:
