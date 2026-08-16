@@ -1,10 +1,18 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "durumsal/hold-the-onions",
+    "kategori": "durumsal",
+    "slayt": 1,
+    "saas_post_id": "cmswdhv260001l204twytex25",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/60975ee78b2b48c8859b31e7025a4e9d",
+    "gonderim_zamani": "2026-08-17T01:25:01+03:00",
+    "son_gecerlilik": "2026-08-18T01:25:01+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-08-16T20:03:36+03:00",
   "bugun": {
-    "tarih": "2026-08-16",
-    "yayinlanan": 1
+    "tarih": "2026-08-17",
+    "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
   "atlananlar": [],
