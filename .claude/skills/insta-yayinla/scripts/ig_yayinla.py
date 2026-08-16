@@ -389,6 +389,42 @@ def komut_yayinla(kok, args) -> int:
     return 0
 
 
+def komut_paket(kok, args) -> int:
+    """Apps Script'in yayin yapabilmesi icin hazir paket yazar.
+
+    Secim, rotasyon, caption ayristirma, dogrulama burada — Python'da, tek kopya.
+    Apps Script'e sadece "su URL'leri su caption ile yayinla" kaliyor.
+    """
+    post = _post_bul(kok, args.paket)
+    veri, sorunlar = veri_topla(kok, post, raw_taban(kok))
+    if sorunlar:
+        json_bas({"durum": "hata", "slug": veri["slug"], "sorunlar": sorunlar})
+        return 1
+
+    paket = {
+        "slug": veri["slug"],
+        "kategori": veri["kategori"],
+        "slayt": veri["slayt"],
+        "caption": veri["caption"],
+        "gorseller": [
+            {"no": g["no"], "url": g["url"], "alt_text": g["alt_text"]}
+            for g in veri["gorseller"]
+        ],
+        "hazirlanma": iso(simdi()),
+    }
+    yol = kok / "otomasyon" / "bekleyen-yayin.json"
+    yol.parent.mkdir(parents=True, exist_ok=True)
+    with yol.open("w", encoding="utf-8", newline="\n") as f:
+        import json as _json
+
+        _json.dump(paket, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+    json_bas({"durum": "paket_yazildi", "dosya": str(yol), "slug": veri["slug"],
+              "slayt": veri["slayt"]})
+    return 0
+
+
 def komut_temizle_isaret(kok, args) -> int:
     durum = durum_oku(kok)
     onceki = durum.get("yayin_denemesi")
@@ -408,6 +444,7 @@ def main() -> int:
     a.add_argument("--isaretle", metavar="SLUG", help="Yayin oncesi isaret yaz")
     a.add_argument("--slug", metavar="SLUG", help="YAYINLA (canli)")
     a.add_argument("--dogrula", metavar="SLUG", help="Yarida kalan deneme gercekten atilmis mi?")
+    a.add_argument("--paket", metavar="SLUG", help="Apps Script icin hazir yayin paketi yaz")
     a.add_argument("--temizle-isaret", action="store_true", help="Yayin denemesi isaretini sil")
     a.add_argument("--tek-slayt", action="store_true", help="--slug ile: sadece 1.jpg, kayit tutmaz")
     a.add_argument("--zorla", action="store_true", help="--slug ile: isaret sarti aranmasin")
