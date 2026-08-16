@@ -44,7 +44,8 @@ hale gelmesi demektir.
 | `son_yayin` | Son basarili yayinin zamani. Iki postun ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
 | `bugun` | Takvim gunu basina yayin sayaci. Tarih degisince sifirlanir. |
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
-| `atlananlar` | Onay mailine "HAYIR" yaniti verilen veya suresi dolan postlar. Bir daha aday olarak secilmezler. Tekrar sirayat girmesi icin buradan silmek yeterli. |
+| `sure_dolanlar` | Onay maili yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
+| `atlananlar` | Onay mailine "HAYIR" yaniti verilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
 
 ## Elle mudahale
 

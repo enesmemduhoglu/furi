@@ -78,12 +78,15 @@ Bu kurallar canli bir hesaba yaziyor. Hicbiri "duruma gore" degil.
 
 ## Faz 0 — Ortam
 
-```powershell
-cd "C:\Users\enesm\visual studio\furi1"
-git pull --ff-only
+```bash
+git checkout main 2>/dev/null || git checkout -B main origin/main
+git pull --ff-only origin main
 ```
 
-Bulut calismasinda repo zaten taze klonlanmis olur; `git pull` hata verirse gec.
+> **Bulut calismasi `detached HEAD` ile baslar.** Bu halde `git pull` de `git push` de
+> calismaz — yani Faz 4'te state'i kaydedemezsin ve bir sonraki calisma eski durumu
+> gorur. Yukaridaki iki satiri **atlamadan** calistir; `git status` ciktisinda
+> `On branch main` gordugunden emin ol.
 
 **Instagram kimlik bilgisi ne zaman gerekli?** Sadece **yayin** yapan calismalarda.
 Aday secme ve onay maili gonderme Instagram API'sine hic dokunmaz (`aday_sec.py`
@@ -162,9 +165,25 @@ Sonra Faz 2'ye gec (ayni calismada yeni bir aday onerilebilir).
 
 **Yanit yok:**
 - `son_gecerlilik` gecmemisse -> hicbir sey yapma, **cik**. State'e dokunma.
-- `son_gecerlilik` gecmisse -> `atlananlar`'a `sebep: "onay suresi doldu"` ile ekle,
-  `bekleyen` -> `null`, bilgi maili at, Faz 4'e gec ve **cik** (ayni calismada yeni
-  aday onerme; bir sonraki tetiklemede onerilir).
+- `son_gecerlilik` gecmisse -> asagidaki "suresi dolma" kuralini uygula, sonra
+  **Faz 2'ye gec** (ayni calismada yeni aday onerilir).
+
+### Suresi dolan onay — post CÖPE ATILMAZ
+
+Sen uyuyorsan, toplantidaysan ya da o gun bakamadiysan bu postun kalici olarak
+elenmesi icin bir sebep yok. Suresi dolmak "bu post kotu" demek degil, "bu sefer
+denk gelmedi" demek.
+
+- `bekleyen` -> `null`
+- `durum.json` > `sure_dolanlar` sozlugunde bu slug'in sayacini bir artir
+  (`{"dizi/long-story-short": 1}`; alan yoksa olustur)
+- Sayac **3'e ulastiysa** -> `atlananlar`'a `sebep: "3 kez onay suresi doldu"` ile
+  ekle. Ucuncu kez de bakilmadiysa artik gercekten istenmiyor demektir.
+- Sayac 3'ten kucukse -> post havuzda kalir, sirasi tekrar geldiginde yeniden
+  onerilir.
+- Post basariyla yayinlandiginda o slug'in sayaci silinir.
+
+Bilgi maili atmaya gerek yok; zaten ayni calismada yeni bir onay maili gidecek.
 
 ---
 
@@ -188,8 +207,13 @@ Cikti `durum: secildi` ise onay mailini gonder — Gmail **send_message** araci:
 
 - **to:** `["eneshan034@gmail.com"]`
 - **subject:** `[FURI-ONAY] <slug> - <GG.AA.YYYY SS:DD>`
-- **htmlBody:** asagidaki sablon
+- **htmlBody:** asagidaki sablon — **bu alan zorunlu, atlanamaz**
 - **body:** ayni icerigin duz metin hali (gorseller yerine URL listesi)
+
+> **`htmlBody` olmadan mail gondermeyin.** Sadece `body` gonderirsen slaytlar mailde
+> gorunmez, sadece URL listesi olur — o zaman postu goremeden onaylamak zorunda
+> kalirsin ve onay adiminin butun anlami kaybolur. Her slayt icin sablondaki `<img>`
+> satirindan bir tane uret.
 
 ```html
 <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;
