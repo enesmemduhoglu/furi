@@ -194,6 +194,10 @@ def main() -> int:
         "gonderim_zamani": iso(an),
         "son_gecerlilik": iso(an + timedelta(hours=ONAY_PENCERESI_SAAT)),
     }
+    # Kota ve minimum ara buna bakar: `bekleyen` onay verilince silindigi icin
+    # gonderim ani ayrica saklanmali.
+    durum["son_gonderim"] = iso(an)
+    durum["bugun"]["siraya_konan"] = int(durum["bugun"].get("siraya_konan", 0)) + 1
     durum_yaz(kok, durum)
 
     rapor = {

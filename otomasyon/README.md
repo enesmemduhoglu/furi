@@ -49,8 +49,9 @@ Instagram'dan sil.
 |---|---|
 | `bekleyen` | SaaS'a gonderilmis, onay bekleyen post. `saas_post_id` ve `onay_url` icerir. Bosta iken `null`. Post yayinlaninca `esitle.py` kapatir. |
 | `yayin_denemesi` | **Artik kullanilmiyor.** Yayin bu repodan yapilirken cift yayini engelliyordu; o is SaaS'a gecti ve orada veritabani seviyesinde kosullu UPDATE ile cozuluyor. Alan geriye donuk uyumluluk icin duruyor, `null` kalmali. Sadece `ig_yayinla.py --slug` ile elle yayin yapilirsa dolar. |
-| `son_yayin` | Son basarili yayinin zamani. Iki postun ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
-| `bugun` | Takvim gunu basina yayin sayaci. Tarih degisince sifirlanir. |
+| `son_yayin` | Son basarili yayinin **fark edildigi** an (gercek yayin ani degil — `esitle.py` bir sonraki calismada ogreniyor). Sadece bilgi; siraya koymayi engellemez. |
+| `son_gonderim` | Son postun SaaS'a gonderildigi an. Iki gonderimin ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
+| `bugun` | Takvim gunu sayaclari. `siraya_konan` gunluk kotayi belirler (max 2), `yayinlanan` sadece bilgi. Tarih degisince ikisi de sifirlanir. |
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
 | `sure_dolanlar` | SaaS onay linki yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
 | `atlananlar` | Onay sayfasinda reddedilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |

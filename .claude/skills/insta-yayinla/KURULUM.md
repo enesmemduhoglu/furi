@@ -228,8 +228,9 @@ Yerel zamanlayici da calisir, skill'de degisiklik gerekmez:
 schtasks /create /tn "furi-insta" /tr "claude -p /insta-yayinla" /sc hourly
 ```
 
-Saat basi tetiklemek sorun degil — gunluk kota (2) ve yayinlar arasi minimum
-sure (4 saat) skill'in icinde.
+Saat basi tetiklemek sorun degil — gunluk kota (gunde 2 gonderim) ve gonderimler
+arasi minimum sure (4 saat) skill'in icinde. Yani saat basi tetiklense bile
+gunde en fazla 2 post, en az 4 saat arayla siraya konur.
 
 ---
 

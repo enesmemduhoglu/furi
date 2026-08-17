@@ -53,7 +53,8 @@ Ayrinti: `SAAS-ENTEGRASYON-PLANI.md`
    **cagrilmaz**. O komut artik yalnizca elle teshis/kurtarma icin duruyor.
 2. **Ayni post iki kez siraya konmaz.** Defterde olan, `atlananlar`'da olan ve
    `bekleyen` olan sluglar aday havuzunun disinda.
-3. **Calisma basina en fazla 1 oneri, takvim gunu basina en fazla 2 yayin.**
+3. **Calisma basina en fazla 1 oneri, takvim gunu basina en fazla 2 gonderim.**
+   Kota siraya konani sayar (`bugun.siraya_konan`), yayinlanani degil.
 4. **Hata olursa state'e dokunma.** Hata mailini at, oldugun yerde dur.
 5. **Sadece `otomasyon/*.json` commit edilir.** Gorseller, `caption.md`, skill
    dosyalari bu akista asla degistirilmez. `--force` push yok.
@@ -113,8 +114,8 @@ uzerinden, token yeterli, oturum gerekmiyor):
 
 | SaaS ne diyor | Ne olur |
 |---|---|
-| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, gunluk sayac artar |
-| `published` ama Instagram'da yok | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir ve kota sayilir |
+| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, `bugun.yayinlanan` artar (bilgi sayaci) |
+| `published` ama Instagram'da yok | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir |
 | `status: rejected` | `atlananlar`'a eklenir, `bekleyen` kapanir |
 | `publishStatus: failed` | **`bekleyen` KORUNUR** — onay sayfasindan tekrar denenebilir. Hata mailini at. |
 | `publishStatus: skipped` | Musteride Instagram bagli degil. `bekleyen` kapanir, post havuzda kalir, durumu mail ile bildir. |
@@ -139,9 +140,19 @@ uzerinden, token yeterli, oturum gerekmiyor):
 
 Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 
-- `bugun.yayinlanan >= 2` (gunluk kota dolu)
-- `son_yayin` uzerinden 4 saatten az gecmis (iki post ayni saate yigilmasin)
+- `bugun.siraya_konan >= 2` (gunluk kota dolu)
+- `son_gonderim` uzerinden 4 saatten az gecmis (iki gonderim ayni saate yigilmasin)
 - `bekleyen` dolu **ve** `son_gecerlilik` gecmemis (onay bekliyor, karistirma)
+
+> **Her iki kural da YAYIN'a degil GONDERIM'e bakar.** `son_yayin` ve
+> `bugun.yayinlanan` sadece bilgi amaclidir, siraya koymayi engellemez.
+> Sebebi: yayin ani senin onay verdigin an — repo onu ne belirliyor ne de
+> zamaninda goruyor, sadece bir sonraki calismada Faz 1'de fark ediyor. Yayina
+> bakan kural bu yuzden kendi kendini bloke ediyordu: Faz 1 "yayinlandi" deyip
+> `son_yayin`'i o ana yaziyor, ayni calismanin Faz 2'si de "daha 4 saat olmadi"
+> diyip cikiyordu. Cron'un iki yuvasi (08:07 / 15:07) 7 saat arali oldugu icin
+> gonderime bakan kural ikisini de gecirir — **yakin zamanda yayin yapilmis
+> olmasi 8 ve 15 calismalarini durdurmaz.**
 
 **`bekleyen` dolu ve suresi gecmisse** — post cope atilmaz:
 

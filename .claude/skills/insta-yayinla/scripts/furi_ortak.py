@@ -32,9 +32,13 @@ MAX_DOSYA_BAYT = 8 * 1024 * 1024
 SAAS_MAX_CAPTION = 2000
 
 # Akis kurallari
+# Kota ve minimum ara YAYIN'a degil GONDERIM'e (siraya koymaya) bakar. Yayin
+# ani kullanicinin onay verdigi an; repo onu ne belirliyor ne de zamaninda
+# ogreniyor. Yayina bakan bir kural, esitlemenin "yayinlandi" dedigi calismayi
+# kendi kendine bloke ediyordu — cron'un iki yuvasindan biri bosa gidiyordu.
 GUNLUK_KOTA = 2
 ONAY_SURESI_SAAT = 6
-YAYIN_ARASI_SAAT = 4
+GONDERIM_ARASI_SAAT = 4
 STOK_ESIGI = 6
 
 TR_SAAT = timezone(timedelta(hours=3))
@@ -188,7 +192,8 @@ def durum_oku(kok: Path) -> dict:
             "bekleyen": None,
             "yayin_denemesi": None,
             "son_yayin": None,
-            "bugun": {"tarih": None, "yayinlanan": 0},
+            "son_gonderim": None,
+            "bugun": {"tarih": None, "siraya_konan": 0, "yayinlanan": 0},
             "son_stok_uyarisi": None,
             "atlananlar": [],
             "sure_dolanlar": {},
@@ -197,13 +202,15 @@ def durum_oku(kok: Path) -> dict:
     veri.setdefault("bekleyen", None)
     veri.setdefault("yayin_denemesi", None)
     veri.setdefault("son_yayin", None)
+    veri.setdefault("son_gonderim", None)
     veri.setdefault("son_stok_uyarisi", None)
     veri.setdefault("atlananlar", [])
     # SKILL.md Faz 2 bu sozluge yaziyor; varsayilani burada olmasa cagiran
     # tarafin once var mi diye bakmasi gerekirdi.
     veri.setdefault("sure_dolanlar", {})
-    bugun = veri.setdefault("bugun", {"tarih": None, "yayinlanan": 0})
+    bugun = veri.setdefault("bugun", {"tarih": None, "siraya_konan": 0, "yayinlanan": 0})
     bugun.setdefault("tarih", None)
+    bugun.setdefault("siraya_konan", 0)
     bugun.setdefault("yayinlanan", 0)
     return veri
 
@@ -233,10 +240,10 @@ def defter_yaz(kok: Path, veri: dict) -> None:
 
 
 def gunluk_sayaci_tazele(durum: dict) -> dict:
-    """Takvim gunu degistiyse gunluk sayaci sifirla."""
+    """Takvim gunu degistiyse gunluk sayaclari sifirla."""
     bugun = simdi().date().isoformat()
     if durum["bugun"].get("tarih") != bugun:
-        durum["bugun"] = {"tarih": bugun, "yayinlanan": 0}
+        durum["bugun"] = {"tarih": bugun, "siraya_konan": 0, "yayinlanan": 0}
     return durum
 
 
