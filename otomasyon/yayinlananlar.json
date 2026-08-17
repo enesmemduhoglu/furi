@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-17T08:12:30+03:00",
+  "guncelleme": "2026-08-17T09:05:25+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/b1",
@@ -27,15 +27,6 @@
       "permalink": "https://www.instagram.com/p/DcG8i6oINaZ/",
       "yayin_zamani": "2026-08-16T16:58:20+00:00",
       "not": "esitleme ile eklendi (SaaS yayinladi)"
-    },
-    {
-      "slug": "durumsal/hold-the-onions",
-      "kategori": "durumsal",
-      "slayt": 1,
-      "ig_media_id": null,
-      "permalink": "",
-      "yayin_zamani": "2026-08-17T08:12:30+03:00",
-      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
 }

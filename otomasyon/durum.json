@@ -9,7 +9,13 @@
     "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
-  "atlananlar": [],
+  "atlananlar": [
+    {
+      "slug": "durumsal/hold-the-onions",
+      "tarih": "2026-08-17",
+      "sebep": "yayinlandi ama elle silindi; tekrar yayinlanmasi istenmiyor"
+    }
+  ],
   "sure_dolanlar": {},
   "token": {
     "son_yenileme": "2026-08-16T01:02:34+03:00",
