@@ -193,7 +193,7 @@ SaaS gonderir** — bu skill mail yazmaz.
 
 | Cikti `durum` | Ne yapilir |
 |---|---|
-| `gonderildi` | Faz 4'e gec |
+| `gonderildi` | Faz 4'e gec — ama once `mail_gitti` alanina bak |
 | `aday_yok` | Stok gercekten bitmis. Faz 5, sonra Faz 4 |
 | `uygun_aday_yok` | Post var ama hicbiri dogrulamayi gecemedi. **Stok sorunu degil, hata.** `elenenler` listesini hata mailine koy, Faz 4, cik |
 | `hata` | State'e dokunulmadi. Hata mailini `yanit` alaniyla at, Faz 4, cik |
@@ -201,6 +201,15 @@ SaaS gonderir** — bu skill mail yazmaz.
 > `gonderildi` ciktisinda **`elenenler` alani varsa** onu da hata mailine ekle:
 > gonderim basarili olsa bile o postlar bozuk ve duzeltilmezse havuz sessizce
 > erir.
+
+**`mail_gitti: false` ise post siraya kondu ama musteriye haber GITMEDI.** State
+dogru, geri alma yok — ama onay istegi kimseye ulasmadi, yani post kendiliginden
+yayinlanmaz. `[FURI-HATA] onay maili gonderilemedi` konulu maili `mail_hatasi`
+sebebi ve `onay_url` ile birlikte at, sonra Faz 4'e gec.
+
+> Bu alan yoksa (eski SaaS surumu) sessiz kalinir. 16-17.08'de bu geri bildirim
+> hic yoktu: SaaS 201 donuyordu, otomasyon "haber gitti" varsayiyordu, mail ise
+> gitmiyordu — iki gun boyunca kimse fark etmedi.
 
 `uygun_aday_yok` en cok "dal push edilmemis" durumunda cikar — gorseller
 `raw.githubusercontent.com` uzerinden servis edildigi icin push edilmemis bir

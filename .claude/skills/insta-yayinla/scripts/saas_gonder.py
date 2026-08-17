@@ -207,8 +207,19 @@ def main() -> int:
         "slayt": veri["slayt"],
         "saas_post_id": saas_post.get("id"),
         "onay_url": yanit.get("approvalUrl"),
-        "not": "Onay maili SaaS tarafindan gonderildi. Onaylaninca yayin ~11 sn icinde olur.",
+        "not": "Onay maili SaaS tarafindan gonderilir. Onaylaninca yayin ~11 sn icinde olur.",
     }
+
+    # 201 "post olustu" demek, "musteriye haber gitti" demek DEGIL. Bu ikisi
+    # ayni sey sanildigi icin 16-17.08'de iki gun onay maili gitmedi ve kimse
+    # fark etmedi: post pending'de bekledi, hata hicbir yerde gorunmedi.
+    # SaaS artik sonucu yanitta bildiriyor; None ise SaaS bu alani henuz
+    # dondurmeyen bir surumde demektir, o zaman sessiz kal (yanlis alarm verme).
+    mail_gitti = yanit.get("emailSent")
+    if mail_gitti is not None:
+        rapor["mail_gitti"] = bool(mail_gitti)
+        if not mail_gitti:
+            rapor["mail_hatasi"] = yanit.get("emailError") or "sebep bildirilmedi"
     if elenenler:
         # Sessizce atlanmasin: bozuk postlar duzeltilmezse havuz sessizce erir.
         rapor["elenenler"] = elenenler
