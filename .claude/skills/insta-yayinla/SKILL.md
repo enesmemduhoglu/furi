@@ -99,10 +99,22 @@ dogruluk kaynagi SaaS'taki `Client` kaydidir; script'ler gerektiginde
 baska ajansa dokunamaz ve ele gecerse SaaS'ta tek degisken degistirilerek
 iptal edilir.
 
-SaaS'a ulasilamayan bir oturumda `esitle.py` Instagram karsilastirmasini atlar
-ve **defteri oldugu gibi birakir** (raporda `instagram: ... atlandi` + sebep) —
-bekleyen postun akibetini zaten SaaS'in public onay endpoint'inden kesin olarak
-ogreniyor.
+Instagram'a bakilamayan bir oturumda — token cekilemedi ya da cagri basarisiz
+oldu, fark etmez — `esitle.py` karsilastirmayi atlar ve **defteri oldugu gibi
+birakir** (raporda `instagram: ... atlandi` + sebep). Bekleyen postun akibetini
+zaten SaaS'in public onay endpoint'inden kesin olarak ogreniyor; o cagri
+Instagram'a hic dokunmuyor.
+
+> **`esitle.py` hata verip Faz 2'yi dusurmez.** Bir kez dusurdu: bulut
+> oturumunun cikis proxy'si `graph.instagram.com`'a CONNECT'i 403 ile kesince
+> Faz 1 hata koduyla cikti, o gunun 15:07 yuvasina post konmadi. Emniyet aginin
+> kopmasi akisi durdurmamali; script artik atlayip devam ediyor.
+
+**Bulutta Instagram karsilastirmasi calismiyor** (proxy `graph.instagram.com`'a
+izin vermiyor). Yani zamanlanmis calismalarda "defterde var, Instagram'da yok"
+tespiti yapilmiyor: elle silinen bir post kendiliginden havuza donmez. Silme
+yaptiysan `atlananlar`'a elle eklemek ya da yerelde bir kez `esitle.py`
+calistirmak gerekir.
 
 ---
 
@@ -181,7 +193,7 @@ SaaS gonderir** — bu skill mail yazmaz.
 
 | Cikti `durum` | Ne yapilir |
 |---|---|
-| `gonderildi` | Faz 4'e gec |
+| `gonderildi` | Faz 4'e gec — ama once `mail_gitti` alanina bak |
 | `aday_yok` | Stok gercekten bitmis. Faz 5, sonra Faz 4 |
 | `uygun_aday_yok` | Post var ama hicbiri dogrulamayi gecemedi. **Stok sorunu degil, hata.** `elenenler` listesini hata mailine koy, Faz 4, cik |
 | `hata` | State'e dokunulmadi. Hata mailini `yanit` alaniyla at, Faz 4, cik |
@@ -189,6 +201,15 @@ SaaS gonderir** — bu skill mail yazmaz.
 > `gonderildi` ciktisinda **`elenenler` alani varsa** onu da hata mailine ekle:
 > gonderim basarili olsa bile o postlar bozuk ve duzeltilmezse havuz sessizce
 > erir.
+
+**`mail_gitti: false` ise post siraya kondu ama musteriye haber GITMEDI.** State
+dogru, geri alma yok — ama onay istegi kimseye ulasmadi, yani post kendiliginden
+yayinlanmaz. `[FURI-HATA] onay maili gonderilemedi` konulu maili `mail_hatasi`
+sebebi ve `onay_url` ile birlikte at, sonra Faz 4'e gec.
+
+> Bu alan yoksa (eski SaaS surumu) sessiz kalinir. 16-17.08'de bu geri bildirim
+> hic yoktu: SaaS 201 donuyordu, otomasyon "haber gitti" varsayiyordu, mail ise
+> gitmiyordu — iki gun boyunca kimse fark etmedi.
 
 `uygun_aday_yok` en cok "dal push edilmemis" durumunda cikar — gorseller
 `raw.githubusercontent.com` uzerinden servis edildigi icin push edilmemis bir
