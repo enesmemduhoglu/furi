@@ -2,9 +2,15 @@
 
 Iki ayri kurulum var:
 
-- **A bolumu** (asagidaki 1-10 adim) — Instagram token'i. Yayini artik SaaS yaptigi
-  icin bu token **SaaS'taki `Client` kaydinda** durur; yereldeki `.env` kopyasi
-  yalnizca elle teshis komutlari (`ig_yayinla.py --kontrol/--dogrula`) icindir.
+- **A bolumu** (asagidaki 1-10 adim) — Instagram token'i. Token **yalnizca**
+  SaaS'taki `Client` kaydinda durur; bu repo onun kopyasini TUTMAZ. Teshis
+  komutlari (`ig_yayinla.py --kontrol/--dogrula`, `ig_token.py --kontrol`)
+  token'i her calismada SaaS'tan ceker.
+
+  > Neden: token 60 gunluk ve SaaS'ta gunluk bir cron bitisine 20 gun kala
+  > otomatik yeniliyor. Yenileme aninda Instagram eskisini kisa sure sonra
+  > gecersiz kiliyor. Burada ayri bir `IG_ACCESS_TOKEN` kopyasi tutulsaydi o
+  > gece sessizce bayatlar ve otomasyon aciklamasiz kirilirdi.
 - **B bolumu** (en altta) — bulut ortami. Zamanlanmis rutinin calismasi icin
   gereken sey; **bilgisayarin kapaliyken sistemin calismasini saglayan kisim budur.**
 
@@ -14,9 +20,9 @@ Bu adimlari **sen** yapiyorsun — Instagram, Meta ve claude.ai hesabina giris g
 
 # A bolumu — Instagram token'i ve SaaS baglantisi
 
-Adim 1-8 `IG_ACCESS_TOKEN` ve `IG_USER_ID` uretir, adim 9 bunlari SaaS'a baglar,
-adim 10 zamanlayiciyi kurar. Tahmini sure: **30-45 dakika**, cogu Meta panelinde
-tiklama.
+Adim 1-8 Instagram token'ini ve hesap kimligini uretir, adim 9 bunlari **SaaS'a**
+kaydeder (tek dogruluk kaynagi orasi), adim 10 zamanlayiciyi kurar. Tahmini sure:
+**30-45 dakika**, cogu Meta panelinde tiklama.
 
 > Gmail'e "EVET" yazarak onaylama yolu **emekliye ayrildi**; onay artik SaaS'in
 > onay linkinden veriliyor. Eski zincirin belgesi ve geri donus adimlari
@@ -65,56 +71,52 @@ Gereken izinler otomatik veriliyor: `instagram_business_basic`,
 
 ---
 
-## 4. Token'i `.env`'e yaz
+## 4. Token'i `.env`'e YAZMA
 
-Repo kokundeki `.env` dosyasina ekle (dosya gitignored, repo public — asla commit edilmez):
+Token'in tek yeri SaaS'taki `Client` kaydidir (adim 9a). Bu repoda
+`IG_ACCESS_TOKEN` diye bir degisken **yok** — ikinci bir kopya, SaaS'in gunluk
+yenileme cron'undan sonra bayatlayan sessiz bir bozukluk demek.
 
-```
-IG_ACCESS_TOKEN=IGQVJ...buraya_yapistir
-```
+Token'i adim 9a'ya kadar parola yoneticisinde tut; oraya yapistirdiktan sonra
+yerelde hicbir yerde durmasin.
 
 ---
 
-## 5. `IG_USER_ID`'yi bul
+## 5. `IG_USER_ID`'yi elle bulmana gerek yok
 
-Token yeterli, baska bilgi gerekmiyor:
+SaaS token'i baglarken hesap kimligini Instagram'a kendisi soruyor ve
+`Client.instagramUserId` alanini dolduruyor. Ayri bir adim gerekmez.
+
+Adim 9a'dan **sonra** dogrulamak istersen:
 
 ```powershell
 cd "C:\Users\enesm\visual studio\furi1"
 python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --kimlik
 ```
 
-Cikti:
-
-```json
-{
-  "durum": "ok",
-  "hesap": { "user_id": "178414...", "username": "furkanteacherteaching", ... },
-  "not": "IG_USER_ID=178414... degerini .env'e ekle."
-}
-```
-
-`user_id` degerini `.env`'e ekle:
-
-```
-IG_USER_ID=178414...
-```
+`durum: ok` bekleniyor. `uyusmazlik` cikarsa SaaS'taki hesap kimligi token'in
+acildigi hesapla ayni degildir — panelden baglantiyi yenile.
 
 ---
 
-## 6. Token sayacini baslat
+## 6. Token sayaci — SaaS'ta, otomatik
 
-Token 60 gunde oluyor. Sayaci simdiden baslat ki skill ne zaman yenileyecegini bilsin:
+Token 60 gunde doluyor ve **SaaS yeniliyor**: gunluk cron
+(`/api/cron/refresh-instagram-tokens`, 03:00) bitisine 20 gun kala uzatiyor.
+Bu repoda yenileme ya da sayac tutma yok.
+
+Kalan sureyi gormek icin (adim 9a'dan sonra):
 
 ```powershell
-python .claude\skills\insta-yayinla\scripts\ig_token.py --kaydet
+python .claude\skills\insta-yayinla\scripts\ig_token.py --kontrol
 ```
-
-Bundan sonrasi otomatik: 50. gunden itibaren kendi yeniler, son 10 gunde uyari maili atar.
 
 ---
 
 ## 7. Kurulumu dogrula
+
+Adim 9a'dan **sonra** calistir — token'i SaaS'tan cektigi icin once oradaki
+kaydin var olmasi gerekiyor:
 
 ```powershell
 python .claude\skills\insta-yayinla\scripts\ig_yayinla.py --kontrol
@@ -154,12 +156,13 @@ yolunda gerekli degil ve gercek bir Instagram postu olusturur.
 Onay ve yayin `content-approval-saas`'ta yapiliyor. Bu adim bir kez yapilir.
 
 **9a. SaaS tarafinda musteri kaydi.** Panelde bir `Client` olustur (`Furkan
-Teacher`, `eneshan034@gmail.com`) ve Instagram alanlarini doldur:
+Teacher`, `eneshan034@gmail.com`) ve **Instagram'i bagla**: adim 3'teki 60
+gunluk token'i yapistir. Hesap kimligini (`instagramUserId`) SaaS token'dan
+turetir; son kullanma tarihini de girmen onemli — cron tarih bilinmeyen token'i
+atlar.
 
-| Alan | Deger |
-|---|---|
-| `instagramUserId` | adim 5'teki `IG_USER_ID` |
-| `instagramAccessToken` | adim 3'teki 60 gunluk token |
+> **Bu adim token'in tek durdugu yerdir.** Buradaki kayit hem SaaS'in yayin
+> yolunu hem de bu reponun teshis komutlarini besler; ikinci bir kopya yok.
 
 > `instagramUserId` bos kalirsa onay calisir ama **yayin yapilmaz**:
 > `publishStatus = "skipped"` doner. Bu bilincli bir guvenli varsayilan,
@@ -175,6 +178,11 @@ FURI_API_KEY=<SaaS'in makine erisim anahtari>
 
 `FURI_API_KEY`, SaaS tarafinda `FURI_API_KEY` + `FURI_API_AGENCY_ID` ortam
 degiskenleriyle eslesir. Ikisi de Vercel'de tanimli olmali.
+
+> Ayni ucu Instagram token'ini cekmek icin de kullaniliyor
+> (`GET /api/clients/<id>/instagram-token`). Bu uc **yalnizca** API anahtariyla
+> acilir ve anahtarin ajansindaki musterileri gorur — baska ajansin musteri
+> id'si 404 doner.
 
 **9c. Kuru calistirma** — hicbir yere yazmadan ne gidecegini gor:
 
@@ -216,9 +224,9 @@ Hepsi calistiktan sonra:
 - komut: `/insta-yayinla`
 - ortam degiskenleri: `FURI_SAAS_URL`, `FURI_CLIENT_ID`, `FURI_API_KEY`
 
-> **`IG_ACCESS_TOKEN` buluta KONMAZ.** Bulut ortamlarinda secrets store yok;
-> o token hesaba dogrudan post atabiliyor. Yayini SaaS yaptigi icin bulut
-> calismasinin token'a ihtiyaci da yok. Ayrinti: B bolumu, adim 1.
+> **Instagram token'i hicbir ortama konmaz** — ne yerelde ne bulutta. Token
+> SaaS'ta duruyor ve gerektiginde `FURI_API_KEY` ile oradan cekiliyor.
+> Ayrinti: B bolumu, adim 1.
 
 Ayrintili bulut kurulumu (ag izinleri dahil) icin **B bolumu**.
 
@@ -243,9 +251,13 @@ Bos sablon: repo kokundeki [`.env.example`](../../../.env.example) — kopyala,
 |---|---|---|
 | `FURI_SAAS_URL` | yerel `.env` + **bulut ortami** | SaaS adresi |
 | `FURI_CLIENT_ID` | yerel `.env` + **bulut ortami** | Hangi musteri |
-| `FURI_API_KEY` | yerel `.env` + **bulut ortami** | SaaS'a post olusturma yetkisi |
-| `IG_ACCESS_TOKEN` | yerel `.env` + **SaaS `Client` kaydi** — buluta KONMAZ | Instagram token'i (60 gun) |
-| `IG_USER_ID` | yerel `.env` + **SaaS `Client` kaydi** | Instagram hesap ID'si |
+| `FURI_API_KEY` | yerel `.env` + **bulut ortami** | SaaS'a post olusturma + token cekme yetkisi |
+
+Instagram token'i ve hesap kimligi **ortam degiskeni degil**: ikisi de SaaS'taki
+`Client` kaydinda durur (`instagramAccessToken`, `instagramUserId`) ve script'ler
+`GET /api/clients/<FURI_CLIENT_ID>/instagram-token` ile ceker. `IG_ACCESS_TOKEN`
+/ `IG_USER_ID` degiskenleri **kaldirildi**; `.env`'inde duruyorsa sil — artik
+hicbir yerde okunmuyor, ama duran bir sir gereksiz risk.
 
 Opsiyonel override'lar (hepsi yalnizca yerel):
 
@@ -263,14 +275,21 @@ Opsiyonel override'lar (hepsi yalnizca yerel):
 **"Generate token" butonu yok** — hesap Professional degil (adim 1) veya uygulama
 Business turunde degil (adim 2).
 
-**`--kimlik` "Invalid OAuth access token" diyor** — token kopyalanirken basina/sonuna
-bosluk veya tirnak karismis olabilir. `.env`'de tirnak kullanma.
+**`--kimlik` "Invalid OAuth access token" diyor** — SaaS'taki token gecersiz.
+Kopyalanirken basina/sonuna bosluk karismis ya da suresi dolmus olabilir; SaaS
+panelinden baglantiyi yenile.
 
 **`--kontrol` calisiyor ama `account_type` `PERSONAL`** — adim 1 tamamlanmamis.
 
-**Token'i kaybettim** — panelden yeniden **Generate token**, `.env`'i guncelle,
-`ig_token.py --kaydet` ile sayaci sifirla. **SaaS'taki `Client.instagramAccessToken`
-alanini da guncelle** — token iki yerde duruyor, yayini yapan taraf SaaS.
+**`kaynak: saas_token` hatasi aliyorum** — token SaaS'tan cekilemiyor. `kod`
+alanina bak: `client_not_found` -> `FURI_CLIENT_ID` yanlis · `instagram_not_connected`
+-> panelde Instagram bagli degil · `baglanti` -> SaaS'a ulasilamiyor (bulutta
+`content-approval-saas.vercel.app` ag izin listesinde mi?) · HTTP 401 ->
+`FURI_API_KEY` yanlis.
+
+**Token'i kaybettim / suresi doldu** — Meta panelinden yeniden **Generate token**
+ve **yalnizca** SaaS panelinden musterinin Instagram baglantisini yenile. Bu
+repoda guncellenecek bir kopya yok.
 
 ---
 
@@ -305,16 +324,23 @@ FURI_CLIENT_ID=<SaaS'taki Client kaydinin id'si>
 FURI_API_KEY=<SaaS'in makine erisim anahtari>
 ```
 
-**Instagram token'i buraya KONMAZ.** Dialogun altinda su uyari yaziyor:
+**Instagram token'i buraya KONMAZ** — zaten hicbir ortama konmuyor. Dialogun
+altinda su uyari yaziyor:
 
 > "These are visible to anyone using this environment — don't add secrets or credentials."
 
-Bulut ortamlarinda secrets store yok. `IG_ACCESS_TOKEN` hesaba dogrudan post
-atabildigi icin disarida birakilir; `FURI_API_KEY` ise dar kapsamli (sadece kendi
-SaaS'inda post olusturur, yayin yapamaz, Instagram'a dokunamaz).
+Bulut ortamlarinda secrets store yok. Instagram token'i hesaba dogrudan post
+atabildigi icin ortama hic girmez; onun yerine `FURI_API_KEY` ile SaaS'tan
+cekilir. `FURI_API_KEY` dar kapsamli: yalnizca kendi ajansinin musterilerini
+gorur, baska ajansa dokunamaz.
 
-Token'siz bulut oturumunda `esitle.py` Instagram karsilastirmasini atlar ve defteri
-oldugu gibi birakir — bekleyen postun akibetini zaten SaaS'in public onay
+`FURI_API_KEY` de bir sirdir ve bu uyari onun icin de gecerli — ama ele
+gecirilirse kaybedilen sey Instagram token'inin kendisi degil, tek bir ajansin
+SaaS erisimidir ve SaaS tarafindan tek degisken degistirilerek iptal edilir.
+
+Bulutta SaaS'a ulasilamazsa `esitle.py` Instagram karsilastirmasini atlar ve
+defteri oldugu gibi birakir; raporda `instagram: ... atlandi` satiri neden
+atlandigini yazar. Bekleyen postun akibetini zaten SaaS'in public onay
 endpoint'inden ogreniyor.
 
 ## 2. Network access
@@ -352,8 +378,9 @@ Rutini elle tetikle ve calisma logunda sunlari ara:
 | Beklenen | Anlami |
 |---|---|
 | `FURI_SAAS_URL/CLIENT_ID/API_KEY: set` | Degiskenler ulasti |
-| `IG_ACCESS_TOKEN: NOT SET` | Dogru — token bilerek disarida |
-| `esitle.py` -> `durum: esit` + `instagram: ... atlandi` | Faz 1 token'siz calisti |
+| `IG_ACCESS_TOKEN: NOT SET` | Dogru — token hicbir ortamda tutulmuyor |
+| `esitle.py` -> `durum: esit` | Faz 1 calisti (token SaaS'tan cekildi) |
+| `esitle.py` -> `instagram: ... atlandi` | SaaS'a ulasilamamis; mesajdaki sebebe bak |
 | `saas_gonder.py` -> `durum: gonderildi` | Ag kapisi acik, SaaS'a ulasildi |
 | `otomasyon/durum.json` commit + push | State kalici |
 

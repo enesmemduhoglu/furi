@@ -43,12 +43,13 @@ import sys
 import ig_api
 from aday_sec import veri_topla
 from furi_ortak import (
+    SaasTokenHatasi,
     defter_oku,
     defter_yaz,
     durum_oku,
     durum_yaz,
-    gerekli_ortam,
     gunluk_sayaci_tazele,
+    ig_kimlik,
     iso,
     iso_oku,
     json_bas,
@@ -58,6 +59,20 @@ from furi_ortak import (
     simdi,
     utf8_cikti,
 )
+
+
+def _kimlik(kok) -> dict:
+    """Instagram token'i + hesap kimligi — SaaS'tan, TEK KAYNAKTAN.
+
+    Bu repo artik `IG_ACCESS_TOKEN` tutmuyor: SaaS'in gunluk cron'u token'i
+    yenilediginde buradaki ayri kopya sessizce bayatliyordu. Hata halinde
+    sessizce devam edilmez; anlasilir bir JSON basilip cikilir.
+    """
+    try:
+        return ig_kimlik(kok)
+    except SaasTokenHatasi as hata:
+        json_bas(hata.rapor())
+        raise SystemExit(1)
 
 
 def _post_bul(kok, slug: str) -> dict:
@@ -99,8 +114,8 @@ def _instagramda_bul(ig_id: str, token: str, caption: str, esikten_sonra) -> dic
 
 
 def komut_kontrol(kok, args) -> int:
-    ortam = gerekli_ortam(kok, "IG_ACCESS_TOKEN", "IG_USER_ID")
-    token, ig_id = ortam["IG_ACCESS_TOKEN"], ortam["IG_USER_ID"]
+    kimlik = _kimlik(kok)
+    token, ig_id = kimlik["token"], kimlik["ig_user_id"]
     try:
         hesap = ig_api.hesap_bilgisi(ig_id, token)
         limit = ig_api.yayin_limiti(ig_id, token)
@@ -120,21 +135,35 @@ def komut_kontrol(kok, args) -> int:
 
 
 def komut_kimlik(kok, args) -> int:
-    """Kurulum yardimcisi: sadece token ile IG_USER_ID'yi bulur."""
-    ortam = gerekli_ortam(kok, "IG_ACCESS_TOKEN")
+    """Teshis: SaaS'taki token gercekte hangi Instagram hesabini aciyor?
+
+    Kurulumda artik bir yere yazilacak deger uretmiyor — hesap kimligi de
+    token da SaaS'ta duruyor. Isi, SaaS'in verdigi ikilinin tutarli olup
+    olmadigini gostermek: `hesap` ile `saas_ig_user_id` ayrisiyorsa SaaS
+    kaydinda yanlis bir hesap kimligi var demektir.
+    """
+    kimlik = _kimlik(kok)
     try:
-        bilgi = ig_api.kimlik(ortam["IG_ACCESS_TOKEN"])
+        bilgi = ig_api.kimlik(kimlik["token"])
     except ig_api.IGHatasi as hata:
         json_bas({"durum": "hata", "mesaj": hata.rapor(), "ayrinti": hata.ayrinti})
         return 1
+    uzak = str(bilgi.get("user_id") or bilgi.get("id") or "")
+    tutarli = uzak == kimlik["ig_user_id"]
     json_bas(
         {
-            "durum": "ok",
+            "durum": "ok" if tutarli else "uyusmazlik",
             "hesap": bilgi,
-            "not": f"IG_USER_ID={bilgi.get('user_id') or bilgi.get('id')} degerini .env'e ekle.",
+            "saas_ig_user_id": kimlik["ig_user_id"],
+            "not": (
+                "SaaS kaydi token'in acildigi hesapla ayni."
+                if tutarli
+                else "SaaS'taki instagramUserId token'in acildigi hesapla AYNI DEGIL — "
+                "SaaS panelinden musterinin Instagram baglantisini yenile."
+            ),
         }
     )
-    return 0
+    return 0 if tutarli else 1
 
 
 def komut_onizle(kok, args) -> int:
@@ -186,8 +215,8 @@ def komut_isaretle(kok, args) -> int:
 def komut_dogrula(kok, args) -> int:
     """Yarida kalmis bir yayin denemesi gercekten Instagram'a dusmus mu?"""
     slug = args.dogrula.replace("\\", "/").strip("/")
-    ortam = gerekli_ortam(kok, "IG_ACCESS_TOKEN", "IG_USER_ID")
-    token, ig_id = ortam["IG_ACCESS_TOKEN"], ortam["IG_USER_ID"]
+    kimlik = _kimlik(kok)
+    token, ig_id = kimlik["token"], kimlik["ig_user_id"]
 
     defter = defter_oku(kok)
     mevcut = _defterde_var_mi(defter, slug)
@@ -259,8 +288,8 @@ def _basariyi_kaydet(kok, veri: dict, media_id: str, permalink: str, sayac_artir
 
 def komut_yayinla(kok, args) -> int:
     slug = args.slug.replace("\\", "/").strip("/")
-    ortam = gerekli_ortam(kok, "IG_ACCESS_TOKEN", "IG_USER_ID")
-    token, ig_id = ortam["IG_ACCESS_TOKEN"], ortam["IG_USER_ID"]
+    kimlik = _kimlik(kok)
+    token, ig_id = kimlik["token"], kimlik["ig_user_id"]
 
     defter = defter_oku(kok)
     mevcut = _defterde_var_mi(defter, slug)
@@ -460,7 +489,8 @@ def main() -> int:
     utf8_cikti()
     a = argparse.ArgumentParser(description="Instagram'a post yayinlar.")
     a.add_argument("--repo", help="Repo kok dizini")
-    a.add_argument("--kimlik", action="store_true", help="Sadece token ile IG_USER_ID'yi bul (kurulum)")
+    a.add_argument("--kimlik", action="store_true",
+                   help="SaaS'taki hesap kimligi token'inkiyle ayni mi (teshis)")
     a.add_argument("--kontrol", action="store_true", help="Hesap + yayin limiti + token saglik testi")
     a.add_argument("--onizle", metavar="SLUG", help="API'ye yazmadan hazirlik testi")
     a.add_argument("--isaretle", metavar="SLUG", help="Yayin oncesi isaret yaz")

@@ -117,6 +117,133 @@ def gerekli_ortam(kok: Path, *anahtarlar: str) -> dict[str, str]:
     return {a: os.environ[a] for a in anahtarlar}
 
 
+# ------------------------------------------------------- Instagram kimlik (SaaS)
+
+
+class SaasTokenHatasi(Exception):
+    """SaaS'tan Instagram kimlik bilgisi alinamadi.
+
+    `kod` SaaS'in dondurdugu makine okunur hata kodu (`client_not_found`,
+    `instagram_not_connected`) ya da yerel bir ad (`baglanti`, `yanit`).
+    """
+
+    def __init__(self, mesaj: str, kod: str | None = None, http: int | None = None):
+        super().__init__(mesaj)
+        self.mesaj = mesaj
+        self.kod = kod
+        self.http = http
+
+    def rapor(self) -> dict:
+        veri = {"durum": "hata", "mesaj": self.mesaj, "kaynak": "saas_token"}
+        if self.kod:
+            veri["kod"] = self.kod
+        if self.http:
+            veri["http"] = self.http
+        return veri
+
+
+# Ayni calisma icinde iki kez cekilmesin; token her seferinde ag uzerinden
+# gitmesi gereken bir sey degil, ama SURECLER ARASI da saklanmaz (bilerek).
+_ig_kimlik_onbellek: dict | None = None
+
+
+def ig_kimlik(kok: Path, zorla: bool = False) -> dict:
+    """Instagram token'ini content-approval-saas'tan ceker.
+
+    ⚠ TEK DOGRULUK KAYNAGI SAAS'TIR. Bu repo token'in kendi kopyasini TUTMAZ.
+
+    Neden: token 60 gunluk ve SaaS'ta gunluk bir cron
+    (`/api/cron/refresh-instagram-tokens`) bitisine 20 gun kala otomatik
+    yeniliyor. Yenileme aninda Instagram eski token'i kisa sure sonra gecersiz
+    kiliyor — burada ayri bir `IG_ACCESS_TOKEN` kopyasi tutulsaydi o gece
+    SESSIZCE bayatlar ve otomasyon aciklamasiz kirilirdi.
+
+    Doner: {"client_id", "ig_user_id", "token", "gecerlilik_bitis",
+            "suresi_doldu"}
+    Hata halinde SaasTokenHatasi firlatir — sessiz basarisizlik YOK.
+    """
+    global _ig_kimlik_onbellek
+    if _ig_kimlik_onbellek is not None and not zorla:
+        return _ig_kimlik_onbellek
+
+    ortam = gerekli_ortam(kok, "FURI_SAAS_URL", "FURI_API_KEY", "FURI_CLIENT_ID")
+    url = (
+        ortam["FURI_SAAS_URL"].rstrip("/")
+        + "/api/clients/"
+        + urllib.parse.quote(ortam["FURI_CLIENT_ID"], safe="")
+        + "/instagram-token"
+    )
+    istek = urllib.request.Request(url, method="GET")
+    istek.add_header("Authorization", "Bearer " + ortam["FURI_API_KEY"])
+    istek.add_header("User-Agent", "furi-insta-yayinla/2.0")
+
+    try:
+        with urllib.request.urlopen(istek, timeout=30) as yanit:
+            veri = json.loads(yanit.read().decode("utf-8"))
+    except urllib.error.HTTPError as hata:
+        ham = hata.read().decode("utf-8", errors="replace")
+        try:
+            govde = json.loads(ham)
+        except json.JSONDecodeError:
+            govde = {}
+        kod = govde.get("code")
+        raise SaasTokenHatasi(_token_hata_metni(hata.code, kod, govde), kod, hata.code)
+    except (urllib.error.URLError, TimeoutError, OSError) as hata:
+        raise SaasTokenHatasi(
+            f"SaaS'a ulasilamadi ({url}): {hata}. Instagram token'i artik SADECE "
+            "SaaS'ta duruyor; SaaS erisilemezken yayin/teshis yapilamaz.",
+            "baglanti",
+        )
+    except ValueError as hata:
+        raise SaasTokenHatasi(f"SaaS yaniti okunamadi: {hata}", "yanit")
+
+    token = veri.get("accessToken")
+    ig_id = veri.get("instagramUserId")
+    if not token or not ig_id:
+        raise SaasTokenHatasi(
+            "SaaS yanitinda accessToken/instagramUserId yok — SaaS surumu eski olabilir.",
+            "yanit",
+        )
+
+    _ig_kimlik_onbellek = {
+        "client_id": veri.get("clientId"),
+        "ig_user_id": str(ig_id),
+        "token": token,
+        "gecerlilik_bitis": veri.get("expiresAt"),
+        "suresi_doldu": bool(veri.get("expired")),
+    }
+    return _ig_kimlik_onbellek
+
+
+def _token_hata_metni(http: int, kod: str | None, govde: dict) -> str:
+    if http == 401:
+        return (
+            "SaaS istegi reddetti (401). FURI_API_KEY yanlis ya da SaaS tarafinda "
+            "FURI_API_KEY/FURI_API_AGENCY_ID tanimli degil."
+        )
+    if kod == "client_not_found":
+        return (
+            "SaaS bu musteriyi bulamadi (404). FURI_CLIENT_ID yanlis ya da musteri "
+            "baska bir ajansa ait."
+        )
+    if kod == "instagram_not_connected":
+        return (
+            "Musterinin Instagram hesabi SaaS'ta bagli degil (409). SaaS panelinden "
+            "musteriye Instagram token'i baglanmali."
+        )
+    # Token'in kendisi hicbir zaman hata metnine girmez; govde yalnizca `error`
+    # alani kadar aktarilir.
+    return f"SaaS HTTP {http}: {govde.get('error') or 'beklenmeyen yanit'}"
+
+
+def kalan_gun(gecerlilik_bitis: str | None) -> float | None:
+    """ISO tarihten kalan gun sayisi. Tarih bilinmiyorsa None."""
+    bitis = iso_oku(gecerlilik_bitis)
+    if not bitis:
+        return None
+    return (bitis - simdi()).total_seconds() / 86400.0
+
+
 def _git(kok: Path, *args: str) -> str:
     try:
         cikti = subprocess.run(
