@@ -55,7 +55,12 @@ Instagram'dan sil.
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
 | `sure_dolanlar` | SaaS onay linki yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
 | `atlananlar` | Onay sayfasinda reddedilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
-| `token` | Instagram token'inin yenileme/bitis tarihleri (`ig_token.py` yazar). Yayini SaaS yaptigi icin **bu kayit SaaS'taki kopyayi takip etmez** — token yenilenince SaaS'taki `Client.instagramAccessToken` da elle guncellenmeli. |
+
+> Eskiden burada bir `token` blogu (Instagram token'inin yenileme/bitis tarihleri)
+> vardi. **Kaldirildi:** token da son kullanma tarihi de artik yalnizca SaaS'ta
+> duruyor ve SaaS'in gunluk cron'u yeniliyor — buradaki tarih o yenilemeleri
+> gormedigi icin bayat bir kopyaydi. Kalan sureyi ogrenmek icin:
+> `python .claude/skills/insta-yayinla/scripts/ig_token.py --kontrol`
 
 ## Elle mudahale
 

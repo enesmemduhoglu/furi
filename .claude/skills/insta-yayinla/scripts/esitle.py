@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import sys
 import urllib.error
@@ -31,12 +30,14 @@ import urllib.request
 
 import ig_api
 from furi_ortak import (
+    SaasTokenHatasi,
     caption_ayristir,
     caption_birlestir,
     defter_oku,
     defter_yaz,
     durum_oku,
     durum_yaz,
+    ig_kimlik,
     ortam_yukle,
     gunluk_sayaci_tazele,
     iso,
@@ -92,29 +93,37 @@ def main() -> int:
 
     kok = repo_kok(args.repo)
     ortam_yukle(kok)
-    ig_token = os.environ.get("IG_ACCESS_TOKEN")
-    ig_id = os.environ.get("IG_USER_ID")
 
     # Instagram karsilastirmasi OPSIYONEL: bir emniyet agi, ana mekanizma degil.
     # Bekleyen postun akibetini SaaS'in public onay endpoint'i kesin olarak
-    # soyluyor ve o kimlik bilgisi istemiyor. Boylece Instagram token'i bulut
-    # ortamina hic girmek zorunda kalmiyor — o token hesaba post atabiliyor,
-    # bulutta secrets store da yok.
+    # soyluyor ve o kimlik bilgisi istemiyor. Bu yuzden token alinamazsa
+    # esitleme durmaz, sadece Instagram karsilastirmasi atlanir — ama NEDEN
+    # atlandigi rapora yazilir, sessiz kalmaz.
+    #
+    # Token artik ortamdan degil SaaS'tan geliyor (tek dogruluk kaynagi):
+    # burada ayri bir IG_ACCESS_TOKEN kopyasi tutulsaydi SaaS'in gunluk
+    # yenileme cron'undan sonra bayatlar ve karsilastirma sessizce yanlis
+    # sonuc uretirdi.
     medyalar: list[dict] = []
     ig_atlandi = None
-    if ig_token and ig_id:
+    try:
+        kimlik = ig_kimlik(kok)
+    except SaasTokenHatasi as hata:
+        kimlik = None
+        ig_atlandi = (
+            f"Instagram karsilastirmasi atlandi — SaaS'tan token alinamadi: {hata.mesaj}"
+        )
+
+    if kimlik:
         try:
             medyalar = ig_api.get(
-                f"{ig_id}/media",
+                f"{kimlik['ig_user_id']}/media",
                 {"fields": "id,permalink,timestamp,media_type,caption", "limit": "50"},
-                ig_token,
+                kimlik["token"],
             )["data"]
         except ig_api.IGHatasi as hata:
             json_bas({"durum": "hata", "mesaj": hata.rapor(), "ayrinti": hata.ayrinti})
             return 1
-    else:
-        ig_atlandi = ("IG_ACCESS_TOKEN/IG_USER_ID yok — Instagram karsilastirmasi "
-                      "atlandi, sadece SaaS durumu kontrol edildi.")
 
     # repo caption izi -> post
     repo = {}

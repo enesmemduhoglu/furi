@@ -155,5 +155,5 @@ def hesap_bilgisi(ig_id: str, token: str) -> dict:
 
 
 def kimlik(token: str) -> dict:
-    """GET /me — kurulumda IG_USER_ID'yi bulmak icin (token disinda bilgi gerekmez)."""
+    """GET /me — token gercekte hangi hesabi aciyor? (token disinda bilgi gerekmez)"""
     return get("me", {"fields": "user_id,username,account_type,media_count"}, token)

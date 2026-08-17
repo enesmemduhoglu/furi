@@ -83,19 +83,26 @@ git pull --ff-only origin main
 |---|---|---|
 | `FURI_SAAS_URL` | **evet** | SaaS adresi (sir degil) |
 | `FURI_CLIENT_ID` | **evet** | Hangi musteri (opak id) |
-| `FURI_API_KEY` | **evet** | SaaS'a post olusturma yetkisi |
-| `IG_ACCESS_TOKEN` | hayir | Sadece tam esitleme icin; yoksa atlanir |
-| `IG_USER_ID` | hayir | Ayni |
+| `FURI_API_KEY` | **evet** | SaaS'a post olusturma + Instagram token'ini cekme yetkisi |
 
-**Instagram token'i buluta konmaz.** O token hesaba dogrudan post atabiliyor ve
-bulut ortamlarinda secrets store yok — degerleri ortami kullanan herkes
-okuyabiliyor. `FURI_API_KEY` ise dar kapsamli: sadece kendi SaaS'inda kendi
-ajansin adina post olusturabiliyor, yayin yapamiyor, Instagram'a dokunamiyor.
+**Instagram token'i hicbir ortama konmaz** — ne yerelde ne bulutta. Tek
+dogruluk kaynagi SaaS'taki `Client` kaydidir; script'ler gerektiginde
+`GET /api/clients/<FURI_CLIENT_ID>/instagram-token` ile ceker
+(`furi_ortak.ig_kimlik`).
 
-Token'siz calisan bulut oturumunda `esitle.py` Instagram karsilastirmasini
-atlar ve **defteri oldugu gibi birakir** — bekleyen postun akibetini zaten
-SaaS'in public onay endpoint'inden kesin olarak ogreniyor. Tam esitleme
-(silinen postlarin yakalanmasi) token'in bulundugu yerel makinede yapilir.
+> Neden ikinci kopya yok: token 60 gunluk ve SaaS'ta gunluk bir cron bitisine
+> 20 gun kala otomatik yeniliyor. Yenileme aninda Instagram eskisini kisa sure
+> sonra gecersiz kiliyor — ayri bir `IG_ACCESS_TOKEN` kopyasi o gece sessizce
+> bayatlar ve otomasyon aciklamasiz kirilirdi.
+
+`FURI_API_KEY` dar kapsamli: yalnizca kendi ajansinin musterilerini gorur,
+baska ajansa dokunamaz ve ele gecerse SaaS'ta tek degisken degistirilerek
+iptal edilir.
+
+SaaS'a ulasilamayan bir oturumda `esitle.py` Instagram karsilastirmasini atlar
+ve **defteri oldugu gibi birakir** (raporda `instagram: ... atlandi` + sebep) —
+bekleyen postun akibetini zaten SaaS'in public onay endpoint'inden kesin olarak
+ogreniyor.
 
 ---
 
@@ -251,9 +258,14 @@ Tum komutlar repo kokunden calistirilir.
 | Komut | Ne zaman |
 |---|---|
 | `ig_yayinla.py --kontrol` | Instagram token'i saglam mi |
+| `ig_yayinla.py --kimlik` | SaaS'taki hesap kimligi token'inkiyle ayni mi |
 | `ig_yayinla.py --dogrula K/S` | Yarida kalmis bir yayin gercekten atilmis mi |
 | `ig_yayinla.py --slug K/S` | SaaS calismiyorken elle yayin (son care) |
-| `ig_token.py --kontrol` | Token kac gun gecerli |
+| `ig_token.py --kontrol` | SaaS'taki token kac gun gecerli |
+
+> Hepsi token'i SaaS'tan cekiyor: **SaaS erisilemezken calismazlar** ve
+> `kaynak: saas_token` hatasi verirler. Sessizce bayat bir token'la calisip
+> yanlis sonuc uretmelerindense durmalari yeglenir.
 
 ---
 
@@ -305,9 +317,13 @@ yapmiyor** — bilinen bosluk, tek tek onayla.
 **Defter ile Instagram ayrismis** — `esitle.py` iki yonlu duzeltir. Silinen bir
 post defterden dusurulup tekrar aday olur.
 
-**Token suresi doluyor** — Instagram token'i 2026-10-15'te oluyor. SaaS
-panelinde uyari yok; o tarihte sessizce durur. `ig_token.py --yenile` yeniler,
-sonra yeni token SaaS'taki `Client.instagramAccessToken` alanina da yazilmali.
+**Token suresi doluyor** — yenileme SaaS'in isi: gunluk cron
+(`/api/cron/refresh-instagram-tokens`, 03:00) bitisine 20 gun kala token'i
+otomatik uzatiyor ve tek kopya oldugu icin bu repo da aninda yeni token'i
+goruyor. `ig_token.py --kontrol` kalan sureyi soyler. `yakinda_doluyor`
+goruyorsan cron calismiyor demektir — Vercel cron loglarina bak. Suresi
+tamamen dolmus bir token otomatik uzatilamaz; SaaS panelinden musterinin
+Instagram baglantisini yenilemek gerekir.
 
 ---
 
