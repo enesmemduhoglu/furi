@@ -99,10 +99,22 @@ dogruluk kaynagi SaaS'taki `Client` kaydidir; script'ler gerektiginde
 baska ajansa dokunamaz ve ele gecerse SaaS'ta tek degisken degistirilerek
 iptal edilir.
 
-SaaS'a ulasilamayan bir oturumda `esitle.py` Instagram karsilastirmasini atlar
-ve **defteri oldugu gibi birakir** (raporda `instagram: ... atlandi` + sebep) —
-bekleyen postun akibetini zaten SaaS'in public onay endpoint'inden kesin olarak
-ogreniyor.
+Instagram'a bakilamayan bir oturumda — token cekilemedi ya da cagri basarisiz
+oldu, fark etmez — `esitle.py` karsilastirmayi atlar ve **defteri oldugu gibi
+birakir** (raporda `instagram: ... atlandi` + sebep). Bekleyen postun akibetini
+zaten SaaS'in public onay endpoint'inden kesin olarak ogreniyor; o cagri
+Instagram'a hic dokunmuyor.
+
+> **`esitle.py` hata verip Faz 2'yi dusurmez.** Bir kez dusurdu: bulut
+> oturumunun cikis proxy'si `graph.instagram.com`'a CONNECT'i 403 ile kesince
+> Faz 1 hata koduyla cikti, o gunun 15:07 yuvasina post konmadi. Emniyet aginin
+> kopmasi akisi durdurmamali; script artik atlayip devam ediyor.
+
+**Bulutta Instagram karsilastirmasi calismiyor** (proxy `graph.instagram.com`'a
+izin vermiyor). Yani zamanlanmis calismalarda "defterde var, Instagram'da yok"
+tespiti yapilmiyor: elle silinen bir post kendiliginden havuza donmez. Silme
+yaptiysan `atlananlar`'a elle eklemek ya da yerelde bir kez `esitle.py`
+calistirmak gerekir.
 
 ---
 

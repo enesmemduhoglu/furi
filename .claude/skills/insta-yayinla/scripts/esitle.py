@@ -12,11 +12,17 @@ Iki yonlu calisir:
 Ikincisi olmadan silinen bir post sonsuza kadar "yayinlanmis" sayilir ve bir
 daha asla onerilmez.
 
+Instagram'a ulasilamazsa bu iki yonlu karsilastirma ATLANIR, script durmaz:
+bekleyen postun akibeti zaten SaaS'in onay endpoint'inden ogreniliyor. Atlandigi
+zaman raporda `instagram` alani sebebiyle birlikte cikar — sessiz kalmaz.
+
 Kullanim:
     python esitle.py            # farklari uygula
     python esitle.py --kuru     # sadece raporla, dosyaya dokunma
 
-Cikis kodlari: 0 (fark olsun olmasin basarili) · 1 hata
+Cikis kodu her zaman 0: fark bulunsa da bulunmasa da, Instagram karsilastirmasi
+yapilsa da atlansa da esitleme kendi isini yapmis sayilir. Bu script'in
+basarisizligi cagiran akisi durdurmaz.
 """
 
 from __future__ import annotations
@@ -96,9 +102,10 @@ def main() -> int:
 
     # Instagram karsilastirmasi OPSIYONEL: bir emniyet agi, ana mekanizma degil.
     # Bekleyen postun akibetini SaaS'in public onay endpoint'i kesin olarak
-    # soyluyor ve o kimlik bilgisi istemiyor. Bu yuzden token alinamazsa
-    # esitleme durmaz, sadece Instagram karsilastirmasi atlanir — ama NEDEN
-    # atlandigi rapora yazilir, sessiz kalmaz.
+    # soyluyor ve o kimlik bilgisi istemiyor. Bu yuzden Instagram'a bakilamadigi
+    # HICBIR durumda esitleme durmaz — ne token alinamadiginda (asagida) ne de
+    # cagri basarisiz oldugunda (bir sonraki blok). Sadece karsilastirma atlanir
+    # ve NEDEN atlandigi rapora yazilir, sessiz kalmaz.
     #
     # Token artik ortamdan degil SaaS'tan geliyor (tek dogruluk kaynagi):
     # burada ayri bir IG_ACCESS_TOKEN kopyasi tutulsaydi SaaS'in gunluk
@@ -122,8 +129,21 @@ def main() -> int:
                 kimlik["token"],
             )["data"]
         except ig_api.IGHatasi as hata:
-            json_bas({"durum": "hata", "mesaj": hata.rapor(), "ayrinti": hata.ayrinti})
-            return 1
+            # Token alindi ama cagri basarisiz. Sonuc token hic alinamamasiyla
+            # ayni: karsilastirma yapilamiyor. Bu yuzden tepki de ayni olmali.
+            #
+            # Burasi eskiden tum calismayi dusuruyordu ve bir kez gercekten
+            # dusurdu: bulut oturumunun cikis proxy'si graph.instagram.com'a
+            # CONNECT'i 403 ile kesince Faz 1 hata verdi, Faz 2 hic calismadi,
+            # o gun 15:07 yuvasina post konmadi. Halbuki Faz 1'in asil isi olan
+            # "bekleyen postun akibeti" bilgisi SaaS'in public onay
+            # endpoint'inden geliyor ve o cagri Instagram'a hic dokunmuyor.
+            # Emniyet agi koptu diye ana mekanizma durmasin.
+            medyalar = []
+            ig_atlandi = (
+                "Instagram karsilastirmasi atlandi — "
+                + " ".join(hata.rapor().split())
+            )
 
     # repo caption izi -> post
     repo = {}
