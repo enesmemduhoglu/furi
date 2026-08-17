@@ -1,20 +1,12 @@
 {
-  "bekleyen": {
-    "slug": "durumsal/no-veggies",
-    "kategori": "durumsal",
-    "slayt": 1,
-    "saas_post_id": "cmswu0px70001jl041fpc563n",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/28da155c26564a5c96d4ddc4dda44211",
-    "gonderim_zamani": "2026-08-17T09:07:33+03:00",
-    "son_gecerlilik": "2026-08-18T09:07:33+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-17T08:12:30+03:00",
+  "son_yayin": "2026-08-17T09:09:24+03:00",
   "son_gonderim": "2026-08-17T09:07:33+03:00",
   "bugun": {
     "tarih": "2026-08-17",
     "siraya_konan": 2,
-    "yayinlanan": 1
+    "yayinlanan": 2
   },
   "son_stok_uyarisi": null,
   "atlananlar": [
