@@ -1,6 +1,6 @@
 ---
 name: insta-yayinla
-description: Repodaki hazir postlari siraya koyup @furkanteacherteaching hesabina yayinlatir. Kategori rotasyonuyla siradaki postu secer ve content-approval-saas'a gonderir; onay maili oradan gider, kullanici telefondan onaylayinca yayin ~11 saniye icinde SaaS tarafindan yapilir. Bu skill yayin yapmaz, sadece siradakini secer ve defteri tutar. Zamanlanmis calisma icin tasarlandi; elle "/insta-yayinla" ile de calistirilabilir.
+description: Repodaki hazir postlari siraya koyup @furkanteacherteaching hesabina yayinlatir. Havuzdaki en yuksek puanli postu secer ve content-approval-saas'a gonderir; onay maili oradan gider, kullanici telefondan onaylayinca yayin ~11 saniye icinde SaaS tarafindan yapilir. Bu skill yayin yapmaz, sadece siradakini secer ve defteri tutar. Zamanlanmis calisma icin tasarlandi; elle "/insta-yayinla" ile de calistirilabilir.
 ---
 
 # insta-yayinla — siradaki postu siraya koy
@@ -10,7 +10,7 @@ Bu skill **iki sey yapmaz**: post uretmez (o `insta-ingilizce`'nin isi) ve
 
 Yaptigi iki sey:
 
-1. Kategori rotasyonu ve puana gore siradaki postu secip onaya gonderir
+1. En yuksek puanli postu secip onaya gonderir
 2. Yayin defterini Instagram ile esitler
 
 Hedef tempo: **gunde 1 post** (oglen).
@@ -186,7 +186,7 @@ Sonra gonder:
 python .claude/skills/insta-yayinla/scripts/saas_gonder.py
 ```
 
-Script kategori rotasyonunu uygular, gorselleri ve caption'i dogrular, SaaS'a
+Script siradaki adayi secer, gorselleri ve caption'i dogrular, SaaS'a
 post olusturur ve `durum.json > bekleyen` alanini kendisi yazar. **Onay mailini
 SaaS gonderir** — bu skill mail yazmaz.
 
@@ -293,19 +293,29 @@ Tum komutlar repo kokunden calistirilir.
 
 ## Aday secimi
 
-**Kategori rotasyonu + puan.** En uzun suredir yayinlanmamis kategori once
-gelir; o kategori icinde **en yuksek puanli** post secilir. Rotasyon arka
-arkaya iki phrasal ya da iki seviye testi cikmasini engeller; puan da o
-kategorinin en iyi postunun once gitmesini saglar.
+**En yuksek puandan asagiya.** Havuzun tamami puana gore siralanir ve tepeden
+baslanir. Kategori **birincil olcut degil**, yalnizca esit puanlilar arasinda
+konusur: ayni puanda iki post varsa uzun suredir gorunmeyen kategoriden olani
+secilir.
+
+> **Takas:** feed'de arka arkaya ayni turden iki post cikabilir. Onceki kural
+> (kategori rotasyonu once) cesitliligi garantiliyordu ama iyi bir postu
+> sirasi gelmedigi icin bekletiyordu. 2026-08-18 karari: yayin sirasi
+> kaliteyi izler, cesitliligi degil.
 
 Puan postun **kalitesini** olcer (ilgi cekiyor mu, ogretiyor mu, ayrisiyor
 mu). Gorseldeki harf hatalari ve sablon sapmalari puana **girmez** —
 onlarin defteri `HATA-RAPORU.md`.
 
-Puan **elemez**: puani olmayan ya da olcut surumu eskimis post kategorisinin
-sonuna duser ama havuzda kalir; bozuk bir `puan.json` de secimi durdurmaz.
-Havuzun puan dagilimini `aday_sec.py --durum` ciktisindaki `puan_dagilimi`
-alani gosterir; sema `puanla.py --sema`, karar gecmisi `TODOS.md` icinde.
+Puan **elemez** ama sirayi tamamen belirler: puani olmayan ya da olcut surumu
+eskimis post havuzun **tamaminin** sonuna duser, yani puanli tek bir aday
+kaldigi surece secilmez. Uretim akisi her postu puanladigi icin bu gecici
+olmali; `puanla.py` puansiz kalanlari listeler. Bozuk bir `puan.json` secimi
+durdurmaz.
+
+Havuzun puan dagilimini ve yaklasik yayin planini `aday_sec.py --durum`
+ciktisindaki `puan_dagilimi` ve `yayin_sirasi` alanlari gosterir; sema
+`puanla.py --sema`, karar gecmisi `TODOS.md` icinde.
 
 Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar`
 icinde, `bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla

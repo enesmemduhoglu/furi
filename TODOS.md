@@ -88,23 +88,46 @@ Agirlikli ortalama ve "en zayif dal belirler" secenekleri degerlendirildi ve
 elendi. Cezali formul (surum 1) kaldirildi; toplamin dal puanlariyla ayni
 olcekte kalmasi puani okunur yapiyor.
 
-**5. Aday secimi — kategori rotasyonu kalir, puan kategori icinde siralar.**
+**5. Aday secimi — en yuksek puandan asagiya.**
 
-Dis siralama eskisi gibi: en uzun suredir yayinlanmamis kategori once. Degisen
-tek sey, o kategori icinde "en eski commit" yerine "en yuksek puan" secilmesi.
-Feed cesitliligi bozulmaz, stok tukenmez (27 adaylik havuzda ve 2 postluk
-`kitap-vs-gercek` kategorisinde esik altini eleme riskliydi — **eleme yok**).
+> Bu karar iki adimda olustu. Ilk hali: kategori rotasyonu birincil, puan
+> kategori icinde siralayici. 2026-08-18'de degistirildi.
+
+Havuzun **tamami** puana gore siralanir ve tepeden baslanir. Kategori birincil
+olcut degil, yalnizca **esit puanlilar** arasinda konusur.
 
 ```python
 sira_anahtari = (
-    kategori_son_yayin,     # en eski kategori once  (degismedi)
-    kategori,               #                        (degismedi)
-    0 if puanli else 1,     # puansiz/bayat kategorinin sonuna  <-- YENI
-    -toplam_puan,           # kategori icinde en iyi post       <-- YENI
-    ilk_commit_zamani,      # esitlik bozucu
+    0 if puanli else 1,     # puansiz/bayat HAVUZUN sonuna
+    -toplam_puan,           # EN YUKSEK PUAN ONCE  <-- birincil
+    # asagisi yalnizca esit puanlilar arasinda konusur
+    kategori_son_yayin,     # ayni puanda: uzun suredir gorunmeyen kategori
+    kategori,
+    ilk_commit_zamani,
     ad,
 )
 ```
+
+**Takas bilincli:** feed'de arka arkaya ayni turden iki post cikabilir. Nitekim
+su anki havuzda 3. ve 4. siralar `dizi/my-bad` ve `dizi/speak-of-the-devil` —
+ikisi de ayni kategoriden. Onceki kural bunu engelliyordu ama iyi bir postu
+sirasi gelmedigi icin bekletiyordu; yeni kuralda yayin sirasi kaliteyi izler,
+cesitliligi degil.
+
+Rotasyon esitlik bozucu olarak tutuldu cunku bedava: ilk iki post da 8.40 ve
+`kitap-vs-gercek` hic yayinlanmadigi icin `native-kaliplar` `tell-me-about-it`in
+onune geciyor.
+
+**Yan etki — puansiz post artik gercekten bekler.** Eskiden puani olmayan post
+kendi kategorisinin sonuna duserdi, yani kategori sirasi geldiginde yine
+gorunurdu. Simdi havuzun tamaminin sonuna dusuyor: puanli tek bir aday kaldigi
+surece puansiz post secilmez. Uretim akisi her postu puanladigi icin
+(WORKFLOW.md Faz 7) bu gecici olmali, ama Faz 7'yi atlamak postu fiilen rafa
+kaldirir. `puanla.py` puansiz kalanlari listeler.
+
+**Puan hala ELEMEZ:** hicbir post puani yuzunden havuzdan cikmiyor, sadece
+sirasi geriye gidiyor. 2 postluk `kitap-vs-gercek` gibi kategorilerde esik
+koyup elemek stok tukenmesi riski tasiyordu — o karar degismedi.
 
 **6. Bayatlama — olcut surumune bagli.**
 
@@ -127,9 +150,10 @@ puanlandi.
    kurali ve gerekce yazma standardi orada.
 2. **[x] Havuz puanlandi.** 27 yayinlanmamis postun tamami; her birinin
    klasorunde `puan.json` var. Puanlar 5.20 ile 8.40 arasinda, ortalama 7.19.
-3. **[x] `aday_sec.py` puani okuyor.** `sira_anahtari` kategori icinde once
-   puanlilari, sonra en yuksek puani aliyor. `--durum` ciktisina
-   `puan_dagilimi`, `puan_ortalamasi`, `en_dusuk_puan`, `en_yuksek_puan` eklendi.
+3. **[x] `aday_sec.py` sirayi puana gore kuruyor.** `sira_anahtari`nin birincil
+   olcutu artik puan; kategori esitlik bozucuya indi. `--durum` ciktisina
+   `puan_dagilimi`, `puan_ortalamasi`, `en_dusuk_puan`, `en_yuksek_puan` ve
+   havuzun tamamini yayin sirasinda veren `yayin_sirasi` eklendi.
 4. **[x] `puanla.py` yazildi.** `--eksik`, `--bayat`, `--tumu`, `--slug`,
    `--sema`, `--yaz` (+ `--kuru`, `--dosya`, `--malzeme`). Puani Claude verir;
    script tarama, sema dogrulamasi ve yazma isini gorur. `toplam` tek yerde
@@ -146,7 +170,8 @@ puanlandi.
 
 #### Puanlamanin ciktisi
 
-Kategori ici siralama (2026-08-18, olcut surumu 2):
+Puanlar kategori kategori (2026-08-18, olcut surumu 2). Yayin sirasi artik
+kategoriden bagimsiz, tepeden asagiya — asagida ayrica veriliyor.
 
 ```
 dizi:            tell-me-about-it 8.40 | speak-of-the-devil 8.20 | my-bad 8.20 | suit-yourself 7.00
@@ -159,9 +184,20 @@ phrasal:         look-forward-to 7.40 | cut-down-on 7.40 | give-up 7.00 | put-of
 durumsal:        without-peppers 6.40 | on-the-side 6.40 | plain 5.20
 ```
 
-Sistem calisir calismaz rotasyonun davranisi degisti: `karistirilan` sirasi
-geldiginde eski kural `effect-vs-affect`'i secerdi (repoya once eklendigi icin);
-yeni kural ayni kategoriden `remember-vs-remind`'i seciyor (7.60 vs 7.00).
+Yayin sirasi (ilk sekiz):
+
+```
+1. kitap-vs-gercek/native-kaliplar   8.40
+2. dizi/tell-me-about-it             8.40
+3. dizi/my-bad                       8.20
+4. dizi/speak-of-the-devil           8.20
+5. kitap-vs-gercek/gunluk-kaliplar   7.80
+6. seviye-testi/a1                   7.80
+7. seviye-testi/c1                   7.80
+8. hikayeli/takside                  7.80
+```
+
+Tamami `aday_sec.py --durum` > `yayin_sirasi` alaninda.
 
 **Havuzun sekli:** puanlar 5.20-8.40 arasinda toplanmis, ortalama 7.19. Yani
 havuzda "cop" yok; fark var ama dar. En zayif uc (`durumsal/plain` 5.20,

@@ -109,11 +109,13 @@ turetilir ve `aday_sec.py` her okuyusta yeniden hesaplar.
 | `hedef_kitle` | Seviye, ton ve ornek secimi sayfanin takipcisine oturuyor mu |
 | `gorsel_kalite` | Kompozisyon, hiyerarsi, okunabilirlik. **Harf hatasi ve sablon/marka sapmasi bu dala girmez** — kirik bir baslik ya da tasan bir metin girer, cunku onlar okunabilirligi bozar |
 
-**Puan aday secimini ELEMEZ.** Kategori rotasyonu aynen calisir; puan yalnizca
-kategori icinde hangi postun once gidecegini belirler. Puani olmayan ya da
-bayatlamis post kategorisinin sonuna duser ama havuzda kalir. Bozuk bir
-`puan.json` de secimi durdurmaz — post puansiz muamelesi gorur ve
-`aday_sec.py --durum` ciktisinda `puan_dagilimi.bozuk` altinda sayilir.
+**Puan yayin sirasini belirler.** Havuzun tamami puana gore siralanir ve
+tepeden baslanir; kategori yalnizca esit puanlilar arasinda konusur. Puan
+**elemez** — hicbir post puani yuzunden havuzdan cikmaz — ama puani olmayan
+ya da bayatlamis post havuzun tamaminin sonuna duser, yani puanli tek bir
+aday kaldigi surece secilmez. Bozuk bir `puan.json` de secimi durdurmaz:
+post puansiz muamelesi gorur ve `aday_sec.py --durum` ciktisinda
+`puan_dagilimi.bozuk` altinda sayilir.
 
 ### Kullanim
 
