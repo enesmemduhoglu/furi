@@ -1,15 +1,23 @@
 """Siradaki Instagram postunu secer.
 
-Secim kurali: **kategori rotasyonu + puan** — en uzun suredir yayinlanmamis
-kategoriden, o kategori icinde **en yuksek puanli** posttan baslanir. Rotasyon
-feed'de arka arkaya iki ayni tur post cikmasini engeller; puan da o kategorinin
-en iyi postunun once gitmesini saglar.
+Secim kurali: **en yuksek puandan asagiya**. Havuzun tamami puana gore
+siralanir ve tepeden baslanir; kategori artik birincil olcut degil, yalnizca
+esitlik bozucu.
 
-Puan ELEMEZ, yalnizca siralar: puani olmayan ya da olcut surumu eskimis post
-kategorisinin sonuna duser ama aday havuzunda kalir. Puan postun KALITESINI
-olcer; gorseldeki harf hatalari ve sablon sapmalari puana girmez, onlarin
-defteri HATA-RAPORU.md. Karar gecmisi: TODOS.md > "Post puanlama sistemi";
-puani ureten: puanla.py.
+Bu bilincli bir takas: feed'de arka arkaya ayni turden iki post cikabilir.
+Onceki kural (kategori rotasyonu once, puan kategori icinde) cesitliligi
+garantiliyordu ama iyi bir postu sirasi gelmedigi icin bekletiyordu. Karar
+2026-08-18: yayin sirasi kaliteyi izler, cesitliligi degil.
+
+Puan ELEMEZ, yalnizca siralar. Ancak puani olmayan ya da olcut surumu eskimis
+post artik havuzun **tamaminin** sonuna duser (eskiden yalnizca kendi
+kategorisinin sonuna duserdi) — yani puanli tek bir aday kaldigi surece
+puansiz post secilmez. Uretim akisi her postu puanladigi icin (WORKFLOW.md
+Faz 7) bu durum gecici olmali; `puanla.py` puansiz kalanlari listeler.
+
+Puan postun KALITESINI olcer; gorseldeki harf hatalari ve sablon sapmalari
+puana girmez, onlarin defteri HATA-RAPORU.md. Karar gecmisi: TODOS.md >
+"Post puanlama sistemi"; puani ureten: puanla.py.
 
 Kullanim:
     python aday_sec.py                  # siradaki adayi sec, JSON bas
@@ -155,11 +163,14 @@ def komut_sec(kok, args) -> int:
             ilk_commit_onbellek[slug] = ilk_commit_zamani(kok, slug)
         puan = puanlar[slug]
         return (
-            kategori_son.get(post["kategori"], 0.0),  # en eski kategori once
+            0 if puan["var"] else 1,                  # puansiz/bayat havuzun sonuna
+            -(puan["toplam"] or 0.0),                 # EN YUKSEK PUAN ONCE
+            # Buradan asagisi yalnizca esit puanlilar arasinda konusur.
+            # Rotasyonu esitlik bozucu olarak tutmak bedava: ayni puanda iki
+            # post varsa uzun suredir gorunmeyen kategoriden olani secilir.
+            kategori_son.get(post["kategori"], 0.0),
             post["kategori"],
-            0 if puan["var"] else 1,                  # puansiz/bayat kategorinin sonuna
-            -(puan["toplam"] or 0.0),                 # kategori icinde en yuksek puan
-            ilk_commit_onbellek[slug],                # esitlik bozucu: en eski post
+            ilk_commit_onbellek[slug],
             post["ad"],
         )
 
@@ -199,7 +210,7 @@ def _ozet_bas(veri: dict, havuz: int, dislanan: int, elenenler: list[dict]) -> N
     y("\n" + "=" * 62 + "\n")
     y(f"  SECILEN: {veri['slug']}\n")
     y("=" * 62 + "\n")
-    y(f"  kategori     : {veri['kategori']}\n")
+    y(f"  kategori     : {veri['kategori']}  (secimde yalnizca esitlik bozucu)\n")
     puan = veri.get("puan") or {}
     if puan.get("hal") == "guncel":
         y(f"  puan         : {puan['toplam']}\n")
@@ -261,11 +272,36 @@ def komut_durum(kok, args) -> int:
     # soylemeli; kalan on postun sekizi puansizsa havuz gorundugu kadar saglam degil.
     puan_dagilimi = {"guncel": 0, "bayat": 0, "puansiz": 0, "bozuk": 0}
     toplamlar: list[float] = []
+    ozetler: dict[str, dict] = {}
     for post in kalan_postlar:
         oz = puan_ozet(post["yol"])
+        ozetler[post["slug"]] = oz
         puan_dagilimi[oz["hal"]] += 1
         if oz["toplam"] is not None:
             toplamlar.append(oz["toplam"])
+
+    # Secim artik global puan siralamasi oldugu icin "kalan postlar" listesinin
+    # kendisi bir yayin plani. Anahtar komut_sec ile ayni sirayla kuruluyor
+    # (puan, sonra kategori rotasyonu) ki iki cikti esit puanlilarda ayrismasin;
+    # tek fark en son esitlik bozucu olan git commit zamaninin okunmamasi.
+    kategori_son = _kategori_son_yayin(defter)
+    yayin_sirasi = [
+        {
+            "slug": p["slug"],
+            "puan": ozetler[p["slug"]]["toplam"],
+            "kategori": p["kategori"],
+        }
+        for p in sorted(
+            kalan_postlar,
+            key=lambda p: (
+                0 if ozetler[p["slug"]]["var"] else 1,
+                -(ozetler[p["slug"]]["toplam"] or 0.0),
+                kategori_son.get(p["kategori"], 0.0),
+                p["kategori"],
+                p["slug"],
+            ),
+        )
+    ]
 
     json_bas(
         {
@@ -277,6 +313,7 @@ def komut_durum(kok, args) -> int:
             "stok_dusuk": len(kalan) < STOK_ESIGI,
             "stok_esigi": STOK_ESIGI,
             "kategori_dagilimi": kategori_dagilimi,
+            "yayin_sirasi": yayin_sirasi,
             "puan_dagilimi": puan_dagilimi,
             "puan_ortalamasi": round(sum(toplamlar) / len(toplamlar), 2) if toplamlar else None,
             "en_dusuk_puan": min(toplamlar) if toplamlar else None,

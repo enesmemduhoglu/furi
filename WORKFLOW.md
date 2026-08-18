@@ -295,8 +295,12 @@ Denetim sonucunu kisa bir tabloyla ozetle — hangi slayt kacinci denemede gecti
 ## Faz 7 — Puanlama
 
 Post bitti; simdi ona puan ver. Puan `puan.json` olarak post klasorune yazilir ve
-icerikle **ayni commit'te** gider. Amaci: rotasyon sirasi gelen postu degil, o
-kategorinin **en iyi** postunu onaya gondersin.
+icerikle **ayni commit'te** gider.
+
+⚠ **Puan artik yayin sirasini dogrudan belirliyor:** havuz en yuksek puandan
+asagiya dogru yayinlaniyor. Yani buradaki puan "bir bilgi notu" degil, postun
+kuyrukta nereye oturacagi. Puansiz birakilan post havuzun sonuna duser ve
+puanli aday bitene kadar hic yayinlanmaz — bu fazi atlamak postu rafa kaldirir.
 
 ```powershell
 $S = ".claude\skills\insta-yayinla\scripts"
