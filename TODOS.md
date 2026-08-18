@@ -20,13 +20,13 @@ _Su an acik is yok._
 **Neden:** 2026-08-18 sabahi rutin `karistirilan/borrow-vs-lend` postunu siraya
 koydu, post onay sayfasinda "cop post" gerekcesiyle reddedildi ve SaaS kaydi
 silindi. Kusur otomasyonda degil: rotasyon **sirasi gelen** postu seciyor,
-**iyi olan** postu degil. Havuzdaki kalite farki bugun hicbir yerde olculmuyor,
-dolayisiyla zayif bir post da guclu bir post da esit sansla onaya gidiyor. Tek
-suzgec insanin onay ekraninda "hayir" demesi — yani kalite kontrolu akisin en
-sonunda ve elle yapiliyor.
+**iyi olan** postu degil. Havuzdaki kalite farki hicbir yerde olculmuyordu,
+dolayisiyla zayif bir post da guclu bir post da esit sansla onaya gidiyordu. Tek
+suzgec insanin onay ekraninda "hayir" demesiydi — yani kalite kontrolu akisin en
+sonunda ve elle yapiliyordu.
 
-**Durum:** tamamlandi (2026-08-18). Kararlar verildi, kod yazildi, havuzdaki
-27 yayinlanmamis postun tamami geriye donuk puanlandi.
+**Durum:** tamamlandi (2026-08-18). Olcut surumu 2 yayinda; havuzdaki 27
+yayinlanmamis postun tamami puanli.
 
 ---
 
@@ -37,71 +37,60 @@ sonunda ve elle yapiliyor.
 Her postun puani kendi klasorunde, `caption.md` yaninda durur. Icerikle birlikte
 tasinir, postla ayni commit'te git gecmisine girer, post silinince puani da
 gider. `aday_sec.py` zaten `postlari_tara` ile klasorleri geziyor; okuma ek
-maliyet degil. Tek dosyali `otomasyon/puanlar.json` **kullanilmayacak** —
-her puanlamanin ayni dosyayi degistirmesi commit cakismasi uretirdi.
+maliyet degil. Tek dosyali `otomasyon/puanlar.json` **kullanilmadi** — her
+puanlamanin ayni dosyayi degistirmesi commit cakismasi uretirdi.
 
-Sema:
+**2. Puan postun KALITESINI olcer, uretim kusurunu degil.**
 
-```json
-{
-  "olcut_surumu": 1,
-  "tarih": "2026-08-18",
-  "model": "claude-opus-5",
-  "dallar": {
-    "ilgi_cekicilik":  {"puan": 4, "gerekce": "kanca zayif, ilk slaytta soru yok"},
-    "yazim":           {"puan": 8, "gerekce": "..."},
-    "gorsel_kalite":   {"puan": 3, "gerekce": "..."},
-    "ogretici_deger":  {"puan": 6, "gerekce": "..."},
-    "ozgunluk":        {"puan": 5, "gerekce": "..."},
-    "hedef_kitle":     {"puan": 7, "gerekce": "..."}
-  },
-  "kontroller": {
-    "gorselde_harf_hatasi":   true,
-    "sablon_tutarli":         false,
-    "caption_imla_temiz":     true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 2.5
-}
-```
+> Bu, olcut surumu 2 ile gelen ve sistemin tamamini sekillendiren karar.
+> Ilk surumde `gorselde_harf_hatasi`, `caption_imla_temiz`, `sablon_tutarli` ve
+> `turkce_ingilizce_dogru` diye dort ikili kontrol ve bir `yazim` dali vardi;
+> her basarisiz kontrol toplamdan 1.5 dusuyordu.
 
-**2. Dallar — alti dal, hepsi 1-10.**
+Kaldirildi. Puanin cevapladigi soru **"bu post iyi mi, ilgi ceker mi"**;
+"duzgun basilmis mi" degil. Uretim kusurlarinin defteri zaten `HATA-RAPORU.md`
+ve tespit yeri WORKFLOW.md Faz 5. Iki defterin ayni seyi iki kez tutmasi
+siralamayi bulaniklastiriyordu: **temiz basilmis siradan bir post, tek harf
+hatasi olan cok daha iyi bir postun onune geciyordu.**
 
-| dal | ne olcer |
+Somut ornek — `hikayeli/otel` surum 1'de havuzun en dusuguydu (2.83), cunku uc
+harf hatasi ve bir ceviri hatasi toplamdan 3.0 goturuyordu. Surum 2'de 7.00:
+icerik olarak ortalama ustu bir post ve zaten oyleydi; sorun basimdaydi, fikirde
+degil. O sorun HATA-RAPORU.md'de kayitli ve orada kalmali.
+
+**3. Bes dal, hepsi 1-10, hepsi gerekceli.**
+
+| Dal | Ne olcer |
 | --- | --- |
-| `ilgi_cekicilik` | konu ve kanca kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi |
-| `yazim` | caption ve slayt metinlerinde imla, dilbilgisi, Turkce-Ingilizce dogruluk |
-| `gorsel_kalite` | sablon tutarliligi, okunabilirlik, gorseldeki harf hatalari |
-| `ogretici_deger` | gercekten bir sey ogretiyor mu, yoksa bilineni mi tekrarliyor |
-| `ozgunluk` | hesabin onceki postlarindan ve piyasadaki tipik icerikten ayrisiyor mu |
-| `hedef_kitle` | seviye ve ton sayfanin takipcisine oturuyor mu |
+| `ilgi_cekicilik` | Konu ve kanca kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi |
+| `ogretici_deger` | Gercekten bir sey ogretiyor mu, yoksa bilineni mi tekrarliyor |
+| `ozgunluk` | Hesabin onceki postlarindan ve piyasadaki tipik icerikten ayrisiyor mu |
+| `hedef_kitle` | Seviye, ton ve ornek secimi sayfanin takipcisine oturuyor mu |
+| `gorsel_kalite` | Kompozisyon, hiyerarsi, okunabilirlik |
 
-Her dal puani yaninda kisa bir **gerekce** metni tasir; ciplak sayi "neden
-dusuk" sorusunu cevaplamiyor. `HATA-RAPORU.md` bulgulari `gorsel_kalite` ve
-`yazim` dallarinin girdisidir.
+`gorsel_kalite` dalinin siniri onemli:
 
-**3. Ikili kontroller — yargi degil, evet/hayir.**
+- **Girer:** kirik baslik, kutuya sigmayan metin, bozuk dikey denge, birbiriyle
+  yarisan iki odak — bunlar okunabilirligi bozar, yani postun kalitesini dusurur.
+- **Girmez:** yanlis harf, eksik diyakritik, farkli font, kayan zemin rengi,
+  baska bir CTA ikonu — bunlar uretim kusuru.
 
-Dal puanlarinin yaninda `kontroller` blogunda tutulur. Bunlar somut ve
-denetlenebilir sorular; puanlayan ile ureten ayni model oldugu icin
-oz-degerlendirmenin yumusak davranma riskini bunlar dengeler. Baslangic seti
-yukaridaki dort soru; olcut surumu artirilarak cogaltilabilir.
+Her dal puani yaninda kisa ve **somut** bir gerekce tasir; ciplak sayi "neden
+dusuk" sorusunu cevaplamiyor, bos sifat ("iyi", "temiz") da cevaplamiyor.
 
-**4. Toplam — duz ortalama, kontroller ceza.**
+**4. Toplam — duz ortalama, ceza yok.**
 
 ```
-toplam = ortalama(alti dal puani) - 1.5 * (basarisiz kontrol sayisi)
+toplam = ortalama(5 dal)      -> her zaman 1-10 arasi
 ```
 
-Basarisiz kontrol = kusurun **var** oldugu durum (`gorselde_harf_hatasi: true`,
-`sablon_tutarli: false`, ...). Dallar esit agirlikli; objektif kusur yargiya
-degil sabit cezaya bagli oldugu icin model kalibrasyonundaki kayma siralamayi
-daha az bozar. Agirlikli ortalama ve "en zayif dal belirler" secenekleri
-degerlendirildi ve elendi.
+Agirlikli ortalama ve "en zayif dal belirler" secenekleri degerlendirildi ve
+elendi. Cezali formul (surum 1) kaldirildi; toplamin dal puanlariyla ayni
+olcekte kalmasi puani okunur yapiyor.
 
 **5. Aday secimi — kategori rotasyonu kalir, puan kategori icinde siralar.**
 
-Dis siralama bugunku gibi: en uzun suredir yayinlanmamis kategori once. Degisen
+Dis siralama eskisi gibi: en uzun suredir yayinlanmamis kategori once. Degisen
 tek sey, o kategori icinde "en eski commit" yerine "en yuksek puan" secilmesi.
 Feed cesitliligi bozulmaz, stok tukenmez (27 adaylik havuzda ve 2 postluk
 `kitap-vs-gercek` kategorisinde esik altini eleme riskliydi — **eleme yok**).
@@ -110,47 +99,37 @@ Feed cesitliligi bozulmaz, stok tukenmez (27 adaylik havuzda ve 2 postluk
 sira_anahtari = (
     kategori_son_yayin,     # en eski kategori once  (degismedi)
     kategori,               #                        (degismedi)
-    -toplam_puan,           # kategori icinde en iyi post  <-- YENI
+    0 if puanli else 1,     # puansiz/bayat kategorinin sonuna  <-- YENI
+    -toplam_puan,           # kategori icinde en iyi post       <-- YENI
     ilk_commit_zamani,      # esitlik bozucu
     ad,
 )
 ```
 
-Puani olmayan post elenmez; kategorisi icinde puanlilarin **arkasina** siralanir
-(`toplam` yoksa `-inf` sayilir). Geriye donuk puanlama havuzu bir kere
-tarayacagi icin bu durum gecici.
-
-**5b. Sablon sapmasinda esik.** `sablon_tutarli` kontrolu ikili oldugu icin
-her sapmaya ayni cezayi (1.5) veriyor. Bu yuzden kontrol yalnizca **ilk bakista
-goze carpan** sapmalar icin `false` isaretlenir: font ya da olcek degisimi,
-eksik standart oge, renk kaymasi, deste icinde eksik slayt. Ince ayrac cizgisi
-gibi dekoratif ayrintilar `gorsel_kalite` dalindan dusulur, kontrole yazilmaz.
-Aksi halde `karistirilan/remember-vs-remind` (tek hairline cizgi) ile
-`dizi/suit-yourself` (butun font ailesi farkli) ayni cezayi alirdi.
-
 **6. Bayatlama — olcut surumune bagli.**
 
 `puan.json` icindeki `olcut_surumu`, koddaki guncel surumden kucukse puan bayat
-sayilir ve yeniden puanlanir. Olcutler (dal tanimlari, kontrol sorulari, ceza
-katsayisi) degistiginde surum artirilir. Takvime bagli bayatlama **yok** —
-icerik ve olcut degismediyse puani yeniden hesaplamak bosa is. Baslangic
-surumu: `1`.
+sayilir. Bayat puanin `toplam`i **kullanilmaz**: eski surum farkli bir formulle
+hesaplandigi icin yenilerle kiyaslanamaz, bu yuzden post siralamada puansiz gibi
+arkaya duser. Takvime bagli bayatlama **yok** — icerik ve olcut degismediyse
+puani yeniden hesaplamak bosa is.
+
+Surum 1'den 2'ye gecerken mekanizma kendini sinadi: 27 puanin tamami
+`puanla.py --bayat` ile tek komutta bayat olarak isaretlendi ve yeniden
+puanlandi.
 
 ---
 
 #### Yapilanlar
 
 1. **[x] Uretim akisina puanlama fazi.** WORKFLOW.md'ye **Faz 7 — Puanlama**
-   eklendi (eski Faz 7 Teslim, Faz 8 oldu). Faz 5'te tespit edilip duzeltilmeden
-   birakilan kusurlarin puana yansimasi kural olarak yazildi.
-2. **[x] Havuz geriye donuk puanlandi.** 27 yayinlanmamis postun tamami
-   puanlandi; her birinin klasorunde `puan.json` var. Puanlar 2.83 ile 8.50
-   arasinda, ortalama 5.91 — havuzdaki kalite farkinin gercek oldugunu ve
-   olculebildigini gosteriyor.
+   eklendi (eski Faz 7 Teslim, Faz 8 oldu). "Uretim kusurlari puana girmez"
+   kurali ve gerekce yazma standardi orada.
+2. **[x] Havuz puanlandi.** 27 yayinlanmamis postun tamami; her birinin
+   klasorunde `puan.json` var. Puanlar 5.20 ile 8.40 arasinda, ortalama 7.19.
 3. **[x] `aday_sec.py` puani okuyor.** `sira_anahtari` kategori icinde once
-   puanlilari, sonra en yuksek puani aliyor; puansiz post arkaya dusuyor ama
-   elenmiyor. `--durum` ciktisina `puan_dagilimi`, `puan_ortalamasi`,
-   `en_dusuk_puan` ve `en_yuksek_puan` eklendi.
+   puanlilari, sonra en yuksek puani aliyor. `--durum` ciktisina
+   `puan_dagilimi`, `puan_ortalamasi`, `en_dusuk_puan`, `en_yuksek_puan` eklendi.
 4. **[x] `puanla.py` yazildi.** `--eksik`, `--bayat`, `--tumu`, `--slug`,
    `--sema`, `--yaz` (+ `--kuru`, `--dosya`, `--malzeme`). Puani Claude verir;
    script tarama, sema dogrulamasi ve yazma isini gorur. `toplam` tek yerde
@@ -163,19 +142,37 @@ surumu: `1`.
 `.claude/skills/insta-yayinla/scripts/{furi_ortak,aday_sec,puanla}.py`,
 `<kategori>/<slug>/puan.json` (27 dosya).
 
-#### Puanlamanin ilk ciktisi
+---
+
+#### Puanlamanin ciktisi
+
+Kategori ici siralama (2026-08-18, olcut surumu 2):
+
+```
+dizi:            tell-me-about-it 8.40 | speak-of-the-devil 8.20 | my-bad 8.20 | suit-yourself 7.00
+kitap-vs-gercek: native-kaliplar 8.40 | gunluk-kaliplar 7.80
+hikayeli:        takside 7.80 | doktorda 7.60 | otel 7.00
+seviye-testi:    c1 7.80 | a1 7.80 | a2 7.60 | b2 7.40
+karistirilan:    remember-vs-remind 7.60 | lose-vs-loose 7.00 | effect-vs-affect 7.00 | make-vs-do 6.60
+phrasal:         look-forward-to 7.40 | cut-down-on 7.40 | give-up 7.00 | put-off 6.80
+                 run-out-of 6.40 | figure-out 6.00 | come-up-with 6.00
+durumsal:        without-peppers 6.40 | on-the-side 6.40 | plain 5.20
+```
 
 Sistem calisir calismaz rotasyonun davranisi degisti: `karistirilan` sirasi
-geldiginde eski kural `effect-vs-affect`'i (5.00, gorselde `takipte kali` harf
-hatasi) secerdi; yeni kural ayni kategoriden `remember-vs-remind`'i (7.67, hatasiz)
-seciyor.
+geldiginde eski kural `effect-vs-affect`'i secerdi (repoya once eklendigi icin);
+yeni kural ayni kategoriden `remember-vs-remind`'i seciyor (7.60 vs 7.00).
+
+**Havuzun sekli:** puanlar 5.20-8.40 arasinda toplanmis, ortalama 7.19. Yani
+havuzda "cop" yok; fark var ama dar. En zayif uc (`durumsal/plain` 5.20,
+`phrasal/come-up-with` 6.00, `phrasal/figure-out` 6.00) ayni sorunu paylasiyor:
+konu fazla basit ya da ornek fazla nis, ozgunluk dusuk. En guclu uc
+(`dizi/tell-me-about-it` 8.40, `kitap-vs-gercek/native-kaliplar` 8.40,
+`dizi/speak-of-the-devil` 8.20) ise ortak bir sey yapiyor — bir yanilgiyi once
+kurup sonra duzeltiyor.
 
 Puanlama sirasinda ayrica **HATA-RAPORU.md'de kayitli olmayan uc harf hatasi**
 bulundu ve o dosyaya islendi: `hikayeli/takside/6.jpg` (`odeyeblir`,
 `edoceklere`) ve `kitap-vs-gercek/gunluk-kaliplar/3.jpg` (`KITAP vs GERCEX` —
-hata markanin kendi etiketinde).
-
-En dusuk uc post — `hikayeli/otel` (2.83), `seviye-testi/b2` (3.33),
-`durumsal/plain` (3.83) — su an aday havuzunda duruyor ve sirasi gelince onaya
-gidecek. Puan elemedigi icin bu tasarim geregi; yeniden uretim ya da arsivleme
-karari ayri bir is.
+hata markanin kendi etiketinde). Bunlar puani etkilemiyor; yeniden uretim ayri
+bir karar.

@@ -1,5 +1,5 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
@@ -7,17 +7,9 @@
       "puan": 6,
       "gerekce": "Faydali ama sasirtmayan bir kalip; kanca yok, sadece bilgi veriliyor. Kaydedilir, paylasilmaz."
     },
-    "yazim": {
-      "puan": 7,
-      "gerekce": "Caption temiz. Gorselde diyakritik ayni satirda tutarsiz: 'icin' c harfini tasirken 'begen' g harfini kaybetmis."
-    },
-    "gorsel_kalite": {
-      "puan": 6,
-      "gerekce": "Hiyerarsi dogru ama CTA ikonu gri daire icinde ok — kategorideki diger kartlarin hicbirinde bu ikon yok. Alt bosluk genis."
-    },
     "ogretici_deger": {
       "puan": 6,
-      "gerekce": "Kalibin sos disinda salata sosu ve tereyagiyla da calistigini soylemesi degerli, ama caption iki kisa paragrafta bitiyor; alternatif ya da tuzak notu yok."
+      "gerekce": "Kalibin salata sosu ve tereyagiyla da calistigini soylemesi degerli, ama caption iki kisa paragrafta bitiyor; alternatif ya da tuzak notu yok."
     },
     "ozgunluk": {
       "puan": 5,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 8,
       "gerekce": "Yurt disina cikan orta seviye takipciye dogrudan yarar; seviye ve ton uygun."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Hiyerarsi dogru ve okunakli; CTA'nin altinda kalan bos alan genis, kart alt kenara dogru boslukta asili kaliyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": true,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 6.33
+  "toplam": 6.4
 }

@@ -68,45 +68,52 @@ Bu klasorde **degil**, her postun kendi klasorunde durur; yine de otomasyonun
 okudugu bir state oldugu icin semasi burada. Karar gecmisi: `TODOS.md` >
 "Post puanlama sistemi".
 
-Puani Claude verir, `puanla.py` yazar. Elle duzenlenmemeli: `toplam` alani
-formulden turetilir ve `aday_sec.py` her okuyusta yeniden hesaplar — dosyadaki
-sayiyi degistirmek siralamayi degistirmez, sadece dosyayi tutarsiz birakir.
+**Puan postun kalitesini olcer** — ilgi cekiyor mu, ogretiyor mu, ayrisiyor mu.
+Uretim kusurlari (gorseldeki harf hatalari, imla, sablon ve marka sapmalari)
+puana **girmez**; onlarin defteri `HATA-RAPORU.md`. Iki defterin ayni seyi iki
+kez tutmasi "hangi post daha iyi" sorusunu bulaniklastiriyordu: temiz basilmis
+siradan bir post, tek harf hatasi olan cok daha iyi bir postun onune geciyordu.
+
+Puani Claude verir, `puanla.py` yazar. Elle duzenlenmemeli: `toplam` formulden
+turetilir ve `aday_sec.py` her okuyusta yeniden hesaplar.
 
 ```json
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
-    "ilgi_cekicilik":  {"puan": 4, "gerekce": "kanca zayif, ilk slaytta soru yok"},
-    "yazim":           {"puan": 8, "gerekce": "..."},
-    "gorsel_kalite":   {"puan": 3, "gerekce": "..."},
-    "ogretici_deger":  {"puan": 6, "gerekce": "..."},
-    "ozgunluk":        {"puan": 5, "gerekce": "..."},
-    "hedef_kitle":     {"puan": 7, "gerekce": "..."}
+    "ilgi_cekicilik": {"puan": 8, "gerekce": "kanca guclu, ilk slaytta soru var"},
+    "ogretici_deger": {"puan": 9, "gerekce": "..."},
+    "ozgunluk":       {"puan": 7, "gerekce": "..."},
+    "hedef_kitle":    {"puan": 9, "gerekce": "..."},
+    "gorsel_kalite":  {"puan": 8, "gerekce": "..."}
   },
-  "kontroller": {
-    "gorselde_harf_hatasi":   true,
-    "sablon_tutarli":         false,
-    "caption_imla_temiz":     true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 2.5
+  "toplam": 8.2
 }
 ```
 
 | Alan | Anlami |
 |---|---|
-| `olcut_surumu` | Puanin hangi olcut setiyle verildigi. Koddaki `OLCUT_SURUMU`'nden kucukse puan **bayat** sayilir ve yeniden puanlanmasi gerekir. Takvime bagli bayatlama yok. |
-| `dallar` | Alti dal, her biri 1-10 puan **ve zorunlu bir gerekce**. Gerekcesiz puan dogrulamadan gecmez. |
-| `kontroller` | Evet/hayir sorular. `gorselde_harf_hatasi` icin beklenen deger `false`, digerleri icin `true`. Eksik birakilan kontrol basarisiz sayilir. |
-| `toplam` | `ortalama(6 dal) - 1.5 * basarisiz kontrol sayisi`. Alt sinir yok, eksiye dusebilir. |
+| `olcut_surumu` | Puanin hangi olcut setiyle verildigi. Koddaki `OLCUT_SURUMU`'nden kucukse puan **bayat** sayilir; eski surum farkli bir formulle hesaplandigi icin toplami yenilerle kiyaslanamaz, bu yuzden siralamada puansiz gibi arkaya duser. Takvime bagli bayatlama yok. |
+| `dallar` | Bes dal, her biri 1-10 **ve zorunlu bir gerekce**. Gerekcesiz puan dogrulamadan gecmez; gerekce bos sifat degil, neyin nerede oldugu olmali. |
+| `toplam` | `ortalama(5 dal)`. Her zaman 1-10 arasi — ceza yok. |
+
+### Dallar
+
+| Dal | Ne olcer |
+|---|---|
+| `ilgi_cekicilik` | Konu ve kanca kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi |
+| `ogretici_deger` | Gercekten bir sey ogretiyor mu, yoksa bilineni mi tekrarliyor |
+| `ozgunluk` | Hesabin onceki postlarindan ve piyasadaki tipik icerikten ayrisiyor mu |
+| `hedef_kitle` | Seviye, ton ve ornek secimi sayfanin takipcisine oturuyor mu |
+| `gorsel_kalite` | Kompozisyon, hiyerarsi, okunabilirlik. **Harf hatasi ve sablon/marka sapmasi bu dala girmez** — kirik bir baslik ya da tasan bir metin girer, cunku onlar okunabilirligi bozar |
 
 **Puan aday secimini ELEMEZ.** Kategori rotasyonu aynen calisir; puan yalnizca
-kategori icinde hangi postun once gidecegini belirler. Puani olmayan post
-kategorisinin sonuna duser ama havuzda kalir. Bozuk bir `puan.json` de secimi
-durdurmaz — post puansiz muamelesi gorur ve `aday_sec.py --durum` ciktisinda
-`puan_dagilimi.bozuk` altinda sayilir.
+kategori icinde hangi postun once gidecegini belirler. Puani olmayan ya da
+bayatlamis post kategorisinin sonuna duser ama havuzda kalir. Bozuk bir
+`puan.json` de secimi durdurmaz — post puansiz muamelesi gorur ve
+`aday_sec.py --durum` ciktisinda `puan_dagilimi.bozuk` altinda sayilir.
 
 ### Kullanim
 
@@ -114,7 +121,7 @@ durdurmaz — post puansiz muamelesi gorur ve `aday_sec.py --durum` ciktisinda
 S=.claude/skills/insta-yayinla/scripts
 python $S/puanla.py                  # puansiz + bozuk + bayat postlar
 python $S/puanla.py --bayat          # olcut surumu eskimis olanlar
-python $S/puanla.py --sema           # dallar, kontroller, formul
+python $S/puanla.py --sema           # dallar ve formul
 python $S/puanla.py --slug dizi/my-bad --malzeme   # tek postun puani + caption
 python $S/aday_sec.py --durum        # havuzun puan dagilimi ve ortalamasi
 ```

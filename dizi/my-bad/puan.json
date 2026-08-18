@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 8,
-      "gerekce": "Gramere aykiri ama herkesin duydugu bir kalip — 'kitapta yanlis, dizide her yerde' acisi kaydirmayi durduruyor. Kaydetmeye deger."
-    },
-    "yazim": {
-      "puan": 9,
-      "gerekce": "Caption ve gorselde hata yok; gorseldeki Turkce bastan sona ASCII, tutarli."
-    },
-    "gorsel_kalite": {
-      "puan": 8,
-      "gerekce": "Sablonun referans kart hali: etiket, dev baslik, Turkce karsilik, ornek + parantezli ceviri, emojili CTA. Ornek ile CTA arasindaki bosluk biraz genis."
+      "gerekce": "Gramere aykiri ama herkesin duydugu bir kalip; 'kitapta yanlis, dizide her yerde' acisi kaydirmayi durduruyor."
     },
     "ogretici_deger": {
       "puan": 9,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 9,
       "gerekce": "Dizi izleyen orta seviye takipciye tam oturuyor; ton gundelik, ornek cumle gunluk hayattan."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Sablonun referans kompozisyonu: etiket, dev baslik, Turkce karsilik, ornek, CTA basamaklari net okunuyor. Ornek ile CTA arasindaki bosluk biraz genis."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": true,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 8.33
+  "toplam": 8.2
 }

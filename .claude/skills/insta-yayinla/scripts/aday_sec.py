@@ -5,8 +5,10 @@ kategoriden, o kategori icinde **en yuksek puanli** posttan baslanir. Rotasyon
 feed'de arka arkaya iki ayni tur post cikmasini engeller; puan da o kategorinin
 en iyi postunun once gitmesini saglar.
 
-Puan ELEMEZ, yalnizca siralar: puani olmayan post kategorisinin sonuna duser ama
-aday havuzunda kalir. Karar gecmisi ve sema: TODOS.md > "Post puanlama sistemi";
+Puan ELEMEZ, yalnizca siralar: puani olmayan ya da olcut surumu eskimis post
+kategorisinin sonuna duser ama aday havuzunda kalir. Puan postun KALITESINI
+olcer; gorseldeki harf hatalari ve sablon sapmalari puana girmez, onlarin
+defteri HATA-RAPORU.md. Karar gecmisi: TODOS.md > "Post puanlama sistemi";
 puani ureten: puanla.py.
 
 Kullanim:
@@ -155,7 +157,7 @@ def komut_sec(kok, args) -> int:
         return (
             kategori_son.get(post["kategori"], 0.0),  # en eski kategori once
             post["kategori"],
-            0 if puan["var"] else 1,                  # puansiz post kategorinin sonuna
+            0 if puan["var"] else 1,                  # puansiz/bayat kategorinin sonuna
             -(puan["toplam"] or 0.0),                 # kategori icinde en yuksek puan
             ilk_commit_onbellek[slug],                # esitlik bozucu: en eski post
             post["ad"],
@@ -199,11 +201,12 @@ def _ozet_bas(veri: dict, havuz: int, dislanan: int, elenenler: list[dict]) -> N
     y("=" * 62 + "\n")
     y(f"  kategori     : {veri['kategori']}\n")
     puan = veri.get("puan") or {}
-    if puan.get("var"):
-        bayat = "  (BAYAT — olcut surumu eski)" if puan.get("bayat") else ""
-        y(f"  puan         : {puan['toplam']}{bayat}\n")
-    elif puan.get("sorun"):
+    if puan.get("hal") == "guncel":
+        y(f"  puan         : {puan['toplam']}\n")
+    elif puan.get("hal") == "bozuk":
         y(f"  puan         : BOZUK — {puan['sorun']}\n")
+    elif puan.get("hal") == "bayat":
+        y(f"  puan         : BAYAT — olcut surumu {puan['olcut_surumu']}, yeniden puanlanmali\n")
     else:
         y("  puan         : YOK\n")
     y(f"  slayt        : {veri['slayt']}\n")
@@ -260,12 +263,8 @@ def komut_durum(kok, args) -> int:
     toplamlar: list[float] = []
     for post in kalan_postlar:
         oz = puan_ozet(post["yol"])
-        if oz["sorun"]:
-            puan_dagilimi["bozuk"] += 1
-        elif not oz["var"]:
-            puan_dagilimi["puansiz"] += 1
-        else:
-            puan_dagilimi["bayat" if oz["bayat"] else "guncel"] += 1
+        puan_dagilimi[oz["hal"]] += 1
+        if oz["toplam"] is not None:
             toplamlar.append(oz["toplam"])
 
     json_bas(

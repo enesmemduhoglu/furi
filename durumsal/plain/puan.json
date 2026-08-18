@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 5,
       "gerekce": "Tek kelimelik konu, kanca zayif; kaydirmayi durduracak bir gerilim yok."
-    },
-    "yazim": {
-      "puan": 7,
-      "gerekce": "Caption temiz. Gorselde 'Tavuk sandvici' c harfini kaybetmis ama ayni kartta 'icin' tasiyor — tutarsiz."
-    },
-    "gorsel_kalite": {
-      "puan": 4,
-      "gerekce": "Dikey denge bozuk: icerik ust yariya toplanmis, alt yari bos. Ornek cumle 'sandwich / plain.' diye kirilip ikinci satirda tek kelime kalmis, CTA ikonu cift basli ok, zemin kategorinin geri kalanindan belirgin sari."
     },
     "ogretici_deger": {
       "puan": 5,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 7,
       "gerekce": "Seviye uygun ama bu kadar basit bir kelime takipcinin cogunun zaten bildigi bir sey olabilir."
+    },
+    "gorsel_kalite": {
+      "puan": 5,
+      "gerekce": "Dikey denge bozuk: butun icerik ust yariya toplanmis, alt yari bos. Ornek cumle 'sandwich / plain.' diye kirilip ikinci satirda tek kelime kalmis."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": false,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 3.83
+  "toplam": 5.2
 }

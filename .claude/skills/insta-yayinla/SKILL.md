@@ -298,10 +298,14 @@ gelir; o kategori icinde **en yuksek puanli** post secilir. Rotasyon arka
 arkaya iki phrasal ya da iki seviye testi cikmasini engeller; puan da o
 kategorinin en iyi postunun once gitmesini saglar.
 
-Puan **elemez**: puani olmayan post kategorisinin sonuna duser ama havuzda
-kalir, bozuk bir `puan.json` de secimi durdurmaz. Havuzun puan dagilimini
-`aday_sec.py --durum` ciktisindaki `puan_dagilimi` alani gosterir; puanlama
-ve sema `puanla.py`, karar gecmisi `TODOS.md` icinde.
+Puan postun **kalitesini** olcer (ilgi cekiyor mu, ogretiyor mu, ayrisiyor
+mu). Gorseldeki harf hatalari ve sablon sapmalari puana **girmez** —
+onlarin defteri `HATA-RAPORU.md`.
+
+Puan **elemez**: puani olmayan ya da olcut surumu eskimis post kategorisinin
+sonuna duser ama havuzda kalir; bozuk bir `puan.json` de secimi durdurmaz.
+Havuzun puan dagilimini `aday_sec.py --durum` ciktisindaki `puan_dagilimi`
+alani gosterir; sema `puanla.py --sema`, karar gecmisi `TODOS.md` icinde.
 
 Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar`
 icinde, `bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla

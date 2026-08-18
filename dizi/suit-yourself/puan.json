@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 7,
       "gerekce": "'Takim elbiseyle alakasi yok' acilisi iyi ama kalip digerleri kadar sasirtici degil."
-    },
-    "yazim": {
-      "puan": 9,
-      "gerekce": "Caption ve gorsel metni hatasiz, gorseldeki Turkce bastan sona ASCII."
-    },
-    "gorsel_kalite": {
-      "puan": 5,
-      "gerekce": "Kart sablondan gorunur bicimde sapiyor: baslik fontu daha ince ve genis, 'Sen bilirsin.' satiri neredeyse baslik boyunda ve optik olarak saga kacik, ust etiket harf araligini kaybetmis."
     },
     "ogretici_deger": {
       "puan": 8,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 8,
       "gerekce": "Seviye ve ton uygun, ornek cumle gundelik."
+    },
+    "gorsel_kalite": {
+      "puan": 6,
+      "gerekce": "Hiyerarsi zayif: 'Sen bilirsin.' satiri neredeyse baslik boyunda, ikisi birbiriyle yarisiyor; ustelik optik olarak saga kacik duruyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": false,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 5.67
+  "toplam": 7.0
 }

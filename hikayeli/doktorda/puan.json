@@ -1,23 +1,15 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 8,
-      "gerekce": "'Yurt disinda hastalanmak yeterince kotu, derdini anlatamamak daha kotu' acilisi gercek bir korkuya dokunuyor; karusel formati kaydirmayi tesvik ediyor."
-    },
-    "yazim": {
-      "puan": 6,
-      "gerekce": "Caption kusursuz ama 5. slaytta 'Yurt disiina cikacaklara gonder' yaziyor — fazladan i harfi, kapanis CTA'sinda."
-    },
-    "gorsel_kalite": {
-      "puan": 7,
-      "gerekce": "Kapak uc satirlik dev tipografiyle guclu, ic slaytlar temiz ve tutarli. Slaytlarin alt yarisinda genis bos alan kaliyor."
+      "gerekce": "'Yurt disinda hastalanmak yeterince kotu, derdini anlatamamak daha kotu' acilisi gercek bir korkuya dokunuyor; karusel kaydirmayi tesvik ediyor."
     },
     "ogretici_deger": {
       "puan": 8,
-      "gerekce": "Dort cumle bir doktor ziyaretini sirayla takip ediyor (randevu, sikayet, recete, eczane); caption en kritik cumleyi isaretleyip nedenini de aciklamis."
+      "gerekce": "Dort cumle bir doktor ziyaretini sirayla takip ediyor (randevu, sikayet, recete, eczane); caption en kritik cumleyi isaretleyip nedenini de acikliyor."
     },
     "ozgunluk": {
       "puan": 7,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 8,
       "gerekce": "Yurt disina cikacak takipciye somut fayda, seviye ve ton uygun."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Kapak uc satirlik dev tipografiyle guclu ve dolu; ic slaytlarda icerik ust yariya toplanip alt yari bos kaliyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": true,
-    "sablon_tutarli": true,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 5.83
+  "toplam": 7.6
 }

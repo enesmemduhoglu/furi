@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 8,
       "gerekce": "'Kelime kelime cevirince tam tersi cikiyor' acisi guclu bir kanca; altyazi izleyeninin gercekten yanildigi bir yer."
-    },
-    "yazim": {
-      "puan": 9,
-      "gerekce": "Caption ve gorsel metni hatasiz, ASCII tutarli."
-    },
-    "gorsel_kalite": {
-      "puan": 6,
-      "gerekce": "Ornek cumlenin altindaki parantezli Turkce ceviri satiri yok — ayni kategorideki diger uc kartta var. Zemin dokusu da belirgin sekilde daha seftali tonda."
     },
     "ogretici_deger": {
       "puan": 9,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 9,
       "gerekce": "Altyazi ile dizi izleyen kitleye dogrudan hitap ediyor, seviye orta."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Dort blok dengeli dagilmis, baslik ve Turkce karsilik arasindaki olcek farki net; okunabilirlik iyi."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": false,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 6.67
+  "toplam": 8.4
 }

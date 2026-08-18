@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 7,
       "gerekce": "'to burada mastar eki degil edat' tuzagi ogrenenin gercekten yaptigi hataya dokunuyor."
-    },
-    "yazim": {
-      "puan": 9,
-      "gerekce": "Caption ve gorsel metni hatasiz, gorseldeki Turkce bastan sona ASCII."
-    },
-    "gorsel_kalite": {
-      "puan": 6,
-      "gerekce": "Karta turuncu 'EXAMPLE SENTENCE' ara etiketi eklenmis — arsivde baska hicbir kartta yok, ustelik kartin tek Ingilizce etiketi. Ikinci bir turuncu baslik hiyerarsiyi bolyor."
     },
     "ogretici_deger": {
       "puan": 9,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 8,
       "gerekce": "Bursa otobus yolculugu ornegi takipcinin hayatindan; seviye ve ton uygun."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Okunabilirlik iyi ama ikinci bir turuncu baslik ('EXAMPLE SENTENCE') kartta iki rakip odak yaratiyor, goz once ona kayiyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": false,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 6.0
+  "toplam": 7.4
 }

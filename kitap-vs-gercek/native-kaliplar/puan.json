@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 8,
-      "gerekce": "'Gramer olarak kusursuz, sorun kimsenin oyle konusmamasi' acilisi net bir catisma; kalip secimleri (I'm starving, Beats me) tanidik ama kart formati merak uyandiriyor."
-    },
-    "yazim": {
-      "puan": 9,
-      "gerekce": "Caption ve butun slayt metinleri hatasiz; gorsellerdeki Turkce bastan sona ASCII, tek bir diyakritik sizintisi yok."
-    },
-    "gorsel_kalite": {
-      "puan": 8,
-      "gerekce": "Arsivin en temiz destesi: her kartta ust iki satir Ingilizce, Turkce yalnizca alttaki parantezde — karsilastirma kurali bastan sona uygulanmis. Kapak tipografisi guclu, dikey ritim tutarli."
+      "gerekce": "'Gramer olarak kusursuz, sorun kimsenin oyle konusmamasi' acilisi net bir catisma kuruyor."
     },
     "ogretici_deger": {
       "puan": 9,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 9,
       "gerekce": "Kitap Ingilizcesi bilip gunluk konusmada takilan kitleye dogrudan hitap ediyor."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Arsivin en okunakli destesi: her kartta uc kademe (kitap satiri, dev karsilik, parantezli ceviri) ayni olcek iliskisiyle diziliyor, hicbir satir tasmiyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": true,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 8.5
+  "toplam": 8.4
 }
