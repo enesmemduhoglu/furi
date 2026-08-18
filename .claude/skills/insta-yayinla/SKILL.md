@@ -10,7 +10,7 @@ Bu skill **iki sey yapmaz**: post uretmez (o `insta-ingilizce`'nin isi) ve
 
 Yaptigi iki sey:
 
-1. Kategori rotasyonuyla siradaki postu secip onaya gonderir
+1. Kategori rotasyonu ve puana gore siradaki postu secip onaya gonderir
 2. Yayin defterini Instagram ile esitler
 
 Hedef tempo: **gunde 2 post**.
@@ -271,7 +271,9 @@ Tum komutlar repo kokunden calistirilir.
 | `saas_gonder.py` | Siradakini secip SaaS'a gonderir | **SaaS'a post olusturur** |
 | `saas_gonder.py --kuru` | Ne gonderilecegini basar | hayir |
 | `saas_gonder.py --slug K/S` | Belirli postu gonderir (rotasyonu atlar) | **evet** |
-| `aday_sec.py --durum` | Havuz istatistigi, stok durumu | hayir |
+| `aday_sec.py --durum` | Havuz istatistigi, stok ve puan dagilimi | hayir |
+| `puanla.py` | Puansiz / bayat postlari listeler | hayir |
+| `puanla.py --yaz K/S` | Post puani yazar (JSON stdin'den) | hayir |
 | `aday_sec.py --dry-run` | Siradaki adayin okunakli ozeti | hayir |
 
 **Elle teshis / kurtarma** (normal akista kullanilmaz):
@@ -292,9 +294,15 @@ Tum komutlar repo kokunden calistirilir.
 
 ## Aday secimi
 
-**Kategori rotasyonu.** En uzun suredir yayinlanmamis kategori once gelir; o
-kategori icinde repoya en once eklenmis post secilir. Boylece arka arkaya iki
-phrasal ya da iki seviye testi cikmaz.
+**Kategori rotasyonu + puan.** En uzun suredir yayinlanmamis kategori once
+gelir; o kategori icinde **en yuksek puanli** post secilir. Rotasyon arka
+arkaya iki phrasal ya da iki seviye testi cikmasini engeller; puan da o
+kategorinin en iyi postunun once gitmesini saglar.
+
+Puan **elemez**: puani olmayan post kategorisinin sonuna duser ama havuzda
+kalir, bozuk bir `puan.json` de secimi durdurmaz. Havuzun puan dagilimini
+`aday_sec.py --durum` ciktisindaki `puan_dagilimi` alani gosterir; puanlama
+ve sema `puanla.py`, karar gecmisi `TODOS.md` icinde.
 
 Bir post su durumlarda aday olmaz: yayin defterinde kayitli, `atlananlar`
 icinde, `bekleyen` olarak duruyor, ya da dogrulamayi gecemiyor (10'dan fazla

@@ -529,3 +529,178 @@ def utf8_cikti() -> None:
 
 def json_bas(veri: dict) -> None:
     sys.stdout.write(json.dumps(veri, ensure_ascii=False, indent=2) + "\n")
+
+
+# --------------------------------------------------------------------- puanlama
+#
+# Karar gecmisi: TODOS.md > "Post puanlama sistemi" > Kararlar.
+# Ozet: puan post klasorunde `puan.json` icinde durur, alti dal 1-10 puanlanir,
+# yaninda ikili kontroller tutulur, toplam = dal ortalamasi - kontrol cezasi.
+# Puan aday secimini ELEMEZ, yalnizca kategori icinde siralar.
+
+# Olcutler (dal tanimlari, kontrol sorulari, ceza katsayisi) her degistiginde
+# artir. Surumu eski kalan puanlar `puanla.py --bayat` ile yakalanir.
+OLCUT_SURUMU = 1
+
+PUAN_ALT = 1
+PUAN_UST = 10
+
+# Basarisiz her ikili kontrolun toplamdan dusurdugu puan. Objektif kusuru
+# yargiya degil sabit cezaya baglamak, puanlayan ile uretenin ayni model olmasi
+# nedeniyle olusan "kendine yumusak davranma" riskini sinirlar.
+KONTROL_CEZASI = 1.5
+
+PUAN_DALLARI = {
+    "ilgi_cekicilik": "konu ve kanca kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi",
+    "yazim": "caption ve slayt metinlerinde imla, dilbilgisi, Turkce-Ingilizce dogruluk",
+    "gorsel_kalite": "sablon tutarliligi, okunabilirlik, gorseldeki harf hatalari",
+    "ogretici_deger": "gercekten bir sey ogretiyor mu, yoksa bilineni mi tekrarliyor",
+    "ozgunluk": "hesabin onceki postlarindan ve piyasadaki tipik icerikten ayrisiyor mu",
+    "hedef_kitle": "seviye ve ton sayfanin takipcisine oturuyor mu",
+}
+
+# kontrol adi -> kusursuz bir postta beklenen deger.
+# Bunlar yargi degil, evet/hayir sorulari; cevabi tartisilabilir olan sey dala
+# yazilir, kontrole degil.
+PUAN_KONTROLLERI = {
+    "gorselde_harf_hatasi": False,
+    "sablon_tutarli": True,
+    "caption_imla_temiz": True,
+    "turkce_ingilizce_dogru": True,
+}
+
+MIN_GEREKCE = 15
+
+
+def puan_yolu(post_yolu: Path) -> Path:
+    return post_yolu / "puan.json"
+
+
+def basarisiz_kontroller(kontroller: dict) -> list[str]:
+    """Beklenen degerden sapan kontrollerin adi.
+
+    Eksik kontrol basarisiz sayilir: puanlayan soruyu atlayarak cezadan
+    kacamasin.
+    """
+    kontroller = kontroller or {}
+    return [
+        ad
+        for ad, beklenen in PUAN_KONTROLLERI.items()
+        if bool(kontroller.get(ad)) is not beklenen
+    ]
+
+
+def toplam_hesapla(dallar: dict, kontroller: dict) -> float:
+    """toplam = ortalama(dal puanlari) - KONTROL_CEZASI * basarisiz kontrol sayisi
+
+    Alt sinir yok: cok kusurlu bir post eksiye dusebilir, siralamada da en
+    arkada kalmasi zaten istenen sey.
+    """
+    puanlar = [
+        dallar[ad]["puan"]
+        for ad in PUAN_DALLARI
+        if isinstance(dallar.get(ad), dict) and isinstance(dallar[ad].get("puan"), (int, float))
+    ]
+    if not puanlar:
+        raise ValueError("hicbir dal puani yok")
+    ortalama = sum(puanlar) / len(puanlar)
+    return round(ortalama - KONTROL_CEZASI * len(basarisiz_kontroller(kontroller)), 2)
+
+
+def puan_dogrula(veri: dict) -> list[str]:
+    """Bir puan sozlugunun semaya uydugunu kontrol eder. Sorun listesi doner."""
+    sorunlar: list[str] = []
+
+    if not isinstance(veri, dict):
+        return ["puan verisi sozluk degil"]
+
+    dallar = veri.get("dallar")
+    if not isinstance(dallar, dict):
+        sorunlar.append("'dallar' sozlugu yok")
+        dallar = {}
+
+    for ad in PUAN_DALLARI:
+        dal = dallar.get(ad)
+        if not isinstance(dal, dict):
+            sorunlar.append(f"dal eksik: {ad}")
+            continue
+        puan = dal.get("puan")
+        if not isinstance(puan, (int, float)) or isinstance(puan, bool):
+            sorunlar.append(f"{ad}: puan sayi degil")
+        elif not (PUAN_ALT <= puan <= PUAN_UST):
+            sorunlar.append(f"{ad}: puan {puan} — {PUAN_ALT}-{PUAN_UST} disinda")
+        gerekce = (dal.get("gerekce") or "").strip()
+        if len(gerekce) < MIN_GEREKCE:
+            sorunlar.append(f"{ad}: gerekce yok ya da cok kisa (en az {MIN_GEREKCE} karakter)")
+
+    for fazla in sorted(set(dallar) - set(PUAN_DALLARI)):
+        sorunlar.append(f"taninmayan dal: {fazla}")
+
+    kontroller = veri.get("kontroller")
+    if not isinstance(kontroller, dict):
+        sorunlar.append("'kontroller' sozlugu yok")
+    else:
+        for ad in PUAN_KONTROLLERI:
+            if ad not in kontroller:
+                sorunlar.append(f"kontrol eksik: {ad}")
+            elif not isinstance(kontroller[ad], bool):
+                sorunlar.append(f"{ad}: true/false olmali")
+        for fazla in sorted(set(kontroller) - set(PUAN_KONTROLLERI)):
+            sorunlar.append(f"taninmayan kontrol: {fazla}")
+
+    return sorunlar
+
+
+def puan_oku(post_yolu: Path) -> tuple[dict | None, str | None]:
+    """(puan, sorun) doner.
+
+    Dosya yoksa (None, None). Bozuk ya da semaya uymuyorsa (None, sebep) —
+    bilerek istisna firlatmiyor: tek bir bozuk puan.json gozetimsiz calisan
+    cron'da butun secimi durdurmamali, ama sessizce de yutulmamali.
+    """
+    yol = puan_yolu(post_yolu)
+    if not yol.exists():
+        return None, None
+    try:
+        with yol.open(encoding="utf-8-sig") as f:
+            veri = json.load(f)
+    except (OSError, json.JSONDecodeError) as hata:
+        return None, f"okunamadi/bozuk: {hata}"
+
+    sorunlar = puan_dogrula(veri)
+    if sorunlar:
+        return None, "; ".join(sorunlar[:3]) + ("..." if len(sorunlar) > 3 else "")
+
+    try:
+        beklenen = toplam_hesapla(veri["dallar"], veri["kontroller"])
+    except ValueError as hata:
+        return None, str(hata)
+    kayitli = veri.get("toplam")
+    if not isinstance(kayitli, (int, float)) or abs(kayitli - beklenen) > 0.01:
+        # Dosyadaki toplam elle degistirilmis ya da eski formulden kalmis
+        # olabilir; siralamada her zaman yeniden hesaplanani kullan.
+        veri["toplam"] = beklenen
+        veri["toplam_yeniden_hesaplandi"] = True
+
+    return veri, None
+
+
+def puan_ozet(post_yolu: Path) -> dict:
+    """aday_sec / durum ciktisi icin sadelestirilmis puan bilgisi."""
+    veri, sorun = puan_oku(post_yolu)
+    if veri is None:
+        return {"var": False, "toplam": None, "olcut_surumu": None, "bayat": False, "sorun": sorun}
+    surum = veri.get("olcut_surumu")
+    return {
+        "var": True,
+        "toplam": veri["toplam"],
+        "olcut_surumu": surum,
+        "bayat": not isinstance(surum, int) or surum < OLCUT_SURUMU,
+        "sorun": None,
+    }
+
+
+def puan_yaz(post_yolu: Path, veri: dict) -> Path:
+    yol = puan_yolu(post_yolu)
+    _json_yaz(yol, veri)
+    return yol

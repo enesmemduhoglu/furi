@@ -12,6 +12,14 @@ Yeniden uretim yapilacaksa: WORKFLOW.md Faz 4–5.
 
 **Model notu:** `fiil` / `fiili` kelimesini iki model de guvenilir basmiyor (`fil`, `fill`, `fili` cikiyor). Ayni sey `alabilir` icin de gecerli — arsivde 3, yeni uretimde 1 kez `alablir` oldu. Cozum promptu sikilastirmak degil, kelimeyi degistirmek: `fiil` → `verb` / `past participle`, `(Fiil)` → `(Eylem)`, `alabilir miyim` → `verir misiniz`.
 
+2026-08-18, **geriye donuk puanlama turu**: havuzdaki 27 yayinlanmamis postun
+tamami puanlanirken (TODOS.md > Post puanlama sistemi) uc yeni hata cikti ve
+asagidaki tabloya eklendi — ikisi `hikayeli/takside/6.jpg`'de (`odeyeblir`,
+`edoceklere`), biri `kitap-vs-gercek/gunluk-kaliplar/3.jpg`'de. Sonuncusu
+digerlerinden agir: hata **marka etiketinin kendisinde** (`KITAP vs GERCEX`).
+Her ucu de bu dosyanin ilk turunden sonra uretilmis destelerde; yani 08-11
+denetimi onlari hic gormedi.
+
 2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
 
 | Dosya | Hatali | Dogrusu |
@@ -51,6 +59,9 @@ Bunlar diyakritik eksigi degil, gercek harf hatasi. Yayindaki bir postta goze ca
 | `seviye-testi/b1/8.jpg` | `bir az` (yeni uretimde) | biraz | -
 | `seviye-testi/b2/8.jpg` | `guclendirelem` (yeni uretimde) | guclendirelim | -
 | `karistirilan/effect-vs-affect/1.jpg` | `takipte kali` (yeni uretimde) | takipte kal | -
+| `hikayeli/takside/6.jpg` | `odeyeblir` | odeyebilir | -
+| `hikayeli/takside/6.jpg` | `edoceklere` | edeceklere | -
+| `kitap-vs-gercek/gunluk-kaliplar/3.jpg` | `KITAP vs GERCEX` | KITAP vs GERCEK | -
 
 **Not:** ayni kelime her deste farkli bozulmus — `guclu` → `guulu` (a2), `gudu` (b1), dogru (b2). Tek bir arama-degistirme ile yakalanmaz.
 

@@ -5,7 +5,7 @@ description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusm
 
 # Instagram Ingilizce Sayfasi — Post Uretim Akisi
 
-Bu akis 7 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 7 (commit)**.
+Bu akis 8 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 8 (commit)**.
 
 ## ⚠️ Her PowerShell cagrisinda gecerli iki kural
 
@@ -292,7 +292,46 @@ Denetim sonucunu kisa bir tabloyla ozetle — hangi slayt kacinci denemede gecti
 
 ---
 
-## Faz 7 — Teslim
+## Faz 7 — Puanlama
+
+Post bitti; simdi ona puan ver. Puan `puan.json` olarak post klasorune yazilir ve
+icerikle **ayni commit'te** gider. Amaci: rotasyon sirasi gelen postu degil, o
+kategorinin en iyi postunu onaya gondersin.
+
+Once olcutleri oku, sonra puani yaz:
+
+```powershell
+$S = ".claude\skills\insta-yayinla\scripts"
+python $S\puanla.py --sema                          # dallar, kontroller, formul
+python $S\puanla.py --yaz <kategori>/<slug> --kuru  # yazmadan dogrula
+python $S\puanla.py --yaz <kategori>/<slug>         # JSON stdin'den
+```
+
+Alti dal, her biri 1-10 **ve zorunlu gerekce**: `ilgi_cekicilik`, `yazim`,
+`gorsel_kalite`, `ogretici_deger`, `ozgunluk`, `hedef_kitle`. Yaninda dort ikili
+kontrol: `gorselde_harf_hatasi`, `sablon_tutarli`, `caption_imla_temiz`,
+`turkce_ingilizce_dogru`.
+
+`toplam` script tarafindan hesaplanir, elle yazma:
+`ortalama(6 dal) - 1.5 * basarisiz kontrol sayisi`
+
+**Puanlarken kendine yumusak davranma.** Ureten ile puanlayan ayni model; tek
+korumamiz olcutlerin somut olmasi. Uc kural:
+
+- Faz 5'te tespit edilip **duzeltilmeden birakilan** her kusur puana yansir.
+  "Esik altinda birakildi" karari yeniden uretim kararidir, puan karari degil.
+- `sablon_tutarli` yalnizca **ilk bakista goze carpan** sapmalar icin `false`:
+  font/olcek degisimi, eksik standart oge, renk kaymasi. Ince ayrac cizgisi gibi
+  dekoratif ayrintilar dala yazilir, kontrole degil.
+- Gerekce "iyi" / "guzel" gibi bos sifat olamaz; **neyin** nerede oldugunu soyle.
+  Ornek: "5. slaytta CTA 'Yurt disiina' — fazladan i harfi."
+
+Karar gecmisi ve sema: `TODOS.md` > "Post puanlama sistemi",
+`otomasyon/README.md` > "Post puani".
+
+---
+
+## Faz 8 — Teslim
 
 1. `SendUserFile` ile uretilen gorselleri kullaniciya goster (`display: "render"`).
 2. Ozet ver: kac slayt, hangi model, kac yeniden deneme, nereye kaydedildi.

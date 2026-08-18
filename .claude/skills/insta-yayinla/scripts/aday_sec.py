@@ -1,8 +1,13 @@
 """Siradaki Instagram postunu secer.
 
-Secim kurali: **kategori rotasyonu** — en uzun suredir yayinlanmamis kategoriden,
-o kategori icinde repoya en once eklenmis posttan baslanir. Boylece feed'de arka
-arkaya iki ayni tur post cikmaz.
+Secim kurali: **kategori rotasyonu + puan** — en uzun suredir yayinlanmamis
+kategoriden, o kategori icinde **en yuksek puanli** posttan baslanir. Rotasyon
+feed'de arka arkaya iki ayni tur post cikmasini engeller; puan da o kategorinin
+en iyi postunun once gitmesini saglar.
+
+Puan ELEMEZ, yalnizca siralar: puani olmayan post kategorisinin sonuna duser ama
+aday havuzunda kalir. Karar gecmisi ve sema: TODOS.md > "Post puanlama sistemi";
+puani ureten: puanla.py.
 
 Kullanim:
     python aday_sec.py                  # siradaki adayi sec, JSON bas
@@ -32,6 +37,7 @@ from furi_ortak import (
     iso_oku,
     json_bas,
     postlari_tara,
+    puan_ozet,
     raw_taban,
     raw_url,
     repo_kok,
@@ -139,15 +145,19 @@ def komut_sec(kok, args) -> int:
 
     kategori_son = _kategori_son_yayin(defter)
     ilk_commit_onbellek: dict[str, int] = {}
+    puanlar = {p["slug"]: puan_ozet(p["yol"]) for p in adaylar}
 
     def sira_anahtari(post: dict):
         slug = post["slug"]
         if slug not in ilk_commit_onbellek:
             ilk_commit_onbellek[slug] = ilk_commit_zamani(kok, slug)
+        puan = puanlar[slug]
         return (
             kategori_son.get(post["kategori"], 0.0),  # en eski kategori once
             post["kategori"],
-            ilk_commit_onbellek[slug],                # kategori icinde en eski post
+            0 if puan["var"] else 1,                  # puansiz post kategorinin sonuna
+            -(puan["toplam"] or 0.0),                 # kategori icinde en yuksek puan
+            ilk_commit_onbellek[slug],                # esitlik bozucu: en eski post
             post["ad"],
         )
 
@@ -161,6 +171,7 @@ def komut_sec(kok, args) -> int:
             continue
 
         veri["durum"] = "secildi"
+        veri["puan"] = puanlar[post["slug"]]
         veri["kalan_aday"] = len(adaylar) - len(elenenler) - 1
         veri["stok_dusuk"] = veri["kalan_aday"] < STOK_ESIGI
         if elenenler:
@@ -187,6 +198,14 @@ def _ozet_bas(veri: dict, havuz: int, dislanan: int, elenenler: list[dict]) -> N
     y(f"  SECILEN: {veri['slug']}\n")
     y("=" * 62 + "\n")
     y(f"  kategori     : {veri['kategori']}\n")
+    puan = veri.get("puan") or {}
+    if puan.get("var"):
+        bayat = "  (BAYAT — olcut surumu eski)" if puan.get("bayat") else ""
+        y(f"  puan         : {puan['toplam']}{bayat}\n")
+    elif puan.get("sorun"):
+        y(f"  puan         : BOZUK — {puan['sorun']}\n")
+    else:
+        y("  puan         : YOK\n")
     y(f"  slayt        : {veri['slayt']}\n")
     y(f"  caption      : {veri['caption_uzunluk']} karakter (limit {MAX_CAPTION})\n")
     y(f"  hashtag      : {len(veri['hashtagler'])} adet\n")
@@ -213,6 +232,7 @@ def komut_slug(kok, args) -> int:
         if post["slug"] == hedef:
             veri, sorunlar = veri_topla(kok, post, raw_taban(kok), url_kontrol=not args.hizli)
             veri["durum"] = "hata" if sorunlar else "ok"
+            veri["puan"] = puan_ozet(post["yol"])
             if sorunlar:
                 veri["sorunlar"] = sorunlar
             json_bas(veri)
@@ -226,12 +246,27 @@ def komut_durum(kok, args) -> int:
     defter = defter_oku(kok)
     postlar = postlari_tara(kok)
     dislanan = _dislanan_sluglar(durum, defter)
-    kalan = [p["slug"] for p in postlar if p["slug"] not in dislanan]
+    kalan_postlar = [p for p in postlar if p["slug"] not in dislanan]
+    kalan = [p["slug"] for p in kalan_postlar]
 
     kategori_dagilimi: dict[str, int] = {}
     for slug in kalan:
         kategori = slug.split("/", 1)[0]
         kategori_dagilimi[kategori] = kategori_dagilimi.get(kategori, 0) + 1
+
+    # Stok uyarisi "kac post kaldi"in yaninda "kac PUANLI post kaldi"i da
+    # soylemeli; kalan on postun sekizi puansizsa havuz gorundugu kadar saglam degil.
+    puan_dagilimi = {"guncel": 0, "bayat": 0, "puansiz": 0, "bozuk": 0}
+    toplamlar: list[float] = []
+    for post in kalan_postlar:
+        oz = puan_ozet(post["yol"])
+        if oz["sorun"]:
+            puan_dagilimi["bozuk"] += 1
+        elif not oz["var"]:
+            puan_dagilimi["puansiz"] += 1
+        else:
+            puan_dagilimi["bayat" if oz["bayat"] else "guncel"] += 1
+            toplamlar.append(oz["toplam"])
 
     json_bas(
         {
@@ -243,6 +278,10 @@ def komut_durum(kok, args) -> int:
             "stok_dusuk": len(kalan) < STOK_ESIGI,
             "stok_esigi": STOK_ESIGI,
             "kategori_dagilimi": kategori_dagilimi,
+            "puan_dagilimi": puan_dagilimi,
+            "puan_ortalamasi": round(sum(toplamlar) / len(toplamlar), 2) if toplamlar else None,
+            "en_dusuk_puan": min(toplamlar) if toplamlar else None,
+            "en_yuksek_puan": max(toplamlar) if toplamlar else None,
             "kalan_sluglar": kalan,
         }
     )

@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "'Dil bilmeyenin en pahaliya patlayan ani' acilisi guclu; taksimetre acisi somut bir kayip korkusu kuruyor."
+    },
+    "yazim": {
+      "puan": 5,
+      "gerekce": "Caption kusursuz ama son slaytta iki harf hatasi birden: 'odeyeblir' (odeyebilir) ve 'edoceklere' (edeceklere). Ikisi de HATA-RAPORU'nda kayitli degil, yeni bulgu."
+    },
+    "gorsel_kalite": {
+      "puan": 6,
+      "gerekce": "Kapak ve ic slaytlar tutarli ve okunakli; kapanis slayti hem iki hatali kelime tasiyor hem de CTA iki satira kirilmis."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "Bes cumle yolculugu sirayla takip ediyor; caption taksimetre cumlesinin neden kritik oldugunu ('tartismayi bastan bitiriyor') acikliyor."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Senaryo formati ayrisiyor, ustelik caption onceki iki bolume atif yaparak seri kuruyor — arsivde bunu yapan tek post."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Yurt disina cikan takipcinin ilk gununde ise yarayacak somut cumleler; seri butunlugu de ayni kitleye sesleniyor."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": true,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 5.67
+}

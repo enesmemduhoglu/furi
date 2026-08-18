@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 6,
+      "gerekce": "Erteleme konusu takipciye yakin ama kalip bilinen; kanca zayif."
+    },
+    "yazim": {
+      "puan": 9,
+      "gerekce": "Caption ve gorsel metni hatasiz, ASCII tutarli."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Temiz ve okunakli; CTA ikonu chevron — kategorideki tek chevron, alt bosluk da genis."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "postpone ile kayit farkini (resmi / gunluk) ve ikinci anlami ('it puts me off') birlikte vermesi degerli."
+    },
+    "ozgunluk": {
+      "puan": 5,
+      "gerekce": "Yaygin kalip; ikinci anlam notu disinda ayrisan yan yok."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "Ornek cumle dogrudan Ingilizce calismaya gonderme yapiyor, kitleyle ortusuyor."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": false,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 7.17
+}
