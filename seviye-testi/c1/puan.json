@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "'Kurali biliyor musun degil, bir native gibi kurabiliyor musun' cercevesi ust seviyeye meydan okuyor; 2. sorunun ozellikle vurgulanmasi merak kuruyor."
+    },
+    "yazim": {
+      "puan": 9,
+      "gerekce": "Cevap anahtari bastan sona hatasiz ve tamamen ASCII; modelin surekli bozdugu 'fiil' kelimesi bile dogru basilmis."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Destenin en temiz cevap anahtari: kondens baslik, turuncu ayraclar, dengeli dikey ritim. Hicbir kartta renk ya da font kaymasi yok."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Karma kosul, insist that sonrasi yalin fiil, No sooner devrigi, play down/up/out ayrimi ve kisaltilmis ortac — bes soru bes ayri ileri yapiyi kural adiyla ogretiyor."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Seri formatinin devami; C1 seviyesinde Turkce anlatimli test iceriginin kendisi nispeten az bulunur."
+    },
+    "hedef_kitle": {
+      "puan": 7,
+      "gerekce": "Seviye takipci kitlesinin ust ucuna hitap ediyor; genis kitle icin fazla ileri kalabilir ama seri butunlugu icinde yeri var."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": false,
+    "sablon_tutarli": false,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 6.5
+}

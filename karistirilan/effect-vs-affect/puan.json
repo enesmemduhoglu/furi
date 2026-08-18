@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 7,
+      "gerekce": "'Ana dili Ingilizce olanlar bile karistiriyor' acilisi ise yariyor; ayrimin tek harfte olmasi merak uyandiriyor."
+    },
+    "yazim": {
+      "puan": 5,
+      "gerekce": "Caption kusursuz ama gorseldeki CTA 'Ogrenmek icin takipte kali' — 'kal' olacak, fazladan i harfi var."
+    },
+    "gorsel_kalite": {
+      "puan": 6,
+      "gerekce": "Iki blokluk karsilastirma okunakli, ama font kategorideki lose-vs-loose kartinin agir kondens fontundan tamamen farkli ince bir grotesk; kategori kendi icinde ayrisiyor."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "A = Action / E = End result hafiza teknigi ve ayni olayin iki cumleyle gosterilmesi gercek bir kazanim."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Konu cok islenmis ama hafiza teknigi ve tek olay uzerinden karsilastirma sunumu ayrisiyor."
+    },
+    "hedef_kitle": {
+      "puan": 6,
+      "gerekce": "Gorseldeki ornekler 'thermal paste' ve 'ping' — dar bir donanim/oyun baglami, genel takipcinin gunluk hayatindan uzak."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": true,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 5.0
+}

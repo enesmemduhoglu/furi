@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 7,
+      "gerekce": "'remember me dersen karsindaki beni hatirla anlar' acilisi somut bir utanma senaryosu kuruyor, kanca isliyor."
+    },
+    "yazim": {
+      "puan": 9,
+      "gerekce": "Caption ve gorsel metninde hata yok; gorseldeki Turkce bastan sona ASCII, tutarli."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Kategorinin en temiz karti: dengeli dikey ritim, okunakli iki blok. Tek fazlalik alt blokla CTA arasindaki ince ayrac cizgisi — arsivde baska hicbir kartta yok."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Kurali (remind nesne alir) verip hemen dogru ve yanlis cumleyi yan yana koymasi ogrenmeyi test edilebilir hale getiriyor."
+    },
+    "ozgunluk": {
+      "puan": 6,
+      "gerekce": "Yaygin bir karistirma; sunumdaki dogru/yanlis esleme disinda ayrisan yan yok."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "Ornekler 'GS match' ve 'bus ticket' — kategorinin diger kartlarindan cok daha genel, takipcinin gunluk hayatina yakin."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": false,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 7.67
+}

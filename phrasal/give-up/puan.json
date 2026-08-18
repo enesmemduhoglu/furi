@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 7,
+      "gerekce": "Motivasyon acisi ve KPSS ornegi paylasilmaya musait; kalip bilinse de cerceve tutuyor."
+    },
+    "yazim": {
+      "puan": 8,
+      "gerekce": "Caption temiz. Gorselde 'icin' c harfini tasirken 'arkadasina gonder' ASCII — ayni satirda tutarsiz."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Dikey ritim ve hiyerarsi kategorinin en duzgunlerinden; tek kusur alt bosluk genisligi."
+    },
+    "ogretici_deger": {
+      "puan": 7,
+      "gerekce": "Nesneli ve nesnesiz kullanimin iki ayri anlama gitmesi gercek bir ayrim; ornek bunu gostermiyor ama caption anlatiyor."
+    },
+    "ozgunluk": {
+      "puan": 5,
+      "gerekce": "En bilinen phrasal verb'lerden biri; icerik yeni bir sey soylemiyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "KPSS ornegi Turk takipciye dogrudan isabet ediyor — arsivdeki en yerinde ornek seciminden biri."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": false,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 7.17
+}

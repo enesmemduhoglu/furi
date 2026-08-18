@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "'Okulda You are welcome ogrendik ama sokakta kimse oyle demiyor' acilisi guclu bir catisma kuruyor; kaydirma ve yorum getirir."
+    },
+    "yazim": {
+      "puan": 5,
+      "gerekce": "Caption kusursuz ama 3. slaytta ust marka etiketi 'KITAP vs GERCEX' basilmis — hatanin markanin kendi etiketinde olmasi digerlerinden daha agir."
+    },
+    "gorsel_kalite": {
+      "puan": 5,
+      "gerekce": "3. kartta 'GERCEK: I get it. / Makes sense.' uc satira tasmis ve 'Sirada' ikiye bolunmus; dikey ritim ayni serinin native-kaliplar destesine gore daginik. 2. kartta CTA'nin altinda cok genis bos alan var."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kalibin yaninda caption'da sekiz alternatif daha veriliyor, ustune 'very yerine daha guclu kelime sec' notu — kartlarin otesine gecen gercek bir ders."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Kitap-gercek karsitligi hesabin kendi formati; ozet kapanis slayti ve ikinci bolum vaadi seri kuruyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Okulda Ingilizce ogrenmis ama konusamayan kitleye tam isabet; ton ve seviye uygun."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": true,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 5.83
+}

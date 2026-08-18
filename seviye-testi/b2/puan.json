@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "'Sorular artik biliyor musun degil, dogal geliyor mu diye soruyor' cercevesi guclu; 1. sorunun neden acimasiz oldugunu anlatmasi meydan okuma kuruyor."
+    },
+    "yazim": {
+      "puan": 3,
+      "gerekce": "Cevap anahtarinda uc ayri harf hatasi var: 'sora' (sonra), 'tamahen' (tamamen), 'vera' (veya). Hatanin ogretilen bilginin kendisinde olmasi digerlerinden agir. Sonuc slaytinda ayrica 'guclendirelem', 'kisa' ve 'bir' kelimelerinde yabanci aksanli harfler var."
+    },
+    "gorsel_kalite": {
+      "puan": 4,
+      "gerekce": "2. soru slayti soru cumlesini ve CTA'yi serif fontta basmis — arsivdeki 60 gorselin tek serif'i, marka disi ve ilk bakista fark ediliyor. Soru sayaci da baslik blogundan kopup soruya yapismis."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "Devrik cumle, Type 3 kosul, future perfect ve uc benzer phrasal verb iyi secilmis; her cevabin kural adiyla verilmesi ise yariyor."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Seri formati tutarli; B2 soru secimi gercekten ayirt edici noktalari hedefliyor."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "Ileri seviye takipciye meydan okuyor, alt seviyedekiler icin de hedef gosteriyor."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": true,
+    "sablon_tutarli": false,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 3.33
+}

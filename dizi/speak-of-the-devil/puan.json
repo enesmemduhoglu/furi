@@ -1,0 +1,38 @@
+{
+  "olcut_surumu": 1,
+  "tarih": "2026-08-18",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "'Turkcede birebir karsiligi olan nadir deyim' acisi merak uyandiriyor; karsilastirma sorusu yorum da getirir."
+    },
+    "yazim": {
+      "puan": 8,
+      "gerekce": "Caption temiz. Gorselde diyakritik tutarsiz: 'gelirmis' s harfini tasirken ayni cumledeki 'lafinin ustune' ASCII."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Iki satirlik baslik dengeli, hiyerarsi dogru. Turkce satirin sonunda kucuk bir leke artefakti var, zemin dokusu referans karttan daha belirgin."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "Deyimin tam hali, kokeni ve 'kisi duyacak sekilde soylenir' kullanim notu birlikte veriliyor."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Turkce atasozuyle esleme acisi bu hesabin kendi cizgisi; tipik deyim kartlarindan ayrisiyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Ofis ve dizi baglami takipcinin gunluk hayatina yakin, seviye orta."
+    }
+  },
+  "kontroller": {
+    "gorselde_harf_hatasi": false,
+    "sablon_tutarli": true,
+    "caption_imla_temiz": true,
+    "turkce_ingilizce_dogru": true
+  },
+  "toplam": 8.0
+}
