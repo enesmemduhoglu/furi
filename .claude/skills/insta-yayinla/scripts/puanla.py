@@ -10,16 +10,19 @@ Kullanim:
     python puanla.py --bayat               # sadece olcut surumu eski olanlar
     python puanla.py --tumu                # havuzun tamami, puan durumuyla
     python puanla.py --slug dizi/my-bad    # tek postun puani + puanlama malzemesi
-    python puanla.py --sema                # dallar, kontroller, formul
+    python puanla.py --sema                # dallar ve formul
     python puanla.py --yaz dizi/my-bad < puan.json     # puan yaz (stdin JSON)
     python puanla.py --yaz dizi/my-bad --dosya p.json  # puan yaz (dosyadan)
     python puanla.py --yaz dizi/my-bad --kuru < p.json # yazmadan dogrula
 
---yaz'in bekledigi JSON yalnizca su iki alani tasir; `toplam`, `olcut_surumu`,
-`tarih` ve `model` script tarafindan eklenir (elle verilse de ezilir):
+--yaz'in bekledigi JSON yalnizca `dallar` alanini tasir; `toplam`,
+`olcut_surumu`, `tarih` ve `model` script tarafindan eklenir (elle verilse
+de ezilir):
 
-    {"dallar": {"ilgi_cekicilik": {"puan": 7, "gerekce": "..."}, ...},
-     "kontroller": {"gorselde_harf_hatasi": false, ...}}
+    {"dallar": {"ilgi_cekicilik": {"puan": 7, "gerekce": "..."}, ...}}
+
+Puan postun KALITESINI olcer. Gorseldeki harf hatalari, imla ve sablon
+sapmalari puana girmez — onlarin defteri HATA-RAPORU.md.
 
 Cikis kodu: 0 basarili, 1 hata / dogrulama basarisiz.
 """
@@ -32,13 +35,10 @@ import sys
 from pathlib import Path
 
 from furi_ortak import (
-    KONTROL_CEZASI,
     OLCUT_SURUMU,
     PUAN_ALT,
     PUAN_DALLARI,
-    PUAN_KONTROLLERI,
     PUAN_UST,
-    basarisiz_kontroller,
     caption_ayristir,
     defter_oku,
     durum_oku,
@@ -46,6 +46,7 @@ from furi_ortak import (
     postlari_tara,
     puan_dogrula,
     puan_oku,
+    puan_ozet,
     puan_yaz,
     repo_kok,
     simdi,
@@ -69,29 +70,22 @@ def _yayinlanan_sluglar(kok: Path) -> set[str]:
 
 
 def _post_durumu(post: dict, disarida: set[str]) -> dict:
-    veri, sorun = puan_oku(post["yol"])
-    surum = veri.get("olcut_surumu") if veri else None
-    if sorun:
-        hal = "bozuk"
-    elif veri is None:
-        hal = "puansiz"
-    elif not isinstance(surum, int) or surum < OLCUT_SURUMU:
-        hal = "bayat"
-    else:
-        hal = "guncel"
-
+    oz = puan_ozet(post["yol"])
     kayit = {
         "slug": post["slug"],
         "kategori": post["kategori"],
-        "hal": hal,
-        "toplam": veri["toplam"] if veri else None,
-        "olcut_surumu": surum,
+        "hal": oz["hal"],
+        "toplam": oz["toplam"],
+        "olcut_surumu": oz["olcut_surumu"],
         "aday": post["slug"] not in disarida,
     }
-    if sorun:
-        kayit["sorun"] = sorun
-    if veri and veri.get("toplam_yeniden_hesaplandi"):
-        kayit["not"] = "dosyadaki toplam formulle uyusmuyordu, yeniden hesaplandi"
+    if oz["sorun"]:
+        kayit["sorun"] = oz["sorun"]
+    if oz["hal"] == "bayat":
+        kayit["not"] = (
+            "olcut surumu %s, guncel surum %s — yeniden puanlanmali"
+            % (oz["olcut_surumu"], OLCUT_SURUMU)
+        )
     return kayit
 
 
@@ -167,7 +161,6 @@ def komut_slug(kok: Path, args) -> int:
         cikti["durum"] = "ok"
         if veri:
             cikti["puan"] = veri
-            cikti["basarisiz_kontroller"] = basarisiz_kontroller(veri["kontroller"])
         cikti["malzeme"] = _malzeme(post)
         json_bas(cikti)
         return 0
@@ -182,18 +175,13 @@ def komut_sema(kok: Path, args) -> int:
             "olcut_surumu": OLCUT_SURUMU,
             "puan_araligi": [PUAN_ALT, PUAN_UST],
             "dallar": PUAN_DALLARI,
-            "kontroller": {
-                ad: "kusursuz postta beklenen deger: " + str(beklenen).lower()
-                for ad, beklenen in PUAN_KONTROLLERI.items()
-            },
-            "kontrol_cezasi": KONTROL_CEZASI,
-            "formul": (
-                "toplam = ortalama(" + str(len(PUAN_DALLARI)) + " dal) - "
-                + str(KONTROL_CEZASI) + " * basarisiz_kontrol_sayisi"
-            ),
+            "formul": "toplam = ortalama(" + str(len(PUAN_DALLARI)) + " dal)",
             "not": (
-                "Her dal icin kisa bir gerekce zorunlu. Kontroller yargi degil "
-                "evet/hayir sorusu; tartisilabilir olan sey dala yazilir."
+                "Puan postun KALITESINI olcer: ilgi cekiyor mu, ogretiyor mu, "
+                "ayrisiyor mu. Gorseldeki harf hatalari, imla ve sablon/marka "
+                "sapmalari puana GIRMEZ — onlarin defteri HATA-RAPORU.md. "
+                "Her dal icin kisa ve somut bir gerekce zorunlu: bos sifat "
+                "degil, neyin nerede oldugu."
             ),
         }
     )
@@ -243,15 +231,12 @@ def komut_yaz(kok: Path, args) -> int:
         }
         for ad in PUAN_DALLARI
     }
-    kontroller = {ad: bool(girdi["kontroller"][ad]) for ad in PUAN_KONTROLLERI}
-
     veri = {
         "olcut_surumu": OLCUT_SURUMU,
         "tarih": simdi().date().isoformat(),
         "model": args.model,
         "dallar": dallar,
-        "kontroller": kontroller,
-        "toplam": toplam_hesapla(dallar, kontroller),
+        "toplam": toplam_hesapla(dallar),
     }
 
     if args.kuru:
@@ -265,7 +250,6 @@ def komut_yaz(kok: Path, args) -> int:
             "slug": hedef,
             "dosya": str(yol.relative_to(kok)).replace("\\", "/"),
             "toplam": veri["toplam"],
-            "basarisiz_kontroller": basarisiz_kontroller(kontroller),
         }
     )
     return 0
@@ -280,7 +264,7 @@ def main() -> int:
     ayrist.add_argument("--tumu", action="store_true", help="Havuzun tamami")
     ayrist.add_argument("--malzeme", action="store_true", help="Listeye caption + slayt yollarini ekle")
     ayrist.add_argument("--slug", help="Tek postun puani ve puanlama malzemesi")
-    ayrist.add_argument("--sema", action="store_true", help="Dallar, kontroller, formul")
+    ayrist.add_argument("--sema", action="store_true", help="Dallar ve formul")
     ayrist.add_argument("--yaz", metavar="SLUG", help="Puan yaz (JSON stdin'den ya da --dosya)")
     ayrist.add_argument("--dosya", help="--yaz ile: JSON'u stdin yerine bu dosyadan oku")
     ayrist.add_argument("--kuru", action="store_true", help="--yaz ile: dogrula ama yazma")

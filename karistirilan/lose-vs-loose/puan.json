@@ -1,19 +1,11 @@
 {
-  "olcut_surumu": 1,
+  "olcut_surumu": 2,
   "tarih": "2026-08-18",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 7,
       "gerekce": "'Bu hata yazim denetiminden geciyor' detayi guzel bir kanca; konu yazarken gercekten yapilan bir hata."
-    },
-    "yazim": {
-      "puan": 8,
-      "gerekce": "Caption ve gorsel metni hatasiz; onceki uretimdeki 'Kaybestmek' hatasi duzelmis."
-    },
-    "gorsel_kalite": {
-      "puan": 6,
-      "gerekce": "Ust etiket ve CTA italik — arsivdeki tek italik kart. Zemin dokusu belirgin pembe-kumlu, kategorinin geri kalanindan ayrisiyor."
     },
     "ogretici_deger": {
       "puan": 8,
@@ -26,13 +18,11 @@
     "hedef_kitle": {
       "puan": 6,
       "gerekce": "Ornekler 'CS2 match' ve 'monitor arm' — dar bir oyun/masaustu baglami, genel takipciye uzak."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Baslik agirligi guclu, iki tanim blogu esit araliklarla yerlesmis; kart ilk bakista okunuyor."
     }
   },
-  "kontroller": {
-    "gorselde_harf_hatasi": false,
-    "sablon_tutarli": false,
-    "caption_imla_temiz": true,
-    "turkce_ingilizce_dogru": true
-  },
-  "toplam": 5.33
+  "toplam": 7.0
 }

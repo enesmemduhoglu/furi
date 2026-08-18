@@ -296,35 +296,49 @@ Denetim sonucunu kisa bir tabloyla ozetle — hangi slayt kacinci denemede gecti
 
 Post bitti; simdi ona puan ver. Puan `puan.json` olarak post klasorune yazilir ve
 icerikle **ayni commit'te** gider. Amaci: rotasyon sirasi gelen postu degil, o
-kategorinin en iyi postunu onaya gondersin.
-
-Once olcutleri oku, sonra puani yaz:
+kategorinin **en iyi** postunu onaya gondersin.
 
 ```powershell
 $S = ".claude\skills\insta-yayinla\scripts"
-python $S\puanla.py --sema                          # dallar, kontroller, formul
+python $S\puanla.py --sema                          # dallar ve formul
 python $S\puanla.py --yaz <kategori>/<slug> --kuru  # yazmadan dogrula
 python $S\puanla.py --yaz <kategori>/<slug>         # JSON stdin'den
 ```
 
-Alti dal, her biri 1-10 **ve zorunlu gerekce**: `ilgi_cekicilik`, `yazim`,
-`gorsel_kalite`, `ogretici_deger`, `ozgunluk`, `hedef_kitle`. Yaninda dort ikili
-kontrol: `gorselde_harf_hatasi`, `sablon_tutarli`, `caption_imla_temiz`,
-`turkce_ingilizce_dogru`.
+Bes dal, her biri 1-10 **ve zorunlu gerekce**:
 
-`toplam` script tarafindan hesaplanir, elle yazma:
-`ortalama(6 dal) - 1.5 * basarisiz kontrol sayisi`
+| Dal | Soru |
+|---|---|
+| `ilgi_cekicilik` | Kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi |
+| `ogretici_deger` | Gercekten bir sey ogretiyor mu, bilineni mi tekrarliyor |
+| `ozgunluk` | Onceki postlardan ve piyasadaki tipik icerikten ayrisiyor mu |
+| `hedef_kitle` | Seviye, ton ve ornek secimi takipciye oturuyor mu |
+| `gorsel_kalite` | Kompozisyon, hiyerarsi, okunabilirlik |
 
-**Puanlarken kendine yumusak davranma.** Ureten ile puanlayan ayni model; tek
-korumamiz olcutlerin somut olmasi. Uc kural:
+`toplam` script tarafindan hesaplanir, elle yazma: **`ortalama(5 dal)`**.
 
-- Faz 5'te tespit edilip **duzeltilmeden birakilan** her kusur puana yansir.
-  "Esik altinda birakildi" karari yeniden uretim kararidir, puan karari degil.
-- `sablon_tutarli` yalnizca **ilk bakista goze carpan** sapmalar icin `false`:
-  font/olcek degisimi, eksik standart oge, renk kaymasi. Ince ayrac cizgisi gibi
-  dekoratif ayrintilar dala yazilir, kontrole degil.
-- Gerekce "iyi" / "guzel" gibi bos sifat olamaz; **neyin** nerede oldugunu soyle.
-  Ornek: "5. slaytta CTA 'Yurt disiina' — fazladan i harfi."
+### ⛔ Uretim kusurlari puana GIRMEZ
+
+Gorseldeki harf hatalari, diyakritik sizintilari, imla ve sablon/marka sapmalari
+puanlanmaz — onlarin defteri `HATA-RAPORU.md` ve tespit yeri Faz 5. Puanin
+cevapladigi soru **"bu post iyi mi, ilgi ceker mi"**; "duzgun basilmis mi" degil.
+
+Sinir `gorsel_kalite` dalinda geciyor:
+
+- **Girer:** kirik baslik, kutuya sigmayan metin, bozuk dikey denge, birbiriyle
+  yarisan iki odak, okunmayan kontrast — bunlar okunabilirligi bozar.
+- **Girmez:** yanlis harf, eksik diyakritik, farkli font, kayan zemin rengi,
+  baska bir CTA ikonu — bunlar uretim kusuru, kalite olcusu degil.
+
+### Puanlarken
+
+Ureten ile puanlayan ayni model; tek korumamiz gerekcelerin kontrol edilebilir
+olmasi. Gerekce **bos sifat olamaz** — "iyi", "guzel", "temiz" tek basina
+yazilmaz; **neyin nerede** oldugu yazilir.
+
+> ✅ "Baslik 'RUN OUT' dev puntoda, 'OF' cok daha kucuk ikinci satirda; goz
+> kalibi tek birim olarak almiyor."
+> ❌ "Gorsel kalitesi dusuk."
 
 Karar gecmisi ve sema: `TODOS.md` > "Post puanlama sistemi",
 `otomasyon/README.md` > "Post puani".

@@ -533,40 +533,33 @@ def json_bas(veri: dict) -> None:
 
 # --------------------------------------------------------------------- puanlama
 #
-# Karar gecmisi: TODOS.md > "Post puanlama sistemi" > Kararlar.
-# Ozet: puan post klasorunde `puan.json` icinde durur, alti dal 1-10 puanlanir,
-# yaninda ikili kontroller tutulur, toplam = dal ortalamasi - kontrol cezasi.
-# Puan aday secimini ELEMEZ, yalnizca kategori icinde siralar.
+# Karar gecmisi: TODOS.md > "Post puanlama sistemi".
+#
+# Puan **postun kalitesini** olcer: ilgi cekiyor mu, ogretiyor mu, ayrisiyor mu.
+# Uretim kusurlari (gorseldeki harf hatalari, imla, sablon/marka sapmalari)
+# BILEREK puanin disinda tutulur — onlarin defteri HATA-RAPORU.md. Iki defterin
+# ayni seyi iki kez tutmasi, "hangi post daha iyi" sorusunu bulaniklastiriyordu:
+# temiz basilmis siradan bir post, tek harf hatasi olan cok daha iyi bir postun
+# onune geciyordu.
 
-# Olcutler (dal tanimlari, kontrol sorulari, ceza katsayisi) her degistiginde
-# artir. Surumu eski kalan puanlar `puanla.py --bayat` ile yakalanir.
-OLCUT_SURUMU = 1
+# Olcutler (dal tanimlari, formul) her degistiginde artir. Surumu eski kalan
+# puanlar `puanla.py --bayat` ile yakalanir ve yeniden puanlanana kadar
+# siralamada puansiz sayilir — eski surum farkli bir formulle hesaplandigi icin
+# yeni puanlarla kiyaslanamaz.
+OLCUT_SURUMU = 2
 
 PUAN_ALT = 1
 PUAN_UST = 10
 
-# Basarisiz her ikili kontrolun toplamdan dusurdugu puan. Objektif kusuru
-# yargiya degil sabit cezaya baglamak, puanlayan ile uretenin ayni model olmasi
-# nedeniyle olusan "kendine yumusak davranma" riskini sinirlar.
-KONTROL_CEZASI = 1.5
-
 PUAN_DALLARI = {
     "ilgi_cekicilik": "konu ve kanca kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi",
-    "yazim": "caption ve slayt metinlerinde imla, dilbilgisi, Turkce-Ingilizce dogruluk",
-    "gorsel_kalite": "sablon tutarliligi, okunabilirlik, gorseldeki harf hatalari",
     "ogretici_deger": "gercekten bir sey ogretiyor mu, yoksa bilineni mi tekrarliyor",
     "ozgunluk": "hesabin onceki postlarindan ve piyasadaki tipik icerikten ayrisiyor mu",
-    "hedef_kitle": "seviye ve ton sayfanin takipcisine oturuyor mu",
-}
-
-# kontrol adi -> kusursuz bir postta beklenen deger.
-# Bunlar yargi degil, evet/hayir sorulari; cevabi tartisilabilir olan sey dala
-# yazilir, kontrole degil.
-PUAN_KONTROLLERI = {
-    "gorselde_harf_hatasi": False,
-    "sablon_tutarli": True,
-    "caption_imla_temiz": True,
-    "turkce_ingilizce_dogru": True,
+    "hedef_kitle": "seviye, ton ve ornek secimi sayfanin takipcisine oturuyor mu",
+    "gorsel_kalite": (
+        "kompozisyon, hiyerarsi, okunabilirlik — harf hatasi ve sablon/marka "
+        "sapmasi bu dala GIRMEZ, onlar HATA-RAPORU.md'nin isi"
+    ),
 }
 
 MIN_GEREKCE = 15
@@ -576,26 +569,8 @@ def puan_yolu(post_yolu: Path) -> Path:
     return post_yolu / "puan.json"
 
 
-def basarisiz_kontroller(kontroller: dict) -> list[str]:
-    """Beklenen degerden sapan kontrollerin adi.
-
-    Eksik kontrol basarisiz sayilir: puanlayan soruyu atlayarak cezadan
-    kacamasin.
-    """
-    kontroller = kontroller or {}
-    return [
-        ad
-        for ad, beklenen in PUAN_KONTROLLERI.items()
-        if bool(kontroller.get(ad)) is not beklenen
-    ]
-
-
-def toplam_hesapla(dallar: dict, kontroller: dict) -> float:
-    """toplam = ortalama(dal puanlari) - KONTROL_CEZASI * basarisiz kontrol sayisi
-
-    Alt sinir yok: cok kusurlu bir post eksiye dusebilir, siralamada da en
-    arkada kalmasi zaten istenen sey.
-    """
+def toplam_hesapla(dallar: dict) -> float:
+    """toplam = dal puanlarinin duz ortalamasi. Her zaman PUAN_ALT-PUAN_UST arasi."""
     puanlar = [
         dallar[ad]["puan"]
         for ad in PUAN_DALLARI
@@ -603,8 +578,7 @@ def toplam_hesapla(dallar: dict, kontroller: dict) -> float:
     ]
     if not puanlar:
         raise ValueError("hicbir dal puani yok")
-    ortalama = sum(puanlar) / len(puanlar)
-    return round(ortalama - KONTROL_CEZASI * len(basarisiz_kontroller(kontroller)), 2)
+    return round(sum(puanlar) / len(puanlar), 2)
 
 
 def puan_dogrula(veri: dict) -> list[str]:
@@ -636,28 +610,10 @@ def puan_dogrula(veri: dict) -> list[str]:
     for fazla in sorted(set(dallar) - set(PUAN_DALLARI)):
         sorunlar.append(f"taninmayan dal: {fazla}")
 
-    kontroller = veri.get("kontroller")
-    if not isinstance(kontroller, dict):
-        sorunlar.append("'kontroller' sozlugu yok")
-    else:
-        for ad in PUAN_KONTROLLERI:
-            if ad not in kontroller:
-                sorunlar.append(f"kontrol eksik: {ad}")
-            elif not isinstance(kontroller[ad], bool):
-                sorunlar.append(f"{ad}: true/false olmali")
-        for fazla in sorted(set(kontroller) - set(PUAN_KONTROLLERI)):
-            sorunlar.append(f"taninmayan kontrol: {fazla}")
-
     return sorunlar
 
 
-def puan_oku(post_yolu: Path) -> tuple[dict | None, str | None]:
-    """(puan, sorun) doner.
-
-    Dosya yoksa (None, None). Bozuk ya da semaya uymuyorsa (None, sebep) —
-    bilerek istisna firlatmiyor: tek bir bozuk puan.json gozetimsiz calisan
-    cron'da butun secimi durdurmamali, ama sessizce de yutulmamali.
-    """
+def _puan_ham_oku(post_yolu: Path) -> tuple[dict | None, str | None]:
     yol = puan_yolu(post_yolu)
     if not yol.exists():
         return None, None
@@ -666,38 +622,53 @@ def puan_oku(post_yolu: Path) -> tuple[dict | None, str | None]:
             veri = json.load(f)
     except (OSError, json.JSONDecodeError) as hata:
         return None, f"okunamadi/bozuk: {hata}"
-
-    sorunlar = puan_dogrula(veri)
-    if sorunlar:
-        return None, "; ".join(sorunlar[:3]) + ("..." if len(sorunlar) > 3 else "")
-
-    try:
-        beklenen = toplam_hesapla(veri["dallar"], veri["kontroller"])
-    except ValueError as hata:
-        return None, str(hata)
-    kayitli = veri.get("toplam")
-    if not isinstance(kayitli, (int, float)) or abs(kayitli - beklenen) > 0.01:
-        # Dosyadaki toplam elle degistirilmis ya da eski formulden kalmis
-        # olabilir; siralamada her zaman yeniden hesaplanani kullan.
-        veri["toplam"] = beklenen
-        veri["toplam_yeniden_hesaplandi"] = True
-
+    if not isinstance(veri, dict):
+        return None, "puan verisi sozluk degil"
     return veri, None
 
 
 def puan_ozet(post_yolu: Path) -> dict:
-    """aday_sec / durum ciktisi icin sadelestirilmis puan bilgisi."""
-    veri, sorun = puan_oku(post_yolu)
+    """Bir postun puan durumu. Tek okuyucu; aday_sec ve puanla bunu kullanir.
+
+    `hal`: puansiz | bayat | bozuk | guncel
+    `toplam`: yalnizca `guncel` icin dolu. Bayat puanin toplami eski formulden
+    geldigi icin yenilerle kiyaslanamaz, bu yuzden None doner ve post
+    siralamada puansiz gibi arkaya duser.
+
+    Bilerek istisna firlatmaz: tek bir bozuk puan.json gozetimsiz calisan
+    cron'da butun secimi durdurmamali, ama sessizce de yutulmamali.
+    """
+    bos = {"hal": "puansiz", "var": False, "toplam": None, "olcut_surumu": None, "sorun": None}
+
+    veri, sorun = _puan_ham_oku(post_yolu)
+    if sorun:
+        return {**bos, "hal": "bozuk", "sorun": sorun}
     if veri is None:
-        return {"var": False, "toplam": None, "olcut_surumu": None, "bayat": False, "sorun": sorun}
+        return bos
+
     surum = veri.get("olcut_surumu")
+    if not isinstance(surum, int) or surum < OLCUT_SURUMU:
+        # Sema dogrulamasi bilerek atlaniyor: eski surum farkli bir semaya gore
+        # yazilmis olabilir, bu onu "bozuk" degil "bayat" yapar.
+        return {**bos, "hal": "bayat", "olcut_surumu": surum}
+
+    sorunlar = puan_dogrula(veri)
+    if sorunlar:
+        kisa = "; ".join(sorunlar[:3]) + ("..." if len(sorunlar) > 3 else "")
+        return {**bos, "hal": "bozuk", "olcut_surumu": surum, "sorun": kisa}
+
     return {
+        "hal": "guncel",
         "var": True,
-        "toplam": veri["toplam"],
+        "toplam": toplam_hesapla(veri["dallar"]),
         "olcut_surumu": surum,
-        "bayat": not isinstance(surum, int) or surum < OLCUT_SURUMU,
         "sorun": None,
     }
+
+
+def puan_oku(post_yolu: Path) -> tuple[dict | None, str | None]:
+    """Ham puan verisi — gosterim icin. Surum kontrolu yapmaz."""
+    return _puan_ham_oku(post_yolu)
 
 
 def puan_yaz(post_yolu: Path, veri: dict) -> Path:
