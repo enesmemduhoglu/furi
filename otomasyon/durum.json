@@ -1,13 +1,5 @@
 {
-  "bekleyen": {
-    "slug": "karistirilan/borrow-vs-lend",
-    "kategori": "karistirilan",
-    "slayt": 1,
-    "saas_post_id": "cmsy7ellk0001jg04kk5b9fcq",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/db812e28aa0b4ceab08c80b16f7cc6f9",
-    "gonderim_zamani": "2026-08-18T08:10:04+03:00",
-    "son_gecerlilik": "2026-08-19T08:10:04+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
   "son_yayin": "2026-08-18T08:09:54+03:00",
   "son_gonderim": "2026-08-18T08:10:04+03:00",
@@ -22,6 +14,11 @@
       "slug": "durumsal/hold-the-onions",
       "tarih": "2026-08-17",
       "sebep": "yayinlandi ama elle silindi; tekrar yayinlanmasi istenmiyor"
+    },
+    {
+      "slug": "karistirilan/borrow-vs-lend",
+      "tarih": "2026-08-18",
+      "sebep": "onay sayfasinda reddedildi (kalite yetersiz); SaaS kaydi da silindi"
     }
   ],
   "sure_dolanlar": {}
