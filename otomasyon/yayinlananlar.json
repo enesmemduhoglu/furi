@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-17T09:09:24+03:00",
+  "guncelleme": "2026-08-18T08:09:54+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/b1",
@@ -35,6 +35,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcIW_DflSYr/",
       "yayin_zamani": "2026-08-17T09:09:24+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "hikayeli/havaalaninda",
+      "kategori": "hikayeli",
+      "slayt": 5,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcJF6qGlj8b/",
+      "yayin_zamani": "2026-08-18T08:09:54+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
