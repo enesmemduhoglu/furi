@@ -220,7 +220,7 @@ Hepsi calistiktan sonra:
 /schedule
 ```
 
-- cron: `7 5,12 * * *` UTC = 08:07 / 15:07 Istanbul (gunde 2 post tempsosu)
+- cron: `7 9 * * *` UTC = 12:07 Istanbul (gunde 1 post temposu)
 - komut: `/insta-yayinla`
 - ortam degiskenleri: `FURI_SAAS_URL`, `FURI_CLIENT_ID`, `FURI_API_KEY`
 
@@ -236,9 +236,8 @@ Yerel zamanlayici da calisir, skill'de degisiklik gerekmez:
 schtasks /create /tn "furi-insta" /tr "claude -p /insta-yayinla" /sc hourly
 ```
 
-Saat basi tetiklemek sorun degil — gunluk kota (gunde 2 gonderim) ve gonderimler
-arasi minimum sure (4 saat) skill'in icinde. Yani saat basi tetiklense bile
-gunde en fazla 2 post, en az 4 saat arayla siraya konur.
+Saat basi tetiklemek sorun degil — gunluk kota (gunde 1 gonderim) skill'in
+icinde. Yani saat basi tetiklense bile gunde en fazla 1 post siraya konur.
 
 ---
 

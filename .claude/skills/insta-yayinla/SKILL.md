@@ -13,14 +13,14 @@ Yaptigi iki sey:
 1. Kategori rotasyonuyla siradaki postu secip onaya gonderir
 2. Yayin defterini Instagram ile esitler
 
-Hedef tempo: **gunde 2 post**.
+Hedef tempo: **gunde 1 post** (oglen).
 
 ---
 
 ## Akis
 
 ```
-  BU SKILL (cron, gunde 2 kez)
+  BU SKILL (cron, gunde 1 kez)
     aday sec  ->  POST /api/posts  ->  SaaS musteriye onay maili atar
                                               |
                                               v
@@ -53,7 +53,7 @@ Ayrinti: `SAAS-ENTEGRASYON-PLANI.md`
    **cagrilmaz**. O komut artik yalnizca elle teshis/kurtarma icin duruyor.
 2. **Ayni post iki kez siraya konmaz.** Defterde olan, `atlananlar`'da olan ve
    `bekleyen` olan sluglar aday havuzunun disinda.
-3. **Calisma basina en fazla 1 oneri, takvim gunu basina en fazla 2 gonderim.**
+3. **Calisma basina en fazla 1 oneri, takvim gunu basina en fazla 1 gonderim.**
    Kota siraya konani sayar (`bugun.siraya_konan`), yayinlanani degil.
 4. **Hata olursa state'e dokunma.** Hata mailini at, oldugun yerde dur.
 5. **Sadece `otomasyon/*.json` commit edilir.** Gorseller, `caption.md`, skill
@@ -159,8 +159,8 @@ uzerinden, token yeterli, oturum gerekmiyor):
 
 Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 
-- `bugun.siraya_konan >= 2` (gunluk kota dolu)
-- `son_gonderim` uzerinden 4 saatten az gecmis (iki gonderim ayni saate yigilmasin)
+- `bugun.siraya_konan >= 1` (gunluk kota dolu)
+- `son_gonderim` ayni takvim gununde (gunde tek gonderim)
 - `bekleyen` dolu **ve** `son_gecerlilik` gecmemis (onay bekliyor, karistirma)
 
 > **Her iki kural da YAYIN'a degil GONDERIM'e bakar.** `son_yayin` ve
@@ -168,10 +168,9 @@ Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 > Sebebi: yayin ani senin onay verdigin an — repo onu ne belirliyor ne de
 > zamaninda goruyor, sadece bir sonraki calismada Faz 1'de fark ediyor. Yayina
 > bakan kural bu yuzden kendi kendini bloke ediyordu: Faz 1 "yayinlandi" deyip
-> `son_yayin`'i o ana yaziyor, ayni calismanin Faz 2'si de "daha 4 saat olmadi"
-> diyip cikiyordu. Cron'un iki yuvasi (08:07 / 15:07) 7 saat arali oldugu icin
-> gonderime bakan kural ikisini de gecirir — **yakin zamanda yayin yapilmis
-> olmasi 8 ve 15 calismalarini durdurmaz.**
+> `son_yayin`'i o ana yaziyor, ayni calismanin Faz 2'si de "daha yeni yayin
+> oldu" deyip cikiyordu. **Dun onaylanip bugun sabah yayinlanmis bir post,
+> bugun oglen calismasini durdurmaz.**
 
 **`bekleyen` dolu ve suresi gecmisse** — post cope atilmaz:
 
@@ -245,7 +244,7 @@ ayni postu tekrar siraya koyabilir. Push hatasini **hata maili ile bildir**.
 `son_stok_uyarisi` bugun degilse:
 
 - subject: `[FURI-STOK] N post kaldi`
-- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 2), yeni post
+- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 1), yeni post
   uretilmesi gerektigi
 - sonra `son_stok_uyarisi` = bugunun tarihi, Faz 4'te commit et
 
@@ -362,7 +361,7 @@ Instagram baglantisini yenilemek gerekir.
 | Parca | Deger |
 |---|---|
 | Rutin | `trig_01TtprvNfdZd5DDEfR8uDCRj` ([panel](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)) |
-| Cron | `7 5,12 * * *` UTC = 08:07 / 15:07 Istanbul |
+| Cron | `7 9 * * *` UTC = 12:07 Istanbul (gunde 1 calisma) |
 | SaaS | https://content-approval-saas.vercel.app |
 | Instagram hesabi | `furkanteacherteaching` (`17841441566401393`) |
 | Onay -> yayin | ~11 saniye (production'da olculdu) |
