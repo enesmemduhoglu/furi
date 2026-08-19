@@ -356,6 +356,23 @@ nesne sekli reddediliyor.
 yayinlanmaz), `publishStatus` ne durumda. **Toplu onay (`/batch`) su an yayin
 yapmiyor** — bilinen bosluk, tek tek onayla.
 
+**`code=4` / `error_subcode=2207051`** (`Application request limit reached` +
+`We restrict certain activity to protect our community`) — Instagram'in spam
+korumasi. SaaS'ta, token'da ya da kotada sorun yok; kisit **hesap seviyesinde**
+ve her "tekrar dene" yeni bir media container acip kisiti besliyor. Yapilacak:
+**denemeyi birak, birkac saat bekle**. Tipik olarak kendiliginden kalkiyor.
+
+> 2026-08-19'da boyle yasandi: bir posta ait **iki ayri onay linki** ayni anda
+> canliydi (hatali gorselle giden ilk kayit + duzeltilmis gorselle gonderilen
+> ikinci kayit). Musteri once eskisini onayladi, post yayinlandi; 18 dakika
+> sonra yenisi onaylaninca Instagram ayni gorselin ikinci kez atilmasini spam
+> sayip hesabi kisitladi. SaaS'in mukerrer korumasi da devreye giremedi, cunku
+> canlilik sorgusu ayni kisita takilip "belirsiz" dondu ve belirsizde yayina
+> izin veriliyor (`publish-post.ts`, bilincli karar).
+>
+> **Ders: bir postun duzeltilmis surumu gonderilecekse, once eski SaaS kaydi
+> panelden silinmeli.** Iki canli onay linki = iki yayin riski.
+
 **Defter ile Instagram ayrismis** — `esitle.py` iki yonlu duzeltir. Silinen bir
 post defterden dusurulup tekrar aday olur.
 
