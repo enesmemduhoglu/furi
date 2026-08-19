@@ -20,6 +20,20 @@ digerlerinden agir: hata **marka etiketinin kendisinde** (`KITAP vs GERCEX`).
 Her ucu de bu dosyanin ilk turunden sonra uretilmis destelerde; yani 08-11
 denetimi onlari hic gormedi.
 
+2026-08-19, **`karistirilan/effect-vs-affect/1.jpg` CTA duzeltmesi**: post 12:07
+rutininde onaya gonderildikten sonra kullanici satirdaki iki hatayi bildirdi
+(`takipte kali` ve sedillali `için`). Gorsel **yeniden uretilmedi** — bulut
+oturumunda `FAL_KEY` tanimli degil, `.env` yalnizca yerelde duruyor. Bunun
+yerine iki hata da **piksel silme** ile kapatildi: son `i` harfi ve `ç`
+sedillasi cevreden orneklenen kagit dokusuyla ortuldu, tuylu maskeyle
+harmanlandi. Yeni harf cizilmedigi icin font, punto ve marka sistemi birebir
+korundu; satir 9 px sola kaydi (1920 px tuvalde gozle secilmiyor).
+
+> **Yontem notu:** bu yol yalnizca duzeltme *silme* oldugunda calisir (fazla
+> harf, sizmis diyakritik). Eksik ya da yanlis harf icin yeni glif cizmek
+> gerekir ve arsivdeki font serbest bir esdegeriyle tam eslesmiyor — o durumda
+> WORKFLOW.md Faz 4'e donup gorseli yeniden uretmek gerekiyor.
+
 2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
 
 | Dosya | Hatali | Dogrusu |
@@ -58,7 +72,7 @@ Bunlar diyakritik eksigi degil, gercek harf hatasi. Yayindaki bir postta goze ca
 | `seviye-testi/{a2,b1,b2}/8.jpg` | `dara` (yeni uretimde) | daha | -
 | `seviye-testi/b1/8.jpg` | `bir az` (yeni uretimde) | biraz | -
 | `seviye-testi/b2/8.jpg` | `guclendirelem` (yeni uretimde) | guclendirelim | -
-| `karistirilan/effect-vs-affect/1.jpg` | `takipte kali` (yeni uretimde) | takipte kal | -
+| ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`takipte kali` (yeni uretimde)~~ | ✅ **cozuldu** (08-19) — fazla `i` silindi |
 | `hikayeli/takside/6.jpg` | `odeyeblir` | odeyebilir | -
 | `hikayeli/takside/6.jpg` | `edoceklere` | edeceklere | -
 | `kitap-vs-gercek/gunluk-kaliplar/3.jpg` | `KITAP vs GERCEX` | KITAP vs GERCEK | -
@@ -112,6 +126,7 @@ Gorsellerdeki Turkce **tutarsiz** — WORKFLOW.md Faz 2 ASCII-only diyor ama ars
 - `Daha fazla kelime için begen` (`durumsal/on-the-side/1.jpg`)
 - `Motivasyon için arkadasina gonder` (`phrasal/give-up/1.jpg`)
 - `BASLAMAK IÇIN KAYDIR` (dort kapak slaytinin hepsinde)
+- ~~`Ogrenmek için takipte kal` (`karistirilan/effect-vs-affect/1.jpg`)~~ — ✅ **cozuldu** (08-19): sedilla silinip `icin` yapildi, satirin geri kalani zaten ASCII'ydi
 
 Ust etiketler de her kartta ASCII: `DURUMSAL INGILIZCE`, `GUNUN PHRASAL VERB'U`, `SIK KARISTIRILANLAR`, `A1 • INGILIZCE TESTI`.
 
