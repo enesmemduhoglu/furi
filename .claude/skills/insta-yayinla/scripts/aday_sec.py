@@ -87,6 +87,40 @@ def _kategori_son_yayin(defter: dict) -> dict[str, float]:
     return son
 
 
+def adaylari_sirala(kok, adaylar: list[dict], defter: dict) -> list[dict]:
+    """Aday havuzunu yayin sirasina dizer. **Tek dogruluk kaynagi budur.**
+
+    Sirayi kullanan her yer (bu dosyadaki secim ve durum komutlari, saas_gonder'in
+    gonderim yolu) buraya bagli olmali. Anahtar bir donem uc yerde ayri ayri
+    yaziliydi ve puanlama gelince yalnizca ikisi guncellendi: gonderimi yapan
+    saas_gonder eski kategori rotasyonunda kaldi, yani puan hic yayina
+    yansimadi. 2026-08-20'de fark edildi (havuzun tepesindeki 8.4'luk postlar
+    dururken 7.8'lik post siraya kondu). Kopya silindigi icin artik ayrisamaz.
+    """
+    kategori_son = _kategori_son_yayin(defter)
+    ilk_commit_onbellek: dict[str, int] = {}
+    puanlar = {p["slug"]: puan_ozet(p["yol"]) for p in adaylar}
+
+    def sira_anahtari(post: dict):
+        slug = post["slug"]
+        if slug not in ilk_commit_onbellek:
+            ilk_commit_onbellek[slug] = ilk_commit_zamani(kok, slug)
+        puan = puanlar[slug]
+        return (
+            0 if puan["var"] else 1,                  # puansiz/bayat havuzun sonuna
+            -(puan["toplam"] or 0.0),                 # EN YUKSEK PUAN ONCE
+            # Buradan asagisi yalnizca esit puanlilar arasinda konusur.
+            # Rotasyonu esitlik bozucu olarak tutmak bedava: ayni puanda iki
+            # post varsa uzun suredir gorunmeyen kategoriden olani secilir.
+            kategori_son.get(post["kategori"], 0.0),
+            post["kategori"],
+            ilk_commit_onbellek[slug],
+            post["ad"],
+        )
+
+    return sorted(adaylar, key=sira_anahtari)
+
+
 def veri_topla(kok, post: dict, taban: str, url_kontrol: bool = True) -> tuple[dict, list[str]]:
     """Bir postun yayin verisini kurar. (veri, sorunlar) doner."""
     sorunlar: list[str] = []
@@ -153,28 +187,8 @@ def komut_sec(kok, args) -> int:
         )
         return 1
 
-    kategori_son = _kategori_son_yayin(defter)
-    ilk_commit_onbellek: dict[str, int] = {}
+    adaylar = adaylari_sirala(kok, adaylar, defter)
     puanlar = {p["slug"]: puan_ozet(p["yol"]) for p in adaylar}
-
-    def sira_anahtari(post: dict):
-        slug = post["slug"]
-        if slug not in ilk_commit_onbellek:
-            ilk_commit_onbellek[slug] = ilk_commit_zamani(kok, slug)
-        puan = puanlar[slug]
-        return (
-            0 if puan["var"] else 1,                  # puansiz/bayat havuzun sonuna
-            -(puan["toplam"] or 0.0),                 # EN YUKSEK PUAN ONCE
-            # Buradan asagisi yalnizca esit puanlilar arasinda konusur.
-            # Rotasyonu esitlik bozucu olarak tutmak bedava: ayni puanda iki
-            # post varsa uzun suredir gorunmeyen kategoriden olani secilir.
-            kategori_son.get(post["kategori"], 0.0),
-            post["kategori"],
-            ilk_commit_onbellek[slug],
-            post["ad"],
-        )
-
-    adaylar.sort(key=sira_anahtari)
 
     elenenler: list[dict] = []
     for post in adaylar:
@@ -281,26 +295,15 @@ def komut_durum(kok, args) -> int:
             toplamlar.append(oz["toplam"])
 
     # Secim artik global puan siralamasi oldugu icin "kalan postlar" listesinin
-    # kendisi bir yayin plani. Anahtar komut_sec ile ayni sirayla kuruluyor
-    # (puan, sonra kategori rotasyonu) ki iki cikti esit puanlilarda ayrismasin;
-    # tek fark en son esitlik bozucu olan git commit zamaninin okunmamasi.
-    kategori_son = _kategori_son_yayin(defter)
+    # kendisi bir yayin plani. Sira komut_sec ile ayni fonksiyondan geliyor —
+    # bu cikti bir tahmin degil, gonderimin gercekten izleyecegi sira.
     yayin_sirasi = [
         {
             "slug": p["slug"],
             "puan": ozetler[p["slug"]]["toplam"],
             "kategori": p["kategori"],
         }
-        for p in sorted(
-            kalan_postlar,
-            key=lambda p: (
-                0 if ozetler[p["slug"]]["var"] else 1,
-                -(ozetler[p["slug"]]["toplam"] or 0.0),
-                kategori_son.get(p["kategori"], 0.0),
-                p["kategori"],
-                p["slug"],
-            ),
-        )
+        for p in adaylari_sirala(kok, kalan_postlar, defter)
     ]
 
     json_bas(

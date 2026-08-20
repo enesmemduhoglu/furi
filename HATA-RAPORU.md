@@ -33,6 +33,35 @@ korundu; satir 9 px sola kaydi (1920 px tuvalde gozle secilmiyor).
 > harf, sizmis diyakritik). Eksik ya da yanlis harf icin yeni glif cizmek
 > gerekir ve arsivdeki font serbest bir esdegeriyle tam eslesmiyor — o durumda
 > WORKFLOW.md Faz 4'e donup gorseli yeniden uretmek gerekiyor.
+>
+> **Ek (08-20):** ucuncu bir yol daha var — *ayni gorselden glif odunc almak*.
+> `dizi/tell-me-about-it/1.jpg`'de CTA `Kaybet` cikti (`Kaydet` olacakti). `d`,
+> geometrik sans'ta `b`'nin yatay aynasi oldugu icin `b` glifinin kutusu
+> (x=639..686, antialias dahil, iki yaninda 4'er piksel bosluk) yerinde
+> aynalandi. Font, punto, agirlik ve konum birebir korundu; yeni glif
+> cizilmedi. Ayna simetrisi olan harf ciftlerinde (b/d, p/q) calisir.
+
+2026-08-20, **Turkce diyakritik denemesi — `dizi/tell-me-about-it/1.jpg`**:
+§5'teki "bazi diyakritikler hayatta kaliyor" gozlemi ilk kez kontrollu olarak
+sinandi. Kart tam Turkce metinle yeniden uretildi (`Bana mi anlatiyorsun` →
+`Bana mı anlatıyorsun`, `lazim` → `lazım`); risk yuzeyi uc adet `ı` (U+0131),
+baska diyakritik yok. Ust kategori etiketi bilincli olarak ASCII birakildi
+(`DIZI INGILIZCESI`) — 60 gorselde sabit oldugu icin marka parcasi.
+
+**Sonuc: seedream ucunu de dogru basti, uc denemede de.** `ı` hicbir denemede
+`i`'ye donmedi, nokta eklenmedi. Yani `ı` model icin sorun degil; §5'teki
+"rastgele dusuyor" gozlemi en azindan bu harf icin gecerli degil. `ş ğ ü ö`
+ayni sekilde sinanmadi.
+
+Denemelerde cikan kusurlar diyakritikle degil, her zamanki harf hatasiyla ilgili:
+
+| Deneme | Tipografi | Metin |
+|---|---|---|
+| 1 | Baslik ince kesim, anlam satiri iki satira kirildi | Kusursuz |
+| 2 | Agirlik dogru, baslik iki satira kirildi | `olocak` (olacak) |
+| 3 | Marka kesimi birebir, tek satir baslik | `Kaybet` (Kaydet) → glif aynalamayla duzeltildi |
+
+Yayina giren: 3. deneme + aynalama. mai'ye hic gerek kalmadi.
 
 2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
 
@@ -131,3 +160,8 @@ Gorsellerdeki Turkce **tutarsiz** — WORKFLOW.md Faz 2 ASCII-only diyor ama ars
 Ust etiketler de her kartta ASCII: `DURUMSAL INGILIZCE`, `GUNUN PHRASAL VERB'U`, `SIK KARISTIRILANLAR`, `A1 • INGILIZCE TESTI`.
 
 Yeni postlarda WORKFLOW.md Faz 2 kurali gecerli: **tam ASCII**. Eski arsivi hizaya cekmek isterse, en gorunur olanlar kapak slaytlarindaki `BASLAMAK IÇIN KAYDIR`.
+
+**08-20 notu:** `dizi/tell-me-about-it/1.jpg` bu kuralin disinda, bilincli olarak
+tam Turkce basildi (yukaridaki deneme kaydi). Kural henuz degismedi — tek kart
+ve tek harf (`ı`) uzerinden genelleme yapilmiyor. Kurali gevsetmeden once
+`ş ğ ü ö` de ayni sekilde sinanmali.

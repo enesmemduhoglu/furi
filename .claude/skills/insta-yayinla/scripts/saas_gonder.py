@@ -20,7 +20,7 @@ import sys
 import urllib.error
 import urllib.request
 
-from aday_sec import _dislanan_sluglar, _kategori_son_yayin, veri_topla
+from aday_sec import _dislanan_sluglar, adaylari_sirala, veri_topla
 from furi_ortak import (
     SAAS_MAX_CAPTION,
     durum_oku,
@@ -28,7 +28,6 @@ from furi_ortak import (
     defter_oku,
     gerekli_ortam,
     gunluk_sayaci_tazele,
-    ilk_commit_zamani,
     iso,
     json_bas,
     postlari_tara,
@@ -45,22 +44,19 @@ ONAY_PENCERESI_SAAT = 24
 
 
 def _adaylar(kok) -> list[dict]:
-    """aday_sec ile ayni rotasyon: en uzun suredir yayinlanmamis kategori once."""
+    """Yayin sirasi: en yuksek puandan asagiya (aday_sec.adaylari_sirala).
+
+    Sirayi burada YENIDEN YAZMA. Bu fonksiyonun kendi anahtari vardi ve
+    puanlama geldiginde guncellenmedi; sonuc olarak `aday_sec --durum` puan
+    sirasini gosterirken gonderim eski kategori rotasyonunu izliyordu ve
+    havuzun en iyi postlari sirasi hic gelmeden bekliyordu.
+    """
     durum, defter = durum_oku(kok), defter_oku(kok)
     dislanan = _dislanan_sluglar(durum, defter)
     adaylar = [p for p in postlari_tara(kok) if p["slug"] not in dislanan]
     if not adaylar:
         return []
-    kategori_son = _kategori_son_yayin(defter)
-    onbellek: dict[str, int] = {}
-
-    def anahtar(p):
-        if p["slug"] not in onbellek:
-            onbellek[p["slug"]] = ilk_commit_zamani(kok, p["slug"])
-        return (kategori_son.get(p["kategori"], 0.0), p["kategori"],
-                onbellek[p["slug"]], p["ad"])
-
-    return sorted(adaylar, key=anahtar)
+    return adaylari_sirala(kok, adaylar, defter)
 
 
 def _saas_sorunlari(veri: dict) -> list[str]:
