@@ -1,11 +1,19 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "dizi/tell-me-about-it",
+    "kategori": "dizi",
+    "slayt": 1,
+    "saas_post_id": "cmt1i6gl00001l3048nrojcap",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/1284f036098347768c65f47d451f14d1",
+    "gonderim_zamani": "2026-08-20T15:34:58+03:00",
+    "son_gecerlilik": "2026-08-21T15:34:58+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-08-20T15:30:34+03:00",
-  "son_gonderim": "2026-08-20T12:08:49+03:00",
+  "son_gonderim": "2026-08-20T15:34:58+03:00",
   "bugun": {
     "tarih": "2026-08-20",
-    "siraya_konan": 1,
+    "siraya_konan": 2,
     "yayinlanan": 2
   },
   "son_stok_uyarisi": null,
