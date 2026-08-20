@@ -1,4 +1,14 @@
 {
-  "guncelleme": "2026-08-20T15:30:34+03:00",
-  "kayitlar": []
+  "guncelleme": "2026-08-20T17:07:56+03:00",
+  "kayitlar": [
+    {
+      "slug": "dizi/tell-me-about-it",
+      "kategori": "dizi",
+      "slayt": 1,
+      "ig_media_id": "17878269618625554",
+      "permalink": "https://www.instagram.com/p/DcQxq_KlYdO/",
+      "yayin_zamani": "2026-08-20T12:35:42+00:00",
+      "not": "esitleme ile eklendi (SaaS yayinladi)"
+    }
+  ]
 }
