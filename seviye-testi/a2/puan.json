@@ -1,28 +1,28 @@
 {
   "olcut_surumu": 2,
-  "tarih": "2026-08-18",
+  "tarih": "2026-08-20",
   "model": "claude-opus-5",
   "dallar": {
     "ilgi_cekicilik": {
       "puan": 8,
-      "gerekce": "Test formatinin etkilesim gucu burada da gecerli; caption 3. soruyu ('good in mi good at mi') isaretleyerek merak kurmus."
+      "gerekce": "Test formati yorum getiriyor (kac dogrun var?); kapak dogrudan meydan okuyor, caption 3. soruyu isaretleyip merak kuruyor."
     },
     "ogretici_deger": {
       "puan": 8,
-      "gerekce": "Bes soru A2 esigini (gecmis zaman, karsilastirma, good at, some/any) yerinde tariyor; her cevabin mantigi tek satirda."
+      "gerekce": "Bes soru A2 esigini yerinde tariyor (Simple Past, karsilastirma, good at, Present Continuous, some/any); cevap anahtarinda her sorunun mantigi tek satir."
     },
     "ozgunluk": {
       "puan": 7,
-      "gerekce": "Seri formati tutarli; soru secimi klise degil, 'good at' gibi gercekten karistirilan noktalari seciyor."
+      "gerekce": "Seviye testi piyasada yaygin bir bicim; ayrisma soru seciminde (good in / good at gibi gercekten karistirilan noktalar) ve tek satirlik gerekcelerde."
     },
     "hedef_kitle": {
       "puan": 8,
-      "gerekce": "A2 hesabin cekirdek kitlesinin seviyesi; sorular ne kolay ne asiri zor."
+      "gerekce": "A2 hesabin cekirdek kitlesi; sorular ne kolay ne asiri zor, aciklamalar Turkce ve terim yuku dusuk."
     },
     "gorsel_kalite": {
-      "puan": 7,
-      "gerekce": "Sonuc slayti dengeli ve okunakli; sik kutulari slayttan slayta farkli genislikte oldugu icin karusel boyunca goz hizasi kayiyor."
+      "puan": 9,
+      "gerekce": "Yerel basimla yeniden uretildi: sik kutulari yedi slaytta ayni genislikte, sorudan cevap anahtarina font sistemi degismiyor, uzun soru iki satira dengeli boluniyor. Arsivdeki kutu genisligi ve font kaymasi kapandi."
     }
   },
-  "toplam": 7.6
+  "toplam": 8.0
 }

@@ -322,6 +322,7 @@ def durum_oku(kok: Path) -> dict:
             "son_gonderim": None,
             "bugun": {"tarih": None, "siraya_konan": 0, "yayinlanan": 0},
             "son_stok_uyarisi": None,
+            "sonraki": None,
             "atlananlar": [],
             "sure_dolanlar": {},
         },
@@ -331,6 +332,9 @@ def durum_oku(kok: Path) -> dict:
     veri.setdefault("son_yayin", None)
     veri.setdefault("son_gonderim", None)
     veri.setdefault("son_stok_uyarisi", None)
+    # Elle secilmis "yarinin postu". Puan sirasini bir kereligine ezer;
+    # gonderim yapilinca saas_gonder temizler.
+    veri.setdefault("sonraki", None)
     veri.setdefault("atlananlar", [])
     # SKILL.md Faz 2 bu sozluge yaziyor; varsayilani burada olmasa cagiran
     # tarafin once var mi diye bakmasi gerekirdi.

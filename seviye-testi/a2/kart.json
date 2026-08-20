@@ -1,0 +1,88 @@
+{
+  "slug": "seviye-testi/a2",
+  "slaytlar": [
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "kapak",  "metin": "BU A2 TESTİNİ GEÇEBİLİR MİSİN?" },
+      { "tur": "ornek",  "metin": "5 soru • 1 dakika" },
+      { "tur": "cta",    "metin": "BAŞLAMAK İÇİN KAYDIR →" }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "sayac",  "metin": "SORU 01 / 05" },
+      { "tur": "soru",   "metin": "I ___ a great movie yesterday." },
+      { "tur": "sik",    "metin": "A) see" },
+      { "tur": "sik",    "metin": "B) saw" },
+      { "tur": "sik",    "metin": "C) seen", "alt": 210 },
+      { "tur": "cta",    "metin": "Cevabını seç." }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "sayac",  "metin": "SORU 02 / 05" },
+      { "tur": "soru",   "metin": "My new car is ___ than my old one." },
+      { "tur": "sik",    "metin": "A) faster" },
+      { "tur": "sik",    "metin": "B) fastest" },
+      { "tur": "sik",    "metin": "C) more fast", "alt": 210 },
+      { "tur": "cta",    "metin": "Cevabını seç." }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "sayac",  "metin": "SORU 03 / 05" },
+      { "tur": "soru",   "metin": "She is very good ___ playing the piano." },
+      { "tur": "sik",    "metin": "A) in" },
+      { "tur": "sik",    "metin": "B) on" },
+      { "tur": "sik",    "metin": "C) at", "alt": 210 },
+      { "tur": "cta",    "metin": "Cevabını seç." }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "sayac",  "metin": "SORU 04 / 05" },
+      { "tur": "soru",   "metin": "We ___ to the beach tomorrow." },
+      { "tur": "sik",    "metin": "A) are going" },
+      { "tur": "sik",    "metin": "B) going" },
+      { "tur": "sik",    "metin": "C) goes", "alt": 210 },
+      { "tur": "cta",    "metin": "Cevabını seç." }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "sayac",  "metin": "SORU 05 / 05" },
+      { "tur": "soru",   "metin": "There isn't ___ milk in the fridge." },
+      { "tur": "sik",    "metin": "A) some" },
+      { "tur": "sik",    "metin": "B) many" },
+      { "tur": "sik",    "metin": "C) any", "alt": 210 },
+      { "tur": "cta",    "metin": "Cevabını seç." }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket",   "metin": "A2 • İNGİLİZCE TESTİ" },
+      { "tur": "baslik",   "metin": "CEVAP ANAHTARI" },
+
+      { "tur": "madde",    "metin": "01 - B) saw" },
+      { "tur": "aciklama", "metin": "Geçmişte yaşanmış ve bitmiş eylemler için Simple Past kullanılır." },
+      { "tur": "ayrac",    "en": 1400 },
+
+      { "tur": "madde",    "metin": "02 - A) faster" },
+      { "tur": "aciklama", "metin": "İki şeyi karşılaştırırken kısa sıfatlara “-er” takısı eklenir." },
+      { "tur": "ayrac",    "en": 1400 },
+
+      { "tur": "madde",    "metin": "03 - C) at" },
+      { "tur": "aciklama", "metin": "Bir konuda iyi veya kötü olmayı belirtirken “good at” kullanılır." },
+      { "tur": "ayrac",    "en": 1400 },
+
+      { "tur": "madde",    "metin": "04 - A) are going" },
+      { "tur": "aciklama", "metin": "Önceden planlanmış gelecek eylemler için Present Continuous kullanılır." },
+      { "tur": "ayrac",    "en": 1400 },
+
+      { "tur": "madde",    "metin": "05 - C) any" },
+      { "tur": "aciklama", "metin": "Olumsuz cümlelerde ve sorularda sayılamayan isimlerle “any” kullanılır." },
+      { "tur": "ayrac",    "en": 1400 },
+
+      { "tur": "cta",      "metin": "Kaç doğrun var? Yorumlara yaz ↓" }
+    ] }
+  ]
+}

@@ -25,13 +25,24 @@ from __future__ import annotations
 import json
 import re
 import sys
-import unicodedata
 from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
 
 KATLAMA = str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU")
-SINIR = {"baslik": 22, "ornek": 60, "anlam": 70, "cta": 45, "etiket": 30}
+
+# Turkce buyuk/kucuk harf. Python'un kendi `.lower()`i `İ` icin `i` + birlesik
+# nokta (U+0307) uretiyor; o kalinti sozluge girince `iyi` gibi tertemiz bir
+# kelime "diyakritiksiz" diye isaretleniyordu.
+BUYUK_HARF = str.maketrans("çğıiöşü", "ÇĞIİÖŞÜ")
+KUCUK_HARF = str.maketrans("İI", "iı")
+SINIR = {
+    # tekil kart
+    "baslik": 22, "ornek": 60, "anlam": 70, "cta": 45, "etiket": 30,
+    # deste slaytlari: kapak basligi bir cumle oldugu icin baslikdan uzun
+    # olabiliyor (iki satira boluniyor), sik metni kutuya sigmak zorunda.
+    "kapak": 40, "sayac": 16, "soru": 70, "sik": 24, "madde": 24, "aciklama": 85,
+}
 
 # Kategori etiketi her kartin en ustunde duruyor; tek harf sapmasi tum feed'de
 # goze carpar. Cikarim yerine sabit liste: `DIZI` mi `DİZİ` mi sorusunun
@@ -50,6 +61,14 @@ def katla(s: str) -> str:
     return s.translate(KATLAMA)
 
 
+def buyuk(s: str) -> str:
+    return s.translate(BUYUK_HARF).upper()
+
+
+def kucuk(s: str) -> str:
+    return s.translate(KUCUK_HARF).lower()
+
+
 def sozluk_kur() -> tuple[dict[str, set[str]], dict[str, str]]:
     """caption.md'lerden iki sozluk turetir.
 
@@ -60,20 +79,27 @@ def sozluk_kur() -> tuple[dict[str, set[str]], dict[str, str]]:
     nokta: dict[str, str] = {}
     for cap in KOK.glob("*/*/caption.md"):
         for kelime in re.findall(r"[A-Za-zçğıöşüÇĞİÖŞÜ]{3,}", cap.read_text(encoding="utf-8")):
-            kucuk = kelime if kelime.islower() else None
             duz = katla(kelime).lower()
-            if katla(kelime) != kelime:            # diyakritik iceriyor
-                sozluk.setdefault(duz, set()).add(kelime.lower())
-            if kucuk and "i" in kucuk:
-                nokta.setdefault(duz, kucuk)
+            # Olcut kelimenin kendisi degil KUCUK hali: cumle basindaki `İyi`
+            # diyakritikli gorunur ama kucugu `iyi`dir.
+            #
+            # ASCII buyuk `I` ayrica belirsiz: Turkce kurala gore kucugu `ı`,
+            # caption'larda ise `İ` yerine de yaziliyor (`Iyi`). Bu yuzden `I`
+            # iceren kelimenin iki okunusu birden denenir. Okunuslardan biri
+            # diyakritiksizse kelime sozluge degil `nokta`ya yazilir — yoksa
+            # tertemiz bir `iyi`, uydurma bir `ıyi` ile karsilastirilip bulgu
+            # uretirdi.
+            okunuslar = {kucuk(kelime)}
+            if "I" in kelime:
+                okunuslar.add(kucuk(kelime.replace("I", "i")))
+            diyakritikli = {o for o in okunuslar if katla(o) != o}
+            if len(diyakritikli) == len(okunuslar):
+                sozluk.setdefault(duz, set()).update(diyakritikli)
+            else:
+                sade = sorted(okunuslar - diyakritikli)[0]
+                if "i" in sade:
+                    nokta.setdefault(duz, sade)
     return sozluk, nokta
-
-
-def buyuk_turkce(kelime: str, kaynak: str) -> str:
-    """Turkce buyuk harf: kucuk `i` -> `İ`, `ı` -> `I`. Kaynaktaki harf sirasina bakar."""
-    if len(kelime) != len(kaynak):
-        return kelime
-    return "".join("İ" if k == "i" else h for h, k in zip(kelime, kaynak))
 
 
 def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> list[str]:
@@ -97,25 +123,35 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
 
             for kelime in re.findall(r"[A-Za-zçğıöşüÇĞİÖŞÜ]{3,}", metin):
                 duz = katla(kelime).lower()
+                adaylar = set(sozluk.get(duz, ()))
+                if duz in nokta:
+                    adaylar.add(nokta[duz])
+                if not adaylar:
+                    continue
 
-                # Buyuk harf I/İ: Turkce'de kucuk `i`nin buyugu `İ`dir. `DIZI`
-                # yerine `DİZİ` olmali; sozluk bunu yakalayamaz cunku `dizi`
-                # kelimesinin kendisinde diyakritik yok.
-                if kelime.isupper() and "I" in kelime and duz in nokta:
-                    dogru = buyuk_turkce(kelime, nokta[duz])
-                    if dogru != kelime:
+                # Buyuk harfte `ı` ve `i` ayrisir (`I` / `İ`), yani buyuk
+                # yazilmis bir kelimede diyakritik eksik GORUNUR ama dogru
+                # olabilir: `ANAHTARI` dogru, `KAYDIR` dogru, `TESTI` degil.
+                # Karsilastirma bu yuzden adaylarin Turkce buyuk hali uzerinden.
+                if kelime == buyuk(kelime):
+                    dogrular = {buyuk(a) for a in adaylar}
+                    if kelime not in dogrular:
                         bulgular.append(
-                            f"slayt {no} · {tur}: {kelime!r} — Turkce buyuk harfte {dogru!r} olmali"
+                            f"slayt {no} · {tur}: {kelime!r} — Turkce buyuk harfte "
+                            f"{'/'.join(sorted(dogrular))} olmali"
                         )
                     continue
 
                 if katla(kelime) != kelime:        # zaten diyakritikli, temiz
                     continue
-                adaylar = sozluk.get(duz)
-                if adaylar:
+                # Burada yalnizca `sozluk` konusur: `nokta` diyakritiksiz
+                # kelimelerin kendisini tutuyor, onu aday saymak her temiz
+                # kelimeyi kendisiyle karsilastirip bulgu uretirdi.
+                yazimlar = sozluk.get(duz)
+                if yazimlar:
                     bulgular.append(
                         f"slayt {no} · {tur}: {kelime!r} diyakritiksiz — "
-                        f"caption'larda {'/'.join(sorted(adaylar))} olarak geciyor"
+                        f"caption'larda {'/'.join(sorted(yazimlar))} olarak geciyor"
                     )
     return bulgular
 

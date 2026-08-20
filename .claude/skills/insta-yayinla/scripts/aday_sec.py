@@ -87,7 +87,7 @@ def _kategori_son_yayin(defter: dict) -> dict[str, float]:
     return son
 
 
-def adaylari_sirala(kok, adaylar: list[dict], defter: dict) -> list[dict]:
+def adaylari_sirala(kok, adaylar: list[dict], defter: dict, sonraki: str | None = None) -> list[dict]:
     """Aday havuzunu yayin sirasina dizer. **Tek dogruluk kaynagi budur.**
 
     Sirayi kullanan her yer (bu dosyadaki secim ve durum komutlari, saas_gonder'in
@@ -96,6 +96,11 @@ def adaylari_sirala(kok, adaylar: list[dict], defter: dict) -> list[dict]:
     saas_gonder eski kategori rotasyonunda kaldi, yani puan hic yayina
     yansimadi. 2026-08-20'de fark edildi (havuzun tepesindeki 8.4'luk postlar
     dururken 7.8'lik post siraya kondu). Kopya silindigi icin artik ayrisamaz.
+
+    `sonraki` (durum.json) puan sirasini bir kereligine ezer: gunun postu elle
+    secildiginde (yerel basima cevrilen post yarin yayina girsin diye) rutinin
+    havuzun tepesindeki baska bir postu almasi gerekiyordu. Sabit slug gonderim
+    yapilinca saas_gonder tarafindan temizlenir, sira normale doner.
     """
     kategori_son = _kategori_son_yayin(defter)
     ilk_commit_onbellek: dict[str, int] = {}
@@ -107,6 +112,7 @@ def adaylari_sirala(kok, adaylar: list[dict], defter: dict) -> list[dict]:
             ilk_commit_onbellek[slug] = ilk_commit_zamani(kok, slug)
         puan = puanlar[slug]
         return (
+            0 if slug == sonraki else 1,              # elle secilmis post herseyin onunde
             0 if puan["var"] else 1,                  # puansiz/bayat havuzun sonuna
             -(puan["toplam"] or 0.0),                 # EN YUKSEK PUAN ONCE
             # Buradan asagisi yalnizca esit puanlilar arasinda konusur.
@@ -187,7 +193,7 @@ def komut_sec(kok, args) -> int:
         )
         return 1
 
-    adaylar = adaylari_sirala(kok, adaylar, defter)
+    adaylar = adaylari_sirala(kok, adaylar, defter, durum.get("sonraki"))
     puanlar = {p["slug"]: puan_ozet(p["yol"]) for p in adaylar}
 
     elenenler: list[dict] = []
@@ -303,7 +309,7 @@ def komut_durum(kok, args) -> int:
             "puan": ozetler[p["slug"]]["toplam"],
             "kategori": p["kategori"],
         }
-        for p in adaylari_sirala(kok, kalan_postlar, defter)
+        for p in adaylari_sirala(kok, kalan_postlar, defter, durum.get("sonraki"))
     ]
 
     json_bas(

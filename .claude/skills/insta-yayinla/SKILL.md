@@ -307,6 +307,11 @@ Puan postun **kalitesini** olcer (ilgi cekiyor mu, ogretiyor mu, ayrisiyor
 mu). Gorseldeki harf hatalari ve sablon sapmalari puana **girmez** —
 onlarin defteri `HATA-RAPORU.md`.
 
+`durum.json > sonraki` doluysa **once o slug denenir** — gunun postu elle
+secildiginde (havuzdaki postlar gunu gunune yerel basima cevriliyor, cevrilen
+post ertesi gun yayina girmeli) puan sirasi bir kereligine ezilir. Sabit
+gonderimden sonra kendini temizler.
+
 Puan **elemez** ama sirayi tamamen belirler: puani olmayan ya da olcut surumu
 eskimis post havuzun **tamaminin** sonuna duser, yani puanli tek bir aday
 kaldigi surece secilmez. Uretim akisi her postu puanladigi icin bu gecici
