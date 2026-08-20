@@ -1,28 +1,15 @@
 {
-  "bekleyen": {
-    "slug": "kitap-vs-gercek/gunluk-kaliplar",
-    "kategori": "kitap-vs-gercek",
-    "slayt": 6,
-    "saas_post_id": "cmt1atc9b0001l4045fckc876",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/897ea6d6246d47f5a6eb2aaf11d4ec7d",
-    "gonderim_zamani": "2026-08-20T12:08:49+03:00",
-    "son_gecerlilik": "2026-08-21T12:08:49+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-20T12:08:37+03:00",
+  "son_yayin": "2026-08-20T15:30:34+03:00",
   "son_gonderim": "2026-08-20T12:08:49+03:00",
   "bugun": {
     "tarih": "2026-08-20",
     "siraya_konan": 1,
-    "yayinlanan": 1
+    "yayinlanan": 2
   },
   "son_stok_uyarisi": null,
   "atlananlar": [
-    {
-      "slug": "durumsal/hold-the-onions",
-      "tarih": "2026-08-17",
-      "sebep": "yayinlandi ama elle silindi; tekrar yayinlanmasi istenmiyor"
-    },
     {
       "slug": "karistirilan/borrow-vs-lend",
       "tarih": "2026-08-18",
