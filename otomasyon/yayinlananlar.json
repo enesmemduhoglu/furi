@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-18T08:09:54+03:00",
+  "guncelleme": "2026-08-20T12:08:37+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/b1",
@@ -44,6 +44,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcJF6qGlj8b/",
       "yayin_zamani": "2026-08-18T08:09:54+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "karistirilan/effect-vs-affect",
+      "kategori": "karistirilan",
+      "slayt": 1,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcN7vC0FiS_/",
+      "yayin_zamani": "2026-08-20T12:08:37+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]

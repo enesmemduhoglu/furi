@@ -1,20 +1,20 @@
 {
   "bekleyen": {
-    "slug": "karistirilan/effect-vs-affect",
-    "kategori": "karistirilan",
-    "slayt": 1,
-    "saas_post_id": "cmszwoql00001jj04uv7kn3h3",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/032d1529b7ed4fc7ac6409b98ed906fb",
-    "gonderim_zamani": "2026-08-19T12:45:33+03:00",
-    "son_gecerlilik": "2026-08-20T12:45:33+03:00"
+    "slug": "kitap-vs-gercek/gunluk-kaliplar",
+    "kategori": "kitap-vs-gercek",
+    "slayt": 6,
+    "saas_post_id": "cmt1atc9b0001l4045fckc876",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/897ea6d6246d47f5a6eb2aaf11d4ec7d",
+    "gonderim_zamani": "2026-08-20T12:08:49+03:00",
+    "son_gecerlilik": "2026-08-21T12:08:49+03:00"
   },
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-18T08:09:54+03:00",
-  "son_gonderim": "2026-08-19T12:45:33+03:00",
+  "son_yayin": "2026-08-20T12:08:37+03:00",
+  "son_gonderim": "2026-08-20T12:08:49+03:00",
   "bugun": {
-    "tarih": "2026-08-19",
-    "siraya_konan": 2,
-    "yayinlanan": 0
+    "tarih": "2026-08-20",
+    "siraya_konan": 1,
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "atlananlar": [
