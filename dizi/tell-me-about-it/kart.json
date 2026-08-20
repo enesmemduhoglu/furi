@@ -1,0 +1,12 @@
+{
+  "slug": "dizi/tell-me-about-it",
+  "slaytlar": [
+    { "ogeler": [
+      { "tur": "etiket", "metin": "DİZİ İNGİLİZCESİ" },
+      { "tur": "baslik", "metin": "TELL ME ABOUT IT" },
+      { "tur": "anlam",  "metin": "Sorma! / Bana mı anlatıyorsun!" },
+      { "tur": "ornek",  "metin": "Tell me about it, I've been there." },
+      { "tur": "cta",    "metin": "Kaydet, lazım olacak ↓" }
+    ] }
+  ]
+}
