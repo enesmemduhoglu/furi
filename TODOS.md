@@ -9,7 +9,7 @@ Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 
 ## Acik isler
 
-### [ ] Havuzdaki 24 postu yerel basima gecir — **gunu gunune**
+### [ ] Havuzdaki 32 postu yerel basima gecir — **gunu gunune**
 
 Kartlar artik yerelde basiliyor (`marka/README.md`), ama havuzdaki postlar hala
 goruntu modelinin urettigi ASCII gorseller. Bir kismi `HATA-RAPORU.md`'de kayitli
@@ -29,19 +29,34 @@ Yontem, post basina:
 5. Gorselleri denetle (yerlesim), `caption.md` alt text'ini guncelle
 6. Cozulen hatalari `HATA-RAPORU.md`'de ustu cizili isaretle
 
+Sira puani izliyor, ama gunun postu elle secilebiliyor: `durum.json > sonraki`
+alanina slug yazilirsa rutin ertesi gun onu siraya koyar (puan sirasini bir
+kereligine ezer, gonderimden sonra kendini temizler). Donusturulen postun
+ertesi gun yayina girmesi bu alana bagli — yoksa rutin havuzun tepesindeki
+**donusturulmemis** postu alir.
+
 | Kalan | Post | Slayt |
 |---|---|---|
-| dizi | 3 | 3 |
-| durumsal | 3 | 3 |
-| hikayeli | 3 | 16 |
-| karistirilan | 3 | 3 |
-| kitap-vs-gercek | 1 | 5 |
-| phrasal | 7 | 7 |
+| dizi | 4 | 4 |
+| durumsal | 5 | 5 |
+| hikayeli | 4 | 21 |
+| karistirilan | 5 | 5 |
+| kitap-vs-gercek | 2 | 11 |
+| phrasal | 8 | 8 |
 | seviye-testi | 4 | 31 |
 
-`seviye-testi` en agiri (8 slayt, cevap anahtari ve skor tablosu) — `kart.json`
-semasi su an tekil kart yapisina gore; cok satirli liste slaytlari icin yeni oge
-turleri gerekecek (`madde`, `sik`, `skor`). Sirasi geldiginde eklenir.
+> Sayilar 2026-08-20'de hesabin bosaltilmasiyla buyudu: yayinlanmis yedi post
+> Instagram'dan silinince havuza geri dondu (`otomasyon/README.md` > elle
+> mudahale). Donusturulenler: `dizi/tell-me-about-it`, `seviye-testi/a2`.
+
+`seviye-testi` en agiri (8 slayt). Deste slaytlari icin gereken oge turleri
+**eklendi** (`kapak`, `sayac`, `soru`, `sik`, `madde`, `aciklama` + `ayrac`in
+`en` degeri, `alt` bosluk ezmesi) — sema `marka/README.md`. Kalan dort testte
+ayni sema calisir; yeni tur gerekmiyor.
+
+**Sonuc slayti (skor tablosu) artik uretilmiyor.** 2026-08-20 karari: o slayt
+yayinlanmiyor, deste cevap anahtariyla bitiyor. `skor` ve `uyari` oge turleri
+bu yuzden hic yazilmadi.
 
 ### [ ] `WORKFLOW.md` ve `HATA-RAPORU.md` duz yaziyi tam Turkce'ye cevir
 

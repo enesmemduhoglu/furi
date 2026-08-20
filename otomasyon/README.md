@@ -53,6 +53,7 @@ Instagram'dan sil.
 | `son_gonderim` | Son postun SaaS'a gonderildigi an. Iki gonderimin ayni saate yigilmamasi icin kullanilir (min 4 saat ara). |
 | `bugun` | Takvim gunu sayaclari. `siraya_konan` gunluk kotayi belirler (max 2), `yayinlanan` sadece bilgi. Tarih degisince ikisi de sifirlanir. |
 | `son_stok_uyarisi` | "Post stogu azaliyor" mailinin gunde birden fazla gitmemesi icin. |
+| `sonraki` | Elle secilmis "gunun postu". Doluysa aday siralamasi bir kereligine ezilir ve o slug siraya konur; gonderim yapilinca `saas_gonder.py` alani temizler. Bosta iken `null`. Havuzdaki postlar gunu gunune yerel basima cevrildigi icin var: cevrilen post ertesi gun yayina girmeli, ama puan sirasi baska bir postu one alabiliyor. |
 | `sure_dolanlar` | SaaS onay linki yanitsiz kalip suresi dolan postlarin sayaci (`{"slug": 2}`). Suresi dolmak postu **elemez** — post havuzda kalir, sirasi gelince yeniden onerilir. Ancak sayac 3'e ulasirsa `atlananlar`'a gecer. Post yayinlaninca sayaci silinir. |
 | `atlananlar` | Onay sayfasinda reddedilen ya da 3 kez ust uste yanitsiz kalan postlar. Bir daha aday olarak secilmezler. Tekrar siraya girmesi icin buradan silmek yeterli. |
 
@@ -135,6 +136,11 @@ calistir. Defterden kaydi kendisi dusurur ve post havuza doner. *Sadece defterde
 silmek yetmez: post hala Instagram'da duruyorsa `esitle.py` kaydi geri ekler.*
 
 **Atlanmis bir postu geri almak** — `durum.json` > `atlananlar` icindeki kaydi sil.
+
+**Yarinin postunu elle secmek** — `durum.json` > `sonraki` alanina slug yaz
+(`"sonraki": "seviye-testi/a2"`). Bir sonraki calisma puan sirasina bakmadan
+onu siraya koyar ve alani temizler. Post yine dogrulamadan gecmek zorunda:
+gecemezse sabit durur, sira normal isler.
 
 **Bekleyen onayi iptal etmek** — `durum.json` > `bekleyen` degerini `null` yap.
 SaaS tarafindaki post kaydi durmaya devam eder; istersen orada da sil.

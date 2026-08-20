@@ -56,7 +56,7 @@ def _adaylar(kok) -> list[dict]:
     adaylar = [p for p in postlari_tara(kok) if p["slug"] not in dislanan]
     if not adaylar:
         return []
-    return adaylari_sirala(kok, adaylar, defter)
+    return adaylari_sirala(kok, adaylar, defter, durum.get("sonraki"))
 
 
 def _saas_sorunlari(veri: dict) -> list[str]:
@@ -194,6 +194,9 @@ def main() -> int:
     # gonderim ani ayrica saklanmali.
     durum["son_gonderim"] = iso(an)
     durum["bugun"]["siraya_konan"] = int(durum["bugun"].get("siraya_konan", 0)) + 1
+    # Elle secilen post siraya girdi; sabit tek kullanimlik, sira normale doner.
+    if durum.get("sonraki") == veri["slug"]:
+        durum["sonraki"] = None
     durum_yaz(kok, durum)
 
     rapor = {

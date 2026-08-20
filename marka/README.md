@@ -32,6 +32,7 @@ Yazım hatası ve eksik Türkçe karakter artık **mümkün değil**: harfler
 
 ```powershell
 powershell -File marka\kart_bas.ps1 -Spec dizi\tell-me-about-it\kart.json -Hedef dizi\tell-me-about-it
+powershell -File marka\kart_bas.ps1 -Spec seviye-testi\a2\kart.json -Hedef seviye-testi\a2
 ```
 
 | Parametre | Varsayılan | Ne |
@@ -71,6 +72,8 @@ grep'lenebilir, denetlenebilir. Görsel ondan türetilir.
 
 ### Öğe türleri
 
+Tekil kart (tek görsel: phrasal, dizi, durumsal, karıştırılan):
+
 | `tur` | Rol | Renk | Punto | Sınır |
 |---|---|---|---|---|
 | `etiket` | Üst kategori etiketi | Turuncu `#EF4A18` | 46, harf aralıklı | 30 |
@@ -80,8 +83,30 @@ grep'lenebilir, denetlenebilir. Görsel ondan türetilir.
 | `ayrac` | İnce turuncu çizgi | Turuncu | 220×4 px | — |
 | `cta` | Çağrı satırı | Lacivert | 74 | 45 |
 
+Deste slaytları (seviye testi, hikâyeli, kitap-vs-gerçek):
+
+| `tur` | Rol | Renk | Punto | Sınır |
+|---|---|---|---|---|
+| `kapak` | Deste kapağının başlığı — cümle olduğu için **en fazla iki satır** | Lacivert | ≤250 | 40 |
+| `sayac` | `SORU 01 / 05` | Gri | 54 | 16 |
+| `soru` | Boşluklu soru cümlesi, gerekirse satıra bölünür | Lacivert, kalın | 92 | 70 |
+| `sik` | Çerçeveli şık — 700 px kutu | Lacivert | 64 | 24 |
+| `madde` | Cevap anahtarı satırı (`01 - B) saw`) | Lacivert | 92 | 24 |
+| `aciklama` | Maddenin altındaki tek satırlık gerekçe | Gri | 52 | 85 |
+
+`ayrac` deste slaytlarında `"en": 1400` ile tam genişlikte çizilir. Her öğeye
+`"alt": <px>` verilebilir; o öğenin altındaki boşluğu türün varsayılanının
+yerine geçirir (son şıkkın altındaki nefes böyle açılıyor).
+
 Başlık **hiçbir zaman iki satıra kırılmaz**: sığmıyorsa punto küçülür. İki
-satıra düşen başlık hiyerarşiyi bozuyordu (08-20 denemeleri).
+satıra düşen başlık hiyerarşiyi bozuyordu (08-20 denemeleri). `kapak`, `soru`,
+`aciklama` ve `cta` bölünebilir — onlar terim değil cümle. Bölünen metin
+**dengelenir**: aynı satır sayısında en geniş satırı en dar tutan bölünme
+seçilir, yani son satırda tek kelime kalmaz (`playing the piano.` → `She is
+very good ___` / `playing the piano.`).
+
+Blok sayfaya sığmıyorsa (beş maddelik cevap anahtarı) punto ve boşluklar
+**birlikte** küçülür; taşma sessizce kırpılmış metin demek olurdu.
 
 ### Kategori etiketleri — kanonik liste
 

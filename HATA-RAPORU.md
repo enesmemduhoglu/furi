@@ -63,6 +63,27 @@ Denemelerde cikan kusurlar diyakritikle degil, her zamanki harf hatasiyla ilgili
 
 Yayina giren: 3. deneme + aynalama. mai'ye hic gerek kalmadi.
 
+2026-08-20, **`seviye-testi/a2` yerel basima gecti**: destenin metni
+`seviye-testi/a2/kart.json`'a girildi ve yedi slayt `marka/kart_bas.ps1` ile
+yeniden basildi. Harfleri artik gercek font basiyor, yani bu destede yazim
+hatasi ve eksik diyakritik **mumkun degil**. Kapanan kayitlar:
+
+- §1 `a2/8.jpg` > `dara` — slayt yayindan kaldirildi (skor tablosu artik
+  uretilmiyor), kalan alti slayt + cevap anahtari yeniden basildi
+- §4 "sik kutulari slayttan slayta farkli genislikte" — kutu genisligi artik
+  sabit (700 px), yedi slaytta ayni
+- §4 "etiket rengi kayiyor" (a2'de 3. slayttan itibaren laciverte donuyordu) —
+  etiket tek yerden basiliyor, kaymiyor
+- §5 ASCII kalintilari (`BASLAMAK IÇIN KAYDIR`, `Cevabini sec.`, cevap
+  anahtarinin tamami) — deste bastan sona tam Turkce
+
+Ayni turda `marka/metin_denetle.py`'de uc yanlis alarm cikti ve duzeltildi:
+buyuk harfli `ANAHTARI`/`KAYDIR` "diyakritiksiz" sayiliyordu (Turkce'de `ı`nin
+buyugu zaten `I`), `iyi` ise caption'lardaki `İyi`nin Python `.lower()` ciktisi
+(`i` + U+0307) yuzunden bozuk bir sozluk girdisiyle eslesiyordu. Denetim artik
+buyuk harfli kelimeyi adaylarin **Turkce buyuk hali** ile karsilastiriyor;
+`GECEBILIR` -> `GEÇEBİLİR` gibi gercek hatalari yakalamaya devam ediyor.
+
 2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
 
 | Dosya | Hatali | Dogrusu |
@@ -98,7 +119,8 @@ Bunlar diyakritik eksigi degil, gercek harf hatasi. Yayindaki bir postta goze ca
 | ~~`seviye-testi/b1/8.jpg`~~ | ~~`gudu`~~ | ✅ **cozuldu** |
 | ~~`seviye-testi/b2/8.jpg`~~ | ~~`seviyesende`~~ | ✅ **cozuldu** |
 | `seviye-testi/a1/8.jpg` | `değidlir` | degildir — **a1'e dokunulmadi**, a2/b1/b2'de yeni uretimde duzeldi | -
-| `seviye-testi/{a2,b1,b2}/8.jpg` | `dara` (yeni uretimde) | daha | -
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`dara`~~ | ✅ **cozuldu** (08-20) — slayt yayindan kaldirildi, deste yeniden basildi |
+| `seviye-testi/{b1,b2}/8.jpg` | `dara` (yeni uretimde) | daha | -
 | `seviye-testi/b1/8.jpg` | `bir az` (yeni uretimde) | biraz | -
 | `seviye-testi/b2/8.jpg` | `guclendirelem` (yeni uretimde) | guclendirelim | -
 | ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`takipte kali` (yeni uretimde)~~ | ✅ **cozuldu** (08-19) — fazla `i` silindi |
