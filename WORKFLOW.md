@@ -1,11 +1,16 @@
 ---
 name: insta-ingilizce
-description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusmesi, slayt metni, Gemini ile gorsel promptu uretimi, fal.ai seedream/mai ile gorsel uretimi, yazim denetimi ve caption. Kullanici post, karusel, slayt, gonderi, "ne paylassak" gibi seylerden bahsettiginde calisir.
+description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusmesi, slayt metni, kart gorsellerinin yerelde basilmasi, metin denetimi, caption ve puanlama. Kullanici post, karusel, slayt, gonderi, "ne paylassak" gibi seylerden bahsettiginde calisir.
 ---
 
 # Instagram Ingilizce Sayfasi — Post Uretim Akisi
 
-Bu akis 8 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 8 (commit)**.
+Bu akis 8 fazdan olusur (Faz 3 emekli). Iki onay noktasi var: **Faz 2 (slayt
+metni)** ve **Faz 8 (commit)**.
+
+> **Kart metni bir goruntu modelinden gecmez.** Harfler `marka/kart_bas.ps1`
+> ile gercek fontla basiliyor; yazim hatasi ve eksik Turkce karakter mumkun
+> degil. Gerekce: [Faz 4](#faz-4--gorsel-uretimi).
 
 ## ⚠️ Her PowerShell cagrisinda gecerli iki kural
 
@@ -18,7 +23,7 @@ Bu akis 8 fazdan olusur. Iki onay noktasi var: **Faz 2 (slayt metni)** ve **Faz 
 Uretim yeri: `C:\Users\enesm\visual studio\furi1\<format>\<konu-slug>\`
 Referans arsiv: ayni repodaki `seviye-testi/`, `hikayeli/`, `durumsal/`, `phrasal/`, `karistirilan/` klasorleri — 60 gorsel, marka sisteminin canli ornegi. Emin olmadigin bir tasarim kararinda bunlardan birini `Read` ile ac ve bak.
 
-**Klasor duzeni:** her post kendi klasorunde durur, klasor de formatinin altinda. Bir post = bir klasor = `1.jpg … N.jpg` + `caption.md` (+ gitignore'lanan `prompts.json`).
+**Klasor duzeni:** her post kendi klasorunde durur, klasor de formatinin altinda. Bir post = bir klasor = `1.jpg … N.jpg` + `caption.md` + `kart.json` (slayt metni, gorselin kaynagi) + `puan.json`.
 
 ---
 
@@ -88,27 +93,37 @@ Slayt slayt metni yaz ve **markdown tablo** halinde kullaniciya goster. Onaylanm
 
 ### Metin kurallari
 
-1. **ASCII-only Turkce — zorunlu.** Gorsel modeli Turkce diyakritikleri guvenilir sekilde basmiyor. Arsivde gorulen bozulmalar: `gónderiyi` (ö→ó), `edoceklere`, `değidlir`, `Kac dogrune var?`. Once dogru Turkce'yi yaz, sonra [Ek C](#ek-c--ascii-donusum)'deki donusumu uygula, tabloda **ASCII halini** goster.
+1. **Tam Turkce — zorunlu.** `ç ğ ı ö ş ü İ` oldugu gibi yazilir; ASCII'ye cevrilmez. *(2026-08-20 oncesi kural bunun tersiydi — sebep gorsel modelinin diyakritigi bozmasiydi. Metin artik modelden gecmiyor: [Faz 4](#faz-4--gorsel-uretimi) kartlari gercek fontla yerelde basiyor, yani harf bozulmasi mumkun degil.)* Metni `kart.json`'a yazip `python marka/metin_denetle.py <kart.json>` calistir; eksik diyakritik ve kanonik olmayan kategori etiketi oradan doner.
 2. Ingilizce metin oldugu gibi yazilir.
-3. Uzunluk siniri: dev baslik ≤ 22 karakter · Ingilizce cumle ≤ 60 karakter · Turkce ceviri ≤ 70 karakter. Uzun metin = model daha cok yazim hatasi yapiyor.
+3. Uzunluk siniri: dev baslik ≤ 22 karakter · Ingilizce cumle ≤ 60 karakter · Turkce ceviri ≤ 70 karakter · CTA ≤ 45. `metin_denetle.py` bunlari zorluyor. Sebep artik yazim hatasi degil yerlesim: uzun baslikta punto dusuyor ve hiyerarsi zayifliyor.
 4. Karuselin son slaytinda mutlaka CTA olsun (kaydet / yorum yap / arkadasina gonder).
 5. Emoji sadece CTA satirinda ve en fazla 1 tane.
 6. Turkce ceviri her zaman **parantez icinde** ve gri tonda.
 
 ### Tablo formati
 
-| # | Etiket | Baslik | Ingilizce | Turkce (parantez) | CTA | Model |
-|---|---|---|---|---|---|---|
-| 1 | DURUMSAL INGILIZCE | OTELDE CHECK-IN | — | — | Kaydir → | seedream |
-| 2 | DURUMSAL INGILIZCE | I HAVE A RESERVATION | I have a reservation under the name Demir. | (Demir adina bir rezervasyonum vardi.) | Odaya cikalim... Kaydir → | seedream |
+| # | Etiket | Baslik | Ingilizce | Turkce (parantez) | CTA |
+|---|---|---|---|---|---|
+| 1 | DURUMSAL İNGİLİZCE | OTELDE CHECK-IN | — | — | Kaydır → |
+| 2 | DURUMSAL İNGİLİZCE | I HAVE A RESERVATION | I have a reservation under the name Demir. | (Demir adına bir rezervasyonum vardı.) | Odaya çıkalım... Kaydır → |
 
-`Model` sutunu Faz 4'te kullanilir — kurali [Faz 4](#faz-4--gorsel-uretimi-falai)'te.
+Onaylanan tablo `kart.json`'a gecer (sema: `marka/README.md`). Model sutunu
+kalkti — kartlari artik model uretmiyor.
 
 ---
 
-## Faz 3 — Gemini ile gorsel promptu uretimi
+## Faz 3 — Gemini ile gorsel promptu uretimi  ⛔ EMEKLI (2026-08-20)
 
-Onaylanan slayt metnini + marka sistemini tek istekte Gemini'ye gonder, her slayt icin nihai gorsel promptunu JSON olarak al.
+Kart metni artik bir goruntu promptuna girmiyor; `kart.json`'dan dogruca
+basiliyor (Faz 4). Bu fazin butun isi — metni tirnak icinde birebir tasitmak,
+Gemini'nin diyakritik "duzeltmesini" engellemek — konusuz kaldi.
+
+Asagidaki blok, ileride gorsel bir oge (ornegin yeni bir zemin dokusu)
+gerekirse referans olsun diye duruyor. **Sistem promptundaki ASCII sarti
+gecersiz.**
+
+<details>
+<summary>Emekli Faz 3 (referans)</summary>
 
 ```powershell
 $sistem = @'
@@ -157,22 +172,42 @@ if ($parsed.error) { "API HATASI: " + $parsed.error.message } else {
 }
 ```
 
-`$slaytlar` blogunu yazarken her metin ogesinin **dikey sirasini, rolunu ve goreli buyuklugunu** ayri satirda ver (bkz. [Ek A](#ek-a--marka-sistemi) dikey siralama semasi). Gemini bu yapiyi promptta birebir tekrarliyor ve sonuc tutarli oluyor.
-
-**Donen promptlari kontrol et:** her promptta slayt metni tirnak icinde birebir duruyor mu? Gemini metni degistirdiyse (ozellikle ASCII'yi "duzeltip" diyakritik eklediyse) o slaytin promptunu elle duzelt, yeniden istek atma.
+</details>
 
 ---
 
-## Faz 4 — Gorsel uretimi (fal.ai)
+## Faz 4 — Gorsel uretimi
 
-### Model secimi
+Kartlar **yerelde basiliyor**. Metin bir goruntu modelinden gecmiyor.
 
-| Slayt tipi | Model | Boyut |
-|---|---|---|
-| Varsayilan: baslik + 1-2 kisa cumle | `fal-ai/bytedance/seedream/v5/lite/text-to-image` | `image_size: {width:1920, height:2400}` |
-| Yogun/kucuk metin: cevap anahtari, 5+ satirli liste, skor tablosu | `microsoft/mai-image-2.5-pro` | `aspect_ratio: "3:4"` + kirpma |
+```powershell
+powershell -File marka\kart_bas.ps1 -Spec dizi\tell-me-about-it\kart.json -Hedef dizi\tell-me-about-it
+```
 
-Kural: **slaytta 5'ten fazla ayri metin satiri varsa mai kullan.** Seedream kucuk puntoda harf hatasi yapiyor (arsivde `seviye-testi/b2/7.jpg` → `conoditional`, `Kac dogrune var?`).
+Sema, oge turleri, kanonik kategori etiketleri ve font secimi: **`marka/README.md`**.
+
+Betik basmadan once `metin_denetle.py`'yi calistirir; denetim gecmezse **hicbir
+dosya yazmaz**. Yani "denetimi atlamak" diye bir ihtimal yok.
+
+### Neden model degil
+
+`HATA-RAPORU.md` bu sorunun defteri: `conoditional`, `değidlir`, `alablir`,
+`edoceklere`, `KITAP vs GERCEX`. 2026-08-20'de tek bir kart uzerinde uc deneme
+yapildi, **ikisinde harf hatasi cikti** (`olocak`, `Kaybet`). Difuzyon modeline
+"dogru yaz" demek istatistiksel bir sey; kac kez denersen dene garanti vermiyor,
+yalnizca denetimle yakalaniyor. Harfleri cizdirmek yerine basmak sorunu
+kokunden kaldiriyor: ciktinin metni girdinin metni.
+
+Yan kazanclar: slayt basina uretim maliyeti sifir, tekrar denemek bedava,
+hizalama piksel piksel kontrolde, zemin her kartta ayni (arsivdeki "zemin rengi
+kayiyor" sorunu kapandi) ve postun metni repoda `kart.json` olarak duruyor —
+diff'lenebilir, grep'lenebilir.
+
+### fal.ai — artik kart uretiminde kullanilmiyor
+
+Asagidaki cagrilar **yeni bir zemin dokusu** gerekirse duruyor (`marka/zemin.jpg`
+arsivden cikarildi, yenisi lazim olursa seedream'e metinsiz kagit uretimi
+yaptirilir). Kart metni icin kullanilmaz.
 
 ### seedream cagrisi
 
@@ -257,18 +292,29 @@ Marka duzeni ortalanmis ve kenar bosluklari genis oldugu icin 80px kirpma icerik
 
 ## Faz 5 — Yazim denetimi  ⚠️ atlanmaz
 
-Uretilen **her** gorseli `Read` ile ac ve kontrol et:
+Uretilen **her** gorseli `Read` ile ac ve kontrol et.
 
-1. Metin, Faz 2'de onaylanan metinle **birebir** ayni mi?
-2. Diyakritik sizmis mi? (`ó`, `ğ`, `ı`, `ş`, `ü`, `ö`, `ç`)
-3. Yazim hatasi var mi? Arsivde gorulen tipler: `conoditional`, `edoceklere`, `dogrune`, `değidlir`
-4. Boyut 1920×2400 mu? (`Add-Type -AssemblyName System.Drawing` ile dogrula)
-5. Metin kenardan tasmis / kesilmis / ust uste binmis mi?
-6. Yasakli oge girmis mi? (logo, watermark, cerceve, illustrasyon)
+**Metin artik denetlenmiyor** — denetlenemez degil, *gerekmiyor*: harfler
+`marka/kart_bas.ps1` tarafindan gercek fontla basiliyor, ciktinin metni
+`kart.json`'un metni. Metnin kendisi Faz 2'de ve `metin_denetle.py` ile
+denetlendi. Geriye yerlesim kaliyor:
 
-**Hata varsa:** ayni promptu farkli `seed` ile yeniden gonder, **en fazla 2 kez**. Ucuncu denemede de hataliysa dur; kullaniciya hatali gorseli goster ve sec: metni kisalt / mai'ye gec / oldugu gibi birak.
+1. Boyut 1920×2400 mu?
+2. Metin kenardan tasmis / kesilmis / ust uste binmis mi?
+3. Baslik punto dusurulurken fazla kuculmus mu? (uzun basliklarda olur — metni kisalt)
+4. Dikey denge bozulmus mu? (cok satirli kartlarda blok asagi tasabilir)
+5. Zemin dokusu duzgun bindi mi?
 
-Denetim sonucunu kisa bir tabloyla ozetle — hangi slayt kacinci denemede gecti.
+**Esik (2026-08-20'de sertlestirildi):** yazim ve diyakritik hatasi
+**istisnasiz** duzeltilir — yerel basimda bu zaten bir `kart.json` duzeltmesi,
+bedava. Tipografik ufakliklar (tirnak yonu, ok gliflerinin bicimi, birkac
+piksel hizalama kaymasi) birakilir ve raporlanir.
+
+> Onceki esik "tek tuk harf hatasi bile yeniden uretim sebebi degil" idi; o
+> kural yeniden uretimin **pahali ve belirsiz** oldugu doneme aitti. Yerel
+> basimda duzeltme bir metin degisikligi oldugu icin tavizin sebebi kalmadi.
+
+Denetim sonucunu kisa bir tabloyla ozetle.
 
 ---
 
@@ -417,25 +463,23 @@ Dikey siralama (tekil kart):
 
 ---
 
-## Ek C — ASCII donusum
+## Ek C — ASCII donusum  ⛔ EMEKLI (2026-08-20)
 
-| Turkce | ASCII |  | Turkce | ASCII |
-|---|---|---|---|---|
-| ç | c |  | Ç | C |
-| ğ | g |  | Ğ | G |
-| ı | i |  | İ | I |
-| ö | o |  | Ö | O |
-| ş | s |  | Ş | S |
-| ü | u |  | Ü | U |
+Bu bolum kartlarin metnini bir goruntu modeli yazarken vardi: model
+diyakritigi bozdugu icin metin once ASCII'ye cevriliyordu. **Artik gecerli
+degil.** Metin `marka/kart_bas.ps1` ile gercek fontla basiliyor; `ç ğ ı ö ş ü
+İ` oldugu gibi yaziliyor.
 
-Ornek: `Bu gönderiyi kaydet` → `Bu gonderiyi kaydet` · `Kaç doğrun var?` → `Kac dogrun var?` · `Beğen` → `Begen`
+Kuralin kendi bedeli de vardi: ASCII'de anlamsizlasan kelimeler cikiyordu
+(`ÖLÜ` → `OLU`). Iki sorun da birlikte kapandi.
 
-Kontrol:
-```powershell
-if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
-```
+Donusum tablosu tek yerde hala kullaniliyor: `metin_denetle.py`, caption'lardan
+sozluk kurarken kelimeleri ASCII'ye katliyor ki `lazim` ile `lazım`i
+eslestirebilsin. Yani ayni tablo artik diyakritigi **silmek** icin degil,
+**eksigini bulmak** icin var.
 
----
+Arsivdeki 60 gorsel ASCII kalmaya devam ediyor; gecis kademeli
+(`HATA-RAPORU.md` §5).
 
 ## Ek D — Bilinen tuzaklar
 
@@ -443,14 +487,15 @@ if ($metin -match '[çğıöşüÇĞİÖŞÜ]') { "ASCII DEGIL: $metin" }
 |---|---|---|
 | **Shell state korunmuyor** | `$env:FAL_KEY` bos gider, 403 "unregistered caller" | Her komutun basinda `.env` yukle |
 | **`Invoke-RestMethod` PS 5.1'de patliyor** | `NullReferenceException`, hicbir ipucu yok | `curl.exe` + `--data-binary "@dosya"` |
+| **BOM'suz `.ps1`** | PS 5.1 dosyayi ANSI okur; UTF-8 `—` -> `â€”` olur ve `”` tirnak sayilip dize erken kapanir, anlamsiz parser hatasi | `.ps1` dosyalarini **UTF-8 BOM ile** kaydet |
 | **fal status URL'i tam endpoint yolu degil** | HTTP 405, bos govde, sonsuz polling | Submit yanitindaki `status_url` / `response_url`'i kullan |
 | **`gemini-3.1-pro-preview` ucretsiz katmanda kotasi 0** | 429 | `gemini-3.6-flash` kullan veya faturalandirmayi ac |
 | **Uretim ~35 sn, arac timeout'u 2 dk** | Karuselde timeout | Her slayti ayri PowerShell komutunda uret |
 | mai-image-2.5-pro'da 4:5 yok | Kare cikti, karuselde kirpma (`seviye-testi/a1/7.png` 1024×1024) | 3:4 uret + 80px simetrik kirp |
 | seedream custom boyut limiti | 400 hatasi | Toplam piksel 3.69 MP – 16.78 MP arasi kalsin; 1920×2400 guvenli |
-| Turkce diyakritik | `gónderiyi`, `değidlir` | ASCII-only + Faz 5 denetimi |
-| Kucuk puntoda yogun metin | `conoditional`, `dogrune` | 5+ satirli slaytta mai kullan |
-| Gemini metni "duzeltir" | Diyakritik geri gelir, cumle degisir | Prompt'ta birebir tirnak sarti + donen prompt kontrolu |
+| Turkce diyakritik | `gónderiyi`, `değidlir` | ~~ASCII-only~~ → metni yerelde bas (`marka/kart_bas.ps1`) |
+| Kucuk puntoda yogun metin | `conoditional`, `dogrune` | ~~mai kullan~~ → metni yerelde bas; punto ne olursa olsun harf bozulmaz |
+| Gemini metni "duzeltir" | Diyakritik geri gelir, cumle degisir | Kart metni artik prompta girmiyor; Gemini yalnizca gorsel yon icin |
 | mai `fiili` kelimesini basamiyor | `fili` / `fill` cikiyor, ust uste 2 denemede duzelmedi | Kelimeyi cumleden cikar. `"I" oznesi ile "am" yardimci fiili kullanilir` → `"I" oznesi her zaman "am" ile kullanilir`. Ayni promptu tekrar gondermek ise yaramiyor, metni kisaltmak yariyor |
 | mai 3:4'te 768×1024 donuyor | Kaynak cozunurluk dusuk, 1920'ye olceklerken 2.5x buyutme | Kacinilmaz — mai'de cozunurluk parametresi yok. IG zaten 1080'e indirdigi icin pratikte sorun cikarmiyor |
 | `.env` public repoda | Anahtar sizinti | `.gitignore`'da `.env`; commit oncesi `git status` kontrolu |

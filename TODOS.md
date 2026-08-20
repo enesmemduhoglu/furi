@@ -1,6 +1,6 @@
 # TODOS
 
-Son guncelleme: 2026-08-18.
+Son guncelleme: 2026-08-20.
 
 Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 `otomasyon/durum.json` icinde.
@@ -9,7 +9,46 @@ Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 
 ## Acik isler
 
-_Su an acik is yok._
+### [ ] Havuzdaki 24 postu yerel basima gecir — **gunu gunune**
+
+Kartlar artik yerelde basiliyor (`marka/README.md`), ama havuzdaki postlar hala
+goruntu modelinin urettigi ASCII gorseller. Bir kismi `HATA-RAPORU.md`'de kayitli
+yazim hatasi tasiyor (`alablir`, `edoceklere`, `değidlir`, `KITAP vs GERCEX`).
+
+**Karar (2026-08-20):** toplu tur yok. Her gun **yalnizca ertesi gunun postu**
+donusturulur. Sebep: maliyet zamana yayilir, hic yayinlanmayacak posta hic
+harcanmaz, ve donusturulen post ertesi gun zaten yayina giriyor. Yerel basimda
+uretim maliyeti sifir oldugu icin asil bedel metin girisi ve denetim.
+
+Yontem, post basina:
+
+1. `python .claude/skills/insta-yayinla/scripts/aday_sec.py --durum` -> siradaki
+2. Gorselleri `Read` ile ac, metni `kart.json`'a gecir — **tam Turkce**
+3. `python marka/metin_denetle.py <kart.json>`
+4. `powershell -File marka\kart_bas.ps1 -Spec <kart.json> -Hedef <format>/<slug>`
+5. Gorselleri denetle (yerlesim), `caption.md` alt text'ini guncelle
+6. Cozulen hatalari `HATA-RAPORU.md`'de ustu cizili isaretle
+
+| Kalan | Post | Slayt |
+|---|---|---|
+| dizi | 3 | 3 |
+| durumsal | 3 | 3 |
+| hikayeli | 3 | 16 |
+| karistirilan | 3 | 3 |
+| kitap-vs-gercek | 1 | 5 |
+| phrasal | 7 | 7 |
+| seviye-testi | 4 | 31 |
+
+`seviye-testi` en agiri (8 slayt, cevap anahtari ve skor tablosu) — `kart.json`
+semasi su an tekil kart yapisina gore; cok satirli liste slaytlari icin yeni oge
+turleri gerekecek (`madde`, `sik`, `skor`). Sirasi geldiginde eklenir.
+
+### [ ] `WORKFLOW.md` ve `HATA-RAPORU.md` duz yaziyi tam Turkce'ye cevir
+
+Dokuman metinleri hala ASCII-Turkce yazilmis (`gorsel`, `uretim`, `cozuldu`).
+ASCII kurali emekli oldugu icin sebebi kalmadi; `marka/README.md` tam Turkce
+yazildi. Kucuk ama tumunu birden yapmak gerekiyor, yarim cevrilmis dokuman daha
+kotu.
 
 ---
 

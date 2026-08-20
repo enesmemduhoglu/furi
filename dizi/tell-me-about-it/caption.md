@@ -22,4 +22,4 @@ Kaydet, lazım olacak ⬇
 
 ## Alt text
 
-1. Krem zeminli tipografik kart: üstte turuncu "DIZI INGILIZCESI" etiketi, ortada dev lacivert "TELL ME ABOUT IT" başlığı, altında büyük lacivert "Sorma! / Bana mı anlatıyorsun!" satırı, gri renkte "Tell me about it, I've been there." örnek cümlesi, en altta aşağı oklu "Kaydet, lazım olacak" çağrısı.
+1. Krem zeminli tipografik kart: üstte turuncu "DİZİ İNGİLİZCESİ" etiketi, ortada dev lacivert "TELL ME ABOUT IT" başlığı, altında büyük lacivert "Sorma! / Bana mı anlatıyorsun!" satırı, gri renkte "Tell me about it, I've been there." örnek cümlesi, en altta aşağı oklu "Kaydet, lazım olacak" çağrısı.
