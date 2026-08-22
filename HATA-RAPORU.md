@@ -112,11 +112,11 @@ Bunlar diyakritik eksiği değil, gerçek harf hatası. Yayındaki bir postta g�
 |---|---|---|
 | ~~`karistirilan/lose-vs-loose/1.jpg`~~ | ~~`Kaybestmek`~~ | ✅ **çözüldü** |
 | ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`AFFECT: Etkilemek (Fill)`~~ | ✅ **çözüldü** — `(Eylem)` olarak yazıldı |
-| `hikayeli/otel/3.jpg` | `alablir` | alabilir | -
+| ~~`hikayeli/otel/3.jpg`~~ | ~~`alablir`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
 | `durumsal/no-veggies/1.jpg` | `alablir` | alabilir | -
 | `durumsal/without-peppers/1.jpg` | `alablir` | alabilir | -
-| `hikayeli/otel/5.jpg` | `Seyahat edoceklere gonder` | edeceklere | -
-| `hikayeli/otel/2.jpg` | `reservasyonum` | rezervasyonum |-
+| ~~`hikayeli/otel/5.jpg`~~ | ~~`Seyahat edoceklere gonder`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
+| ~~`hikayeli/otel/2.jpg`~~ | ~~`reservasyonum`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
 | ~~`seviye-testi/a1/7.png`~~ | ~~`fill -s takisi`~~ | ✅ **çözüldü** — 7.jpg olarak yeniden üretildi |
 | ~~`seviye-testi/a1/7.png`~~ | ~~`I" oznesi`~~ | ✅ **çözüldü** — aynı üretimde |
 | ~~`seviye-testi/b1/7.png`~~ | ~~`would + fil` / `filin 3. hali`~~ | ✅ **çözüldü** — `would + verb` / `past participle` |
@@ -142,7 +142,7 @@ Bunlar diyakritik eksiği değil, gerçek harf hatası. Yayındaki bir postta g�
 
 **Not:** aynı kelime her destede farklı bozulmuş — `guclu` → `guulu` (a2), `gudu` (b1), doğru (b2). Tek bir arama-değiştirme ile yakalanmaz.
 
-`hikayeli/otel/2.jpg` ayrıca **zaman uyumsuzluğu** taşıyor: İngilizce `I have a reservation` (geniş zaman) ama Türkçe `rezervasyonum vardi` (geçmiş). Doğrusu `var`. -
+~~`hikayeli/otel/2.jpg` ayrıca **zaman uyumsuzluğu** taşıyordu: İngilizce `I have a reservation` (geniş zaman) ama Türkçe `rezervasyonum vardi` (geçmiş).~~ ✅ **çözüldü** (08-22) — kart `(Demir adına bir rezervasyonum var.)` olarak basıldı.
 
 ## 2. Yabancı diyakritik sızıntısı
 
@@ -178,8 +178,8 @@ Hata değil, ama yan yana paylaşılınca göze çarpar. Yeniden üretim yapıl�
 - **CTA ikonu her kartta farklı:** düz `↓`, dolu daire içinde `⬇`, çizgili daire, gri daire, turuncu ok, `⌄` chevron, ve iki kartta hiç ok yok (sadece emoji).
 - **Şablon sapması:** `phrasal/look-forward-to` tek `EXAMPLE SENTENCE` ara etiketi olan kart; `karistirilan/remember-vs-remind` tek ayraç çizgisi olan kart.
 - **Şık kutuları** slayttan slayta farklı genişlikte (en belirgin `seviye-testi/a2/5.jpg`); `b2/4.jpg` tek çift çizgili kutuya sahip.
-- **Emoji rengi:** ~~`seviye-testi/b2/8.jpg` sarı emoji kullanıyor~~ (08-22: slayt kaldırıldı), diğerleri tek renk glif. `hikayeli/otel/5.jpg`'deki balon emoji gri-laciverde dönüşmüş.
-- **Kesme işareti:** `hikayeli/otel/5.jpg` başlığında `I'D` açılış tırnağı olarak basılmış (`I‘D`), gövdede doğru.
+- **Emoji rengi:** ~~`seviye-testi/b2/8.jpg` sarı emoji kullanıyor~~ (08-22: slayt kaldırıldı), diğerleri tek renk glif. ~~`hikayeli/otel/5.jpg`'deki balon emoji gri-laciverde dönüşmüş.~~ (08-22: kart yeniden basıldı, CTA'da emoji yok.)
+- **Kesme işareti:** ~~`hikayeli/otel/5.jpg` başlığında `I'D` açılış tırnağı olarak basılmış (`I‘D`)~~ — 08-22'de kart yeniden basıldı, kesme işareti doğru.
 
 ## 5. Genel diyakritik politikası
 
