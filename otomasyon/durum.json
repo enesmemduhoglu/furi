@@ -1,20 +1,12 @@
 {
-  "bekleyen": {
-    "slug": "hikayeli/otel",
-    "kategori": "hikayeli",
-    "slayt": 5,
-    "saas_post_id": "cmt45u3rs0001l104srs7sd1d",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/bb93a25086a74828b85dfd13772aaa3f",
-    "gonderim_zamani": "2026-08-22T12:12:45+03:00",
-    "son_gecerlilik": "2026-08-23T12:12:45+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-22T11:25:08+03:00",
+  "son_yayin": "2026-08-22T15:46:47+03:00",
   "son_gonderim": "2026-08-22T12:12:45+03:00",
   "bugun": {
     "tarih": "2026-08-22",
     "siraya_konan": 1,
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
