@@ -24,7 +24,7 @@ metni)** ve **Faz 8 (commit)**.
 2. **`Invoke-RestMethod` kullanma.** PS 5.1'de bu API'lerde `NullReferenceException` fırlatıyor ve hata mesajı hiçbir şey söylemiyor. Bunun yerine `& "$env:SystemRoot\System32\curl.exe"` kullan; gövdeyi geçici bir dosyaya yazıp `--data-binary "@dosya"` ile gönder (UTF-8 ve tırnak sorunlarını bu çözüyor).
 
 Üretim yeri: `C:\Users\enesm\visual studio\furi1\<format>\<konu-slug>\`
-Referans arşiv: aynı repodaki `seviye-testi/`, `hikayeli/`, `durumsal/`, `phrasal/`, `karistirilan/` klasörleri — 60 görsel, marka sisteminin canlı örneği. Emin olmadığın bir tasarım kararında bunlardan birini `Read` ile aç ve bak.
+Referans arşiv: aynı repodaki `seviye-testi/`, `hikayeli/`, `phrasal/`, `karistirilan/`, `dizi/`, `kitap-vs-gercek/` klasörleri — marka sisteminin canlı örneği. Emin olmadığın bir tasarım kararında bunlardan birini `Read` ile aç ve bak.
 
 **Klasör düzeni:** her post kendi klasöründe durur, klasör de formatının altında. Bir post = bir klasör = `1.jpg … N.jpg` + `caption.md` + `kart.json` (slayt metni, görselin kaynağı) + `puan.json`.
 
@@ -82,9 +82,9 @@ Sonra `AskUserQuestion` ile format ve slayt sayısını onaylat.
 |---|---|---|
 | Seviye testi (A1/A2/B1/B2) | 7 | `seviye-testi/a1/`, `seviye-testi/b2/` |
 | Durumsal İngilizce — seri | 5 | `hikayeli/otel/`, `hikayeli/havaalaninda/` |
-| Durumsal İngilizce — tekil kart | 1 | `durumsal/on-the-side/` |
-| Günün Phrasal Verb'ü | 1 | `phrasal/figure-out/` |
-| Sık Karıştırılanlar (X vs Y) | 1 | `karistirilan/make-vs-do/` |
+| Durumsal İngilizce — tekil kart | 1 | *(havuzda örnek kalmadı, Ek B'ye bak)* |
+| Günün Phrasal Verb'ü | 1 | `phrasal/give-up/` |
+| Sık Karıştırılanlar (X vs Y) | 1 | `karistirilan/lose-vs-loose/` |
 
 Slayt iskeletleri için → [Ek B](#ek-b--format-iskeletleri).
 
@@ -285,11 +285,11 @@ Marka düzeni ortalanmış ve kenar boşlukları geniş olduğu için 80px kırp
 |---|---|---|
 | `seviye-testi` | CEFR testleri (kapak + 5 soru + cevap anahtarı) | `seviye-testi/b1/` |
 | `hikayeli` | Çok slaytlı, bir yolculuğu anlatan seriler | `hikayeli/havaalaninda/` |
-| `durumsal` | Durumsal İngilizce tekil kartları | `durumsal/on-the-side/` |
-| `phrasal` | Günün Phrasal Verb'ü kartları | `phrasal/break-down/` |
-| `karistirilan` | Sık Karıştırılanlar (X vs Y) kartları | `karistirilan/make-vs-do/` |
+| `durumsal` | Durumsal İngilizce tekil kartları | *(klasör şu an boş)* |
+| `phrasal` | Günün Phrasal Verb'ü kartları | `phrasal/give-up/` |
+| `karistirilan` | Sık Karıştırılanlar (X vs Y) kartları | `karistirilan/lose-vs-loose/` |
 
-`<konu-slug>` ASCII ve tireli olsun, konuyu tarif etsin: `break-down`, `make-vs-do`, `hold-the-onions`.
+`<konu-slug>` ASCII ve tireli olsun, konuyu tarif etsin: `give-up`, `lose-vs-loose`, `long-story-short`.
 
 ---
 

@@ -37,9 +37,14 @@ bir defter ve düzenli olarak bayat. Bulut rutininin defter commit'leri bazen
 `claude/*` dallarında kalıp main'e girmiyor.
 
 > **Durum sorulduğunda deftere bakıp cevap verme.** Sırayla: `git fetch origin`
-> → `esitle.py --kuru` → `esitle.py` → `aday_sec.py --durum`. `esitle.py`
-> `durum.json`'un `sonraki`/`son_yayin` alanlarını güncellemiyor; yayınlanmış
-> bir slug `sonraki`de kalırsa rutin onu tekrar sıraya koyar, elle temizle.
+> → `esitle.py --kuru` → `esitle.py` → `aday_sec.py --durum`.
+>
+> `bekleyen` alanının dolu olması "onay bekliyor" demek **değildir** — o alan
+> gönderim anında yazılır ve yayınla kapanmaz, kapatan `esitle.py`'dir.
+> `esitle.py --kuru` çıktısındaki `bekleyen.sonuc` gerçeği verir. `esitle.py`
+> kapatırken `son_yayin`i ve `bugun.yayinlanan`ı kendisi günceller, ama
+> `sonraki` alanına dokunmaz: yayınlanmış bir slug orada kalırsa rutin onu
+> tekrar sıraya koyar, elle temizle.
 
 ## İki skill, iki ayrı iş
 
@@ -88,8 +93,9 @@ Shell state çağrılar arasında korunmadığı için her PowerShell komutunun 
 ## Post klasörü
 
 `<format>/<slug>/` = `1.jpg … N.jpg` + `caption.md` + `kart.json` + `puan.json`.
-Beş format: `seviye-testi` (7 slayt), `hikayeli` (seri), `durumsal`, `phrasal`,
-`karistirilan` (tekil kart). `<slug>` ASCII ve tireli.
+Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi`,
+`kitap-vs-gercek`, `phrasal`, `karistirilan`, `durumsal` (tekil kart —
+2026-08-22'de havuzdaki tüm `durumsal` postları silindi, klasör boş). `<slug>` ASCII ve tireli.
 
 `puan.json` yayın sırasını **doğrudan** belirliyor: havuz en yüksek puandan
 aşağıya yayınlanıyor, kategori yalnızca eşitlik bozucu. Puansız post havuzun

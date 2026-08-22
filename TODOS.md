@@ -9,52 +9,52 @@ Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 
 ## Acik isler
 
-### [ ] Havuzdaki 32 postu yerel basima gecir — **gunu gunune**
+### [x] Havuzu yerel basima gecir — **bitti (2026-08-22)**
 
-Kartlar artik yerelde basiliyor (`marka/README.md`), ama havuzdaki postlar hala
-goruntu modelinin urettigi ASCII gorseller. Bir kismi `HATA-RAPORU.md`'de kayitli
-yazim hatasi tasiyor (`alablir`, `edoceklere`, `değidlir`, `KITAP vs GERCEX`).
+**Repoda artik goruntu modelinin metin yazdigi hicbir kart yok.** Havuzun 7.0 ve
+uzeri kismi (22 post) yerel basima cevrildi; altinda kalan 11 post ise
+cevrilmek yerine silindi (asagida). Ikisi birlikte isi kapatti.
 
-**Karar (2026-08-20):** toplu tur yok. Her gun **yalnizca ertesi gunun postu**
-donusturulur. Sebep: maliyet zamana yayilir, hic yayinlanmayacak posta hic
-harcanmaz, ve donusturulen post ertesi gun zaten yayina giriyor. Yerel basimda
-uretim maliyeti sifir oldugu icin asil bedel metin girisi ve denetim.
+**Karar (2026-08-20) neydi:** toplu tur yok, her gun yalnizca ertesi gunun
+postu donusturulur. Maliyet zamana yayilsin, hic yayinlanmayacak posta hic
+harcanmasin diye. Pratikte 22 post tek turda cevrildi ve kalan zayif kuyruk
+silindi, yani kural konusuz kaldi. Yeni post uretiminde zaten yerel basim
+varsayilan (WORKFLOW.md Faz 4).
 
-Yontem, post basina:
+Cevirmek yerine **silinen 13 post** (hepsi 2026-08-22):
 
-1. `python .claude/skills/insta-yayinla/scripts/aday_sec.py --durum` -> siradaki
-2. Gorselleri `Read` ile ac, metni `kart.json`'a gecir — **tam Turkce**
-3. `python marka/metin_denetle.py <kart.json>`
-4. `powershell -File marka\kart_bas.ps1 -Spec <kart.json> -Hedef <format>/<slug>`
-5. Gorselleri denetle (yerlesim), `caption.md` alt text'ini guncelle
-6. Cozulen hatalari `HATA-RAPORU.md`'de ustu cizili isaretle
-
-Sira puani izliyor, ama gunun postu elle secilebiliyor: `durum.json > sonraki`
-alanina slug yazilirsa rutin ertesi gun onu siraya koyar (puan sirasini bir
-kereligine ezer, gonderimden sonra kendini temizler). Donusturulen postun
-ertesi gun yayina girmesi bu alana bagli — yoksa rutin havuzun tepesindeki
-**donusturulmemis** postu alir.
-
-| Kalan | Post | Slayt |
+| Post | Puan | Sebep |
 |---|---|---|
-| durumsal | 5 | 5 |
-| karistirilan | 1 | 1 |
-| phrasal | 5 | 5 |
+| `karistirilan/borrow-vs-lend` | — | Onayda reddedilmisti (2026-08-18) |
+| `kitap-vs-gercek/native-kaliplar` | 8.40 | Kullanici posta isinamadi |
+| `phrasal/break-down` | 6.80 | 7.0 altı |
+| `phrasal/put-off` | 6.80 | 7.0 altı |
+| `durumsal/hold-the-onions` | 6.60 | 7.0 altı |
+| `karistirilan/make-vs-do` | 6.60 | 7.0 altı |
+| `durumsal/on-the-side` | 6.40 | 7.0 altı |
+| `durumsal/without-peppers` | 6.40 | 7.0 altı |
+| `phrasal/run-out-of` | 6.40 | 7.0 altı |
+| `phrasal/come-up-with` | 6.00 | 7.0 altı |
+| `phrasal/figure-out` | 6.00 | 7.0 altı |
+| `durumsal/no-veggies` | 5.60 | 7.0 altı |
+| `durumsal/plain` | 5.20 | 7.0 altı |
 
-> **2026-08-22 durumu:** havuzdaki 33 postun 22'si yerel basima gecti — puani
-> 7.0 ve uzeri olanlarin **tamami**. Kalan 11 postun hepsi 7.0'in altinda,
-> yani yayin sirasinda zaten arkada. Gunu gunune donusturme karari gecerli:
-> sira bir posta geldiginde donusturulur.
+Havuz 34'ten **21 posta** dustu. `durumsal` kategorisi tamamen bosaldi;
+`kitap-vs-gercek`te tek post kaldi. Gunde 1 post temposuyla eldeki stok
+yaklasik uc hafta — sonrasi icin yeni uretim gerekiyor.
+
+> Yontem, ileride bir posta gerekirse: `kart.json`'a tam Turkce metin →
+> `python marka/metin_denetle.py <kart.json>` →
+> `powershell -File marka\kart_bas.ps1 -Spec <kart.json> -Hedef <format>/<slug>`
+> → gorselleri yerlesim icin denetle → `caption.md` alt text'ini kartla esitle.
 >
-> 2026-08-22'de iki post **silindi**: `karistirilan/borrow-vs-lend` (onayda
-> reddedilmisti) ve `kitap-vs-gercek/native-kaliplar` (kullanici postu begenmedi,
-> puani 8.4 olmasina ragmen). Havuz 34'ten 32'ye dustu; `kitap-vs-gercek`
-> kategorisinde tek post kaldi.
+> Gunun postu elle secilebiliyor: `durum.json > sonraki` alanina slug yazilirsa
+> rutin onu siraya koyar (puan sirasini bir kereligine ezer, gonderimden sonra
+> kendini temizler).
 
-`seviye-testi` en agiri (8 slayt). Deste slaytlari icin gereken oge turleri
-**eklendi** (`kapak`, `sayac`, `soru`, `sik`, `madde`, `aciklama` + `ayrac`in
-`en` degeri, `alt` bosluk ezmesi) — sema `marka/README.md`. Kalan dort testte
-ayni sema calisir; yeni tur gerekmiyor.
+Deste slaytlari icin gereken oge turleri **eklendi** (`kapak`, `sayac`, `soru`,
+`sik`, `madde`, `aciklama` + `ayrac`in `en` degeri, `alt` bosluk ezmesi) — sema
+`marka/README.md`. Bes testin hepsi ayni semayla basiliyor.
 
 **Sonuc slayti (skor tablosu) artik uretilmiyor.** 2026-08-20 karari: o slayt
 yayinlanmiyor, deste cevap anahtariyla bitiyor. `skor` ve `uyari` oge turleri

@@ -130,7 +130,10 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
             if not metin:
                 continue
 
-            if tur == "etiket" and metin not in ETIKETLER and not ETIKET_TEST.match(metin):
+            kanonik_etiket = tur == "etiket" and (
+                metin in ETIKETLER or bool(ETIKET_TEST.match(metin))
+            )
+            if tur == "etiket" and not kanonik_etiket:
                 bulgular.append(
                     f"slayt {no} · etiket: {metin!r} kanonik etiket degil — "
                     f"marka/README.md > Kategori etiketleri"
@@ -139,6 +142,16 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
             sinir = SINIR.get(tur)
             if sinir and len(metin) > sinir:
                 bulgular.append(f"slayt {no} · {tur}: {len(metin)} karakter, sinir {sinir} — {metin!r}")
+
+            # Kanonik etiket zaten harfi harfine dogrulandi; kelime kelime
+            # yeniden denetlemek yalnizca yanlis alarm uretir. `SIK
+            # KARISTIRILANLAR`daki `SIK` dogrudur (`sık`), ama sozluk
+            # caption'lardan turedigi icin `sık` iceren caption silinince
+            # geriye `şık` kaliyor ve `SIK` "SİK/ŞİK olmali" diye
+            # isaretleniyordu. Sozlugun icerigi degistikce denetimin sonucu
+            # degismemeli.
+            if kanonik_etiket:
+                continue
 
             # Ingilizce oge: sozluk Turkce caption'lardan turedigi icin
             # `SAYING` -> `SAYİNG` gibi uydurma bulgular uretiyordu. Dil

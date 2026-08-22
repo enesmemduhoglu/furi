@@ -86,6 +86,13 @@ büyüğü zaten `I`), `iyi` ise caption'lardaki `İyi`nin Python `.lower()` ç�
 büyük harfli kelimeyi adayların **Türkçe büyük hali** ile karşılaştırıyor;
 `GECEBILIR` -> `GEÇEBİLİR` gibi gerçek hataları yakalamaya devam ediyor.
 
+2026-08-22, **puanı 7.0'ın altındaki 11 post silindi**: `durumsal`ın tamamı
+(5), `phrasal`dan 5 (`break-down`, `put-off`, `run-out-of`, `come-up-with`,
+`figure-out`) ve `karistirilan/make-vs-do`. Havuzun yerel basıma geçmemiş kısmı
+tam olarak bu 11 postu kapsıyordu, yani **repoda artık görüntü modelinin metin
+yazdığı hiçbir kart kalmadı**. Bu bölümdeki açık kayıtların büyük kısmı bu
+yüzden konusuz kaldı; altları çizilerek işaretlendi.
+
 2026-08-22, **`a1`, `b1`, `b2` skor slaytları silindi ve desteler yerel basıma
 geçti**: 2026-08-20'de alınan "sonuç slaytı üretilmiyor" kararı bu üç destede
 uygulanmamıştı. `8.jpg` dosyaları silindi, 7. slaytın CTA'sı `Sonucun için
@@ -113,8 +120,8 @@ Bunlar diyakritik eksiği değil, gerçek harf hatası. Yayındaki bir postta g�
 | ~~`karistirilan/lose-vs-loose/1.jpg`~~ | ~~`Kaybestmek`~~ | ✅ **çözüldü** |
 | ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`AFFECT: Etkilemek (Fill)`~~ | ✅ **çözüldü** — `(Eylem)` olarak yazıldı |
 | ~~`hikayeli/otel/3.jpg`~~ | ~~`alablir`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
-| `durumsal/no-veggies/1.jpg` | `alablir` | alabilir | -
-| `durumsal/without-peppers/1.jpg` | `alablir` | alabilir | -
+| ~~`durumsal/no-veggies/1.jpg`~~ | ~~`alablir`~~ | ⛔ **konusuz kaldı** (08-22) — post silindi |
+| ~~`durumsal/without-peppers/1.jpg`~~ | ~~`alablir`~~ | ⛔ **konusuz kaldı** (08-22) — post silindi |
 | ~~`hikayeli/otel/5.jpg`~~ | ~~`Seyahat edoceklere gonder`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
 | ~~`hikayeli/otel/2.jpg`~~ | ~~`reservasyonum`~~ | ✅ **çözüldü** (08-22) — deste yerel basıma geçti, harfleri gerçek font basıyor |
 | ~~`seviye-testi/a1/7.png`~~ | ~~`fill -s takisi`~~ | ✅ **çözüldü** — 7.jpg olarak yeniden üretildi |
@@ -150,8 +157,8 @@ Modelin Türkçe olmayan aksanlı harf basması. Kelime yanlış görünüyor.
 
 | Dosya | Hatalı | Doğrusu |
 |---|---|---|
-| `karistirilan/make-vs-do/1.jpg` | `gónderiyi` (ó) | gonderiyi | -
-| `durumsal/no-veggies/1.jpg` | `nasĭl` (ĭ) | nasil | -
+| ~~`karistirilan/make-vs-do/1.jpg`~~ | ~~`gónderiyi` (ó)~~ | ⛔ **konusuz kaldı** (08-22) — post silindi |
+| ~~`durumsal/no-veggies/1.jpg`~~ | ~~`nasĭl` (ĭ)~~ | ⛔ **konusuz kaldı** (08-22) — post silindi |
 | ~~`seviye-testi/a2/8.jpg`~~ | ~~`bìraz` (ì)~~ | ✅ **çözüldü** |
 | ~~`seviye-testi/a2/8.jpg`~~ | ~~`Asagĭya` (ĭ)~~ | ✅ **çözüldü** |
 | ~~`seviye-testi/b2/8.jpg`~~ | ~~`kísa`, `bír` (í)~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
@@ -163,7 +170,7 @@ Modelin Türkçe olmayan aksanlı harf basması. Kelime yanlış görünüyor.
 | ~~`seviye-testi/a1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `a1/7.jpg`, 1920×2400 |
 | ~~`seviye-testi/a2/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `a2/7.jpg`, 1920×2400 |
 | ~~`seviye-testi/b1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `b1/7.jpg`, 1920×2400 |
-| `phrasal/run-out-of/1.jpg` | Başlık `RUN OUT` / `OF` şeklinde **iki farklı puntoda** kırılmış | Otomatik sığdırma artefaktı, başlık bozuk görülüyor | -
+| ~~`phrasal/run-out-of/1.jpg`~~ | ~~Başlık `RUN OUT` / `OF` şeklinde iki farklı puntoda kırılmış~~ | ⛔ **konusuz kaldı** (08-22) — post silindi |
 | `seviye-testi/b2/3.jpg` | Soru ve CTA **serif** fontta | 60 görselin tek serif'i, marka dışı | -
 | `seviye-testi/b2/2.jpg` | `SORU 01 / 05` sayacı başlıktan kopmuş, soruya yapışmış | Üst blok dağılmış | -
 
@@ -186,7 +193,7 @@ Hata değil, ama yan yana paylaşılınca göze çarpar. Yeniden üretim yapıl�
 Görsellerdeki Türkçe **tutarsız** — arşiv, ASCII-only kuralının yürürlükte olduğu dönemde üretildi ama kurala kendisi de uymuyor. `ç` ve noktalı `i` genelde hayatta kalıyor, `ı ş ğ ü ö` ise rastgele düşüyor; üstelik **aynı cümle içinde**:
 
 - `Kahvalti saat kaçta servis ediliyor?` (`hikayeli/otel/4.jpg`)
-- `Daha fazla kelime için begen` (`durumsal/on-the-side/1.jpg`)
+- ~~`Daha fazla kelime için begen` (`durumsal/on-the-side/1.jpg`)~~ — post silindi (08-22)
 - `Motivasyon için arkadasina gonder` (`phrasal/give-up/1.jpg`)
 - `BASLAMAK IÇIN KAYDIR` (dört kapak slaytının hepsinde)
 - ~~`Ogrenmek için takipte kal` (`karistirilan/effect-vs-affect/1.jpg`)~~ — ✅ **çözüldü** (08-19): sedilya silinip `icin` yapıldı, satırın geri kalanı zaten ASCII'ydi
