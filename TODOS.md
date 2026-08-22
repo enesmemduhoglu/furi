@@ -46,8 +46,10 @@ ertesi gun yayina girmesi bu alana bagli — yoksa rutin havuzun tepesindeki
 > yani yayin sirasinda zaten arkada. Gunu gunune donusturme karari gecerli:
 > sira bir posta geldiginde donusturulur.
 >
-> `karistirilan/borrow-vs-lend` 2026-08-22'de **silindi** (onayda reddedilmisti,
-> yeniden uretilmedi); havuz 34'ten 33'e dustu.
+> 2026-08-22'de iki post **silindi**: `karistirilan/borrow-vs-lend` (onayda
+> reddedilmisti) ve `kitap-vs-gercek/native-kaliplar` (kullanici postu begenmedi,
+> puani 8.4 olmasina ragmen). Havuz 34'ten 32'ye dustu; `kitap-vs-gercek`
+> kategorisinde tek post kaldi.
 
 `seviye-testi` en agiri (8 slayt). Deste slaytlari icin gereken oge turleri
 **eklendi** (`kapak`, `sayac`, `soru`, `sik`, `madde`, `aciklama` + `ayrac`in
