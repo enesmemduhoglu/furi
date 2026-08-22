@@ -12,4 +12,4 @@ Motivasyon için arkadaşına gönder 👇
 
 ## Alt text
 
-1. Krem renkli dikey poster. Üstte turuncu "GÜNÜN PHRASAL VERB'Ü" etiketi. Ortada koyu lacivert çok kalın harflerle "GIVE UP" başlığı. Altında gri İngilizce tanım: "To stop trying to do something." Onun altında lacivert örnek cümle: "KPSS questions are tough, but never give up." Parantez içinde gri Türkçe çevirisi: "(KPSS soruları zor ama asla pes etme.)" En altta "Motivasyon için arkadaşına gönder ⬇" çağrısı.
+1. Krem renkli dikey poster. Üstte turuncu "GÜNÜN PHRASAL VERB'Ü" etiketi. Ortada koyu lacivert çok kalın harflerle "GIVE UP" başlığı. Altında gri İngilizce tanım: "To stop trying to do something." Onun altında lacivert örnek cümle: "KPSS questions are tough, but never give up." Parantez içinde gri Türkçe çevirisi: "(KPSS soruları zor ama asla pes etme.)" En altta "Motivasyon için arkadaşına gönder ↓" çağrısı.

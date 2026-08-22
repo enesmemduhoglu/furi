@@ -1,0 +1,286 @@
+{
+  "slug": "seviye-testi/c1",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "kapak",
+          "metin": "BU C1 TESTİNİ GEÇEBİLİR MİSİN?"
+        },
+        {
+          "tur": "ornek",
+          "metin": "5 soru • 1 dakika"
+        },
+        {
+          "tur": "cta",
+          "metin": "BAŞLAMAK İÇİN KAYDIR →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 01 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "If he had studied medicine, he ___ a doctor now.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) would be",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) would have been",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) will be",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 02 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "The board insisted that the report ___ by Friday.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) is submitted",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) be submitted",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) was submitted",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 03 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "No sooner ___ the door than the phone rang.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) I had closed",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) had I closed",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) did I close",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 04 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "He tried to ___ the fact that he was nervous.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) play down",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) play up",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) play out",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 05 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "___ in 1890, the building is now a museum.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) Building",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) Built",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) Having built",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "C1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "CEVAP ANAHTARI"
+        },
+        {
+          "tur": "madde",
+          "metin": "01 - A) would be"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Karma koşul cümlesi: geçmişteki şart, bugünkü sonuç."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "02 - B) be submitted"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Insist that” kalıbında fiil yalın halde kalır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "03 - B) had I closed"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“No sooner” devrik cümle yapısı gerektirir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "04 - A) play down"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Play down” bir şeyi küçük göstermek demektir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "05 - B) Built"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“which was built” kısaltılmış ortaç cümlesidir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "cta",
+          "metin": "Kaç doğrun var? Yorumlara yaz ↓"
+        }
+      ]
+    }
+  ]
+}

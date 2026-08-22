@@ -3,33 +3,36 @@ name: insta-ingilizce
 description: Instagram Ingilizce ogrenme sayfasi icin post uretir - fikir gorusmesi, slayt metni, kart gorsellerinin yerelde basilmasi, metin denetimi, caption ve puanlama. Kullanici post, karusel, slayt, gonderi, "ne paylassak" gibi seylerden bahsettiginde calisir.
 ---
 
-# Instagram Ingilizce Sayfasi — Post Uretim Akisi
+<!-- Yukaridaki frontmatter bilerek ASCII: ~/.claude/skills/insta-ingilizce/SKILL.md
+     ile birebir ayni olmali, yoksa skill eslesmesi iki surum arasinda ayrisir. -->
 
-Bu akis 8 fazdan olusur (Faz 3 emekli). Iki onay noktasi var: **Faz 2 (slayt
+# Instagram İngilizce Sayfası — Post Üretim Akışı
+
+Bu akış 8 fazdan oluşur (Faz 3 emekli). İki onay noktası var: **Faz 2 (slayt
 metni)** ve **Faz 8 (commit)**.
 
-> **Kart metni bir goruntu modelinden gecmez.** Harfler `marka/kart_bas.ps1`
-> ile gercek fontla basiliyor; yazim hatasi ve eksik Turkce karakter mumkun
-> degil. Gerekce: [Faz 4](#faz-4--gorsel-uretimi).
+> **Kart metni bir görüntü modelinden geçmez.** Harfler `marka/kart_bas.ps1`
+> ile gerçek fontla basılıyor; yazım hatası ve eksik Türkçe karakter mümkün
+> değil. Gerekçe: [Faz 4](#faz-4--görsel-üretimi).
 
-## ⚠️ Her PowerShell cagrisinda gecerli iki kural
+## ⚠️ Her PowerShell çağrısında geçerli iki kural
 
-1. **Shell state cagrilar arasinda korunmuyor.** Degiskenler ve `$env:` degerleri bir sonraki komutta yok. Her PowerShell komutunun ilk satiri `.env` yuklemesi olmali:
+1. **Shell state çağrılar arasında korunmuyor.** Değişkenler ve `$env:` değerleri bir sonraki komutta yok. Her PowerShell komutunun ilk satırı `.env` yüklemesi olmalı:
    ```powershell
    Get-Content "C:\Users\enesm\visual studio\furi1\.env" | Where-Object { $_ -match '^\s*[A-Za-z_]+\s*=' } | ForEach-Object { $k,$v = $_ -split '=',2; Set-Item -Path "env:$($k.Trim())" -Value $v.Trim() }
    ```
-2. **`Invoke-RestMethod` kullanma.** PS 5.1'de bu API'lerde `NullReferenceException` firlatiyor ve hata mesaji hicbir sey soylemiyor. Bunun yerine `& "$env:SystemRoot\System32\curl.exe"` kullan; govdeyi gecici bir dosyaya yazip `--data-binary "@dosya"` ile gonder (UTF-8 ve tirnak sorunlarini bu cozuyor).
+2. **`Invoke-RestMethod` kullanma.** PS 5.1'de bu API'lerde `NullReferenceException` fırlatıyor ve hata mesajı hiçbir şey söylemiyor. Bunun yerine `& "$env:SystemRoot\System32\curl.exe"` kullan; gövdeyi geçici bir dosyaya yazıp `--data-binary "@dosya"` ile gönder (UTF-8 ve tırnak sorunlarını bu çözüyor).
 
-Uretim yeri: `C:\Users\enesm\visual studio\furi1\<format>\<konu-slug>\`
-Referans arsiv: ayni repodaki `seviye-testi/`, `hikayeli/`, `durumsal/`, `phrasal/`, `karistirilan/` klasorleri — 60 gorsel, marka sisteminin canli ornegi. Emin olmadigin bir tasarim kararinda bunlardan birini `Read` ile ac ve bak.
+Üretim yeri: `C:\Users\enesm\visual studio\furi1\<format>\<konu-slug>\`
+Referans arşiv: aynı repodaki `seviye-testi/`, `hikayeli/`, `durumsal/`, `phrasal/`, `karistirilan/` klasörleri — 60 görsel, marka sisteminin canlı örneği. Emin olmadığın bir tasarım kararında bunlardan birini `Read` ile aç ve bak.
 
-**Klasor duzeni:** her post kendi klasorunde durur, klasor de formatinin altinda. Bir post = bir klasor = `1.jpg … N.jpg` + `caption.md` + `kart.json` (slayt metni, gorselin kaynagi) + `puan.json`.
+**Klasör düzeni:** her post kendi klasöründe durur, klasör de formatının altında. Bir post = bir klasör = `1.jpg … N.jpg` + `caption.md` + `kart.json` (slayt metni, görselin kaynağı) + `puan.json`.
 
 ---
 
-## Faz 0 — Kurulum kontrolu
+## Faz 0 — Kurulum kontrolü
 
-Her oturumda ilk is, anahtarlarin yuklu oldugunu dogrula:
+Her oturumda ilk iş, anahtarların yüklü olduğunu doğrula:
 
 ```powershell
 $envFile = "C:\Users\enesm\visual studio\furi1\.env"
@@ -43,84 +46,84 @@ if (Test-Path $envFile) {
 "FAL_KEY: " + $(if ($env:FAL_KEY) { "var" } else { "YOK" })
 ```
 
-Gemini modelini de dogrula — plan degisirse hangi modelin acik oldugu degisir:
+Gemini modelini de doğrula — plan değişirse hangi modelin açık olduğu değişir:
 
 ```powershell
 $m = (& "$env:SystemRoot\System32\curl.exe" -s "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200" -H "x-goog-api-key: $env:GEMINI_API_KEY") -join "" | ConvertFrom-Json
 $m.models | Where-Object { $_.supportedGenerationMethods -contains "generateContent" } | ForEach-Object { $_.name }
 ```
 
-**Not (2026-08 itibariyle):** `gemini-3.1-pro-preview` listede gorunuyor ama ucretsiz katmanda kotasi 0 — 429 doner. Ucretsiz katmanda calisan: `gemini-3.6-flash` (varsayilan), `gemini-3.5-flash`, `gemini-3-flash-preview`. Prompt yazma isi icin flash yeterli. Kullanici Google Cloud'da faturalandirmayi acarsa `gemini-3.1-pro-preview`'a gec.
+**Not (2026-08 itibarıyla):** `gemini-3.1-pro-preview` listede görünüyor ama ücretsiz katmanda kotası 0 — 429 döner. Ücretsiz katmanda çalışan: `gemini-3.6-flash` (varsayılan), `gemini-3.5-flash`, `gemini-3-flash-preview`. Prompt yazma işi için flash yeterli. Kullanıcı Google Cloud'da faturalandırmayı açarsa `gemini-3.1-pro-preview`'a geç.
 
-Eksikse kullanicidan `furi1\.env` dosyasina eklemesini iste:
+Eksikse kullanıcıdan `furi1\.env` dosyasına eklemesini iste:
 
 ```
 GEMINI_API_KEY=...
 FAL_KEY=...
 ```
 
-**Repo public.** `.env` asla commit edilmez, ekrana yazdirilmaz, prompt icine konmaz. `.gitignore`'da `.env` satiri olmali — yoksa once onu ekle.
+**Repo public.** `.env` asla commit edilmez, ekrana yazdırılmaz, prompt içine konmaz. `.gitignore`'da `.env` satırı olmalı — yoksa önce onu ekle.
 
 ---
 
-## Faz 1 — Brief (konusma)
+## Faz 1 — Brief (konuşma)
 
-Kullanici ya net bir konuyla gelir ("otelde check-in cumleleri yapalim") ya da fikir ister ("ne paylassak").
+Kullanıcı ya net bir konuyla gelir ("otelde check-in cümleleri yapalım") ya da fikir ister ("ne paylaşsak").
 
-**Fikir isteniyorsa:** asagidaki 5 formatin arsivde ne kadar kullanildigina bak, 3 somut oneri sun. Her oneri: *format + baslik + neden ilgi ceker* (tek satir). Tekrar eden konu onerme — arsivdeki klasor adlari zaten islenmis konular.
+**Fikir isteniyorsa:** aşağıdaki 5 formatın arşivde ne kadar kullanıldığına bak, 3 somut öneri sun. Her öneri: *format + başlık + neden ilgi çeker* (tek satır). Tekrar eden konu önerme — arşivdeki klasör adları zaten işlenmiş konular.
 
-**Konu netse:** dogrudan format + slayt sayisi oner.
+**Konu netse:** doğrudan format + slayt sayısı öner.
 
-Sonra `AskUserQuestion` ile format ve slayt sayisini onaylat.
+Sonra `AskUserQuestion` ile format ve slayt sayısını onaylat.
 
-### 5 post formati
+### 5 post formatı
 
-| Format | Slayt | Arsiv ornegi |
+| Format | Slayt | Arşiv örneği |
 |---|---|---|
-| Seviye testi (A1/A2/B1/B2) | 8 | `seviye-testi/a1/`, `seviye-testi/b2/` |
-| Durumsal Ingilizce — seri | 5 | `hikayeli/otel/`, `hikayeli/havaalaninda/` |
-| Durumsal Ingilizce — tekil kart | 1 | `durumsal/on-the-side/` |
-| Gunun Phrasal Verb'u | 1 | `phrasal/figure-out/` |
-| Sik Karistirilanlar (X vs Y) | 1 | `karistirilan/make-vs-do/` |
+| Seviye testi (A1/A2/B1/B2) | 7 | `seviye-testi/a1/`, `seviye-testi/b2/` |
+| Durumsal İngilizce — seri | 5 | `hikayeli/otel/`, `hikayeli/havaalaninda/` |
+| Durumsal İngilizce — tekil kart | 1 | `durumsal/on-the-side/` |
+| Günün Phrasal Verb'ü | 1 | `phrasal/figure-out/` |
+| Sık Karıştırılanlar (X vs Y) | 1 | `karistirilan/make-vs-do/` |
 
-Slayt iskeletleri icin → [Ek B](#ek-b--format-iskeletleri).
+Slayt iskeletleri için → [Ek B](#ek-b--format-iskeletleri).
 
 ---
 
 ## Faz 2 — Slayt metni  ⛔ ONAY NOKTASI
 
-Slayt slayt metni yaz ve **markdown tablo** halinde kullaniciya goster. Onaylanmadan Faz 3'e gecme.
+Slayt slayt metni yaz ve **markdown tablo** halinde kullanıcıya göster. Onaylanmadan Faz 4'e geçme.
 
-### Metin kurallari
+### Metin kuralları
 
-1. **Tam Turkce — zorunlu.** `ç ğ ı ö ş ü İ` oldugu gibi yazilir; ASCII'ye cevrilmez. *(2026-08-20 oncesi kural bunun tersiydi — sebep gorsel modelinin diyakritigi bozmasiydi. Metin artik modelden gecmiyor: [Faz 4](#faz-4--gorsel-uretimi) kartlari gercek fontla yerelde basiyor, yani harf bozulmasi mumkun degil.)* Metni `kart.json`'a yazip `python marka/metin_denetle.py <kart.json>` calistir; eksik diyakritik ve kanonik olmayan kategori etiketi oradan doner.
-2. Ingilizce metin oldugu gibi yazilir.
-3. Uzunluk siniri: dev baslik ≤ 22 karakter · Ingilizce cumle ≤ 60 karakter · Turkce ceviri ≤ 70 karakter · CTA ≤ 45. `metin_denetle.py` bunlari zorluyor. Sebep artik yazim hatasi degil yerlesim: uzun baslikta punto dusuyor ve hiyerarsi zayifliyor.
-4. Karuselin son slaytinda mutlaka CTA olsun (kaydet / yorum yap / arkadasina gonder).
-5. Emoji sadece CTA satirinda ve en fazla 1 tane.
-6. Turkce ceviri her zaman **parantez icinde** ve gri tonda.
+1. **Tam Türkçe — zorunlu.** `ç ğ ı ö ş ü İ` olduğu gibi yazılır; ASCII'ye çevrilmez. *(2026-08-20 öncesi kural bunun tersiydi — sebep görsel modelinin diyakritiği bozmasıydı. Metin artık modelden geçmiyor: [Faz 4](#faz-4--görsel-üretimi) kartları gerçek fontla yerelde basıyor, yani harf bozulması mümkün değil.)* Metni `kart.json`'a yazıp `python marka/metin_denetle.py <kart.json>` çalıştır; eksik diyakritik ve kanonik olmayan kategori etiketi oradan döner.
+2. İngilizce metin olduğu gibi yazılır. Öğesine `"dil": "en"` koy — denetim o zaman Türkçe diyakritik kurallarını o satıra uygulamaz.
+3. Uzunluk sınırı: dev başlık ≤ 22 karakter · İngilizce cümle ≤ 60 karakter · Türkçe çeviri ≤ 70 karakter · CTA ≤ 45. `metin_denetle.py` bunları zorluyor. Sebep artık yazım hatası değil yerleşim: uzun başlıkta punto düşüyor ve hiyerarşi zayıflıyor.
+4. Karuselin son slaytında mutlaka CTA olsun (kaydet / yorum yap / arkadaşına gönder).
+5. Emoji sadece CTA satırında ve en fazla 1 tane.
+6. Türkçe çeviri her zaman **parantez içinde** ve gri tonda.
 
-### Tablo formati
+### Tablo formatı
 
-| # | Etiket | Baslik | Ingilizce | Turkce (parantez) | CTA |
+| # | Etiket | Başlık | İngilizce | Türkçe (parantez) | CTA |
 |---|---|---|---|---|---|
 | 1 | DURUMSAL İNGİLİZCE | OTELDE CHECK-IN | — | — | Kaydır → |
-| 2 | DURUMSAL İNGİLİZCE | I HAVE A RESERVATION | I have a reservation under the name Demir. | (Demir adına bir rezervasyonum vardı.) | Odaya çıkalım... Kaydır → |
+| 2 | DURUMSAL İNGİLİZCE | I HAVE A RESERVATION | I have a reservation under the name Demir. | (Demir adına bir rezervasyonum var.) | Odaya çıkalım... Kaydır → |
 
-Onaylanan tablo `kart.json`'a gecer (sema: `marka/README.md`). Model sutunu
-kalkti — kartlari artik model uretmiyor.
+Onaylanan tablo `kart.json`'a geçer (şema: `marka/README.md`). Model sütunu
+kalktı — kartları artık model üretmiyor.
 
 ---
 
-## Faz 3 — Gemini ile gorsel promptu uretimi  ⛔ EMEKLI (2026-08-20)
+## Faz 3 — Gemini ile görsel promptu üretimi  ⛔ EMEKLİ (2026-08-20)
 
-Kart metni artik bir goruntu promptuna girmiyor; `kart.json`'dan dogruca
-basiliyor (Faz 4). Bu fazin butun isi — metni tirnak icinde birebir tasitmak,
-Gemini'nin diyakritik "duzeltmesini" engellemek — konusuz kaldi.
+Kart metni artık bir görüntü promptuna girmiyor; `kart.json`'dan doğruca
+basılıyor (Faz 4). Bu fazın bütün işi — metni tırnak içinde birebir taşıtmak,
+Gemini'nin diyakritik "düzeltmesini" engellemek — konusuz kaldı.
 
-Asagidaki blok, ileride gorsel bir oge (ornegin yeni bir zemin dokusu)
-gerekirse referans olsun diye duruyor. **Sistem promptundaki ASCII sarti
-gecersiz.**
+Aşağıdaki blok, ileride görsel bir öge (örneğin yeni bir zemin dokusu)
+gerekirse referans olsun diye duruyor. **Sistem promptundaki ASCII şartı
+geçersiz.**
 
 <details>
 <summary>Emekli Faz 3 (referans)</summary>
@@ -176,42 +179,42 @@ if ($parsed.error) { "API HATASI: " + $parsed.error.message } else {
 
 ---
 
-## Faz 4 — Gorsel uretimi
+## Faz 4 — Görsel üretimi
 
-Kartlar **yerelde basiliyor**. Metin bir goruntu modelinden gecmiyor.
+Kartlar **yerelde basılıyor**. Metin bir görüntü modelinden geçmiyor.
 
 ```powershell
 powershell -File marka\kart_bas.ps1 -Spec dizi\tell-me-about-it\kart.json -Hedef dizi\tell-me-about-it
 ```
 
-Sema, oge turleri, kanonik kategori etiketleri ve font secimi: **`marka/README.md`**.
+Şema, öge türleri, kanonik kategori etiketleri ve font seçimi: **`marka/README.md`**.
 
-Betik basmadan once `metin_denetle.py`'yi calistirir; denetim gecmezse **hicbir
+Betik basmadan önce `metin_denetle.py`'yi çalıştırır; denetim geçmezse **hiçbir
 dosya yazmaz**. Yani "denetimi atlamak" diye bir ihtimal yok.
 
-### Neden model degil
+### Neden model değil
 
 `HATA-RAPORU.md` bu sorunun defteri: `conoditional`, `değidlir`, `alablir`,
-`edoceklere`, `KITAP vs GERCEX`. 2026-08-20'de tek bir kart uzerinde uc deneme
-yapildi, **ikisinde harf hatasi cikti** (`olocak`, `Kaybet`). Difuzyon modeline
-"dogru yaz" demek istatistiksel bir sey; kac kez denersen dene garanti vermiyor,
-yalnizca denetimle yakalaniyor. Harfleri cizdirmek yerine basmak sorunu
-kokunden kaldiriyor: ciktinin metni girdinin metni.
+`edoceklere`, `KITAP vs GERCEX`. 2026-08-20'de tek bir kart üzerinde üç deneme
+yapıldı, **ikisinde harf hatası çıktı** (`olocak`, `Kaybet`). Difüzyon modeline
+"doğru yaz" demek istatistiksel bir şey; kaç kez denersen dene garanti vermiyor,
+yalnızca denetimle yakalanıyor. Harfleri çizdirmek yerine basmak sorunu
+kökünden kaldırıyor: çıktının metni girdinin metni.
 
-Yan kazanclar: slayt basina uretim maliyeti sifir, tekrar denemek bedava,
-hizalama piksel piksel kontrolde, zemin her kartta ayni (arsivdeki "zemin rengi
-kayiyor" sorunu kapandi) ve postun metni repoda `kart.json` olarak duruyor —
+Yan kazançlar: slayt başına üretim maliyeti sıfır, tekrar denemek bedava,
+hizalama piksel piksel kontrolde, zemin her kartta aynı (arşivdeki "zemin rengi
+kayıyor" sorunu kapandı) ve postun metni repoda `kart.json` olarak duruyor —
 diff'lenebilir, grep'lenebilir.
 
-### fal.ai — artik kart uretiminde kullanilmiyor
+### fal.ai — artık kart üretiminde kullanılmıyor
 
-Asagidaki cagrilar **yeni bir zemin dokusu** gerekirse duruyor (`marka/zemin.jpg`
-arsivden cikarildi, yenisi lazim olursa seedream'e metinsiz kagit uretimi
-yaptirilir). Kart metni icin kullanilmaz.
+Aşağıdaki çağrılar **yeni bir zemin dokusu** gerekirse duruyor (`marka/zemin.jpg`
+arşivden çıkarıldı, yenisi lazım olursa seedream'e metinsiz kâğıt üretimi
+yaptırılır). Kart metni için kullanılmaz.
 
-### seedream cagrisi
+### seedream çağrısı
 
-> ⛔ **Status/result URL'ini elle kurma.** fal'da submit adresi tam endpoint yolu (`fal-ai/bytedance/seedream/v5/lite/text-to-image`) ama status/result adresi sadece **uygulama kimligi** (`fal-ai/bytedance`). Tam yolu kullanirsan HTTP 405 + bos govde doner ve polling sonsuza kadar bosa doner. Cozum: submit yanitindaki `status_url` ve `response_url` alanlarini oldugu gibi kullan.
+> ⛔ **Status/result URL'ini elle kurma.** fal'da submit adresi tam endpoint yolu (`fal-ai/bytedance/seedream/v5/lite/text-to-image`) ama status/result adresi sadece **uygulama kimliği** (`fal-ai/bytedance`). Tam yolu kullanırsan HTTP 405 + boş gövde döner ve polling sonsuza kadar boşa döner. Çözüm: submit yanıtındaki `status_url` ve `response_url` alanlarını olduğu gibi kullan.
 
 ```powershell
 $ep = "fal-ai/bytedance/seedream/v5/lite/text-to-image"
@@ -240,13 +243,13 @@ $res = (& "$env:SystemRoot\System32\curl.exe" -s $sub.response_url -H "Authoriza
 & "$env:SystemRoot\System32\curl.exe" -s -o "$out\$n.jpg" $res.images[0].url
 ```
 
-> `image_size` custom deger limiti: toplam piksel 2560×1440 ile 4096×4096 arasi olmali. 1920×2400 = 4.6 MP ✓ gecerli.
+> `image_size` custom değer limiti: toplam piksel 2560×1440 ile 4096×4096 arası olmalı. 1920×2400 = 4.6 MP ✓ geçerli.
 >
-> Uretim ~35 saniye suruyor. PowerShell aracinin varsayilan zaman asimi 2 dakika — **cok slaytli karuselde her slaytin uretimini ayri komutta calistir**, hepsini tek komuta koyma yoksa timeout yersin.
+> Üretim ~35 saniye sürüyor. PowerShell aracının varsayılan zaman aşımı 2 dakika — **çok slaytlı karuselde her slaytın üretimini ayrı komutta çalıştır**, hepsini tek komuta koyma yoksa timeout yersin.
 
-### mai cagrisi + 4:5 duzeltmesi
+### mai çağrısı + 4:5 düzeltmesi
 
-`microsoft/mai-image-2.5-pro`'nun `aspect_ratio` enum'unda **4:5 yok** (`auto, 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3`). Arsivdeki `seviye-testi/a1/7.png`, `a2/7.png`, `b1/7.png` bu yuzden 1024×1024 kare kalmis ve karuselde kirpiliyor. Cozum: 3:4 uret, 1920 genislige olcekle, ustten ve alttan 80'er piksel simetrik kirp.
+`microsoft/mai-image-2.5-pro`'nun `aspect_ratio` enum'unda **4:5 yok** (`auto, 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3`). Arşivdeki `seviye-testi/a1/7.png`, `a2/7.png`, `b1/7.png` bu yüzden 1024×1024 kare kalmış ve karuselde kırpılıyor. Çözüm: 3:4 üret, 1920 genişliğe ölçekle, üstten ve alttan 80'er piksel simetrik kırp.
 
 ```powershell
 $ep = "microsoft/mai-image-2.5-pro"
@@ -270,69 +273,74 @@ $final.Dispose(); $g.Dispose(); $scaled.Dispose(); $src.Dispose()
 Remove-Item "$out\_raw$n.jpg"
 ```
 
-Marka duzeni ortalanmis ve kenar bosluklari genis oldugu icin 80px kirpma icerik kaybettirmez.
+Marka düzeni ortalanmış ve kenar boşlukları geniş olduğu için 80px kırpma içerik kaybettirmez.
 
-### Dosya adlandirma
+### Dosya adlandırma
 
-`furi1\<format>\<konu-slug>\1.jpg`, `2.jpg`, ... — arsivdeki `seviye-testi/a1/1.jpg`, `hikayeli/otel/1.jpg` kuralinin aynisi.
+`furi1\<format>\<konu-slug>\1.jpg`, `2.jpg`, ... — arşivdeki `seviye-testi/a1/1.jpg`, `hikayeli/otel/1.jpg` kuralının aynısı.
 
-`<format>` su besten biri:
+`<format>` şu beşten biri:
 
-| `<format>` | Ne girer | Ornek |
+| `<format>` | Ne girer | Örnek |
 |---|---|---|
-| `seviye-testi` | 8 slaytlik CEFR testleri | `seviye-testi/b1/` |
-| `hikayeli` | Cok slaytli, bir yolculugu anlatan seriler | `hikayeli/havaalaninda/` |
-| `durumsal` | Durumsal Ingilizce tekil kartlari | `durumsal/on-the-side/` |
-| `phrasal` | Gunun Phrasal Verb'u kartlari | `phrasal/break-down/` |
-| `karistirilan` | Sik Karistirilanlar (X vs Y) kartlari | `karistirilan/make-vs-do/` |
+| `seviye-testi` | CEFR testleri (kapak + 5 soru + cevap anahtarı) | `seviye-testi/b1/` |
+| `hikayeli` | Çok slaytlı, bir yolculuğu anlatan seriler | `hikayeli/havaalaninda/` |
+| `durumsal` | Durumsal İngilizce tekil kartları | `durumsal/on-the-side/` |
+| `phrasal` | Günün Phrasal Verb'ü kartları | `phrasal/break-down/` |
+| `karistirilan` | Sık Karıştırılanlar (X vs Y) kartları | `karistirilan/make-vs-do/` |
 
 `<konu-slug>` ASCII ve tireli olsun, konuyu tarif etsin: `break-down`, `make-vs-do`, `hold-the-onions`.
 
 ---
 
-## Faz 5 — Yazim denetimi  ⚠️ atlanmaz
+## Faz 5 — Yazım denetimi  ⚠️ atlanmaz
 
-Uretilen **her** gorseli `Read` ile ac ve kontrol et.
+Üretilen **her** görseli `Read` ile aç ve kontrol et.
 
-**Metin artik denetlenmiyor** — denetlenemez degil, *gerekmiyor*: harfler
-`marka/kart_bas.ps1` tarafindan gercek fontla basiliyor, ciktinin metni
+**Metin artık denetlenmiyor** — denetlenemez değil, *gerekmiyor*: harfler
+`marka/kart_bas.ps1` tarafından gerçek fontla basılıyor, çıktının metni
 `kart.json`'un metni. Metnin kendisi Faz 2'de ve `metin_denetle.py` ile
-denetlendi. Geriye yerlesim kaliyor:
+denetlendi. Geriye yerleşim kalıyor:
 
-1. Boyut 1920×2400 mu?
-2. Metin kenardan tasmis / kesilmis / ust uste binmis mi?
-3. Baslik punto dusurulurken fazla kuculmus mu? (uzun basliklarda olur — metni kisalt)
-4. Dikey denge bozulmus mu? (cok satirli kartlarda blok asagi tasabilir)
-5. Zemin dokusu duzgun bindi mi?
+1. Boyut 1920×2400 mü?
+2. Metin kenardan taşmış / kesilmiş / üst üste binmiş mi?
+3. Başlık punto düşürülürken fazla küçülmüş mü? (uzun başlıklarda olur — metni kısalt)
+4. Dikey denge bozulmuş mu? (çok satırlı kartlarda blok aşağı taşabilir)
+5. Zemin dokusu düzgün bindi mi?
 
-**Esik (2026-08-20'de sertlestirildi):** yazim ve diyakritik hatasi
-**istisnasiz** duzeltilir — yerel basimda bu zaten bir `kart.json` duzeltmesi,
-bedava. Tipografik ufakliklar (tirnak yonu, ok gliflerinin bicimi, birkac
-piksel hizalama kaymasi) birakilir ve raporlanir.
+**Eşik (2026-08-20'de sertleştirildi):** yazım ve diyakritik hatası
+**istisnasız** düzeltilir — yerel basımda bu zaten bir `kart.json` düzeltmesi,
+bedava. Tipografik ufaklıklar (tırnak yönü, ok gliflerinin biçimi, birkaç
+piksel hizalama kayması) bırakılır ve raporlanır.
 
-> Onceki esik "tek tuk harf hatasi bile yeniden uretim sebebi degil" idi; o
-> kural yeniden uretimin **pahali ve belirsiz** oldugu doneme aitti. Yerel
-> basimda duzeltme bir metin degisikligi oldugu icin tavizin sebebi kalmadi.
+> Önceki eşik "tek tük harf hatası bile yeniden üretim sebebi değil" idi; o
+> kural yeniden üretimin **pahalı ve belirsiz** olduğu döneme aitti. Yerel
+> basımda düzeltme bir metin değişikliği olduğu için tavizin sebebi kalmadı.
 
-Denetim sonucunu kisa bir tabloyla ozetle.
+Denetim sonucunu kısa bir tabloyla özetle.
 
 ---
 
 ## Faz 6 — Caption
 
-`furi1\<format>\<konu-slug>\caption.md` dosyasina yaz. **Caption metin alani, gorsel degil — burada tam Turkce kullan** (ASCII kurali sadece gorsel icin gecerli).
+`furi1\<format>\<konu-slug>\caption.md` dosyasına yaz. Caption metin alanı,
+görsel değil — burada da tam Türkçe kullan.
+
+**Alt text kartın metnini birebir alıntılar.** Kart tam Türkçe basıldığı için
+alt text'te ASCII kalıntısı (`DIZI INGILIZCESI`, `Kisacasi.`) bir hatadır;
+alıntı ile kart aynı olmalı.
 
 ```markdown
-## Aciklama
-<2-4 satir. Ilk satir kanca olsun. Konuyu ve kime yaradigini soyle.>
+## Açıklama
+<2-4 satır. İlk satır kanca olsun. Konuyu ve kime yaradığını söyle.>
 
-<Son satir: kaydetmeye / yorum yapmaya cagiran CTA>
+<Son satır: kaydetmeye / yorum yapmaya çağıran CTA>
 
 ## Hashtag
-<10-15 etiket: genel ingilizce ogrenme + seviye/konu ozel. Tek satir, bosluklu.>
+<10-15 etiket: genel İngilizce öğrenme + seviye/konu özel. Tek satır, boşluklu.>
 
 ## Alt text
-1. <slayt 1 icin erisilebilirlik metni>
+1. <slayt 1 için erişilebilirlik metni>
 2. ...
 ```
 
@@ -340,13 +348,13 @@ Denetim sonucunu kisa bir tabloyla ozetle.
 
 ## Faz 7 — Puanlama
 
-Post bitti; simdi ona puan ver. Puan `puan.json` olarak post klasorune yazilir ve
-icerikle **ayni commit'te** gider.
+Post bitti; şimdi ona puan ver. Puan `puan.json` olarak post klasörüne yazılır ve
+içerikle **aynı commit'te** gider.
 
-⚠ **Puan artik yayin sirasini dogrudan belirliyor:** havuz en yuksek puandan
-asagiya dogru yayinlaniyor. Yani buradaki puan "bir bilgi notu" degil, postun
-kuyrukta nereye oturacagi. Puansiz birakilan post havuzun sonuna duser ve
-puanli aday bitene kadar hic yayinlanmaz — bu fazi atlamak postu rafa kaldirir.
+⚠ **Puan artık yayın sırasını doğrudan belirliyor:** havuz en yüksek puandan
+aşağıya doğru yayınlanıyor. Yani buradaki puan "bir bilgi notu" değil, postun
+kuyrukta nereye oturacağı. Puansız bırakılan post havuzun sonuna düşer ve
+puanlı aday bitene kadar hiç yayınlanmaz — bu fazı atlamak postu rafa kaldırır.
 
 ```powershell
 $S = ".claude\skills\insta-yayinla\scripts"
@@ -355,165 +363,172 @@ python $S\puanla.py --yaz <kategori>/<slug> --kuru  # yazmadan dogrula
 python $S\puanla.py --yaz <kategori>/<slug>         # JSON stdin'den
 ```
 
-Bes dal, her biri 1-10 **ve zorunlu gerekce**:
+Beş dal, her biri 1-10 **ve zorunlu gerekçe**:
 
 | Dal | Soru |
 |---|---|
-| `ilgi_cekicilik` | Kaydirmayi durdurur mu, kaydetmeye/paylasmaya deger mi |
-| `ogretici_deger` | Gercekten bir sey ogretiyor mu, bilineni mi tekrarliyor |
-| `ozgunluk` | Onceki postlardan ve piyasadaki tipik icerikten ayrisiyor mu |
-| `hedef_kitle` | Seviye, ton ve ornek secimi takipciye oturuyor mu |
-| `gorsel_kalite` | Kompozisyon, hiyerarsi, okunabilirlik |
+| `ilgi_cekicilik` | Kaydırmayı durdurur mu, kaydetmeye/paylaşmaya değer mi |
+| `ogretici_deger` | Gerçekten bir şey öğretiyor mu, bilineni mi tekrarlıyor |
+| `ozgunluk` | Önceki postlardan ve piyasadaki tipik içerikten ayrışıyor mu |
+| `hedef_kitle` | Seviye, ton ve örnek seçimi takipçiye oturuyor mu |
+| `gorsel_kalite` | Kompozisyon, hiyerarşi, okunabilirlik |
 
-`toplam` script tarafindan hesaplanir, elle yazma: **`ortalama(5 dal)`**.
+`toplam` script tarafından hesaplanır, elle yazma: **`ortalama(5 dal)`**.
 
-### ⛔ Uretim kusurlari puana GIRMEZ
+### ⛔ Üretim kusurları puana GİRMEZ
 
-Gorseldeki harf hatalari, diyakritik sizintilari, imla ve sablon/marka sapmalari
-puanlanmaz — onlarin defteri `HATA-RAPORU.md` ve tespit yeri Faz 5. Puanin
-cevapladigi soru **"bu post iyi mi, ilgi ceker mi"**; "duzgun basilmis mi" degil.
+Görseldeki harf hataları, diyakritik sızıntıları, imla ve şablon/marka sapmaları
+puanlanmaz — onların defteri `HATA-RAPORU.md` ve tespit yeri Faz 5. Puanın
+cevapladığı soru **"bu post iyi mi, ilgi çeker mi"**; "düzgün basılmış mı" değil.
 
-Sinir `gorsel_kalite` dalinda geciyor:
+Sınır `gorsel_kalite` dalında geçiyor:
 
-- **Girer:** kirik baslik, kutuya sigmayan metin, bozuk dikey denge, birbiriyle
-  yarisan iki odak, okunmayan kontrast — bunlar okunabilirligi bozar.
-- **Girmez:** yanlis harf, eksik diyakritik, farkli font, kayan zemin rengi,
-  baska bir CTA ikonu — bunlar uretim kusuru, kalite olcusu degil.
+- **Girer:** kırık başlık, kutuya sığmayan metin, bozuk dikey denge, birbiriyle
+  yarışan iki odak, okunmayan kontrast — bunlar okunabilirliği bozar.
+- **Girmez:** yanlış harf, eksik diyakritik, farklı font, kayan zemin rengi,
+  başka bir CTA ikonu — bunlar üretim kusuru, kalite ölçüsü değil.
 
 ### Puanlarken
 
-Ureten ile puanlayan ayni model; tek korumamiz gerekcelerin kontrol edilebilir
-olmasi. Gerekce **bos sifat olamaz** — "iyi", "guzel", "temiz" tek basina
-yazilmaz; **neyin nerede** oldugu yazilir.
+Üreten ile puanlayan aynı model; tek korumamız gerekçelerin kontrol edilebilir
+olması. Gerekçe **boş sıfat olamaz** — "iyi", "güzel", "temiz" tek başına
+yazılmaz; **neyin nerede** olduğu yazılır.
 
-> ✅ "Baslik 'RUN OUT' dev puntoda, 'OF' cok daha kucuk ikinci satirda; goz
-> kalibi tek birim olarak almiyor."
-> ❌ "Gorsel kalitesi dusuk."
+> ✅ "Başlık 'RUN OUT' dev puntoda, 'OF' çok daha küçük ikinci satırda; göz
+> kalıbı tek birim olarak almıyor."
+> ❌ "Görsel kalitesi düşük."
 
-Karar gecmisi ve sema: `TODOS.md` > "Post puanlama sistemi",
-`otomasyon/README.md` > "Post puani".
+Karar geçmişi ve şema: `TODOS.md` > "Post puanlama sistemi",
+`otomasyon/README.md` > "Post puanı".
 
 ---
 
 ## Faz 8 — Teslim
 
-1. `SendUserFile` ile uretilen gorselleri kullaniciya goster (`display: "render"`).
-2. Ozet ver: kac slayt, hangi model, kac yeniden deneme, nereye kaydedildi.
-3. **Commit'i sen yapma — oner ve onay iste.** Repo public; ne zaman yayinlanacagi kullanicinin karari.
+1. `SendUserFile` ile üretilen görselleri kullanıcıya göster (`display: "render"`).
+2. Özet ver: kaç slayt, hangi model, kaç yeniden deneme, nereye kaydedildi.
+3. **Commit'i sen yapma — öner ve onay iste.** Repo public; ne zaman yayınlanacağı kullanıcının kararı.
 
 ---
 ---
 
 ## Ek A — Marka sistemi
 
-Arsivdeki 52 gorselden cikarilmis, degismez sistem:
+Arşivdeki 52 görselden çıkarılmış, değişmez sistem:
 
-| Oge | Deger |
+| Öge | Değer |
 |---|---|
 | Tuval | 1920 × 2400 px (4:5) |
-| Zemin | Sicak krem kagit `#FAF6E9`, uzerinde cok ince grain dokusu |
+| Zemin | Sıcak krem kâğıt `#FAF6E9`, üzerinde çok ince grain dokusu |
 | Ana mürekkep | Koyu lacivert `#0E2038` |
-| Vurgu | Turuncu-kirmizi `#EF4A18` — **sadece** ust kategori etiketinde ve ince ayrac cizgilerinde |
-| Ikincil metin | Orta gri `#6B7280` — ceviri ve aciklama satirlarinda |
-| Hizalama | Her sey ortalanmis |
-| Baslik | Kalin geometrik grotesk, cok buyuk punto; uzun basliklar icin sikisik (condensed) kesim |
-| Govde | Temiz geometrik sans, orta agirlik |
-| Bosluk | Cok genis — tuvalin ustunde ve altinda buyuk nefes alani |
-| Yasak | Illustrasyon, fotograf, ikon, cerceve, logo, watermark, gradyan, golge, dekoratif obje |
+| Vurgu | Turuncu-kırmızı `#EF4A18` — **sadece** üst kategori etiketinde ve ince ayraç çizgilerinde |
+| İkincil metin | Orta gri `#6B7280` — çeviri ve açıklama satırlarında |
+| Hizalama | Her şey ortalanmış |
+| Başlık | Kalın geometrik grotesk, çok büyük punto; uzun başlıklar için sıkışık (condensed) kesim |
+| Gövde | Temiz geometrik sans, orta ağırlık |
+| Boşluk | Çok geniş — tuvalin üstünde ve altında büyük nefes alanı |
+| Yasak | İllüstrasyon, fotoğraf, ikon, çerçeve, logo, watermark, gradyan, gölge, dekoratif obje |
 
-Dikey siralama (tekil kart):
+Dikey sıralama (tekil kart):
 ```
-        KATEGORI ETIKETI          <- kucuk, buyuk harf, turuncu
+        KATEGORİ ETİKETİ          <- kucuk, buyuk harf, turuncu
                                      (genis bosluk)
-         DEV BASLIK               <- lacivert, cok kalin, en buyuk oge
+         DEV BAŞLIK               <- lacivert, cok kalin, en buyuk oge
                                      (bosluk)
-     Ingilizce ornek cumle        <- orta punto, lacivert, kalin
-      (Turkce cevirisi)           <- kucuk punto, gri, parantezli
+     İngilizce örnek cümle        <- orta punto, lacivert, kalin
+      (Türkçe çevirisi)           <- kucuk punto, gri, parantezli
                                      (genis bosluk)
-          CTA satiri              <- orta punto, lacivert, kalin
+          CTA satırı              <- orta punto, lacivert, kalin
 ```
 
 ---
 
 ## Ek B — Format iskeletleri
 
-### 1. Seviye testi — 8 slayt (`seviye-testi/a1/` … `b2/`)
-| # | Icerik |
+> Metinler **tam Türkçe** yazılır. Arşivdeki eski görsellerde bu satırlar ASCII
+> görünür (`BASLAMAK ICIN KAYDIR`); o kural emekli, iskelet buradaki hâlidir.
+
+### 1. Seviye testi — 7 slayt (`seviye-testi/a1/` … `b2/`)
+| # | İçerik |
 |---|---|
-| 1 | Kapak: `A1 • INGILIZCE TESTI` / `BU A1 TESTINI GECEBILIR MISIN?` / `5 soru • 1 dakika` / `BASLAMAK ICIN KAYDIR →` |
-| 2-6 | Soru: etiket + `SORU 01 / 05` / bosluklu cumle (`I ___ a student.`) / kutulu siklar `A) am` `B) is` `C) are` / `Cevabini sec.` |
-| 7 | **Cevap anahtari** (→ mai): `CEVAP ANAHTARI` + 5 madde (`01 — A) am` + tek satir Turkce aciklama, aralarinda ince turuncu ayrac) + `Kac dogrun var?` |
-| 8 | Skor yorumu: `SONUCUN` + `5/5`, `4/5`, `3/5`, `0-2/5` satirlari + `Bu kisa bir pratik testidir, resmi bir CEFR degerlendirmesi degildir.` + `Skorun ne? Asagiya yorum yap ⬇` |
+| 1 | Kapak: `A1 • İNGİLİZCE TESTİ` / `BU A1 TESTİNİ GEÇEBİLİR MİSİN?` / `5 soru • 1 dakika` / `BAŞLAMAK İÇİN KAYDIR →` |
+| 2-6 | Soru: etiket + `SORU 01 / 05` / boşluklu cümle (`I ___ a student.`) / kutulu şıklar `A) am` `B) is` `C) are` / `Cevabını seç.` |
+| 7 | **Cevap anahtarı**: `CEVAP ANAHTARI` + 5 madde (`01 - A) am` + tek satır Türkçe açıklama, aralarında ince turuncu ayraç) + `Kaç doğrun var? Yorumlara yaz ↓` |
 
-### 2. Durumsal Ingilizce — seri, 5 slayt (`hikayeli/otel/`, `hikayeli/havaalaninda/`)
-| # | Icerik |
+> **Skor tablosu slaytı üretilmiyor** (2026-08-20 kararı): deste cevap
+> anahtarıyla biter, yani 7 slayt. Beş destenin hepsi 2026-08-22'de bu hâle
+> getirildi; arşivde artık 8 slaytlık test yok.
+
+### 2. Durumsal İngilizce — seri, 5 slayt (`hikayeli/otel/`, `hikayeli/havaalaninda/`)
+| # | İçerik |
 |---|---|
-| 1 | Kapak: `DURUMSAL INGILIZCE` / `OTELDE HAYAT KURTARAN CUMLELER` / `Check-in yapmak icin kaydir →` |
-| 2-4 | Cumle karti: etiket / `I HAVE A RESERVATION` / tam cumle / `(Turkce cevirisi)` / gecis CTA'si (`Odaya cikalim... Kaydir →`) |
-| 5 | Kapanis: son cumle + `Seyahat edeceklere gonder` |
+| 1 | Kapak: `DURUMSAL İNGİLİZCE` / `OTELDE HAYAT KURTARAN CÜMLELER` / `Check-in yapmak için kaydır →` |
+| 2-4 | Cümle kartı: etiket / `I HAVE A RESERVATION` / tam cümle / `(Türkçe çevirisi)` / geçiş CTA'sı (`Odaya çıkalım... Kaydır →`) |
+| 5 | Kapanış: son cümle + `Seyahat edeceklere gönder ↓` |
 
-### 3. Durumsal Ingilizce — tekil kart (`durumsal/<konu>/`)
-`DURUMSAL INGILIZCE` / `ON THE SIDE` / `Can I have the sauce on the side?` / `(Sosu yaninda alabilir miyim?)` / `Daha fazla kelime icin begen ⬇`
+### 3. Durumsal İngilizce — tekil kart (`durumsal/<konu>/`)
+`DURUMSAL İNGİLİZCE` / `ON THE SIDE` / `Can I have the sauce on the side?` / `(Sosu yanında verir misiniz?)` / `Daha fazla kelime için beğen ↓`
 
-### 4. Gunun Phrasal Verb'u (`phrasal/<verb>/`)
-`GUNUN PHRASAL VERB'U` / `FIGURE OUT` / `To understand or solve something.` / ornek cumle / `(Turkce cevirisi)` / `Senin ornek cumlen nedir? 🥰`
+### 4. Günün Phrasal Verb'ü (`phrasal/<verb>/`)
+`GÜNÜN PHRASAL VERB'Ü` / `FIGURE OUT` / `To understand or solve something.` / örnek cümle / `(Türkçe çevirisi)` / `Senin örnek cümlen nedir? ↓`
 
-### 5. Sik Karistirilanlar (`karistirilan/<x>-vs-<y>/`)
-`SIK KARISTIRILANLAR` / `MAKE vs DO` / `MAKE: Ortaya cikarmak` + `Make a new Flutter app.` / `DO: Eylemi yapmak` + `Do some coding today.` / `Bu gonderiyi kaydet ⬇`
+### 5. Sık Karıştırılanlar (`karistirilan/<x>-vs-<y>/`)
+`SIK KARIŞTIRILANLAR` / `MAKE vs DO` / `MAKE: Ortaya çıkarmak` + `Make a new Flutter app.` / `DO: Eylemi yapmak` + `Do some coding today.` / `Bu gönderiyi kaydet ↓`
 
 ---
 
-## Ek C — ASCII donusum  ⛔ EMEKLI (2026-08-20)
+## Ek C — ASCII dönüşüm  ⛔ EMEKLİ (2026-08-20)
 
-Bu bolum kartlarin metnini bir goruntu modeli yazarken vardi: model
-diyakritigi bozdugu icin metin once ASCII'ye cevriliyordu. **Artik gecerli
-degil.** Metin `marka/kart_bas.ps1` ile gercek fontla basiliyor; `ç ğ ı ö ş ü
-İ` oldugu gibi yaziliyor.
+Bu bölüm kartların metnini bir görüntü modeli yazarken vardı: model
+diyakritiği bozduğu için metin önce ASCII'ye çevriliyordu. **Artık geçerli
+değil.** Metin `marka/kart_bas.ps1` ile gerçek fontla basılıyor; `ç ğ ı ö ş ü
+İ` olduğu gibi yazılıyor.
 
-Kuralin kendi bedeli de vardi: ASCII'de anlamsizlasan kelimeler cikiyordu
-(`ÖLÜ` → `OLU`). Iki sorun da birlikte kapandi.
+Kuralın kendi bedeli de vardı: ASCII'de anlamsızlaşan kelimeler çıkıyordu
+(`ÖLÜ` → `OLU`). İki sorun da birlikte kapandı.
 
-Donusum tablosu tek yerde hala kullaniliyor: `metin_denetle.py`, caption'lardan
-sozluk kurarken kelimeleri ASCII'ye katliyor ki `lazim` ile `lazım`i
-eslestirebilsin. Yani ayni tablo artik diyakritigi **silmek** icin degil,
-**eksigini bulmak** icin var.
+Dönüşüm tablosu tek yerde hâlâ kullanılıyor: `metin_denetle.py`, caption'lardan
+sözlük kurarken kelimeleri ASCII'ye katlıyor ki `lazim` ile `lazım`ı
+eşleştirebilsin. Yani aynı tablo artık diyakritiği **silmek** için değil,
+**eksiğini bulmak** için var.
 
-Arsivdeki 60 gorsel ASCII kalmaya devam ediyor; gecis kademeli
+Arşivdeki eski görseller ASCII kalmaya devam ediyor; geçiş kademeli
 (`HATA-RAPORU.md` §5).
 
 ## Ek D — Bilinen tuzaklar
 
-| Tuzak | Sonuc | Kacinma |
+| Tuzak | Sonuç | Kaçınma |
 |---|---|---|
-| **Shell state korunmuyor** | `$env:FAL_KEY` bos gider, 403 "unregistered caller" | Her komutun basinda `.env` yukle |
-| **`Invoke-RestMethod` PS 5.1'de patliyor** | `NullReferenceException`, hicbir ipucu yok | `curl.exe` + `--data-binary "@dosya"` |
-| **BOM'suz `.ps1`** | PS 5.1 dosyayi ANSI okur; UTF-8 `—` -> `â€”` olur ve `”` tirnak sayilip dize erken kapanir, anlamsiz parser hatasi | `.ps1` dosyalarini **UTF-8 BOM ile** kaydet |
-| **fal status URL'i tam endpoint yolu degil** | HTTP 405, bos govde, sonsuz polling | Submit yanitindaki `status_url` / `response_url`'i kullan |
-| **`gemini-3.1-pro-preview` ucretsiz katmanda kotasi 0** | 429 | `gemini-3.6-flash` kullan veya faturalandirmayi ac |
-| **Uretim ~35 sn, arac timeout'u 2 dk** | Karuselde timeout | Her slayti ayri PowerShell komutunda uret |
-| mai-image-2.5-pro'da 4:5 yok | Kare cikti, karuselde kirpma (`seviye-testi/a1/7.png` 1024×1024) | 3:4 uret + 80px simetrik kirp |
-| seedream custom boyut limiti | 400 hatasi | Toplam piksel 3.69 MP – 16.78 MP arasi kalsin; 1920×2400 guvenli |
-| Turkce diyakritik | `gónderiyi`, `değidlir` | ~~ASCII-only~~ → metni yerelde bas (`marka/kart_bas.ps1`) |
-| Kucuk puntoda yogun metin | `conoditional`, `dogrune` | ~~mai kullan~~ → metni yerelde bas; punto ne olursa olsun harf bozulmaz |
-| Gemini metni "duzeltir" | Diyakritik geri gelir, cumle degisir | Kart metni artik prompta girmiyor; Gemini yalnizca gorsel yon icin |
-| mai `fiili` kelimesini basamiyor | `fili` / `fill` cikiyor, ust uste 2 denemede duzelmedi | Kelimeyi cumleden cikar. `"I" oznesi ile "am" yardimci fiili kullanilir` → `"I" oznesi her zaman "am" ile kullanilir`. Ayni promptu tekrar gondermek ise yaramiyor, metni kisaltmak yariyor |
-| mai 3:4'te 768×1024 donuyor | Kaynak cozunurluk dusuk, 1920'ye olceklerken 2.5x buyutme | Kacinilmaz — mai'de cozunurluk parametresi yok. IG zaten 1080'e indirdigi icin pratikte sorun cikarmiyor |
-| `.env` public repoda | Anahtar sizinti | `.gitignore`'da `.env`; commit oncesi `git status` kontrolu |
+| **Shell state korunmuyor** | `$env:FAL_KEY` boş gider, 403 "unregistered caller" | Her komutun başında `.env` yükle |
+| **`Invoke-RestMethod` PS 5.1'de patlıyor** | `NullReferenceException`, hiçbir ipucu yok | `curl.exe` + `--data-binary "@dosya"` |
+| **BOM'suz `.ps1`** | PS 5.1 dosyayı ANSI okur; UTF-8 `—` -> `â€”` olur ve `”` tırnak sayılıp dize erken kapanır, anlamsız parser hatası | `.ps1` dosyalarını **UTF-8 BOM ile** kaydet |
+| **fal status URL'i tam endpoint yolu değil** | HTTP 405, boş gövde, sonsuz polling | Submit yanıtındaki `status_url` / `response_url`'i kullan |
+| **`gemini-3.1-pro-preview` ücretsiz katmanda kotası 0** | 429 | `gemini-3.6-flash` kullan veya faturalandırmayı aç |
+| **Üretim ~35 sn, araç timeout'u 2 dk** | Karuselde timeout | Her slaytı ayrı PowerShell komutunda üret |
+| mai-image-2.5-pro'da 4:5 yok | Kare çıktı, karuselde kırpma (`seviye-testi/a1/7.png` 1024×1024) | 3:4 üret + 80px simetrik kırp |
+| seedream custom boyut limiti | 400 hatası | Toplam piksel 3.69 MP – 16.78 MP arası kalsın; 1920×2400 güvenli |
+| Türkçe diyakritik | `gónderiyi`, `değidlir` | ~~ASCII-only~~ → metni yerelde bas (`marka/kart_bas.ps1`) |
+| Küçük puntoda yoğun metin | `conoditional`, `dogrune` | ~~mai kullan~~ → metni yerelde bas; punto ne olursa olsun harf bozulmaz |
+| Gemini metni "düzeltir" | Diyakritik geri gelir, cümle değişir | Kart metni artık prompta girmiyor; Gemini yalnızca görsel yön için |
+| mai `fiili` kelimesini basamıyor | `fili` / `fill` çıkıyor, üst üste 2 denemede düzelmedi | Kelimeyi cümleden çıkar. `"I" oznesi ile "am" yardimci fiili kullanilir` → `"I" oznesi her zaman "am" ile kullanilir`. Aynı promptu tekrar göndermek işe yaramıyor, metni kısaltmak yarıyor |
+| mai 3:4'te 768×1024 dönüyor | Kaynak çözünürlük düşük, 1920'ye ölçeklerken 2.5x büyütme | Kaçınılmaz — mai'de çözünürlük parametresi yok. IG zaten 1080'e indirdiği için pratikte sorun çıkarmıyor |
+| Windows'ta `python` çıktısı cp1252 | `İ` içeren bulgu metni `UnicodeEncodeError` ile betiği çökertir | Betiğin başında `sys.stdout.reconfigure(encoding="utf-8")` (bkz. `metin_denetle.py`) |
+| `.env` public repoda | Anahtar sızıntı | `.gitignore`'da `.env`; commit öncesi `git status` kontrolü |
 
-## Ek E — Dogrulanmis API kunyesi
+## Ek E — Doğrulanmış API künyesi
 
-2026-08-11'de canli olarak dogrulandi (break down dry-run).
+2026-08-11'de canlı olarak doğrulandı (break down dry-run).
 
 | | |
 |---|---|
-| Gemini model (ucretsiz) | `gemini-3.6-flash` ✓ calisiyor |
-| Gemini model (ucretli) | `gemini-3.1-pro-preview` — free tier kotasi 0, 429 doner |
+| Gemini model (ücretsiz) | `gemini-3.6-flash` ✓ çalışıyor |
+| Gemini model (ücretli) | `gemini-3.1-pro-preview` — free tier kotası 0, 429 döner |
 | Gemini endpoint | `POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent` |
 | Gemini auth | header `x-goog-api-key: $GEMINI_API_KEY` |
 | fal ana model | `fal-ai/bytedance/seedream/v5/lite/text-to-image` ✓ |
 | fal yedek model | `microsoft/mai-image-2.5-pro` |
 | fal submit | `POST https://queue.fal.run/fal-ai/bytedance/seedream/v5/lite/text-to-image` |
-| fal durum | submit yanitindaki `status_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}/status` |
-| fal sonuc | submit yanitindaki `response_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}` |
+| fal durum | submit yanıtındaki `status_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}/status` |
+| fal sonuç | submit yanıtındaki `response_url` → `https://queue.fal.run/fal-ai/bytedance/requests/{id}` |
 | fal auth | header `Authorization: Key $FAL_KEY` |
-| seedream uretim suresi | ~35 sn (`metrics.inference_time`) |
+| seedream üretim süresi | ~35 sn (`metrics.inference_time`) |

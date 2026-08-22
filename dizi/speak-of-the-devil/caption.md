@@ -20,4 +20,4 @@ Bizde de aynı deyim var — hangisi kulağa daha iyi geliyor? Yoruma yaz ⬇
 
 ## Alt text
 
-1. Krem zeminli tipografik kart: üstte turuncu "DIZI INGILIZCESI" etiketi, ortada dev lacivert "SPEAK OF THE DEVIL" başlığı, altında büyük lacivert "Lafinin ustune gelir." satırı, gri renkte "Speak of the devil, here she comes." örnek cümlesi ve "(Iyi insan lafinin ustune gelirmiş.)" çevirisi, en altta aşağı oklu "Bizde de ayni deyim var" çağrısı.
+1. Krem zeminli tipografik kart: üstte turuncu "DİZİ İNGİLİZCESİ" etiketi, ortada dev lacivert "SPEAK OF THE DEVIL" başlığı, altında büyük lacivert "Lafının üstüne gelir." satırı, gri renkte "Speak of the devil, here she comes." örnek cümlesi ve "(İyi insan lafının üstüne gelirmiş.)" çevirisi, en altta aşağı oklu "Bizde de aynı deyim var" çağrısı.

@@ -11,50 +11,50 @@
     { "ogeler": [
       { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
       { "tur": "sayac",  "metin": "SORU 01 / 05" },
-      { "tur": "soru",   "metin": "I ___ a great movie yesterday." },
-      { "tur": "sik",    "metin": "A) see" },
-      { "tur": "sik",    "metin": "B) saw" },
-      { "tur": "sik",    "metin": "C) seen", "alt": 210 },
+      { "tur": "soru",   "metin": "I ___ a great movie yesterday.", "dil": "en" },
+      { "tur": "sik",    "metin": "A) see", "dil": "en" },
+      { "tur": "sik",    "metin": "B) saw", "dil": "en" },
+      { "tur": "sik",    "metin": "C) seen", "dil": "en", "alt": 210 },
       { "tur": "cta",    "metin": "Cevabını seç." }
     ] },
 
     { "ogeler": [
       { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
       { "tur": "sayac",  "metin": "SORU 02 / 05" },
-      { "tur": "soru",   "metin": "My new car is ___ than my old one." },
-      { "tur": "sik",    "metin": "A) faster" },
-      { "tur": "sik",    "metin": "B) fastest" },
-      { "tur": "sik",    "metin": "C) more fast", "alt": 210 },
+      { "tur": "soru",   "metin": "My new car is ___ than my old one.", "dil": "en" },
+      { "tur": "sik",    "metin": "A) faster", "dil": "en" },
+      { "tur": "sik",    "metin": "B) fastest", "dil": "en" },
+      { "tur": "sik",    "metin": "C) more fast", "dil": "en", "alt": 210 },
       { "tur": "cta",    "metin": "Cevabını seç." }
     ] },
 
     { "ogeler": [
       { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
       { "tur": "sayac",  "metin": "SORU 03 / 05" },
-      { "tur": "soru",   "metin": "She is very good ___ playing the piano." },
-      { "tur": "sik",    "metin": "A) in" },
-      { "tur": "sik",    "metin": "B) on" },
-      { "tur": "sik",    "metin": "C) at", "alt": 210 },
+      { "tur": "soru",   "metin": "She is very good ___ playing the piano.", "dil": "en" },
+      { "tur": "sik",    "metin": "A) in", "dil": "en" },
+      { "tur": "sik",    "metin": "B) on", "dil": "en" },
+      { "tur": "sik",    "metin": "C) at", "dil": "en", "alt": 210 },
       { "tur": "cta",    "metin": "Cevabını seç." }
     ] },
 
     { "ogeler": [
       { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
       { "tur": "sayac",  "metin": "SORU 04 / 05" },
-      { "tur": "soru",   "metin": "We ___ to the beach tomorrow." },
-      { "tur": "sik",    "metin": "A) are going" },
-      { "tur": "sik",    "metin": "B) going" },
-      { "tur": "sik",    "metin": "C) goes", "alt": 210 },
+      { "tur": "soru",   "metin": "We ___ to the beach tomorrow.", "dil": "en" },
+      { "tur": "sik",    "metin": "A) are going", "dil": "en" },
+      { "tur": "sik",    "metin": "B) going", "dil": "en" },
+      { "tur": "sik",    "metin": "C) goes", "dil": "en", "alt": 210 },
       { "tur": "cta",    "metin": "Cevabını seç." }
     ] },
 
     { "ogeler": [
       { "tur": "etiket", "metin": "A2 • İNGİLİZCE TESTİ" },
       { "tur": "sayac",  "metin": "SORU 05 / 05" },
-      { "tur": "soru",   "metin": "There isn't ___ milk in the fridge." },
-      { "tur": "sik",    "metin": "A) some" },
-      { "tur": "sik",    "metin": "B) many" },
-      { "tur": "sik",    "metin": "C) any", "alt": 210 },
+      { "tur": "soru",   "metin": "There isn't ___ milk in the fridge.", "dil": "en" },
+      { "tur": "sik",    "metin": "A) some", "dil": "en" },
+      { "tur": "sik",    "metin": "B) many", "dil": "en" },
+      { "tur": "sik",    "metin": "C) any", "dil": "en", "alt": 210 },
       { "tur": "cta",    "metin": "Cevabını seç." }
     ] },
 

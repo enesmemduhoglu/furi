@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-21",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 6,
+      "gerekce": "Acilis islevsel ama carpici degil; hold-the-onions ile ayni sahneyi daha zayif bir cengelle anlatiyor."
+    },
+    "ogretici_deger": {
+      "puan": 6,
+      "gerekce": "'With no...' kalibi dogru ve genellenebilir, ama tek katman; kartta ikinci bir bilgi yok."
+    },
+    "ozgunluk": {
+      "puan": 5,
+      "gerekce": "Havuzdaki besinci restoran-siparisi postu; hold-the-onions ile ayni ani paylasiyor, ayrismiyor."
+    },
+    "hedef_kitle": {
+      "puan": 7,
+      "gerekce": "Seyahat/restoran kesimi hesabin ilgi alaninda ama bu kalip zaten uc postta gecti."
+    },
+    "gorsel_kalite": {
+      "puan": 4,
+      "gerekce": "Kartta YAZIM HATASI var: 'alablir miyim' (dogrusu alabilir). Ayrica 'nasil' bozuk bir diyakritikle basilmis, 'siparis' ASCII, zemin dokusuz."
+    }
+  },
+  "toplam": 5.6
+}

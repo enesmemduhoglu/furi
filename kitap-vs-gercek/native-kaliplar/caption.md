@@ -22,8 +22,8 @@ Kaydet ki lazım olduğunda bulasın.
 
 ## Alt text
 
-1. Krem zeminli tipografik kapak: üstte turuncu "KITAP vs GERCEK" etiketi, ortada büyük lacivert "STOP SAYING THIS" başlığı, altında "Gunluk hayatta kimse boyle demiyor." ve "Baslamak icin kaydir" yazısı.
-2. Kart: turuncu "KITAP vs GERCEK" etiketi, gri "KITAP: I am very hungry." satırı, dev lacivert "I'M STARVING" başlığı, gri parantez içinde "(Kurt gibi acim / Cok actim.)" ve altta "Sirada: Bilmiyorum".
-3. Kart: turuncu "KITAP vs GERCEK" etiketi, gri "KITAP: I don't know." satırı, dev lacivert "BEATS ME" başlığı, gri parantez içinde "(Hicbir fikrim yok / Ne bileyim.)" ve altta "Sirada: Ben oderim".
-4. Kart: turuncu "KITAP vs GERCEK" etiketi, gri "KITAP: I will pay." satırı, dev lacivert "IT'S ON ME" başlığı, gri parantez içinde "(Ben ismarliyorum / Benden.)" ve altta "Sirada: Seni dinliyorum".
-5. Kapanış kartı: turuncu "KITAP vs GERCEK" etiketi, gri "KITAP: I am listening." satırı, dev lacivert "I'M ALL EARS" başlığı, gri parantez içinde "(Seni dinliyorum / Kulagim sende.)" ve aşağı oklu "Kaydetmeyi unutma" çağrısı.
+1. Krem zeminli tipografik kapak: üstte turuncu "KİTAP vs GERÇEK" etiketi, ortada büyük lacivert "STOP SAYING THIS" başlığı, altında "Günlük hayatta kimse böyle demiyor." ve "Başlamak için kaydır →" yazısı.
+2. Kart: turuncu "KİTAP vs GERÇEK" etiketi, gri "KİTAP: I am very hungry." satırı, dev lacivert "I'M STARVING" başlığı, gri parantez içinde "(Kurt gibi açım / Çok acıktım.)" ve altta "Sırada: Bilmiyorum".
+3. Kart: turuncu "KİTAP vs GERÇEK" etiketi, gri "KİTAP: I don't know." satırı, dev lacivert "BEATS ME" başlığı, gri parantez içinde "(Hiçbir fikrim yok / Ne bileyim.)" ve altta "Sırada: Ben öderim".
+4. Kart: turuncu "KİTAP vs GERÇEK" etiketi, gri "KİTAP: I will pay." satırı, dev lacivert "IT'S ON ME" başlığı, gri parantez içinde "(Ben ısmarlıyorum / Benden.)" ve altta "Sırada: Seni dinliyorum".
+5. Kapanış kartı: turuncu "KİTAP vs GERÇEK" etiketi, gri "KİTAP: I am listening." satırı, dev lacivert "I'M ALL EARS" başlığı, gri parantez içinde "(Seni dinliyorum / Kulağım sende.)" ve aşağı oklu "Kaydetmeyi unutma" çağrısı.

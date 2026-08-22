@@ -1,0 +1,125 @@
+{
+  "slug": "hikayeli/havaalaninda",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "kapak",
+          "metin": "HAVAALANINDA HAYAT KURTARAN CÜMLELER"
+        },
+        {
+          "tur": "cta",
+          "metin": "Uçuşa hazır mısın? Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "AN AISLE SEAT, PLEASE",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Can I have an aisle seat, please?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Koridor tarafı bir koltuk alabilir miyim?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Güvenliğe geçelim... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "IS THIS THE GATE",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Is this the gate for Istanbul?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(İstanbul uçuşunun kapısı burası mı?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Pasaport kontrolü... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "NOTHING TO DECLARE",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I have nothing to declare.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Beyan edecek bir şeyim yok.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Ya bavulun kaybolduysa... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "MY LUGGAGE IS MISSING",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "My luggage is missing. Here is my tag.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Bavulum kayıp. İşte etiketim.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Bu yaz uçacaklara gönder ↓"
+        }
+      ]
+    }
+  ]
+}

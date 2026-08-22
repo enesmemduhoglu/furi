@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-21",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Turkcede birebir karsiligi olan bir kalip ('uzun lafin kisasi'); caption sonunda konum uyarisi veriyor, 'Sen nerede duydun?' dizi formatinin calisan yorum cagrisi."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "Tek kalip degil bir kume: to cut a long story short, bottom line, in short. Ustune cumlenin basinda kullanildigi kurali — ezberin otesine geciyor."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Dizi kalibi hesabin bilinen bicimi; ayrisma alternatif listesinde ve 'sonunda kullanilmaz' uyarisinda."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "Altyazili dizi izleyen kitlenin haftada birkac kez karsilastigi kalip."
+    },
+    "gorsel_kalite": {
+      "puan": 5,
+      "gerekce": "Baslik iki satira dusuyor, hiyerarsi bozuluyor; 'Kisacasi.' anlam satiri marka olcusunun cok altinda; karttaki tum Turkce ASCII (Kisacasi, lafin, DIZI INGILIZCESI)."
+    }
+  },
+  "toplam": 7.2
+}

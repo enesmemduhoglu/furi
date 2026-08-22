@@ -1,0 +1,45 @@
+{
+  "slug": "karistirilan/lose-vs-loose",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "SIK KARIŞTIRILANLAR"
+        },
+        {
+          "tur": "baslik",
+          "metin": "LOSE vs LOOSE",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "LOSE: Kaybetmek",
+          "dil": "karisik",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "Don't lose the CS2 match.",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "LOOSE: Gevşek",
+          "dil": "karisik",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "The monitor arm is loose.",
+          "dil": "en",
+          "alt": 200
+        },
+        {
+          "tur": "cta",
+          "metin": "Farkları öğrendin mi? Kaydet ↓"
+        }
+      ]
+    }
+  ]
+}

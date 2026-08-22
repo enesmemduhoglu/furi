@@ -1,0 +1,125 @@
+{
+  "slug": "hikayeli/doktorda",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "kapak",
+          "metin": "DOKTORDA HAYAT KURTARAN CÜMLELER"
+        },
+        {
+          "tur": "cta",
+          "metin": "Randevu alalım... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "AN APPOINTMENT",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'd like to make an appointment.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Randevu almak istiyorum.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Peki neyin var... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "A SORE THROAT",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I have a sore throat and a fever.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Boğazım ağrıyor ve ateşim var.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "İlaç lazım mı... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "NEED A PRESCRIPTION",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Do I need a prescription for this?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Bunun için reçete gerekiyor mu?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Son durak eczane... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "SOMETHING FOR THE PAIN",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Can I get something for the pain?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Ağrı için bir şey verir misiniz?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Yurt dışına çıkacaklara gönder ↓"
+        }
+      ]
+    }
+  ]
+}

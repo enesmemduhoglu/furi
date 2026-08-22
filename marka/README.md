@@ -91,8 +91,15 @@ Deste slaytları (seviye testi, hikâyeli, kitap-vs-gerçek):
 | `sayac` | `SORU 01 / 05` | Gri | 54 | 16 |
 | `soru` | Boşluklu soru cümlesi, gerekirse satıra bölünür | Lacivert, kalın | 92 | 70 |
 | `sik` | Çerçeveli şık — 700 px kutu | Lacivert | 64 | 24 |
-| `madde` | Cevap anahtarı satırı (`01 - B) saw`) | Lacivert | 92 | 24 |
+| `madde` | Cevap anahtarı satırı (`01 - B) saw`) | Lacivert | 92 | 30 |
 | `aciklama` | Maddenin altındaki tek satırlık gerekçe | Gri | 52 | 85 |
+
+Her iki biçimde de kullanılabilen iki öğe:
+
+| `tur` | Rol | Renk | Punto | Sınır |
+|---|---|---|---|---|
+| `cumle` | Lacivert kalın cümle satırı — phrasal örneği, `KİTAP:`/`GERÇEK:` satırı, hikâyeli kartın İngilizce cümlesi. Sığmazsa satıra bölünür | Lacivert | 84 | 70 |
+| `araetiket` | Kart ortasındaki turuncu ara başlık (`EXAMPLE SENTENCE`) — kanonik liste denetimine **girmez**, `etiket` ile karıştırma | Turuncu | 40, harf aralıklı | 24 |
 
 `ayrac` deste slaytlarında `"en": 1400` ile tam genişlikte çizilir. Her öğeye
 `"alt": <px>` verilebilir; o öğenin altındaki boşluğu türün varsayılanının
@@ -125,6 +132,28 @@ A1 • İNGİLİZCE TESTİ          (A1/A2/B1/B2/C1/C2)
 > Arşivdeki 60 görselde bu etiketler ASCII (`DIZI INGILIZCESI`). Yeni kartlar
 > tam Türkçe basılıyor; geçiş kademeli.
 
+### `"dil": "en"` — İngilizce öğeler
+
+Sözlük Türkçe caption'lardan türediği için içine İngilizce kelimeler de
+karışıyor. Büyük harf `I`/`İ` kuralı bu yüzden `STOP SAYING THIS` gibi
+İngilizce bir başlıkta `SAYİNG` diye uydurma bulgu üretiyordu.
+
+Dil **tahmin edilmiyor, veride yazıyor**: İngilizce bir öğeye `"dil": "en"`
+eklenir, denetim o öğede diyakritik ve `I`/`İ` kontrolünü atlar. Uzunluk
+sınırı ve kanonik etiket denetimi yine geçerlidir.
+
+```json
+{ "tur": "baslik", "metin": "I'M STARVING", "dil": "en" }
+```
+
+Kural: karta basılan her İngilizce satır (`baslik`, İngilizce `kapak`,
+`KİTAP: ...` satırı, test soruları) işaretlenir. İşaretlemeyi unutmak sessiz
+değil gürültülü bir hata — denetim yanlış bulgu verir, kart basılmaz.
+
+Bir satırda hem İngilizce terim hem Türkçe karşılığı varsa (`REMIND:
+Hatırlatmak`, `NATİVE GİBİ KONUŞ`) `"dil": "karisik"` kullanılır: büyük harf
+`I`/`İ` kuralı atlanır, diyakritik denetimi Türkçe kelimeler için sürer.
+
 ## Denetim neyi yakalar
 
 1. **Eksik diyakritik** — `lazim` → `lazım`, `icin` → `için`. Sözlük elle
@@ -133,6 +162,12 @@ A1 • İNGİLİZCE TESTİ          (A1/A2/B1/B2/C1/C2)
 2. **Kanonik olmayan kategori etiketi.**
 3. **Büyük harf `I`/`İ`** — Türkçe'de küçük `i`nin büyüğü `İ`dir.
 4. **Uzunluk sınırları** — `WORKFLOW.md` Faz 2.
+
+Muaf tuttuğu tek şey Türkçe **soru eki**: `mi/mı/mu/mü` + şahıs eki
+paradigmasının dört uyum varyantından ikisi (`misiniz`, `musunuz`) zaten
+diyakritiksizdir ve ikisi de doğrudur — hangisinin geleceğini önceki hecenin
+ünlüsü belirler. ASCII katlaması dördünü tek torbaya attığı için `durur
+musunuz` → `müsünüz` gibi uydurma bulgu üretiyordu.
 
 Yakalayamadığı: sözlükte hiç geçmeyen bir kelimenin yanlış yazılması. Faz 2'de
 metni okumanın yerini tutmaz, onu tamamlar.

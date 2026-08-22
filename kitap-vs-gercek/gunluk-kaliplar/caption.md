@@ -22,9 +22,9 @@ Kaydet ki lazım olduğunda bulasın.
 
 ## Alt text
 
-1. Krem zeminli tipografik kapak: üstte turuncu "KITAP vs GERCEK" etiketi, ortada büyük lacivert "OKULDA BOYLE OGRENDIN" başlığı, altında "Ama kimse boyle konusmuyor." ve "Baslamak icin kaydir" yazısı.
-2. "RICA EDERIM" başlıklı kart. KITAP: You're welcome. GERCEK: No worries. / Anytime. Parantez içinde "(Lafi bile olmaz. / Ne demek.)" ve altta "Sirada: Anliyorum".
-3. "ANLIYORUM" başlıklı kart. KITAP: I understand. GERCEK: I get it. / Makes sense. Parantez içinde "(Anladim. / Mantikli.)" ve altta "Sirada: Cok yorgunum".
-4. "COK YORGUNUM" başlıklı kart. KITAP: I am very tired. GERCEK: I'm beat. / I'm exhausted. Parantez içinde "(Bittim. / Tukendim.)" ve altta "Sirada: Bulusalim".
-5. "BULUSALIM" başlıklı kart. KITAP: Let's meet today. GERCEK: Let's catch up. / Let's hang out. Parantez içinde "(Arayi kapatalim. / Takilalim.)" ve altta "Ozet icin kaydir".
-6. Kapanış kartı: "NATIVE GIBI KONUS" başlığı, altında dört kalıbın özeti "No worries. I get it. I'm beat. Let's catch up.", parantez içinde "(Hepsi gunluk konusma dili.)" ve aşağı oklu "Hangisi yeniydi? Yorum yaz" çağrısı.
+1. Krem zeminli tipografik kapak: üstte turuncu "KİTAP vs GERÇEK" etiketi, ortada büyük lacivert "OKULDA BÖYLE ÖĞRENDİN" başlığı, altında "Ama kimse böyle konuşmuyor." ve "Başlamak için kaydır →" yazısı.
+2. "RİCA EDERİM" başlıklı kart. KİTAP: You're welcome. GERÇEK: No worries. / Anytime. Parantez içinde "(Lafı bile olmaz. / Ne demek.)" ve altta "Sırada: Anlıyorum".
+3. "ANLIYORUM" başlıklı kart. KİTAP: I understand. GERÇEK: I get it. / Makes sense. Parantez içinde "(Anladım. / Mantıklı.)" ve altta "Sırada: Çok yorgunum".
+4. "ÇOK YORGUNUM" başlıklı kart. KİTAP: I am very tired. GERÇEK: I'm beat. / I'm exhausted. Parantez içinde "(Bittim. / Tükendim.)" ve altta "Sırada: Buluşalım".
+5. "BULUŞALIM" başlıklı kart. KİTAP: Let's meet today. GERÇEK: Let's catch up. / Let's hang out. Parantez içinde "(Arayı kapatalım. / Takılalım.)" ve altta "Özet için kaydır →".
+6. Kapanış kartı: "NATIVE GİBİ KONUŞ" başlığı, altında dört kalıbın özeti "No worries. I get it." ve "I'm beat. Let's catch up.", parantez içinde "(Hepsi günlük konuşma dili.)" ve aşağı oklu "Hangisi yeniydi? Yorum yaz" çağrısı.

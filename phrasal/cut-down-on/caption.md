@@ -12,4 +12,4 @@ Daha fazlası için beğen 👇
 
 ## Alt text
 
-1. Krem renkli dikey poster. Üstte turuncu "GÜNÜN PHRASAL VERB'Ü" etiketi. Ortada koyu lacivert çok kalın harflerle "CUT DOWN ON" başlığı. Altında gri İngilizce tanım: "To eat or use less of something." Onun altında lacivert örnek cümle: "I should cut down on fast food, but I love burgers." Parantez içinde gri Türkçe çevirisi: "(Fast food'u azaltmalıyım ama burgerleri seviyorum.)" En altta "Daha fazlası için beğen ⬇" çağrısı.
+1. Krem renkli dikey poster. Üstte turuncu "GÜNÜN PHRASAL VERB'Ü" etiketi. Ortada koyu lacivert çok kalın harflerle "CUT DOWN ON" başlığı. Altında gri İngilizce tanım: "To eat or use less of something." Onun altında lacivert örnek cümle: "I should cut down on fast food, but I love burgers." Parantez içinde gri Türkçe çevirisi: "(Fast food'u azaltmalıyım ama burgerleri seviyorum.)" En altta "Daha fazlası için beğen ↓" çağrısı.

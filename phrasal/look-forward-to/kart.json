@@ -1,0 +1,42 @@
+{
+  "slug": "phrasal/look-forward-to",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "GÜNÜN PHRASAL VERB'Ü"
+        },
+        {
+          "tur": "baslik",
+          "metin": "LOOK FORWARD TO",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "To feel excited about something that is going to happen.",
+          "dil": "en",
+          "alt": 130
+        },
+        {
+          "tur": "araetiket",
+          "metin": "EXAMPLE SENTENCE",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I am looking forward to my bus trip to Bursa.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Bursa'ya otobüs yolculuğumu dört gözle bekliyorum.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sen neyi dört gözle bekliyorsun? ↓"
+        }
+      ]
+    }
+  ]
+}

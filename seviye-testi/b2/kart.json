@@ -1,0 +1,286 @@
+{
+  "slug": "seviye-testi/b2",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "kapak",
+          "metin": "BU B2 TESTİNİ GEÇEBİLİR MİSİN?"
+        },
+        {
+          "tur": "ornek",
+          "metin": "5 soru • 1 dakika"
+        },
+        {
+          "tur": "cta",
+          "metin": "BAŞLAMAK İÇİN KAYDIR →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 01 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "Rarely ___ such a beautiful sunset.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) I have seen",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) have I seen",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) I saw",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 02 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "The new policy is intended to ___ unnecessary expenses.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) eliminate",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) withdraw",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) prevent",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 03 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "If she had left earlier, she ___ the train.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) wouldn't miss",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) wouldn't have missed",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) didn't miss",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 04 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "We need to ___ a solution before the meeting tomorrow.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) come up with",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) get away with",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) put up with",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 05 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "By next year, I ___ at this company for ten years.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) will work",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) will have worked",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) have worked",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B2 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "CEVAP ANAHTARI"
+        },
+        {
+          "tur": "madde",
+          "metin": "01 - B) have I seen"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Rarely” gibi olumsuz zarflardan sonra devrik cümle kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "02 - A) eliminate"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Eliminate” bir şeyi tamamen ortadan kaldırmak demektir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "03 - B) wouldn't have missed"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Type 3 koşul cümlesi: would have + past participle."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "04 - A) come up with"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Come up with” bir fikir veya çözüm bulmak demektir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "05 - B) will have worked"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Future perfect gelecekte tamamlanacak eylemleri anlatır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "cta",
+          "metin": "Kaç doğrun var? Yorumlara yaz ↓"
+        }
+      ]
+    }
+  ]
+}

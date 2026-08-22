@@ -22,4 +22,4 @@ Sen nerede duydun? Yoruma yaz ⬇
 
 ## Alt text
 
-1. Krem zeminli tipografik kart: üstte turuncu "DIZI INGILIZCESI" etiketi, ortada dev lacivert "LONG STORY SHORT" başlığı, altında büyük lacivert "Kisacasi." satırı, gri renkte "Long story short, we need a new plan." örnek cümlesi ve "(Uzun lafin kisasi, yeni bir plan gerek.)" çevirisi, en altta aşağı oklu "Sen nerede duydun?" çağrısı.
+1. Krem zeminli tipografik kart: üstte turuncu "DİZİ İNGİLİZCESİ" etiketi, ortada dev lacivert "LONG STORY SHORT" başlığı, altında büyük lacivert "Kısacası." satırı, gri renkte "Long story short, we need a new plan." örnek cümlesi ve "(Uzun lafın kısası, yeni bir plan gerek.)" çevirisi, en altta aşağı oklu "Sen nerede duydun?" çağrısı.

@@ -1,0 +1,45 @@
+{
+  "slug": "karistirilan/effect-vs-affect",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "SIK KARIŞTIRILANLAR"
+        },
+        {
+          "tur": "baslik",
+          "metin": "EFFECT vs AFFECT",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "EFFECT: Etki (İsim)",
+          "dil": "karisik",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "The thermal paste had a big effect.",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "AFFECT: Etkilemek (Eylem)",
+          "dil": "karisik",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "Ping affects the game.",
+          "dil": "en",
+          "alt": 200
+        },
+        {
+          "tur": "cta",
+          "metin": "Öğrenmek için takipte kal ↓"
+        }
+      ]
+    }
+  ]
+}

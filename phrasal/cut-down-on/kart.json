@@ -1,0 +1,37 @@
+{
+  "slug": "phrasal/cut-down-on",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "GÜNÜN PHRASAL VERB'Ü"
+        },
+        {
+          "tur": "baslik",
+          "metin": "CUT DOWN ON",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "To eat or use less of something.",
+          "dil": "en",
+          "alt": 130
+        },
+        {
+          "tur": "cumle",
+          "metin": "I should cut down on fast food, but I love burgers.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Fast food'u azaltmalıyım ama burgerleri seviyorum.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Daha fazlası için beğen ↓"
+        }
+      ]
+    }
+  ]
+}

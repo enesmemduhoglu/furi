@@ -1,0 +1,286 @@
+{
+  "slug": "seviye-testi/a1",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "kapak",
+          "metin": "BU A1 TESTİNİ GEÇEBİLİR MİSİN?"
+        },
+        {
+          "tur": "ornek",
+          "metin": "5 soru • 1 dakika"
+        },
+        {
+          "tur": "cta",
+          "metin": "BAŞLAMAK İÇİN KAYDIR →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 01 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "I ___ a student.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) am",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) is",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) are",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 02 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "She ___ to the park on Sundays.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) go",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) goes",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) going",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 03 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "___ are my books.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) This",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) That",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) These",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 04 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "___ do you live?",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) What",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) Where",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) Who",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 05 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "What time is ___?",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) it",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) this",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) that",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "A1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "CEVAP ANAHTARI"
+        },
+        {
+          "tur": "madde",
+          "metin": "01 - A) am"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“I” öznesi her zaman “am” ile kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "02 - B) goes"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Geniş zamanda he, she, it özneleriyle fiil “-s” takısı alır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "03 - C) These"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Çoğul ve yakındaki nesneler için “These” kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "04 - B) Where"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Yer ve mekân sorarken “Where” kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "05 - A) it"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Saati sorarken “What time is it” kalıbı kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "cta",
+          "metin": "Kaç doğrun var? Yorumlara yaz ↓"
+        }
+      ]
+    }
+  ]
+}

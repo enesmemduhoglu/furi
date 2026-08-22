@@ -1,0 +1,36 @@
+{
+  "slug": "dizi/speak-of-the-devil",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DİZİ İNGİLİZCESİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "SPEAK OF THE DEVIL",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "Lafının üstüne gelir."
+        },
+        {
+          "tur": "ornek",
+          "metin": "Speak of the devil, here she comes.",
+          "dil": "en",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "(İyi insan lafının üstüne gelirmiş.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Bizde de aynı deyim var ↓"
+        }
+      ]
+    }
+  ]
+}

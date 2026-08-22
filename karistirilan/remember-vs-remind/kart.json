@@ -1,0 +1,49 @@
+{
+  "slug": "karistirilan/remember-vs-remind",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "SIK KARIŞTIRILANLAR"
+        },
+        {
+          "tur": "baslik",
+          "metin": "REMEMBER vs REMIND",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "REMEMBER: Hatırlamak",
+          "alt": 40,
+          "dil": "karisik"
+        },
+        {
+          "tur": "ornek",
+          "metin": "I remember the GS match.",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "REMIND: Hatırlatmak",
+          "alt": 40,
+          "dil": "karisik"
+        },
+        {
+          "tur": "ornek",
+          "metin": "Remind me to buy a bus ticket.",
+          "dil": "en",
+          "alt": 90
+        },
+        {
+          "tur": "ayrac",
+          "metin": ""
+        },
+        {
+          "tur": "cta",
+          "metin": "Arkadaşlarınla paylaş ↓"
+        }
+      ]
+    }
+  ]
+}

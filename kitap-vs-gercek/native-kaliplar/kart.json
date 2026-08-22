@@ -1,0 +1,43 @@
+{
+  "slug": "kitap-vs-gercek/native-kaliplar",
+  "slaytlar": [
+    { "ogeler": [
+      { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+      { "tur": "kapak",  "metin": "STOP SAYING THIS", "dil": "en" },
+      { "tur": "ornek",  "metin": "Günlük hayatta kimse böyle demiyor." },
+      { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+      { "tur": "ornek",  "metin": "KİTAP: I am very hungry.", "dil": "en", "alt": 70 },
+      { "tur": "baslik", "metin": "I'M STARVING", "dil": "en" },
+      { "tur": "ornek",  "metin": "(Kurt gibi açım / Çok acıktım.)" },
+      { "tur": "cta",    "metin": "Sırada: Bilmiyorum" }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+      { "tur": "ornek",  "metin": "KİTAP: I don't know.", "dil": "en", "alt": 70 },
+      { "tur": "baslik", "metin": "BEATS ME", "dil": "en" },
+      { "tur": "ornek",  "metin": "(Hiçbir fikrim yok / Ne bileyim.)" },
+      { "tur": "cta",    "metin": "Sırada: Ben öderim" }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+      { "tur": "ornek",  "metin": "KİTAP: I will pay.", "dil": "en", "alt": 70 },
+      { "tur": "baslik", "metin": "IT'S ON ME", "dil": "en" },
+      { "tur": "ornek",  "metin": "(Ben ısmarlıyorum / Benden.)" },
+      { "tur": "cta",    "metin": "Sırada: Seni dinliyorum" }
+    ] },
+
+    { "ogeler": [
+      { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+      { "tur": "ornek",  "metin": "KİTAP: I am listening.", "dil": "en", "alt": 70 },
+      { "tur": "baslik", "metin": "I'M ALL EARS", "dil": "en" },
+      { "tur": "ornek",  "metin": "(Seni dinliyorum / Kulağım sende.)" },
+      { "tur": "cta",    "metin": "Kaydetmeyi unutma ↓" }
+    ] }
+  ]
+}

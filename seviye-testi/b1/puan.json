@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-21",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Test bicimi yorum getiriyor; kapak dogrudan meydan okuyor, caption 3. soruyu isaretleyip merak kuruyor."
+    },
+    "ogretici_deger": {
+      "puan": 8,
+      "gerekce": "Bes soru B1 esigini yerinde tariyor (since/for, Type 2 kosul, -ed/-ing sifat, present perfect, turn on); cevap anahtarinda her sorunun kurali tek satir."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Seviye testi yaygin bir bicim; ayrisma soru seciminde — exhausted/exhausting Turkce konusanin gercekten tokezledigi yer, ezber sorusu degil."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "B1 hesabin en kalabalik segmenti; sorular ne kolay ne asiri zor, aciklamalar Turkce ve terim yuku dusuk."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Yerel basimla uretildi: sik kutulari sekiz slaytta ayni genislikte, font sistemi sorudan sonuca degismiyor, uzun soru dengeli boluniyor."
+    }
+  },
+  "toplam": 8.0
+}
