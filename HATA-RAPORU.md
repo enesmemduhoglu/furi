@@ -1,189 +1,206 @@
-# Arsivdeki bilinen hatalar
+# Arşivdeki bilinen hatalar
 
-2026-08-11'de repodaki **60 gorselin tamami** tek tek okunarak cikarildi. Hicbiri duzeltilmedi — bu dosya, hangi kartin yeniden uretilmesi gerektigine sonra karar verebilmek icin tutuluyor.
+2026-08-11'de repodaki **60 görselin tamamı** tek tek okunarak çıkarıldı. Hiçbiri düzeltilmedi — bu dosya, hangi kartın yeniden üretilmesi gerektiğine sonra karar verebilmek için tutuluyor.
 
-Yeniden uretim yapilacaksa: WORKFLOW.md Faz 4–5.
+Yeniden üretim yapılacaksa: WORKFLOW.md Faz 4–5.
 
-**Cozulenler ustu cizili isaretlenir.** 2026-08-11: dort cevap anahtarinin **hepsi** yeniden uretildi (mai 3:4 → 1920×2560 olcek → 80px kirp → 1920×2400). Uc kare dosya (`a1/7.png`, `a2/7.png`, `b1/7.png`) gitti; artik **repodaki 60 gorselin tamami 1920×2400**. Ayni turda `fill`, `fil`, `filin`, `conoditional`, `Kac dogrune var?` hatalari da duzeldi.
+> **Alıntı kuralı:** tablolardaki "Hatalı" ve "Doğrusu" sütunları görseldeki metni **birebir** aktarır. O görseller ASCII-Türkçe üretildiği için sütunlarda ASCII yazım görmek normaldir; düz yazı ise tam Türkçe.
 
-2026-08-11, ikinci tur: kullanicinin `-` ile isaretlemedigi **5 gorsel** yeniden uretildi — `karistirilan/lose-vs-loose`, `karistirilan/effect-vs-affect`, `seviye-testi/{a2,b1,b2}/8.jpg`. Hedeflenen hatalarin **tamami** duzeldi.
+**Çözülenler üstü çizili işaretlenir.** 2026-08-11: dört cevap anahtarının **hepsi** yeniden üretildi (mai 3:4 → 1920×2560 ölçek → 80px kırp → 1920×2400). Üç kare dosya (`a1/7.png`, `a2/7.png`, `b1/7.png`) gitti; artık **repodaki 60 görselin tamamı 1920×2400**. Aynı turda `fill`, `fil`, `filin`, `conoditional`, `Kac dogrune var?` hataları da düzeldi.
 
-**Esik notu:** Kucuk ve goze batmayan kusurlar (bas harf buyuk/kucuk, tirnak yonu, `•` yerine `-`, tek tuk harf hatasi) icin yeniden uretim yapilmiyor. Asagida bunlar listelense de birakilmalari bilincli bir karardir. Satir sonundaki `-` isareti "bu satir gecildi" demektir.
+2026-08-11, ikinci tur: kullanıcının `-` ile işaretlemediği **5 görsel** yeniden üretildi — `karistirilan/lose-vs-loose`, `karistirilan/effect-vs-affect`, `seviye-testi/{a2,b1,b2}/8.jpg`. Hedeflenen hataların **tamamı** düzeldi.
 
-**Model notu:** `fiil` / `fiili` kelimesini iki model de guvenilir basmiyor (`fil`, `fill`, `fili` cikiyor). Ayni sey `alabilir` icin de gecerli — arsivde 3, yeni uretimde 1 kez `alablir` oldu. Cozum promptu sikilastirmak degil, kelimeyi degistirmek: `fiil` → `verb` / `past participle`, `(Fiil)` → `(Eylem)`, `alabilir miyim` → `verir misiniz`.
+**Eşik notu:** Küçük ve göze batmayan kusurlar (baş harf büyük/küçük, tırnak yönü, `•` yerine `-`, tek tük harf hatası) için yeniden üretim yapılmıyor. Aşağıda bunlar listelense de bırakılmaları bilinçli bir karardır. Satır sonundaki `-` işareti "bu satır geçildi" demektir.
 
-2026-08-18, **geriye donuk puanlama turu**: havuzdaki 27 yayinlanmamis postun
-tamami puanlanirken (TODOS.md > Post puanlama sistemi) uc yeni hata cikti ve
-asagidaki tabloya eklendi — ikisi `hikayeli/takside/6.jpg`'de (`odeyeblir`,
+**Model notu:** `fiil` / `fiili` kelimesini iki model de güvenilir basmıyor (`fil`, `fill`, `fili` çıkıyor). Aynı şey `alabilir` için de geçerli — arşivde 3, yeni üretimde 1 kez `alablir` oldu. Çözüm promptu sıkılaştırmak değil, kelimeyi değiştirmek: `fiil` → `verb` / `past participle`, `(Fiil)` → `(Eylem)`, `alabilir miyim` → `verir misiniz`.
+
+2026-08-18, **geriye dönük puanlama turu**: havuzdaki 27 yayınlanmamış postun
+tamamı puanlanırken (TODOS.md > Post puanlama sistemi) üç yeni hata çıktı ve
+aşağıdaki tabloya eklendi — ikisi `hikayeli/takside/6.jpg`'de (`odeyeblir`,
 `edoceklere`), biri `kitap-vs-gercek/gunluk-kaliplar/3.jpg`'de. Sonuncusu
-digerlerinden agir: hata **marka etiketinin kendisinde** (`KITAP vs GERCEX`).
-Her ucu de bu dosyanin ilk turunden sonra uretilmis destelerde; yani 08-11
-denetimi onlari hic gormedi.
+diğerlerinden ağır: hata **marka etiketinin kendisinde** (`KITAP vs GERCEX`).
+Her üçü de bu dosyanın ilk turundan sonra üretilmiş destelerde; yani 08-11
+denetimi onları hiç görmedi.
 
-2026-08-19, **`karistirilan/effect-vs-affect/1.jpg` CTA duzeltmesi**: post 12:07
-rutininde onaya gonderildikten sonra kullanici satirdaki iki hatayi bildirdi
-(`takipte kali` ve sedillali `için`). Gorsel **yeniden uretilmedi** — bulut
-oturumunda `FAL_KEY` tanimli degil, `.env` yalnizca yerelde duruyor. Bunun
-yerine iki hata da **piksel silme** ile kapatildi: son `i` harfi ve `ç`
-sedillasi cevreden orneklenen kagit dokusuyla ortuldu, tuylu maskeyle
-harmanlandi. Yeni harf cizilmedigi icin font, punto ve marka sistemi birebir
-korundu; satir 9 px sola kaydi (1920 px tuvalde gozle secilmiyor).
+2026-08-19, **`karistirilan/effect-vs-affect/1.jpg` CTA düzeltmesi**: post 12:07
+rutininde onaya gönderildikten sonra kullanıcı satırdaki iki hatayı bildirdi
+(`takipte kali` ve sedilyalı `için`). Görsel **yeniden üretilmedi** — bulut
+oturumunda `FAL_KEY` tanımlı değil, `.env` yalnızca yerelde duruyor. Bunun
+yerine iki hata da **piksel silme** ile kapatıldı: son `i` harfi ve `ç`
+sedilyası çevreden örneklenen kâğıt dokusuyla örtüldü, tüylü maskeyle
+harmanlandı. Yeni harf çizilmediği için font, punto ve marka sistemi birebir
+korundu; satır 9 px sola kaydı (1920 px tuvalde gözle seçilmiyor).
 
-> **Yontem notu:** bu yol yalnizca duzeltme *silme* oldugunda calisir (fazla
-> harf, sizmis diyakritik). Eksik ya da yanlis harf icin yeni glif cizmek
-> gerekir ve arsivdeki font serbest bir esdegeriyle tam eslesmiyor — o durumda
-> WORKFLOW.md Faz 4'e donup gorseli yeniden uretmek gerekiyor.
+> **Yöntem notu:** bu yol yalnızca düzeltme *silme* olduğunda çalışır (fazla
+> harf, sızmış diyakritik). Eksik ya da yanlış harf için yeni glif çizmek
+> gerekir ve arşivdeki font serbest bir eşdeğeriyle tam eşleşmiyor — o durumda
+> WORKFLOW.md Faz 4'e dönüp görseli yeniden üretmek gerekiyor.
 >
-> **Ek (08-20):** ucuncu bir yol daha var — *ayni gorselden glif odunc almak*.
-> `dizi/tell-me-about-it/1.jpg`'de CTA `Kaybet` cikti (`Kaydet` olacakti). `d`,
-> geometrik sans'ta `b`'nin yatay aynasi oldugu icin `b` glifinin kutusu
-> (x=639..686, antialias dahil, iki yaninda 4'er piksel bosluk) yerinde
-> aynalandi. Font, punto, agirlik ve konum birebir korundu; yeni glif
-> cizilmedi. Ayna simetrisi olan harf ciftlerinde (b/d, p/q) calisir.
+> **Ek (08-20):** üçüncü bir yol daha var — *aynı görselden glif ödünç almak*.
+> `dizi/tell-me-about-it/1.jpg`'de CTA `Kaybet` çıktı (`Kaydet` olacaktı). `d`,
+> geometrik sans'ta `b`'nin yatay aynası olduğu için `b` glifinin kutusu
+> (x=639..686, antialias dahil, iki yanında 4'er piksel boşluk) yerinde
+> aynalandı. Font, punto, ağırlık ve konum birebir korundu; yeni glif
+> çizilmedi. Ayna simetrisi olan harf çiftlerinde (b/d, p/q) çalışır.
 
-2026-08-20, **Turkce diyakritik denemesi — `dizi/tell-me-about-it/1.jpg`**:
-§5'teki "bazi diyakritikler hayatta kaliyor" gozlemi ilk kez kontrollu olarak
-sinandi. Kart tam Turkce metinle yeniden uretildi (`Bana mi anlatiyorsun` →
-`Bana mı anlatıyorsun`, `lazim` → `lazım`); risk yuzeyi uc adet `ı` (U+0131),
-baska diyakritik yok. Ust kategori etiketi bilincli olarak ASCII birakildi
-(`DIZI INGILIZCESI`) — 60 gorselde sabit oldugu icin marka parcasi.
+2026-08-20, **Türkçe diyakritik denemesi — `dizi/tell-me-about-it/1.jpg`**:
+§5'teki "bazı diyakritikler hayatta kalıyor" gözlemi ilk kez kontrollü olarak
+sınandı. Kart tam Türkçe metinle yeniden üretildi (`Bana mi anlatiyorsun` →
+`Bana mı anlatıyorsun`, `lazim` → `lazım`); risk yüzeyi üç adet `ı` (U+0131),
+başka diyakritik yok. Üst kategori etiketi bilinçli olarak ASCII bırakıldı
+(`DIZI INGILIZCESI`) — 60 görselde sabit olduğu için marka parçası.
 
-**Sonuc: seedream ucunu de dogru basti, uc denemede de.** `ı` hicbir denemede
-`i`'ye donmedi, nokta eklenmedi. Yani `ı` model icin sorun degil; §5'teki
-"rastgele dusuyor" gozlemi en azindan bu harf icin gecerli degil. `ş ğ ü ö`
-ayni sekilde sinanmadi.
+**Sonuç: seedream üçünü de doğru bastı, üç denemede de.** `ı` hiçbir denemede
+`i`'ye dönmedi, nokta eklenmedi. Yani `ı` model için sorun değil; §5'teki
+"rastgele düşüyor" gözlemi en azından bu harf için geçerli değil. `ş ğ ü ö`
+aynı şekilde sınanmadı.
 
-Denemelerde cikan kusurlar diyakritikle degil, her zamanki harf hatasiyla ilgili:
+Denemelerde çıkan kusurlar diyakritikle değil, her zamanki harf hatasıyla ilgili:
 
 | Deneme | Tipografi | Metin |
 |---|---|---|
-| 1 | Baslik ince kesim, anlam satiri iki satira kirildi | Kusursuz |
-| 2 | Agirlik dogru, baslik iki satira kirildi | `olocak` (olacak) |
-| 3 | Marka kesimi birebir, tek satir baslik | `Kaybet` (Kaydet) → glif aynalamayla duzeltildi |
+| 1 | Başlık ince kesim, anlam satırı iki satıra kırıldı | Kusursuz |
+| 2 | Ağırlık doğru, başlık iki satıra kırıldı | `olocak` (olacak) |
+| 3 | Marka kesimi birebir, tek satır başlık | `Kaybet` (Kaydet) → glif aynalamayla düzeltildi |
 
-Yayina giren: 3. deneme + aynalama. mai'ye hic gerek kalmadi.
+Yayına giren: 3. deneme + aynalama. mai'ye hiç gerek kalmadı.
 
-2026-08-20, **`seviye-testi/a2` yerel basima gecti**: destenin metni
+2026-08-20, **`seviye-testi/a2` yerel basıma geçti**: destenin metni
 `seviye-testi/a2/kart.json`'a girildi ve yedi slayt `marka/kart_bas.ps1` ile
-yeniden basildi. Harfleri artik gercek font basiyor, yani bu destede yazim
-hatasi ve eksik diyakritik **mumkun degil**. Kapanan kayitlar:
+yeniden basıldı. Harfleri artık gerçek font basıyor, yani bu destede yazım
+hatası ve eksik diyakritik **mümkün değil**. Kapanan kayıtlar:
 
-- §1 `a2/8.jpg` > `dara` — slayt yayindan kaldirildi (skor tablosu artik
-  uretilmiyor), kalan alti slayt + cevap anahtari yeniden basildi
-- §4 "sik kutulari slayttan slayta farkli genislikte" — kutu genisligi artik
-  sabit (700 px), yedi slaytta ayni
-- §4 "etiket rengi kayiyor" (a2'de 3. slayttan itibaren laciverte donuyordu) —
-  etiket tek yerden basiliyor, kaymiyor
-- §5 ASCII kalintilari (`BASLAMAK IÇIN KAYDIR`, `Cevabini sec.`, cevap
-  anahtarinin tamami) — deste bastan sona tam Turkce
+- §1 `a2/8.jpg` > `dara` — slayt yayından kaldırıldı (skor tablosu artık
+  üretilmiyor), kalan altı slayt + cevap anahtarı yeniden basıldı
+- §4 "şık kutuları slayttan slayta farklı genişlikte" — kutu genişliği artık
+  sabit (700 px), yedi slaytta aynı
+- §4 "etiket rengi kayıyor" (a2'de 3. slayttan itibaren laciverde dönüyordu) —
+  etiket tek yerden basılıyor, kaymıyor
+- §5 ASCII kalıntıları (`BASLAMAK IÇIN KAYDIR`, `Cevabini sec.`, cevap
+  anahtarının tamamı) — deste baştan sona tam Türkçe
 
-Ayni turda `marka/metin_denetle.py`'de uc yanlis alarm cikti ve duzeltildi:
-buyuk harfli `ANAHTARI`/`KAYDIR` "diyakritiksiz" sayiliyordu (Turkce'de `ı`nin
-buyugu zaten `I`), `iyi` ise caption'lardaki `İyi`nin Python `.lower()` ciktisi
-(`i` + U+0307) yuzunden bozuk bir sozluk girdisiyle eslesiyordu. Denetim artik
-buyuk harfli kelimeyi adaylarin **Turkce buyuk hali** ile karsilastiriyor;
-`GECEBILIR` -> `GEÇEBİLİR` gibi gercek hatalari yakalamaya devam ediyor.
+Aynı turda `marka/metin_denetle.py`'de üç yanlış alarm çıktı ve düzeltildi:
+büyük harfli `ANAHTARI`/`KAYDIR` "diyakritiksiz" sayılıyordu (Türkçede `ı`nın
+büyüğü zaten `I`), `iyi` ise caption'lardaki `İyi`nin Python `.lower()` çıktısı
+(`i` + U+0307) yüzünden bozuk bir sözlük girdisiyle eşleşiyordu. Denetim artık
+büyük harfli kelimeyi adayların **Türkçe büyük hali** ile karşılaştırıyor;
+`GECEBILIR` -> `GEÇEBİLİR` gibi gerçek hataları yakalamaya devam ediyor.
 
-2026-08-11, `hikayeli/doktorda` uretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tirnak icine alinmasi cikti, ikisi de birer tekrarla duzeldi. Kalan tek kusur asagida.
+2026-08-22, **`a1`, `b1`, `b2` skor slaytları silindi ve desteler yerel basıma
+geçti**: 2026-08-20'de alınan "sonuç slaytı üretilmiyor" kararı bu üç destede
+uygulanmamıştı. `8.jpg` dosyaları silindi, 7. slaytın CTA'sı `Sonucun için
+kaydır →` yerine `Kaç doğrun var? Yorumlara yaz ↓` oldu (deste artık orada
+bitiyor) ve üç deste `marka/kart_bas.ps1` ile yeniden basıldı. Kapanan kayıtlar
+§1'de ve §2'de üstü çizili işaretlendi — hepsi silinen slayttaydı.
 
-| Dosya | Hatali | Dogrusu |
+Aynı turda `karistirilan/borrow-vs-lend` repodan silindi (2026-08-18'de onayda
+reddedilmişti); postun görselindeki kayıt kalmadı.
+
+2026-08-11, `hikayeli/doktorda` üretimi: kapakta `CUMLELERS` ve 5. slaytta `alablir` + etiketin tırnak içine alınması çıktı, ikisi de birer tekrarla düzeldi. Kalan tek kusur aşağıda.
+
+| Dosya | Hatalı | Doğrusu |
 |---|---|---|
 | `hikayeli/doktorda/5.jpg` | `Yurt disiina` | Yurt disina | -
 
 ---
 
-## 1. Anlam bozan yazim hatalari — en yuksek oncelik
+## 1. Anlam bozan yazım hataları — en yüksek öncelik
 
-Bunlar diyakritik eksigi degil, gercek harf hatasi. Yayindaki bir postta goze carpar.
+Bunlar diyakritik eksiği değil, gerçek harf hatası. Yayındaki bir postta göze çarpar.
 
-| Dosya | Hatali | Dogrusu |
+| Dosya | Hatalı | Doğrusu |
 |---|---|---|
-| ~~`karistirilan/lose-vs-loose/1.jpg`~~ | ~~`Kaybestmek`~~ | ✅ **cozuldu** |
-| ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`AFFECT: Etkilemek (Fill)`~~ | ✅ **cozuldu** — `(Eylem)` olarak yazildi |
+| ~~`karistirilan/lose-vs-loose/1.jpg`~~ | ~~`Kaybestmek`~~ | ✅ **çözüldü** |
+| ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`AFFECT: Etkilemek (Fill)`~~ | ✅ **çözüldü** — `(Eylem)` olarak yazıldı |
 | `hikayeli/otel/3.jpg` | `alablir` | alabilir | -
 | `durumsal/no-veggies/1.jpg` | `alablir` | alabilir | -
 | `durumsal/without-peppers/1.jpg` | `alablir` | alabilir | -
 | `hikayeli/otel/5.jpg` | `Seyahat edoceklere gonder` | edeceklere | -
 | `hikayeli/otel/2.jpg` | `reservasyonum` | rezervasyonum |-
-| ~~`seviye-testi/a1/7.png`~~ | ~~`fill -s takisi`~~ | ✅ **cozuldu** — 7.jpg olarak yeniden uretildi |
-| ~~`seviye-testi/a1/7.png`~~ | ~~`I" oznesi`~~ | ✅ **cozuldu** — ayni uretimde |
-| ~~`seviye-testi/b1/7.png`~~ | ~~`would + fil` / `filin 3. hali`~~ | ✅ **cozuldu** — `would + verb` / `past participle` |
-| ~~`seviye-testi/b2/7.jpg`~~ | ~~`Third conoditional`~~ | ✅ **cozuldu** — parantezli terim kaldirildi |
-| ~~`seviye-testi/b2/7.jpg`~~ | ~~`Kac dogrune var?`~~ | ✅ **cozuldu** |
-| `seviye-testi/b2/7.jpg` | `sora` (yeni uretimde) | sonra | -
-| `seviye-testi/b2/7.jpg` | `tamahen` (yeni uretimde) | tamamen | -
-| `seviye-testi/b2/7.jpg` | `vera` (yeni uretimde) | veya | -
-| ~~`seviye-testi/a2/8.jpg`~~ | ~~`guulu`~~ | ✅ **cozuldu** |
-| ~~`seviye-testi/a2/8.jpg`~~ | ~~`gorunuıyorsun`~~ | ✅ **cozuldu** |
-| ~~`seviye-testi/b1/8.jpg`~~ | ~~`seviyesnde`~~ | ✅ **cozuldu** |
-| ~~`seviye-testi/b1/8.jpg`~~ | ~~`gudu`~~ | ✅ **cozuldu** |
-| ~~`seviye-testi/b2/8.jpg`~~ | ~~`seviyesende`~~ | ✅ **cozuldu** |
-| `seviye-testi/a1/8.jpg` | `değidlir` | degildir — **a1'e dokunulmadi**, a2/b1/b2'de yeni uretimde duzeldi | -
-| ~~`seviye-testi/a2/8.jpg`~~ | ~~`dara`~~ | ✅ **cozuldu** (08-20) — slayt yayindan kaldirildi, deste yeniden basildi |
-| `seviye-testi/{b1,b2}/8.jpg` | `dara` (yeni uretimde) | daha | -
-| `seviye-testi/b1/8.jpg` | `bir az` (yeni uretimde) | biraz | -
-| `seviye-testi/b2/8.jpg` | `guclendirelem` (yeni uretimde) | guclendirelim | -
-| ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`takipte kali` (yeni uretimde)~~ | ✅ **cozuldu** (08-19) — fazla `i` silindi |
+| ~~`seviye-testi/a1/7.png`~~ | ~~`fill -s takisi`~~ | ✅ **çözüldü** — 7.jpg olarak yeniden üretildi |
+| ~~`seviye-testi/a1/7.png`~~ | ~~`I" oznesi`~~ | ✅ **çözüldü** — aynı üretimde |
+| ~~`seviye-testi/b1/7.png`~~ | ~~`would + fil` / `filin 3. hali`~~ | ✅ **çözüldü** — `would + verb` / `past participle` |
+| ~~`seviye-testi/b2/7.jpg`~~ | ~~`Third conoditional`~~ | ✅ **çözüldü** — parantezli terim kaldırıldı |
+| ~~`seviye-testi/b2/7.jpg`~~ | ~~`Kac dogrune var?`~~ | ✅ **çözüldü** |
+| `seviye-testi/b2/7.jpg` | `sora` (yeni üretimde) | sonra | -
+| `seviye-testi/b2/7.jpg` | `tamahen` (yeni üretimde) | tamamen | -
+| `seviye-testi/b2/7.jpg` | `vera` (yeni üretimde) | veya | -
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`guulu`~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`gorunuıyorsun`~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/b1/8.jpg`~~ | ~~`seviyesnde`~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/b1/8.jpg`~~ | ~~`gudu`~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/b2/8.jpg`~~ | ~~`seviyesende`~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/a1/8.jpg`~~ | ~~`değidlir`~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`dara`~~ | ✅ **çözüldü** (08-20) — slayt yayından kaldırıldı, deste yeniden basıldı |
+| ~~`seviye-testi/{b1,b2}/8.jpg`~~ | ~~`dara`~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
+| ~~`seviye-testi/b1/8.jpg`~~ | ~~`bir az`~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
+| ~~`seviye-testi/b2/8.jpg`~~ | ~~`guclendirelem`~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
+| ~~`karistirilan/effect-vs-affect/1.jpg`~~ | ~~`takipte kali` (yeni üretimde)~~ | ✅ **çözüldü** (08-19) — fazla `i` silindi |
 | `hikayeli/takside/6.jpg` | `odeyeblir` | odeyebilir | -
 | `hikayeli/takside/6.jpg` | `edoceklere` | edeceklere | -
 | `kitap-vs-gercek/gunluk-kaliplar/3.jpg` | `KITAP vs GERCEX` | KITAP vs GERCEK | -
 
-**Not:** ayni kelime her deste farkli bozulmus — `guclu` → `guulu` (a2), `gudu` (b1), dogru (b2). Tek bir arama-degistirme ile yakalanmaz.
+**Not:** aynı kelime her destede farklı bozulmuş — `guclu` → `guulu` (a2), `gudu` (b1), doğru (b2). Tek bir arama-değiştirme ile yakalanmaz.
 
-`hikayeli/otel/2.jpg` ayrica **zaman uyumsuzlugu** tasiyor: Ingilizce `I have a reservation` (genis zaman) ama Turkce `rezervasyonum vardi` (gecmis). Dogrusu `var`. -
+`hikayeli/otel/2.jpg` ayrıca **zaman uyumsuzluğu** taşıyor: İngilizce `I have a reservation` (geniş zaman) ama Türkçe `rezervasyonum vardi` (geçmiş). Doğrusu `var`. -
 
-## 2. Yabanci diyakritik sizintisi
+## 2. Yabancı diyakritik sızıntısı
 
-Modelin Turkce olmayan aksanli harf basmasi. Kelime yanlis gorunuyor.
+Modelin Türkçe olmayan aksanlı harf basması. Kelime yanlış görünüyor.
 
-| Dosya | Hatali | Dogrusu |
+| Dosya | Hatalı | Doğrusu |
 |---|---|---|
 | `karistirilan/make-vs-do/1.jpg` | `gónderiyi` (ó) | gonderiyi | -
 | `durumsal/no-veggies/1.jpg` | `nasĭl` (ĭ) | nasil | -
-| ~~`seviye-testi/a2/8.jpg`~~ | ~~`bìraz` (ì)~~ | ✅ **cozuldu** |
-| ~~`seviye-testi/a2/8.jpg`~~ | ~~`Asagĭya` (ĭ)~~ | ✅ **cozuldu** |
-| `seviye-testi/b2/8.jpg` | `kísa`, `bír` (í) | kisa, bir | -
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`bìraz` (ì)~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/a2/8.jpg`~~ | ~~`Asagĭya` (ĭ)~~ | ✅ **çözüldü** |
+| ~~`seviye-testi/b2/8.jpg`~~ | ~~`kísa`, `bír` (í)~~ | ✅ **çözüldü** (08-22) — 8. slayt yayından kaldırıldı, deste yeniden basıldı |
 
-## 3. Yapisal hatalar
+## 3. Yapısal hatalar
 
 | Dosya | Sorun | Etki |
 |---|---|---|
-| ~~`seviye-testi/a1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **cozuldu** — `a1/7.jpg`, 1920×2400 |
-| ~~`seviye-testi/a2/7.png`~~ | ~~1024×1024 kare~~ | ✅ **cozuldu** — `a2/7.jpg`, 1920×2400 |
-| ~~`seviye-testi/b1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **cozuldu** — `b1/7.jpg`, 1920×2400 |
-| `phrasal/run-out-of/1.jpg` | Baslik `RUN OUT` / `OF` seklinde **iki farkli puntoda** kirilmis | Otomatik sigdirma artefakti, baslik bozuk goruluyor | -
-| `seviye-testi/b2/3.jpg` | Soru ve CTA **serif** fontta | 60 gorselin tek serif'i, marka disi | -
-| `seviye-testi/b2/2.jpg` | `SORU 01 / 05` sayaci basliktan kopmus, soruya yapismis | Ust blok dagilmis | -
+| ~~`seviye-testi/a1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `a1/7.jpg`, 1920×2400 |
+| ~~`seviye-testi/a2/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `a2/7.jpg`, 1920×2400 |
+| ~~`seviye-testi/b1/7.png`~~ | ~~1024×1024 kare~~ | ✅ **çözüldü** — `b1/7.jpg`, 1920×2400 |
+| `phrasal/run-out-of/1.jpg` | Başlık `RUN OUT` / `OF` şeklinde **iki farklı puntoda** kırılmış | Otomatik sığdırma artefaktı, başlık bozuk görülüyor | -
+| `seviye-testi/b2/3.jpg` | Soru ve CTA **serif** fontta | 60 görselin tek serif'i, marka dışı | -
+| `seviye-testi/b2/2.jpg` | `SORU 01 / 05` sayacı başlıktan kopmuş, soruya yapışmış | Üst blok dağılmış | -
 
-`seviye-testi/b2/7.jpg` dort cevap anahtarindan **tek 4:5 olani** — yani format hatasi setin kendi icinde bile tutarsiz. -
+`seviye-testi/b2/7.jpg` dört cevap anahtarından **tek 4:5 olanı** — yani format hatası setin kendi içinde bile tutarsız. -
 
-## 4. Marka tutarsizliklari — dusuk oncelik
+## 4. Marka tutarsızlıkları — düşük öncelik
 
-Hata degil, ama yan yana paylasilinca goze carpar. Yeniden uretim yapilirsa birlikte duzeltilebilir.
+Hata değil, ama yan yana paylaşılınca göze çarpar. Yeniden üretim yapılırsa birlikte düzeltilebilir.
 
-- **Etiket rengi kayiyor:** `a1` ve `a2` destelerinde ust etiket 3. slayttan itibaren turuncudan laciverte donuyor; `b1` ve `b2` boyunca turuncu kaliyor.
-- **Zemin rengi kayiyor:** `a1` 5. slayttan itibaren sariya, `b1` 4. slayttan itibaren seftali tonuna kayiyor. `phrasal/cut-down-on` daha sari, `karistirilan/lose-vs-loose` daha pembe.
-- **CTA ikonu her kartta farkli:** duz `↓`, dolu daire icinde `⬇`, cizgili daire, gri daire, turuncu ok, `⌄` chevron, ve iki kartta hic ok yok (sadece emoji).
-- **Sablon sapmasi:** `phrasal/look-forward-to` tek `EXAMPLE SENTENCE` ara etiketi olan kart; `karistirilan/remember-vs-remind` tek ayrac cizgisi olan kart.
-- **Sik kutulari** slayttan slayta farkli genislikte (en belirgin `seviye-testi/a2/5.jpg`); `b2/4.jpg` tek cift cizgili kutuya sahip.
-- **Emoji rengi:** `seviye-testi/b2/8.jpg` sari emoji kullaniyor, digerleri tek renk glif. `hikayeli/otel/5.jpg`'deki balon emoji gri-laciverte donusmus.
-- **Kesme isareti:** `hikayeli/otel/5.jpg` basliginda `I'D` acilis tirnagi olarak basilmis (`I‘D`), govdede dogru.
+- **Etiket rengi kayıyor:** `a1` ve `a2` destelerinde üst etiket 3. slayttan itibaren turuncudan laciverde dönüyor; `b1` ve `b2` boyunca turuncu kalıyor.
+- **Zemin rengi kayıyor:** `a1` 5. slayttan itibaren sarıya, `b1` 4. slayttan itibaren şeftali tonuna kayıyor. `phrasal/cut-down-on` daha sarı, `karistirilan/lose-vs-loose` daha pembe.
+- **CTA ikonu her kartta farklı:** düz `↓`, dolu daire içinde `⬇`, çizgili daire, gri daire, turuncu ok, `⌄` chevron, ve iki kartta hiç ok yok (sadece emoji).
+- **Şablon sapması:** `phrasal/look-forward-to` tek `EXAMPLE SENTENCE` ara etiketi olan kart; `karistirilan/remember-vs-remind` tek ayraç çizgisi olan kart.
+- **Şık kutuları** slayttan slayta farklı genişlikte (en belirgin `seviye-testi/a2/5.jpg`); `b2/4.jpg` tek çift çizgili kutuya sahip.
+- **Emoji rengi:** ~~`seviye-testi/b2/8.jpg` sarı emoji kullanıyor~~ (08-22: slayt kaldırıldı), diğerleri tek renk glif. `hikayeli/otel/5.jpg`'deki balon emoji gri-laciverde dönüşmüş.
+- **Kesme işareti:** `hikayeli/otel/5.jpg` başlığında `I'D` açılış tırnağı olarak basılmış (`I‘D`), gövdede doğru.
 
-## 5. Genel diyakritik politikasi
+## 5. Genel diyakritik politikası
 
-Gorsellerdeki Turkce **tutarsiz** — WORKFLOW.md Faz 2 ASCII-only diyor ama arsiv buna uymuyor. `ç` ve noktali `i` genelde hayatta kaliyor, `ı ş ğ ü ö` ise rastgele dusuyor; ustelik **ayni cumle icinde**:
+Görsellerdeki Türkçe **tutarsız** — arşiv, ASCII-only kuralının yürürlükte olduğu dönemde üretildi ama kurala kendisi de uymuyor. `ç` ve noktalı `i` genelde hayatta kalıyor, `ı ş ğ ü ö` ise rastgele düşüyor; üstelik **aynı cümle içinde**:
 
 - `Kahvalti saat kaçta servis ediliyor?` (`hikayeli/otel/4.jpg`)
 - `Daha fazla kelime için begen` (`durumsal/on-the-side/1.jpg`)
 - `Motivasyon için arkadasina gonder` (`phrasal/give-up/1.jpg`)
-- `BASLAMAK IÇIN KAYDIR` (dort kapak slaytinin hepsinde)
-- ~~`Ogrenmek için takipte kal` (`karistirilan/effect-vs-affect/1.jpg`)~~ — ✅ **cozuldu** (08-19): sedilla silinip `icin` yapildi, satirin geri kalani zaten ASCII'ydi
+- `BASLAMAK IÇIN KAYDIR` (dört kapak slaytının hepsinde)
+- ~~`Ogrenmek için takipte kal` (`karistirilan/effect-vs-affect/1.jpg`)~~ — ✅ **çözüldü** (08-19): sedilya silinip `icin` yapıldı, satırın geri kalanı zaten ASCII'ydi
 
-Ust etiketler de her kartta ASCII: `DURUMSAL INGILIZCE`, `GUNUN PHRASAL VERB'U`, `SIK KARISTIRILANLAR`, `A1 • INGILIZCE TESTI`.
+Üst etiketler de her kartta ASCII: `DURUMSAL INGILIZCE`, `GUNUN PHRASAL VERB'U`, `SIK KARISTIRILANLAR`, `A1 • INGILIZCE TESTI`.
 
-Yeni postlarda WORKFLOW.md Faz 2 kurali gecerli: **tam ASCII**. Eski arsivi hizaya cekmek isterse, en gorunur olanlar kapak slaytlarindaki `BASLAMAK IÇIN KAYDIR`.
+**ASCII kuralı emekli oldu.** Kartlar artık `marka/kart_bas.ps1` ile yerelde
+basılıyor; harfleri görüntü modeli değil gerçek font çiziyor, yani diyakritik
+kaybı fiziksel olarak mümkün değil. Yeni ve yeniden basılan postlarda kural
+**tam Türkçe** (`marka/README.md`). Bu bölümdeki kayıtlar yalnızca hâlâ eski
+görselle duran postlar için geçerli; bir post yerel basıma geçtiğinde
+kayıtları kapanıyor.
 
-**08-20 notu:** `dizi/tell-me-about-it/1.jpg` bu kuralin disinda, bilincli olarak
-tam Turkce basildi (yukaridaki deneme kaydi). Kural henuz degismedi — tek kart
-ve tek harf (`ı`) uzerinden genelleme yapilmiyor. Kurali gevsetmeden once
-`ş ğ ü ö` de ayni sekilde sinanmali.
+**08-20 notu:** `dizi/tell-me-about-it/1.jpg` bu geçişin ilk örneğiydi — henüz
+görüntü modeliyle, ama bilinçli olarak tam Türkçe metinle basıldı (yukarıdaki
+deneme kaydı). Yerel basım geldiği için `ş ğ ü ö`nin modelde sınanması artık
+gereksiz kaldı.

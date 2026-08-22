@@ -63,6 +63,8 @@ $STIL = @{
   'sik'      = @{ Font='govde';  Punto=64;  Renk=$LACIVERT; Aralik=0;  Bosluk=44;  Kutu=$true }
   'madde'    = @{ Font='baslik'; Punto=92;  Renk=$LACIVERT; Aralik=0;  Bosluk=12  }
   'aciklama' = @{ Font='govde';  Punto=52;  Renk=$GRI;      Aralik=0;  Bosluk=46;  Sar=$true }
+  'cumle'    = @{ Font='govde';  Punto=84;  Renk=$LACIVERT; Aralik=0;  Bosluk=100; Kalin=$true; Sar=$true }
+  'araetiket'= @{ Font='baslik'; Punto=40;  Renk=$TURUNCU;  Aralik=10; Bosluk=70  }
   'ornek'    = @{ Font='govde';  Punto=58;  Renk=$GRI;      Aralik=0;  Bosluk=240 }
   'ayrac'    = @{ Font='baslik'; Punto=0;   Renk=$TURUNCU;  Aralik=0;  Bosluk=64  }
   'cta'      = @{ Font='baslik'; Punto=74;  Renk=$LACIVERT; Aralik=0;  Bosluk=0;   Sar=$true }

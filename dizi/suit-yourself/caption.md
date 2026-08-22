@@ -19,4 +19,4 @@ Arkadaşına gönder, o da öğrensin ⬇
 
 ## Alt text
 
-1. Krem zeminli tipografik kart: üstte turuncu "DIZI INGILIZCESI" etiketi, ortada dev lacivert "SUIT YOURSELF" başlığı, altında büyük lacivert "Sen bilirsin." satırı, gri renkte "You don't want to come? Suit yourself." örnek cümlesi ve "(Gelmek istemiyor musun? Sen bilirsin.)" çevirisi, en altta aşağı oklu "Arkadasina gonder" çağrısı.
+1. Krem zeminli tipografik kart: üstte turuncu "DİZİ İNGİLİZCESİ" etiketi, ortada dev lacivert "SUIT YOURSELF" başlığı, altında büyük lacivert "Sen bilirsin." satırı, gri renkte "You don't want to come? Suit yourself." örnek cümlesi ve "(Gelmek istemiyor musun? Sen bilirsin.)" çevirisi, en altta aşağı oklu "Arkadaşına gönder" çağrısı.

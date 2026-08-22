@@ -1,0 +1,36 @@
+{
+  "slug": "dizi/suit-yourself",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DİZİ İNGİLİZCESİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "SUIT YOURSELF",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "Sen bilirsin."
+        },
+        {
+          "tur": "ornek",
+          "metin": "You don't want to come? Suit yourself.",
+          "dil": "en",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Gelmek istemiyor musun? Sen bilirsin.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Arkadaşına gönder ↓"
+        }
+      ]
+    }
+  ]
+}

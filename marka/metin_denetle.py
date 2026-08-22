@@ -27,6 +27,11 @@ import re
 import sys
 from pathlib import Path
 
+# Windows'ta stdout cp1252; bulgu metnindeki `İ` betigi cokertiyordu.
+for _akis in (sys.stdout, sys.stderr):
+    if hasattr(_akis, "reconfigure"):
+        _akis.reconfigure(encoding="utf-8", errors="replace")
+
 KOK = Path(__file__).resolve().parent.parent
 
 KATLAMA = str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU")
@@ -41,7 +46,10 @@ SINIR = {
     "baslik": 22, "ornek": 60, "anlam": 70, "cta": 45, "etiket": 30,
     # deste slaytlari: kapak basligi bir cumle oldugu icin baslikdan uzun
     # olabiliyor (iki satira boluniyor), sik metni kutuya sigmak zorunda.
-    "kapak": 40, "sayac": 16, "soru": 70, "sik": 24, "madde": 24, "aciklama": 85,
+    "kapak": 40, "sayac": 16, "soru": 70, "sik": 24, "madde": 30, "aciklama": 85,
+    # phrasal/karistirilan/hikayeli kartlarindaki lacivert kalin cumle satiri
+    # ve kart ortasindaki turuncu ara etiket
+    "cumle": 70, "araetiket": 24,
 }
 
 # Kategori etiketi her kartin en ustunde duruyor; tek harf sapmasi tum feed'de
@@ -55,6 +63,17 @@ ETIKETLER = {
     "KİTAP vs GERÇEK",
 }
 ETIKET_TEST = re.compile(r"^(A1|A2|B1|B2|C1|C2) • İNGİLİZCE TESTİ$")
+
+
+# Turkce soru eki: `mi/mi/mu/mu` + sahis eki. Dort harmoni varyantinin ikisi
+# (`mi...`, `mu...`) diyakritiksizdir ve ikisi de DOGRUDUR — hangisinin
+# gelecegini onceki hecenin unlusu belirler. ASCII katlamasi dordunu tek
+# torbaya attigi icin `durur musunuz` -> `müsünüz` gibi uydurma bulgu
+# uretiyordu. Bu formlar diyakritik denetiminden muaf.
+SORU_EKI = {
+    "misin", "misiniz", "miyim", "miyiz", "midir", "miydi", "miyiz",
+    "musun", "musunuz", "muyum", "muyuz", "mudur", "muydu",
+}
 
 
 def katla(s: str) -> str:
@@ -121,6 +140,14 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
             if sinir and len(metin) > sinir:
                 bulgular.append(f"slayt {no} · {tur}: {len(metin)} karakter, sinir {sinir} — {metin!r}")
 
+            # Ingilizce oge: sozluk Turkce caption'lardan turedigi icin
+            # `SAYING` -> `SAYİNG` gibi uydurma bulgular uretiyordu. Dil
+            # tahmin edilmiyor, kart.json'da yaziyor. Uzunluk siniri ve
+            # kanonik etiket denetimi yine de gecerli.
+            dil = oge.get("dil")
+            if dil == "en":
+                continue
+
             for kelime in re.findall(r"[A-Za-zçğıöşüÇĞİÖŞÜ]{3,}", metin):
                 duz = katla(kelime).lower()
                 adaylar = set(sozluk.get(duz, ()))
@@ -133,7 +160,13 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
                 # yazilmis bir kelimede diyakritik eksik GORUNUR ama dogru
                 # olabilir: `ANAHTARI` dogru, `KAYDIR` dogru, `TESTI` degil.
                 # Karsilastirma bu yuzden adaylarin Turkce buyuk hali uzerinden.
+                # `karisik`: satirda hem Ingilizce terim hem Turkce karsilik
+                # var (`REMIND: Hatirlatmak`). Buyuk harf I/İ kurali Ingilizce
+                # terimde uydurma bulgu uretiyor; diyakritik denetimi Turkce
+                # kelimeler icin gecerli kalir.
                 if kelime == buyuk(kelime):
+                    if dil == "karisik":
+                        continue
                     dogrular = {buyuk(a) for a in adaylar}
                     if kelime not in dogrular:
                         bulgular.append(
@@ -147,6 +180,8 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
                 # Burada yalnizca `sozluk` konusur: `nokta` diyakritiksiz
                 # kelimelerin kendisini tutuyor, onu aday saymak her temiz
                 # kelimeyi kendisiyle karsilastirip bulgu uretirdi.
+                if kucuk(kelime) in SORU_EKI:
+                    continue
                 yazimlar = sozluk.get(duz)
                 if yazimlar:
                     bulgular.append(

@@ -1,0 +1,36 @@
+{
+  "slug": "dizi/my-bad",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DİZİ İNGİLİZCESİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "MY BAD",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "Benim hatam! / Kusura bakma."
+        },
+        {
+          "tur": "ornek",
+          "metin": "My bad, I didn't see your message.",
+          "dil": "en",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Pardon, mesajını görmedim.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Bunu hangi dizide duydun? ↓"
+        }
+      ]
+    }
+  ]
+}

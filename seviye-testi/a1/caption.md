@@ -2,7 +2,7 @@
 
 A1 "başlangıç" demek ama çoğu kişi tam da burada takılıyor: am/is/are, this/that/these, Where mi What mi.
 
-Bu 5 soru İngilizcenin en temel yapılarını yokluyor. Hepsi bir dakikada biter, hiçbiri kurnaz değil — ama üçünü birden doğru yapmak sandığın kadar kolay olmayabilir.
+Bu 5 soru İngilizcenin en temel yapılarını yokluyor. Hepsi bir dakikada biter, hiçbiri kurnaz değil — ama beşini birden doğru yapmak sandığın kadar kolay olmayabilir.
 
 Cevap anahtarı 7. slaytta, her sorunun neden o cevabı aldığı tek satırla açıklanıyor.
 
@@ -20,5 +20,4 @@ Kaç doğrun var? Yorumlara yaz 👇
 4. Soru 03 / 05. Boşluklu cümle: "___ are my books." Kutulu şıklar: A) This, B) That, C) These. Altta "Cevabını seç."
 5. Soru 04 / 05. Boşluklu cümle: "___ do you live?" Kutulu şıklar: A) What, B) Where, C) Who. Altta "Cevabını seç."
 6. Soru 05 / 05. Boşluklu cümle: "What time is ___?" Kutulu şıklar: A) it, B) this, C) that. Altta "Cevabını seç."
-7. Cevap anahtarı. Aralarında ince turuncu ayraçlar olan beş madde: 01 • A) am, "I" öznesi her zaman "am" ile kullanılır. 02 • B) goes, geniş zamanda he, she, it özneleriyle fiil -s takısı alır. 03 • C) These, çoğul ve yakındaki nesneler için "These" kullanılır. 04 • B) Where, yer ve mekân sorarken "Where" kelimesi kullanılır. 05 • A) it, saatleri sorarken "What time is it" kalıbı kullanılır. Altta "Kaç doğrun var? Sonucunu görmek için sonraki slayta kaydır."
-8. Sonuç slaytı. "SONUCUN" başlığı altında dört satır: 5/5 A1 seviyesinde harika görünüyorsun. 4/5 A1 seviyesini güzel kavramışsın. 3/5 İyi gidiyorsun, pratik yapmaya devam et. 0-2/5 Temel kelime ve gramer çalışmaya devam. Altta uyarı: bu kısa bir pratik testidir, resmi bir CEFR değerlendirmesi değildir. En altta "Skorun ne? Aşağıya yorum yap ⬇".
+7. Cevap anahtarı. Aralarında ince turuncu ayraçlar olan beş madde: 01 • A) am, "I" öznesi her zaman "am" ile kullanılır. 02 • B) goes, geniş zamanda he, she, it özneleriyle fiil -s takısı alır. 03 • C) These, çoğul ve yakındaki nesneler için "These" kullanılır. 04 • B) Where, yer ve mekân sorarken "Where" kullanılır. 05 • A) it, saati sorarken "What time is it" kalıbı kullanılır. En altta "Kaç doğrun var? Yorumlara yaz ↓".

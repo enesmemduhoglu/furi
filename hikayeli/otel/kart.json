@@ -1,0 +1,125 @@
+{
+  "slug": "hikayeli/otel",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "kapak",
+          "metin": "OTELDE HAYAT KURTARAN CÜMLELER"
+        },
+        {
+          "tur": "cta",
+          "metin": "Check-in yapmak için kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "I HAVE A RESERVATION",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I have a reservation under the name Demir.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Demir adına bir rezervasyonum var.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Odaya çıkalım... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "COULD I GET...",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Could I get some extra towels, please?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Fazladan havlu alabilir miyim, lütfen?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Kahvaltı zamanı... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "WHAT TIME IS...",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "What time is breakfast served?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Kahvaltı saat kaçta servis ediliyor?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Ve çıkış vakti... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "I'D LIKE TO...",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'd like to check out, please. Here is my key.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Çıkış yapmak istiyorum, lütfen. İşte anahtarım.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Seyahat edeceklere gönder ↓"
+        }
+      ]
+    }
+  ]
+}

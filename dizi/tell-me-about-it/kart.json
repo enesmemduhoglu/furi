@@ -3,9 +3,11 @@
   "slaytlar": [
     { "ogeler": [
       { "tur": "etiket", "metin": "DİZİ İNGİLİZCESİ" },
-      { "tur": "baslik", "metin": "TELL ME ABOUT IT" },
+      { "tur": "baslik", "metin": "TELL ME ABOUT IT",
+          "dil": "en" },
       { "tur": "anlam",  "metin": "Sorma! / Bana mı anlatıyorsun!" },
-      { "tur": "ornek",  "metin": "Tell me about it, I've been there." },
+      { "tur": "ornek",  "metin": "Tell me about it, I've been there.",
+          "dil": "en" },
       { "tur": "cta",    "metin": "Kaydet, lazım olacak ↓" }
     ] }
   ]

@@ -21,4 +21,4 @@ Kaydet, lazım olduğunda hatırlarsın.
 
 ## Alt text
 
-1. Krem zeminli tipografik kart: üstte turuncu "DIZI INGILIZCESI" etiketi, ortada dev lacivert "MY BAD" başlığı, altında büyük lacivert "Benim hatam! / Kusura bakma." satırı, gri renkte "My bad, I didn't see your message." örnek cümlesi ve "(Pardon, mesajini gormedim.)" çevirisi, en altta patlamış mısır emojili "Bunu hangi dizide duydun?" çağrısı.
+1. Krem zeminli tipografik kart: üstte turuncu "DİZİ İNGİLİZCESİ" etiketi, ortada dev lacivert "MY BAD" başlığı, altında büyük lacivert "Benim hatam! / Kusura bakma." satırı, gri renkte "My bad, I didn't see your message." örnek cümlesi ve "(Pardon, mesajını görmedim.)" çevirisi, en altta aşağı oklu "Bunu hangi dizide duydun?" çağrısı.

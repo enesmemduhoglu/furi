@@ -1,0 +1,37 @@
+{
+  "slug": "phrasal/give-up",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "GÜNÜN PHRASAL VERB'Ü"
+        },
+        {
+          "tur": "baslik",
+          "metin": "GIVE UP",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "To stop trying to do something.",
+          "dil": "en",
+          "alt": 130
+        },
+        {
+          "tur": "cumle",
+          "metin": "KPSS questions are tough, but never give up.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(KPSS soruları zor ama asla pes etme.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Motivasyon için arkadaşına gönder ↓"
+        }
+      ]
+    }
+  ]
+}

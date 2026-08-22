@@ -37,17 +37,17 @@ ertesi gun yayina girmesi bu alana bagli — yoksa rutin havuzun tepesindeki
 
 | Kalan | Post | Slayt |
 |---|---|---|
-| dizi | 4 | 4 |
 | durumsal | 5 | 5 |
-| hikayeli | 4 | 21 |
-| karistirilan | 5 | 5 |
-| kitap-vs-gercek | 2 | 11 |
-| phrasal | 8 | 8 |
-| seviye-testi | 4 | 31 |
+| karistirilan | 1 | 1 |
+| phrasal | 5 | 5 |
 
-> Sayilar 2026-08-20'de hesabin bosaltilmasiyla buyudu: yayinlanmis yedi post
-> Instagram'dan silinince havuza geri dondu (`otomasyon/README.md` > elle
-> mudahale). Donusturulenler: `dizi/tell-me-about-it`, `seviye-testi/a2`.
+> **2026-08-22 durumu:** havuzdaki 33 postun 22'si yerel basima gecti — puani
+> 7.0 ve uzeri olanlarin **tamami**. Kalan 11 postun hepsi 7.0'in altinda,
+> yani yayin sirasinda zaten arkada. Gunu gunune donusturme karari gecerli:
+> sira bir posta geldiginde donusturulur.
+>
+> `karistirilan/borrow-vs-lend` 2026-08-22'de **silindi** (onayda reddedilmisti,
+> yeniden uretilmedi); havuz 34'ten 33'e dustu.
 
 `seviye-testi` en agiri (8 slayt). Deste slaytlari icin gereken oge turleri
 **eklendi** (`kapak`, `sayac`, `soru`, `sik`, `madde`, `aciklama` + `ayrac`in
@@ -56,18 +56,37 @@ ayni sema calisir; yeni tur gerekmiyor.
 
 **Sonuc slayti (skor tablosu) artik uretilmiyor.** 2026-08-20 karari: o slayt
 yayinlanmiyor, deste cevap anahtariyla bitiyor. `skor` ve `uyari` oge turleri
-bu yuzden hic yazilmadi.
+bu yuzden hic yazilmadi. 2026-08-22'de karar `a1`, `b1`, `b2`'de de uygulandi:
+`8.jpg`'ler silindi, 7. slaytin CTA'si kapanis CTA'si oldu, uc deste yeniden
+basildi. Bes testin hepsi artik 7 slayt.
 
-### [ ] `WORKFLOW.md` ve `HATA-RAPORU.md` duz yaziyi tam Turkce'ye cevir
+### [ ] `TODOS.md` duz yaziyi tam Turkce'ye cevir
 
-Dokuman metinleri hala ASCII-Turkce yazilmis (`gorsel`, `uretim`, `cozuldu`).
-ASCII kurali emekli oldugu icin sebebi kalmadi; `marka/README.md` tam Turkce
-yazildi. Kucuk ama tumunu birden yapmak gerekiyor, yarim cevrilmis dokuman daha
-kotu.
+`WORKFLOW.md` ve `HATA-RAPORU.md` 2026-08-22'de cevrildi (asagida). Geriye bu
+dosya kaldi. Ayni gerekce: ASCII kurali emekli, yarim cevrilmis dokuman daha
+kotu — tumu birden cevrilmeli.
+
+`~/.claude/skills/insta-ingilizce/SKILL.md` de ASCII; repo disinda oldugu icin
+ayri bir is. Frontmatter'i (`name`, `description`) iki dosyada da ASCII kalmali,
+yoksa skill eslesmesi ayrisir.
 
 ---
 
 ## Kapanan isler
+
+### [x] `WORKFLOW.md` ve `HATA-RAPORU.md` tam Turkce'ye cevrildi
+
+2026-08-22. Duz yazinin tamami cevrildi. Cevrilmeyenler bilincli:
+
+- Kod bloklari, dosya yollari, slug'lar, JSON anahtarlari
+- `HATA-RAPORU.md` tablolarindaki "Hatali"/"Dogrusu" sutunlari — bunlar
+  gorseldeki metnin **birebir alintisi**, o gorseller ASCII uretildi
+- `WORKFLOW.md` frontmatter'i — SKILL.md ile birebir ayni kalmali
+
+Ayni turda iki bayat kayit duzeltildi: `HATA-RAPORU.md` §5 hala "yeni
+postlarda tam ASCII" diyordu (kural 08-20'de emekli oldu), `WORKFLOW.md` Ek B
+iskeleti hala 8 slaytli test ve ASCII slayt metni gosteriyordu.
+
 
 ### [x] Post puanlama sistemi — Claude urettigi ve repoda duran her posta puan verir
 

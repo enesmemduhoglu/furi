@@ -1,0 +1,151 @@
+{
+  "slug": "hikayeli/takside",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "kapak",
+          "metin": "TAKSİDE HAYAT KURTARAN CÜMLELER"
+        },
+        {
+          "tur": "cta",
+          "metin": "Taksiye binelim... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "THIS ADDRESS",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Could you take me to this address?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Beni bu adrese götürür müsünüz?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Peki ne kadar tutar... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "HOW MUCH IS IT",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "How much is it to the city center?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Şehir merkezine ne kadar tutar?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Taksimetre açık mı... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "TURN ON THE METER",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Could you turn on the meter, please?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Taksimetreyi açar mısınız?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Neredeyse geldik... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "STOP HERE",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Can you stop here, please?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Burada durur musunuz?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sıra ödemede... Kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DURUMSAL İNGİLİZCE"
+        },
+        {
+          "tur": "baslik",
+          "metin": "PAY BY CARD",
+          "dil": "en"
+        },
+        {
+          "tur": "cumle",
+          "metin": "Can I pay by card?",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Kartla ödeyebilir miyim?)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Seyahat edeceklere gönder ↓"
+        }
+      ]
+    }
+  ]
+}

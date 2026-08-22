@@ -1,0 +1,286 @@
+{
+  "slug": "seviye-testi/b1",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "kapak",
+          "metin": "BU B1 TESTİNİ GEÇEBİLİR MİSİN?"
+        },
+        {
+          "tur": "ornek",
+          "metin": "5 soru • 1 dakika"
+        },
+        {
+          "tur": "cta",
+          "metin": "BAŞLAMAK İÇİN KAYDIR →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 01 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "I haven't seen him ___ Monday.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) for",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) since",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) during",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 02 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "If I ___ more money, I would travel more.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) have",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) had",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) would have",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 03 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "I'm really ___ after working all day.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) exhausted",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) exhausting",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) exhaust",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 04 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "Have you ever ___ sushi?",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) ate",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) eaten",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) eat",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "sayac",
+          "metin": "SORU 05 / 05"
+        },
+        {
+          "tur": "soru",
+          "metin": "Can you ___ the TV? I want to watch the news.",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "A) turn on",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "B) turn up",
+          "dil": "en"
+        },
+        {
+          "tur": "sik",
+          "metin": "C) turn over",
+          "dil": "en",
+          "alt": 210
+        },
+        {
+          "tur": "cta",
+          "metin": "Cevabını seç."
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "B1 • İNGİLİZCE TESTİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "CEVAP ANAHTARI"
+        },
+        {
+          "tur": "madde",
+          "metin": "01 - B) since"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Zaman içinde bir başlangıç noktası belirtirken “since” kullanılır."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "02 - B) had"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Type 2 koşul cümlesi: If + past simple, would + fiil."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "03 - A) exhausted"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Exhausted” bir kişinin nasıl hissettiğini tanımlar."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "04 - B) eaten"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "Present perfect have/has + past participle ile kurulur."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "madde",
+          "metin": "05 - A) turn on"
+        },
+        {
+          "tur": "aciklama",
+          "metin": "“Turn on” bir cihazı çalıştırmak anlamına gelir."
+        },
+        {
+          "tur": "ayrac",
+          "en": 1400
+        },
+        {
+          "tur": "cta",
+          "metin": "Kaç doğrun var? Yorumlara yaz ↓"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "slug": "kitap-vs-gercek/gunluk-kaliplar",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "kapak",
+          "metin": "OKULDA BÖYLE ÖĞRENDİN"
+        },
+        {
+          "tur": "ornek",
+          "metin": "Ama kimse böyle konuşmuyor."
+        },
+        {
+          "tur": "cta",
+          "metin": "Başlamak için kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "baslik",
+          "metin": "RİCA EDERİM"
+        },
+        {
+          "tur": "cumle",
+          "metin": "KİTAP: You're welcome.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "GERÇEK: No worries. / Anytime.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Lafı bile olmaz. / Ne demek.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sırada: Anlıyorum"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "baslik",
+          "metin": "ANLIYORUM"
+        },
+        {
+          "tur": "cumle",
+          "metin": "KİTAP: I understand.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "GERÇEK: I get it. / Makes sense.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Anladım. / Mantıklı.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sırada: Çok yorgunum"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "baslik",
+          "metin": "ÇOK YORGUNUM"
+        },
+        {
+          "tur": "cumle",
+          "metin": "KİTAP: I am very tired.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "GERÇEK: I'm beat. / I'm exhausted.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Bittim. / Tükendim.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sırada: Buluşalım"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "baslik",
+          "metin": "BULUŞALIM"
+        },
+        {
+          "tur": "cumle",
+          "metin": "KİTAP: Let's meet today.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "GERÇEK: Let's catch up. / Let's hang out.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Arayı kapatalım. / Takılalım.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Özet için kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "KİTAP vs GERÇEK"
+        },
+        {
+          "tur": "kapak",
+          "metin": "NATIVE GİBİ KONUŞ",
+          "dil": "karisik"
+        },
+        {
+          "tur": "cumle",
+          "metin": "No worries. I get it.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'm beat. Let's catch up.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Hepsi günlük konuşma dili.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Hangisi yeniydi? Yorum yaz ↓"
+        }
+      ]
+    }
+  ]
+}

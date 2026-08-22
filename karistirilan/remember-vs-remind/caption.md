@@ -14,4 +14,4 @@ Arkadaşlarınla paylaş 👇
 
 ## Alt text
 
-1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "REMEMBER vs REMIND" başlığı. Altında iki blok: "REMEMBER: Hatırlamak" ve örnek "I remember the GS match."; "REMIND: Hatırlatmak" ve örnek "Remind me to buy a bus ticket." Altta ince bir ayraç çizgi, en altta "Arkadaşlarınla paylaş ⬇" çağrısı.
+1. Krem renkli dikey poster. Üstte turuncu "SIK KARIŞTIRILANLAR" etiketi. Ortada koyu lacivert dev harflerle "REMEMBER vs REMIND" başlığı. Altında iki blok: "REMEMBER: Hatırlamak" ve örnek "I remember the GS match."; "REMIND: Hatırlatmak" ve örnek "Remind me to buy a bus ticket." Altta ince bir ayraç çizgi, en altta "Arkadaşlarınla paylaş ↓" çağrısı.

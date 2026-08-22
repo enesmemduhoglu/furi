@@ -1,0 +1,36 @@
+{
+  "slug": "dizi/long-story-short",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "DİZİ İNGİLİZCESİ"
+        },
+        {
+          "tur": "baslik",
+          "metin": "LONG STORY SHORT",
+          "dil": "en"
+        },
+        {
+          "tur": "anlam",
+          "metin": "Kısacası."
+        },
+        {
+          "tur": "ornek",
+          "metin": "Long story short, we need a new plan.",
+          "dil": "en",
+          "alt": 40
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Uzun lafın kısası, yeni bir plan gerek.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sen nerede duydun? ↓"
+        }
+      ]
+    }
+  ]
+}
