@@ -1,20 +1,20 @@
 {
   "bekleyen": {
-    "slug": "dizi/speak-of-the-devil",
+    "slug": "dizi/my-bad",
     "kategori": "dizi",
     "slayt": 1,
-    "saas_post_id": "cmt5l4ndz0001ju04dg57e2ho",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/fb628a78651544ccb5a775efcc491e56",
-    "gonderim_zamani": "2026-08-23T12:08:37+03:00",
-    "son_gecerlilik": "2026-08-24T12:08:37+03:00"
+    "saas_post_id": "cmt70oqr50001l4040in9hfss",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/48b9e3a558694937af5ecce1016e0a93",
+    "gonderim_zamani": "2026-08-24T12:11:55+03:00",
+    "son_gecerlilik": "2026-08-25T12:11:55+03:00"
   },
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-22T15:46:47+03:00",
-  "son_gonderim": "2026-08-23T12:08:37+03:00",
+  "son_yayin": "2026-08-24T12:11:45+03:00",
+  "son_gonderim": "2026-08-24T12:11:55+03:00",
   "bugun": {
-    "tarih": "2026-08-23",
+    "tarih": "2026-08-24",
     "siraya_konan": 1,
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "sonraki": null,

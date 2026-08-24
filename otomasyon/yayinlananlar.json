@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-22T15:46:47+03:00",
+  "guncelleme": "2026-08-24T12:11:45+03:00",
   "kayitlar": [
     {
       "slug": "dizi/tell-me-about-it",
@@ -27,6 +27,15 @@
       "permalink": "https://www.instagram.com/p/DcVo4XSFUTN/",
       "yayin_zamani": "2026-08-22T09:55:05+00:00",
       "not": "esitleme ile eklendi (SaaS yayinladi)"
+    },
+    {
+      "slug": "dizi/speak-of-the-devil",
+      "kategori": "dizi",
+      "slayt": 1,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcYId_0Frs9/",
+      "yayin_zamani": "2026-08-24T12:11:45+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
 }
