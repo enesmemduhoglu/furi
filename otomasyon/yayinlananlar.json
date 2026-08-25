@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-24T12:11:45+03:00",
+  "guncelleme": "2026-08-25T12:10:43+03:00",
   "kayitlar": [
     {
       "slug": "dizi/tell-me-about-it",
@@ -35,6 +35,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcYId_0Frs9/",
       "yayin_zamani": "2026-08-24T12:11:45+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "dizi/my-bad",
+      "kategori": "dizi",
+      "slayt": 1,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcauY45IEx-/",
+      "yayin_zamani": "2026-08-25T12:10:43+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]

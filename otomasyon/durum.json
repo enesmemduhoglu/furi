@@ -1,18 +1,18 @@
 {
   "bekleyen": {
-    "slug": "dizi/my-bad",
-    "kategori": "dizi",
-    "slayt": 1,
-    "saas_post_id": "cmt70oqr50001l4040in9hfss",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/48b9e3a558694937af5ecce1016e0a93",
-    "gonderim_zamani": "2026-08-24T12:11:55+03:00",
-    "son_gecerlilik": "2026-08-25T12:11:55+03:00"
+    "slug": "seviye-testi/b1",
+    "kategori": "seviye-testi",
+    "slayt": 7,
+    "saas_post_id": "cmt8g3b040001jp04eh4bzd1r",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/4d5fafd5b3db4b219c9eb66f8a2bbe44",
+    "gonderim_zamani": "2026-08-25T12:10:55+03:00",
+    "son_gecerlilik": "2026-08-26T12:10:55+03:00"
   },
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-24T12:11:45+03:00",
-  "son_gonderim": "2026-08-24T12:11:55+03:00",
+  "son_yayin": "2026-08-25T12:10:43+03:00",
+  "son_gonderim": "2026-08-25T12:10:55+03:00",
   "bugun": {
-    "tarih": "2026-08-24",
+    "tarih": "2026-08-25",
     "siraya_konan": 1,
     "yayinlanan": 1
   },
