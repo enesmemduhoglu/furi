@@ -1,20 +1,12 @@
 {
-  "bekleyen": {
-    "slug": "hikayeli/havaalaninda",
-    "kategori": "hikayeli",
-    "slayt": 5,
-    "saas_post_id": "cmt9vk3oa0001l104zqsc7j8p",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/e3ab4b9cd48a44b3874dbc77dd49fc7c",
-    "gonderim_zamani": "2026-08-26T12:11:39+03:00",
-    "son_gecerlilik": "2026-08-27T12:11:39+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-26T09:56:12+03:00",
+  "son_yayin": "2026-08-26T20:25:59+03:00",
   "son_gonderim": "2026-08-26T12:11:39+03:00",
   "bugun": {
     "tarih": "2026-08-26",
     "siraya_konan": 1,
-    "yayinlanan": 1
+    "yayinlanan": 2
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
