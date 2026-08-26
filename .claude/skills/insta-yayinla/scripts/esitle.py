@@ -36,6 +36,7 @@ import urllib.request
 
 import ig_api
 from furi_ortak import (
+    TR_SAAT,
     SaasTokenHatasi,
     caption_ayristir,
     caption_birlestir,
@@ -88,6 +89,19 @@ def _saas_durum(onay_url: str) -> dict | None:
             OSError, json.JSONDecodeError):
         return None
     return veri.get("post") or veri
+
+
+def _saas_zaman(metin):
+    """SaaS'in `publishedAt` damgasini TR saatine cevirir.
+
+    Prisma tarihi `...Z` ile bitiriyor; `fromisoformat` bunu Python 3.11'den
+    once okuyamaz, o yuzden ofset elle yazilir. Alan yoksa None doner ve cagiran
+    "tespit ani"na duser.
+    """
+    if not metin:
+        return None
+    dt = iso_oku(str(metin).replace("Z", "+00:00"))
+    return dt.astimezone(TR_SAAT) if dt else None
 
 
 def main() -> int:
@@ -204,10 +218,16 @@ def main() -> int:
             # Instagram sorgulanmadiysa "silinmis mi" bilinemez; yayinlanmis kabul
             # edilir. Yanlissa bir sonraki tam esitleme kaydi dusurur.
             canli = True if ig_atlandi else (_kod(link) in canli_kodlar)
+            # Yayin ani SaaS'in kaydi; bu esitlemenin kostugu an DEGIL. Eslesme
+            # cogu zaman ertesi gunun cron'unda kuruldugu icin "simdi" yazmak
+            # her kaydi bir gun ileri kaydiriyordu.
+            yayin_ani = _saas_zaman(saas.get("publishedAt"))
             bekleyen_karari = {
                 "sonuc": "yayinlandi" if canli else "yayinlandi_sonra_silindi",
                 "slug": bekleyen["slug"],
                 "permalink": link,
+                "yayin_zamani": iso(yayin_ani or simdi()),
+                "zaman_kaynagi": "saas" if yayin_ani else "tespit",
             }
             # Yayinlanmis ama silinmisse deftere YAZILMAZ: icerik havuza donsun.
             # Yine de kota sayilir ve bekleyen kapanir.
@@ -219,8 +239,9 @@ def main() -> int:
                     "slayt": bekleyen.get("slayt", 0),
                     "ig_media_id": None,
                     "permalink": link,
-                    "yayin_zamani": iso(simdi()),
-                    "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)",
+                    "yayin_zamani": iso(yayin_ani or simdi()),
+                    "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)" if yayin_ani
+                           else "SaaS yayinladi; yayin saati gelmedi, tespit ani yazildi",
                 })
         elif yayin == "failed":
             bekleyen_karari = {"sonuc": "yayin_hatasi", "slug": bekleyen["slug"]}
@@ -255,8 +276,12 @@ def main() -> int:
 
         if sonuc in ("yayinlandi", "yayinlandi_sonra_silindi"):
             durum["bekleyen"] = None
-            durum["son_yayin"] = iso(simdi())
-            durum["bugun"]["yayinlanan"] = int(durum["bugun"].get("yayinlanan", 0)) + 1
+            yayin_ani = iso_oku(bekleyen_karari.get("yayin_zamani")) or simdi()
+            durum["son_yayin"] = iso(yayin_ani)
+            # Sayac takvim gunune bagli: dun yayinlanip bugun fark edilen bir post
+            # bugune yazilirsa defter "bugun iki post cikti" diye okunuyor.
+            if yayin_ani.date() == simdi().date():
+                durum["bugun"]["yayinlanan"] = int(durum["bugun"].get("yayinlanan", 0)) + 1
             degisti = True
         elif sonuc == "reddedildi":
             durum["atlananlar"].append({
