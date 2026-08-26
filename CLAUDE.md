@@ -45,6 +45,13 @@ bir defter ve düzenli olarak bayat. Bulut rutininin defter commit'leri bazen
 > kapatırken `son_yayin`i ve `bugun.yayinlanan`ı kendisi günceller, ama
 > `sonraki` alanına dokunmaz: yayınlanmış bir slug orada kalırsa rutin onu
 > tekrar sıraya koyar, elle temizle.
+>
+> **`yayin_zamani` bir postun yayın anıdır, eşitlemenin çalıştığı an değil** —
+> kaynak SaaS'in `publishedAt` alanı (Instagram'dan gelen kayıtlarda IG'nin
+> `timestamp`i). Kayıtta `zaman_kaynagi: "tespit"` ya da `not` alanında "tespit
+> ani yazildi" görürsen o damga tahmindir, "dün mü bugün mü" sorusuna cevap
+> olarak kullanma. 2026-08-26 öncesi SaaS yolundan düşen kayıtlar (24–26.08)
+> bu yüzden bir gün ileri; geriye dönük düzeltilmediler.
 
 ## İki skill, iki ayrı iş
 

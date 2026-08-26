@@ -133,7 +133,7 @@ uzerinden, token yeterli, oturum gerekmiyor):
 
 | SaaS ne diyor | Ne olur |
 |---|---|
-| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, `bugun.yayinlanan` artar (bilgi sayaci) |
+| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, yayin BUGUNSE `bugun.yayinlanan` artar (bilgi sayaci) |
 | `published` ama Instagram'da yok | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir |
 | `status: rejected` | `atlananlar`'a eklenir, `bekleyen` kapanir |
 | `publishStatus: failed` | **`bekleyen` KORUNUR** — onay sayfasindan tekrar denenebilir. Hata mailini at. |
@@ -147,6 +147,13 @@ uzerinden, token yeterli, oturum gerekmiyor):
 | Defterde var, Instagram'da yok | Defterden dusurulur, icerik tekrar aday olur |
 
 `durum: esit` ve `bekleyen` alani yoksa yapacak is yok, Faz 2'ye gec.
+
+> **Yayin saati SaaS'in `publishedAt` alanindan gelir, esitlemenin kostugu
+> andan degil.** Eslesme cogu zaman ertesi gunun cron'unda kuruldugu icin
+> "simdi" yazmak her kaydi bir gun ileri kaydiriyordu ve defter "bugun iki post
+> cikti" diye okunuyordu. Alan bos donerse (eski bir SaaS surumu) tespit ani
+> yazilir; o zaman kayitta `zaman_kaynagi: "tespit"` ve kaydin `not` alaninda
+> uyari cikar — raporlarken buna bak.
 
 > SaaS sorgusu once gelir cunku **caption eslestirmesi bir cikarim, SaaS cevabi
 > kesin bilgi**. Ozellikle "yayinlandi ama sonra silindi" durumunu sadece SaaS
@@ -168,7 +175,7 @@ Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 > Sebebi: yayin ani senin onay verdigin an — repo onu ne belirliyor ne de
 > zamaninda goruyor, sadece bir sonraki calismada Faz 1'de fark ediyor. Yayina
 > bakan kural bu yuzden kendi kendini bloke ediyordu: Faz 1 "yayinlandi" deyip
-> `son_yayin`'i o ana yaziyor, ayni calismanin Faz 2'si de "daha yeni yayin
+> `son_yayin`'i gunceliyor, ayni calismanin Faz 2'si de "daha yeni yayin
 > oldu" deyip cikiyordu. **Dun onaylanip bugun sabah yayinlanmis bir post,
 > bugun oglen calismasini durdurmaz.**
 
