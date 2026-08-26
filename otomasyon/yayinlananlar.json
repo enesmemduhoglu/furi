@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-25T12:10:43+03:00",
+  "guncelleme": "2026-08-26T09:56:12+03:00",
   "kayitlar": [
     {
       "slug": "dizi/tell-me-about-it",
@@ -44,6 +44,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcauY45IEx-/",
       "yayin_zamani": "2026-08-25T12:10:43+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "seviye-testi/b1",
+      "kategori": "seviye-testi",
+      "slayt": 7,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcdTvNqIGNC/",
+      "yayin_zamani": "2026-08-26T09:56:12+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
