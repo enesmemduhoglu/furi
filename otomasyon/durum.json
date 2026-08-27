@@ -1,12 +1,20 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "kitap-vs-gercek/gunluk-kaliplar",
+    "kategori": "kitap-vs-gercek",
+    "slayt": 6,
+    "saas_post_id": "cmtbb01rb0001jp04l2h9b34y",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/bdc4265ef27342ce9f047ac3a38c61af",
+    "gonderim_zamani": "2026-08-27T12:11:44+03:00",
+    "son_gecerlilik": "2026-08-28T12:11:44+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-08-26T20:25:59+03:00",
-  "son_gonderim": "2026-08-26T12:11:39+03:00",
+  "son_gonderim": "2026-08-27T12:11:44+03:00",
   "bugun": {
-    "tarih": "2026-08-26",
+    "tarih": "2026-08-27",
     "siraya_konan": 1,
-    "yayinlanan": 2
+    "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
