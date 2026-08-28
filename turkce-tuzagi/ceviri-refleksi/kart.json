@@ -1,0 +1,61 @@
+{
+  "slug": "turkce-tuzagi/ceviri-refleksi",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "kapak",  "metin": "GRAMER DOĞRU ANLAM YANLIŞ" },
+        { "tur": "ornek",  "metin": "Cümlen kusursuz, kastettiğin şey değil." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "SIKILDIM" },
+        { "tur": "araetiket", "metin": "YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "I'm boring.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "I'm bored.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(I'm boring dersen: ben sıkıcıyım.)" },
+        { "tur": "cta",    "metin": "Sırada: Çok beğendim" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "ÇOK BEĞENDİM" },
+        { "tur": "araetiket", "metin": "YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "I very like it.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "I really like it.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Very sıfatı büyütür, fiili really büyütür.)" },
+        { "tur": "cta",    "metin": "Sırada: Ne diyorsun?" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "NE DİYORSUN?" },
+        { "tur": "araetiket", "metin": "YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "How do you call this?", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "What do you call this?", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Türkçede nasıl sorulur, İngilizcede ne.)" },
+        { "tur": "cta",    "metin": "Sırada: Yeterince iyi" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "YETERİNCE İYİ" },
+        { "tur": "araetiket", "metin": "YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "It is not enough good.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "It is not good enough.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Enough sıfattan sonra gelir, önce değil.)" },
+        { "tur": "cta",    "metin": "Hangisini yapıyordun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-28",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Acilis dogrudan bir utanma anina basiyor: 'I'm boring dersen karsindaki seni sikici sanir.' Kapak da ayni gerilimi kuruyor (GRAMER DOGRU ANLAM YANLIS) — yillardir dogru sandigi cumlenin tersini soyledigini ogrenmek kaydirmayi ve yorumu getiren turden."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kartin dordu de kural veriyor, ornek degil: -ing/-ed sifat ayrimi, very'nin sifati really'nin fiili buyutmesi, what/how ayrimi, enough'un sifattan sonra isimden once gelmesi. Caption her kuralı genisletiyor (interesting/interested ailesi, enough time). Ozet slayti yok, bes slaytin dordu ders."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Format hesabin kendisi icin yeni ama 'Turklerin Ingilizce hatalari' piyasada cok islenmis. Ayrisma sebebi Turkce grameriyle acikllamakta ve serinin ilk bolumune baglanmasinda; ikinci bolum olmasi ozgunluge ek getirmiyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Dordu de Turkiye'de okulda Ingilizce ogrenmis birinin gercekten yaptigi hata; ozellikle 'I'm boring' ve 'I very like it' bu kitlenin imzasi. Caption sonunda bir sonraki bolum icin yorum istiyor, seriyi surduruyor."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Dort tuzak slayti da 1500 px blokta, birebir ayni iskelet — kapak disinda deste bastan sona tek sablon. Turuncu YANLIS/DOGRU ara etiketleri hiyerarsiyi ikiye ayiriyor, butun cumleler tek satira sigiyor. Kapak iki satirda dengeli bolunmus."
+    }
+  },
+  "toplam": 8.6
+}
