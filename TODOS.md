@@ -105,6 +105,33 @@ yayinlanmamis postun tamami puanli.
 
 ---
 
+#### Karar (2026-08-28): arka arkaya ayni kategori cikmaz
+
+**Kural:** en son yayinlanan postun kategorisi bir tur bekler. Kisit **puanin
+ustunde** duruyor, yani havuzun tepesindeki post da atlanir ve sirasi bir gun
+kayar. `durum.json > sonraki` ile elle secim bu kisiti de ezer.
+
+**Neden:** 28.08'de `turkce-tuzagi/birebir-ceviri` yayinlandi. Ayni gun serinin
+ikinci bolumu (`ceviri-refleksi`, 8.60) uretildi ve havuzun tepesine oturdu —
+yani ertesi gun de ayni konu cikacakti. Feed'de art arda iki ayni tur post
+seriyi tuketiyor: ikinci bolumun degeri ilkinden bir gun sonra degil, birkac
+gun sonra cikmasinda.
+
+**2026-08-18 karariyla celismiyor.** O karar kategori rotasyonunu *birincil
+olcut* olmaktan cikardi, cunku rotasyon "sirasi gelen"i seciyordu ve guclu bir
+postu gunlerce bekletebiliyordu (`borrow-vs-lend` onayda "cop post" diye
+reddedilmisti). Buradaki kisit tek adimlik ve yon degistirmiyor: kalite sirasi
+hem kategorinin icinde hem disinda aynen korunuyor, yalnizca son cikan tur bir
+gun bekliyor.
+
+**Nerede:** `aday_sec.adaylari_sirala` — siralamanin tek dogruluk kaynagi,
+`saas_gonder` de oradan okuyor. `--durum` ciktisina `bekleyen_kategori` alani
+eklendi; o alan olmadan "en yuksek puanli post neden sirada degil" sorusu
+ciktinin icinde cevapsiz kaliyordu.
+
+**Sinir durumu:** havuzda tek kategori kalirsa hepsi ayni cezayi alir, yani
+kilitlenme olmaz — sira kendi icinde puana gore isler.
+
 #### Kararlar
 
 **1. Saklama — post klasorunde `puan.json`.**

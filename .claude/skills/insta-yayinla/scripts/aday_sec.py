@@ -87,6 +87,24 @@ def _kategori_son_yayin(defter: dict) -> dict[str, float]:
     return son
 
 
+def son_yayinlanan_kategori(defter: dict) -> str | None:
+    """Defterdeki EN SON yayinlanan postun kategorisi.
+
+    `_kategori_son_yayin` her kategorinin son gorulme anini verir; buradaki soru
+    farkli: "en son hangi kategori cikti". Arka arkaya ayni turden iki post
+    ciktirmamak icin gerekli — gerekce `adaylari_sirala` icinde.
+    """
+    son_kategori, son_an = None, None
+    for kayit in defter.get("kayitlar", []):
+        zaman = iso_oku(kayit.get("yayin_zamani"))
+        kategori = kayit.get("kategori")
+        if not zaman or not kategori:
+            continue
+        if son_an is None or zaman > son_an:
+            son_an, son_kategori = zaman, kategori
+    return son_kategori
+
+
 def adaylari_sirala(kok, adaylar: list[dict], defter: dict, sonraki: str | None = None) -> list[dict]:
     """Aday havuzunu yayin sirasina dizer. **Tek dogruluk kaynagi budur.**
 
@@ -97,12 +115,24 @@ def adaylari_sirala(kok, adaylar: list[dict], defter: dict, sonraki: str | None 
     yansimadi. 2026-08-20'de fark edildi (havuzun tepesindeki 8.4'luk postlar
     dururken 7.8'lik post siraya kondu). Kopya silindigi icin artik ayrisamaz.
 
+    **Arka arkaya ayni kategori cikmaz.** En son yayinlanan postun kategorisi bir
+    tur geri duser — puanin ustunde, yani 8.6'lik bir post da atlanir. 2026-08-28'de
+    kondu: o gun `turkce-tuzagi/birebir-ceviri` yayinlandi ve ayni serinin ikinci
+    bolumu (8.60) havuzun tepesine oturdugu icin ertesi gun de ayni konu
+    cikacakti. Feed'de art arda iki ayni tur post seriyi tuketiyor.
+
+    Bu, 2026-08-18'de kaldirilan kategori rotasyonuna donus DEGIL: o kural sirasi
+    gelen kategoriyi seciyor ve iyi bir postu gunlerce bekletebiliyordu. Buradaki
+    kisit tek adimlik — post bir gun kayar, kalite sirasi korunur. `sonraki` ile
+    elle secim bu kisiti da ezer.
+
     `sonraki` (durum.json) puan sirasini bir kereligine ezer: gunun postu elle
     secildiginde (yerel basima cevrilen post yarin yayina girsin diye) rutinin
     havuzun tepesindeki baska bir postu almasi gerekiyordu. Sabit slug gonderim
     yapilinca saas_gonder tarafindan temizlenir, sira normale doner.
     """
     kategori_son = _kategori_son_yayin(defter)
+    dun_cikan = son_yayinlanan_kategori(defter)
     ilk_commit_onbellek: dict[str, int] = {}
     puanlar = {p["slug"]: puan_ozet(p["yol"]) for p in adaylar}
 
@@ -114,6 +144,7 @@ def adaylari_sirala(kok, adaylar: list[dict], defter: dict, sonraki: str | None 
         return (
             0 if slug == sonraki else 1,              # elle secilmis post herseyin onunde
             0 if puan["var"] else 1,                  # puansiz/bayat havuzun sonuna
+            1 if post["kategori"] == dun_cikan else 0,  # en son cikan kategori bir tur bekler
             -(puan["toplam"] or 0.0),                 # EN YUKSEK PUAN ONCE
             # Buradan asagisi yalnizca esit puanlilar arasinda konusur.
             # Rotasyonu esitlik bozucu olarak tutmak bedava: ayni puanda iki
@@ -322,6 +353,9 @@ def komut_durum(kok, args) -> int:
             "stok_dusuk": len(kalan) < STOK_ESIGI,
             "stok_esigi": STOK_ESIGI,
             "kategori_dagilimi": kategori_dagilimi,
+            # Bir tur bekleyen kategori. Bu alan olmadan "havuzun en yuksek
+            # puanlisi neden sirada degil" sorusu cikti icinde cevapsiz kaliyor.
+            "bekleyen_kategori": son_yayinlanan_kategori(defter),
             "yayin_sirasi": yayin_sirasi,
             "puan_dagilimi": puan_dagilimi,
             "puan_ortalamasi": round(sum(toplamlar) / len(toplamlar), 2) if toplamlar else None,

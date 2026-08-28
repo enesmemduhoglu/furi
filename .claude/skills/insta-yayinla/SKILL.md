@@ -305,10 +305,18 @@ baslanir. Kategori **birincil olcut degil**, yalnizca esit puanlilar arasinda
 konusur: ayni puanda iki post varsa uzun suredir gorunmeyen kategoriden olani
 secilir.
 
-> **Takas:** feed'de arka arkaya ayni turden iki post cikabilir. Onceki kural
-> (kategori rotasyonu once) cesitliligi garantiliyordu ama iyi bir postu
-> sirasi gelmedigi icin bekletiyordu. 2026-08-18 karari: yayin sirasi
-> kaliteyi izler, cesitliligi degil.
+**Arka arkaya ayni kategori cikmaz.** En son yayinlanan postun kategorisi bir
+tur bekler; puanin **ustunde** bir kisit, yani havuzun tepesindeki post da
+atlanir ve sirasi bir gun kayar. `--durum` ciktisindaki `bekleyen_kategori`
+alani o an hangi kategorinin beklediğini soyler.
+
+> **Iki kararin ortasi.** 2026-08-18'de kategori rotasyonu birincil olcut
+> olmaktan cikarildi: sirasi gelen postu seciyordu, iyi olani degil, ve guclu
+> bir post gunlerce bekleyebiliyordu. 2026-08-28'de bunun tersi gorundu —
+> `turkce-tuzagi/birebir-ceviri` yayinlandigi gun ayni serinin ikinci bolumu
+> (8.60) havuzun tepesine oturdu, yani ertesi gun de ayni konu cikacakti.
+> Kisit bu yuzden **tek adimlik**: post cope gitmiyor, bir gun kayiyor;
+> kalite sirasi kategorinin icinde ve disinda aynen korunuyor.
 
 Puan postun **kalitesini** olcer (ilgi cekiyor mu, ogretiyor mu, ayrisiyor
 mu). Gorseldeki harf hatalari ve sablon sapmalari puana **girmez** —

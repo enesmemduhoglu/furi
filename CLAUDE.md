@@ -101,11 +101,16 @@ Shell state çağrılar arasında korunmadığı için her PowerShell komutunun 
 
 `<format>/<slug>/` = `1.jpg … N.jpg` + `caption.md` + `kart.json` + `puan.json`.
 Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi`,
-`kitap-vs-gercek`, `phrasal`, `karistirilan`, `durumsal` (tekil kart —
+`kitap-vs-gercek`, `turkce-tuzagi` (kapak + 4 tuzak kartı, 2026-08-28),
+`phrasal`, `karistirilan`, `durumsal` (tekil kart —
 2026-08-22'de havuzdaki tüm `durumsal` postları silindi, klasör boş). `<slug>` ASCII ve tireli.
 
 `puan.json` yayın sırasını **doğrudan** belirliyor: havuz en yüksek puandan
-aşağıya yayınlanıyor, kategori yalnızca eşitlik bozucu. Puansız post havuzun
+aşağıya yayınlanıyor. Kategorinin iki rolü var — eşit puanlıları ayırmak, ve
+**en son yayınlanan kategoriyi bir tur bekletmek** (2026-08-28; puanın üstünde
+bir kısıt, havuzun tepesindeki post da atlanır ve bir gün kayar). Sıranın tek
+kaynağı `aday_sec.adaylari_sirala`; `--durum` çıktısındaki `bekleyen_kategori`
+o an hangi kategorinin beklediğini söyler. Puansız post havuzun
 sonuna düşer ve puanlı aday bitene kadar hiç yayınlanmaz — Faz 7'yi atlamak
 postu fiilen rafa kaldırır. Puan postun **kalitesini** ölçer; görseldeki harf
 hatası ve marka sapması puana girmez (defteri `HATA-RAPORU.md`).
