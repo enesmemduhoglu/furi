@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-28",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Bes sorunun ucu gunluk bir anda geciyor — 'Can I ___ your pen for a minute?', 'We ___ them three to zero.' — okur kendi agzindan cikan cumleyi test ediyor, cevap anahtari 6. slaytta oldugu icin desteyi sonuna kadar kaydiriyor. Eksi ilk destedekiyle ayni: kapak olmadigi icin feed'de ilk goren kart ciplak bir soru, ilk duraklamayi sorunun kendisi tasiyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Bes ayrimin besi de kuralla veriliyor, ezberle degil: tell kisiye / say sozu, do var olan isi / make yeni bir sey, borrow alan / lend veren, look at bakmak / watch izlemek / see istemeden gormek, beat rakibi / win maci. Ucuncu maddede yon farkini tek kelimeyle isaretlemek ('Yon ters') kaliba degil mantiga tutunuyor."
+    },
+    "ozgunluk": {
+      "puan": 5,
+      "gerekce": "Formatin ikinci kullanimi, iskelet cumleyi-tamamla/edatlar ile birebir ayni — orada ozgunlugu tasiyan 'kapaksiz deste' karari burada artik yeni degil. Ustune say/tell ve make/do piyasadaki Ingilizce sayfalarinin en cok isledigi iki cift. Ayrisma yalnizca konu cercevesinde: bes soru Turkcede tek kelime olan yerlerden secilmis."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Cerceve dogrudan Turkce konusanin sorunu: 'soylemek' bir kelime ama say/tell iki fiil, 'yapmak' bir kelime ama do/make iki fiil, 'odunc' tek kelime ama borrow/lend yonu ters. Ingilizceyi anadili baska olan biri icin bu ayrimlar gorunmez; Turk takipci icin gunluk hata."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Bes soru slayti da 1831 px blokta, birebir ayni iskelet — kaydirirken yalnizca cumle ve siklar degisiyor. Bes soru cumlesinin besi tek satira sigdi. 4. soruda bosluk cumlenin basinda ('___ at this photo I took!') ve siklar buyuk harfle basliyor, yani bosluk cumle basi oldugu okunuyor. Cevap anahtari 0.91 olcekle sigdi."
+    }
+  },
+  "toplam": 8.0
+}

@@ -1,0 +1,87 @@
+{
+  "slug": "cumleyi-tamamla/karisan-fiiller",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 01 / 05" },
+        { "tur": "soru",   "metin": "Can you ___ me the truth?", "dil": "en" },
+        { "tur": "sik",    "metin": "A) say",   "dil": "en" },
+        { "tur": "sik",    "metin": "B) tell",  "dil": "en" },
+        { "tur": "sik",    "metin": "C) speak", "dil": "en" },
+        { "tur": "sik",    "metin": "D) talk",  "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 02 / 05" },
+        { "tur": "soru",   "metin": "I need to ___ my homework tonight.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) make", "dil": "en" },
+        { "tur": "sik",    "metin": "B) get",  "dil": "en" },
+        { "tur": "sik",    "metin": "C) do",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) take", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 03 / 05" },
+        { "tur": "soru",   "metin": "Can I ___ your pen for a minute?", "dil": "en" },
+        { "tur": "sik",    "metin": "A) borrow", "dil": "en" },
+        { "tur": "sik",    "metin": "B) lend",   "dil": "en" },
+        { "tur": "sik",    "metin": "C) rent",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) give",   "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 04 / 05" },
+        { "tur": "soru",   "metin": "___ at this photo I took!", "dil": "en" },
+        { "tur": "sik",    "metin": "A) Watch", "dil": "en" },
+        { "tur": "sik",    "metin": "B) See",   "dil": "en" },
+        { "tur": "sik",    "metin": "C) Show",  "dil": "en" },
+        { "tur": "sik",    "metin": "D) Look",  "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 05 / 05" },
+        { "tur": "soru",   "metin": "We ___ them three to zero.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) won",    "dil": "en" },
+        { "tur": "sik",    "metin": "B) beat",   "dil": "en" },
+        { "tur": "sik",    "metin": "C) gained", "dil": "en" },
+        { "tur": "sik",    "metin": "D) earned", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevaplar sırada →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket",   "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "baslik",   "metin": "CEVAP ANAHTARI" },
+        { "tur": "madde",    "metin": "01 - B) tell", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Bir kişiye söylersen “tell”, sözü aktarırsan “say”.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "02 - C) do", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "“Do” var olan işi yapar, “make” ortaya yeni bir şey çıkarır.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "03 - A) borrow", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "“Borrow” ödünç almak, “lend” ödünç vermek. Yön ters.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "04 - D) Look", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "“Look at” bakmak, “watch” izlemek, “see” istemeden görmek.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "05 - B) beat", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Rakibi yenersin: beat them. Maçı kazanırsın: win the match.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "cta",      "metin": "Kaç doğrun var? Yorumlara yaz ↓" }
+      ]
+    }
+  ]
+}
