@@ -1,0 +1,87 @@
+{
+  "slug": "cumleyi-tamamla/edatlar",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 01 / 05" },
+        { "tur": "soru",   "metin": "She is married ___ a doctor.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) to",   "dil": "en" },
+        { "tur": "sik",    "metin": "B) with", "dil": "en" },
+        { "tur": "sik",    "metin": "C) by",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) for",  "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 02 / 05" },
+        { "tur": "soru",   "metin": "It depends ___ you.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) to",   "dil": "en" },
+        { "tur": "sik",    "metin": "B) from", "dil": "en" },
+        { "tur": "sik",    "metin": "C) on",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) at",   "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 03 / 05" },
+        { "tur": "soru",   "metin": "She is afraid ___ spiders.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) from",  "dil": "en" },
+        { "tur": "sik",    "metin": "B) of",    "dil": "en" },
+        { "tur": "sik",    "metin": "C) about", "dil": "en" },
+        { "tur": "sik",    "metin": "D) to",    "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 04 / 05" },
+        { "tur": "soru",   "metin": "We arrived ___ the airport late.", "dil": "en" },
+        { "tur": "sik",    "metin": "A) to",   "dil": "en" },
+        { "tur": "sik",    "metin": "B) into", "dil": "en" },
+        { "tur": "sik",    "metin": "C) on",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) at",   "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 05 / 05" },
+        { "tur": "soru",   "metin": "Congratulations ___ your new job!", "dil": "en" },
+        { "tur": "sik",    "metin": "A) for",  "dil": "en" },
+        { "tur": "sik",    "metin": "B) to",   "dil": "en" },
+        { "tur": "sik",    "metin": "C) on",   "dil": "en" },
+        { "tur": "sik",    "metin": "D) with", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevaplar sırada →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket",   "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "baslik",   "metin": "CEVAP ANAHTARI" },
+        { "tur": "madde",    "metin": "01 - A) to", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Evlilikte eş belirtilirken “married to” kullanılır, “with” değil.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "02 - C) on", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "“Depend” fiili her zaman “on” edatıyla gelir.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "03 - B) of", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Türkçede “-dan korkmak”, İngilizcede “afraid of”.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "04 - D) at", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Bir noktaya varmak “arrive at”; “arrive to” diye bir kalıp yok.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "madde",    "metin": "05 - C) on", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Tebrik bir olay üzerine yapılır: “congratulations on”.", "dil": "karisik" },
+        { "tur": "ayrac",    "en": 1400 },
+        { "tur": "cta",      "metin": "Kaç doğrun var? Yorumlara yaz ↓" }
+      ]
+    }
+  ]
+}

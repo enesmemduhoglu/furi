@@ -102,6 +102,7 @@ Shell state çağrılar arasında korunmadığı için her PowerShell komutunun 
 `<format>/<slug>/` = `1.jpg … N.jpg` + `caption.md` + `kart.json` + `puan.json`.
 Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi`,
 `kitap-vs-gercek`, `turkce-tuzagi` (kapak + 4 tuzak kartı, 2026-08-28),
+`cumleyi-tamamla` (kapaksız, 5 soru + cevap anahtarı, 2026-08-28),
 `phrasal`, `karistirilan`, `durumsal` (tekil kart —
 2026-08-22'de havuzdaki tüm `durumsal` postları silindi, klasör boş). `<slug>` ASCII ve tireli.
 

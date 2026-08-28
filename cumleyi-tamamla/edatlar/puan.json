@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-28",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Bosluk doldurma karti kaydirmayi durduran turden: 'She is married ___ a doctor.' cumlesini goren okur cevabi zihninden secmeden gecemiyor, cevap anahtari da 6. slaytta oldugu icin desteyi sonuna kadar kaydirtiyor. Eksi: giris slayti olmadigi icin feed'de ilk goren kart ciplak bir soru — 'BU B1 TESTINI GECEBILIR MISIN?' gibi bir kanca cumlesi yok, ilk duraklamayi sorunun kendisi tasimak zorunda."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Bes sorunun besi de kural veriyor: married to, depend on, afraid of, arrive at, congratulations on. Cevap anahtarinda her maddenin altinda tek satirlik gerekce var ve gerekceler kaliba degil sebebe bakiyor ('Bir noktaya varmak arrive at; arrive to diye bir kalip yok'). Kaydedilip tekrar acilacak bir liste."
+    },
+    "ozgunluk": {
+      "puan": 6,
+      "gerekce": "Iskelet seviye-testi ile neredeyse ayni: sayac + bosluklu cumle + kutulu siklar + cevap anahtari. Ayrisma iki yerden geliyor — kapak slaytinin kaldirilmasi (deste dogrudan soruyla basliyor) ve bes sorunun tek bir tuzak ailesinden secilmesi (Turkcenin yanlis edata cektigi kaliplar). Mekanik olarak yeni bir sey yok."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Besi de Turkiye'de okulda Ingilizce ogrenmis birinin fiilen yaptigi hata: 'ile evli' with dedirtiyor, '-dan korkmak' from dedirtiyor, 'havaalanina vardim' to dedirtiyor. Seviyeden bagimsiz — ileri seviyede de kaliyor, yani A2'den C1'e kadar takipcinin hepsine dokunuyor."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Bes soru slayti da 1831 px blokta, birebir ayni iskelet — kaydirirken yalnizca cumle ve siklar degisiyor, goz hicbir yerde yeniden konumlanmiyor. Bes soru cumlesinin besi de tek satira sigdi, en uzunu (Congratulations ___ your new job!) dahil. Cevap anahtari 0.91 olcekle sigdi, turuncu ayraclar bes maddeyi ayirt edilir tutuyor."
+    }
+  },
+  "toplam": 8.2
+}
