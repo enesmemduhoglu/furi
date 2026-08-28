@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-08-28",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Kanca sucu ogrenciden aliyor: 'Hata Ingilizcende degil, Turkcende.' Suclama degil tespit oldugu icin savunmaya gecirmeden okutuyor; 'ben de boyle diyordum' refleksi yorum getirir."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Her kart yanlis/dogru ciftinin altina Turkcenin hangi kuralinin sizdigini yaziyor (karar 'alinir', tek 'acmak' fiili, soru cumle icine girince duzlesir). Caption uc tuzak daha ekliyor (close the TV, I'm boring, how do you call this). Ezber degil kural ogretiyor."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Hesapta yeni bir format ve etiket, ama 'Turklerin yaptigi Ingilizce hatalari' piyasada cok islenmis bir tur. Ayrisma sadece hatayi gostermekte degil sebebini Turkce grameriyle acikllamakta; bu acik tek basina tam puani tasimiyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Turkce ana dilli takipciye dogrudan yaziyor — ucu de Turkiye'de okulda Ingilizce ogrenmis birinin gercekten yaptigi hata. 'I have 21 years' gibi Roman dillerinden gelen ornekler bilerek elendi."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Uc tuzak slayti da 1500 px blokta, birebir ayni ritim. Turuncu YANLIS/DOGRU ara etiketleri hiyerarsiyi ikiye ayiriyor, cumlelerin hepsi tek satira sigiyor (onceki surumde DOGRU satiri ikiye bolunup yanlis olani gorsel olarak baskin kiliyordu). Kapak ve kapanis iki satirli baslikta dengeli."
+    }
+  },
+  "toplam": 8.2
+}

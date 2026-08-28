@@ -61,6 +61,7 @@ ETIKETLER = {
     "GÜNÜN PHRASAL VERB'Ü",
     "SIK KARIŞTIRILANLAR",
     "KİTAP vs GERÇEK",
+    "TÜRKÇE TUZAĞI",
 }
 ETIKET_TEST = re.compile(r"^(A1|A2|B1|B2|C1|C2) • İNGİLİZCE TESTİ$")
 

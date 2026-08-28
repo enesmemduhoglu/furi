@@ -1,0 +1,182 @@
+{
+  "slug": "turkce-tuzagi/birebir-ceviri",
+  "slaytlar": [
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "TÜRKÇE TUZAĞI"
+        },
+        {
+          "tur": "kapak",
+          "metin": "TÜRKÇE DÜŞÜNÜP İNGİLİZCE SÖYLEME"
+        },
+        {
+          "tur": "ornek",
+          "metin": "Hata İngilizcende değil, Türkçende."
+        },
+        {
+          "tur": "cta",
+          "metin": "Başlamak için kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "TÜRKÇE TUZAĞI"
+        },
+        {
+          "tur": "baslik",
+          "metin": "KARAR ALMAK"
+        },
+        {
+          "tur": "araetiket",
+          "metin": "YANLIŞ",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "I took a decision.",
+          "dil": "en",
+          "alt": 52
+        },
+        {
+          "tur": "araetiket",
+          "metin": "DOĞRU",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "I made a decision.",
+          "dil": "en",
+          "alt": 48
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Türkçede karar alınır, İngilizcede yapılır.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sırada: Işığı aç"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "TÜRKÇE TUZAĞI"
+        },
+        {
+          "tur": "baslik",
+          "metin": "IŞIĞI AÇMAK"
+        },
+        {
+          "tur": "araetiket",
+          "metin": "YANLIŞ",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "Open the light.",
+          "dil": "en",
+          "alt": 52
+        },
+        {
+          "tur": "araetiket",
+          "metin": "DOĞRU",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "Turn on the light.",
+          "dil": "en",
+          "alt": 48
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Türkçede tek \"açmak\" var, İngilizcede iki fiil.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Sırada: Ne yapacağım?"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "TÜRKÇE TUZAĞI"
+        },
+        {
+          "tur": "baslik",
+          "metin": "NE YAPACAĞIM?"
+        },
+        {
+          "tur": "araetiket",
+          "metin": "YANLIŞ",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'm thinking what should I do.",
+          "dil": "en",
+          "alt": 52
+        },
+        {
+          "tur": "araetiket",
+          "metin": "DOĞRU",
+          "alt": 8
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'm wondering what I should do.",
+          "dil": "en",
+          "alt": 48
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Soru cümle içine girince düz cümleye döner.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Özet için kaydır →"
+        }
+      ]
+    },
+    {
+      "ogeler": [
+        {
+          "tur": "etiket",
+          "metin": "TÜRKÇE TUZAĞI"
+        },
+        {
+          "tur": "kapak",
+          "metin": "TÜRKÇEYİ ÇEVİRME"
+        },
+        {
+          "tur": "cumle",
+          "metin": "I made a decision. Turn on the light.",
+          "dil": "en",
+          "alt": 14
+        },
+        {
+          "tur": "cumle",
+          "metin": "I'm wondering what I should do.",
+          "dil": "en"
+        },
+        {
+          "tur": "ornek",
+          "metin": "(Üçü de Türkçeden çevrilince bozuluyor.)"
+        },
+        {
+          "tur": "cta",
+          "metin": "Hangisini yapıyordun? Yorum yaz ↓"
+        }
+      ]
+    }
+  ]
+}
