@@ -1,20 +1,12 @@
 {
-  "bekleyen": {
-    "slug": "turkce-tuzagi/birebir-ceviri",
-    "kategori": "turkce-tuzagi",
-    "slayt": 5,
-    "saas_post_id": "cmtcq03500001l4046telro6s",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/9216df9db2424bd8b7c49a15b019d4d1",
-    "gonderim_zamani": "2026-08-28T11:59:25+03:00",
-    "son_gecerlilik": "2026-08-29T11:59:25+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-08-27T12:14:56+03:00",
+  "son_yayin": "2026-08-28T12:12:25+03:00",
   "son_gonderim": "2026-08-28T11:59:25+03:00",
   "bugun": {
     "tarih": "2026-08-28",
     "siraya_konan": 1,
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
