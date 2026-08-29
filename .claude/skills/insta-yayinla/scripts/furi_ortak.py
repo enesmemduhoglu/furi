@@ -24,6 +24,15 @@ MAX_HASHTAG = 30
 MAX_ALT_TEXT = 1000
 MAX_DOSYA_BAYT = 8 * 1024 * 1024
 
+# Video (Reels) sinirlari. Instagram'in kendi tavani 1GB / 15 dakika; buradaki
+# degerler SaaS'in kabul ettigi ust sinir (validation.ts > MAX_VIDEO_BYTES) ve
+# sayfanin format tercihi. Sure sinirini yerelde ffprobe ile denetliyoruz —
+# uzun bir videoyu once 100MB yukleyip sonra Instagram'dan reddedilmesindense
+# maliyetsiz elemek yegleniyor.
+MAX_VIDEO_BAYT = 300 * 1024 * 1024
+MAX_VIDEO_SURE = 90.0
+VIDEO_TURLERI = ("video/mp4", "video/quicktime")
+
 # SaaS sinirlari — yayin yolu artik content-approval-saas uzerinden gittigi icin
 # gercekte baglayici olan limit budur, Instagram'inki degil.
 # Kaynak: content-approval-saas src/lib/validation.ts > CAPTION_MAX_LENGTH.
@@ -395,8 +404,31 @@ def _slayt_dosyalari(klasor: Path) -> list[Path]:
     return sirali
 
 
+def video_oku(klasor: Path) -> dict | None:
+    """`video.json` varsa icerigini doner, yoksa None.
+
+    Video dosyasinin KENDISI repoda durmuyor — `.git` zaten 96 gorselle 103MB
+    ve her Reel 10-70MB. Dosya Vercel Blob'a yukleniyor (`medya_yukle.py`),
+    repoda yalnizca URL ve olcumler kaliyor.
+    """
+    yol = klasor / "video.json"
+    if not yol.exists():
+        return None
+    try:
+        return json.loads(yol.read_text(encoding="utf-8-sig"))
+    except (json.JSONDecodeError, OSError):
+        # Bozuk video.json postu gorunmez yapmasin: `veri_topla` bunu anlasilir
+        # bir hata olarak raporlayacak.
+        return {}
+
+
 def postlari_tara(kok: Path) -> list[dict]:
-    """Repodaki tum <kategori>/<slug>/ post klasorleri."""
+    """Repodaki tum <kategori>/<slug>/ post klasorleri.
+
+    Bir klasor post sayilir: `caption.md` VE (numarali jpg'ler YA DA
+    `video.json`). `tur` alani ikisini ayirir — gorsel yolu hicbir yerde
+    degismesin diye varsayilan "gorsel".
+    """
     postlar: list[dict] = []
     for kategori_yolu in sorted(p for p in kok.iterdir() if p.is_dir()):
         kategori = kategori_yolu.name
@@ -405,9 +437,12 @@ def postlari_tara(kok: Path) -> list[dict]:
         for slug_yolu in sorted(p for p in kategori_yolu.iterdir() if p.is_dir()):
             if slug_yolu.name.startswith((".", "_")):
                 continue
-            slaytlar = _slayt_dosyalari(slug_yolu)
             caption = slug_yolu / "caption.md"
-            if not slaytlar or not caption.exists():
+            if not caption.exists():
+                continue
+            slaytlar = _slayt_dosyalari(slug_yolu)
+            video = video_oku(slug_yolu)
+            if not slaytlar and video is None:
                 continue
             postlar.append(
                 {
@@ -416,6 +451,8 @@ def postlari_tara(kok: Path) -> list[dict]:
                     "ad": slug_yolu.name,
                     "yol": slug_yolu,
                     "slaytlar": slaytlar,
+                    "tur": "video" if video is not None else "gorsel",
+                    "video": video,
                 }
             )
     return postlar
@@ -495,8 +532,18 @@ def raw_url(taban: str, slug: str, dosya_adi: str) -> str:
     return f"{taban}/{yol}"
 
 
-def url_erisilebilir(url: str, zaman_asimi: int = 20) -> tuple[bool, str]:
-    """HEAD ile 200 + image/jpeg dogrulamasi. (tamam_mi, mesaj)"""
+def url_erisilebilir(
+    url: str,
+    zaman_asimi: int = 20,
+    turler: tuple[str, ...] = ("image/jpeg", "image/jpg"),
+    max_bayt: int = MAX_DOSYA_BAYT,
+) -> tuple[bool, str]:
+    """HEAD ile 200 + tur/boyut dogrulamasi. (tamam_mi, mesaj)
+
+    Tur ve boyut parametreye cikarildi cunku video postlarinda ikisi de farkli:
+    `video/mp4` ve 300MB. Sabit kaldigi surece her Reel "beklenmeyen tur"
+    diyerek elenirdi.
+    """
     istek = urllib.request.Request(url, method="HEAD")
     istek.add_header("User-Agent", "furi-insta-yayinla/1.0")
     for deneme in (1, 2):
@@ -506,10 +553,10 @@ def url_erisilebilir(url: str, zaman_asimi: int = 20) -> tuple[bool, str]:
                 boyut = int(yanit.headers.get("Content-Length") or 0)
                 if yanit.status != 200:
                     return False, f"HTTP {yanit.status}"
-                if tur not in ("image/jpeg", "image/jpg"):
+                if tur not in turler:
                     return False, f"beklenmeyen tur: {tur or 'yok'}"
-                if boyut > MAX_DOSYA_BAYT:
-                    return False, f"dosya cok buyuk: {boyut} bayt (limit {MAX_DOSYA_BAYT})"
+                if boyut > max_bayt:
+                    return False, f"dosya cok buyuk: {boyut} bayt (limit {max_bayt})"
                 return True, "ok"
         except urllib.error.HTTPError as hata:
             return False, f"HTTP {hata.code}"

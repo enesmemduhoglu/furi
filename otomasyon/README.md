@@ -63,6 +63,38 @@ Instagram'dan sil.
 > gormedigi icin bayat bir kopyaydi. Kalan sureyi ogrenmek icin:
 > `python .claude/skills/insta-yayinla/scripts/ig_token.py --kontrol`
 
+## Reel videosu — `reels/<slug>/video.json`
+
+Post klasorunde durur, otomasyonun okudugu bir state oldugu icin semasi burada.
+**Video dosyasinin kendisi repoda YOK** — `.git` 96 gorselle zaten 103MB ve her
+Reel 10-70MB; duzenli commit edilse depo ayda ~1GB buyur ve git gecmisinden
+geri alinamaz. Dosya Vercel Blob'da, burada yalnizca URL ve olcumler var.
+
+```json
+{
+  "video_url": "https://<store>.public.blob.vercel-storage.com/videos/<uuid>.mp4",
+  "sure": 33.2,
+  "genislik": 1080,
+  "yukseklik": 1920,
+  "bayt": 11234567,
+  "kaynak": "IMG_1615_sub.mp4",
+  "yuklendi": "2026-08-29T16:40:00+03:00"
+}
+```
+
+| Alan | Anlami |
+|---|---|
+| `video_url` | Instagram'in cekecegi public adres. `medya_yukle.py` yazar, elle duzenlenmez. |
+| `sure` | Saniye. `MAX_VIDEO_SURE` (90 sn) asilirsa post elenir. |
+| `genislik` / `yukseklik` | Reels dikey ister; yatay video yuklemede reddedilir. |
+| `bayt` | `MAX_VIDEO_BAYT` (300MB) ust siniri. |
+| `kaynak` | Yuklenen yerel dosyanin adi — hangi render'dan geldigi izlenebilsin. |
+| `yuklendi` | Yukleme ani (TR saati). |
+
+Dosyayi `medya_yukle.py` uretir; `aday_sec.veri_topla` yalnizca dogrular ve
+URL'in HALA erisilebilir oldugunu HEAD ile kontrol eder (blob silinmis ya da
+yukleme yarim kalmis olabilir).
+
 ## Post puani — `<kategori>/<slug>/puan.json`
 
 Bu klasorde **degil**, her postun kendi klasorunde durur; yine de otomasyonun

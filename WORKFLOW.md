@@ -344,6 +344,23 @@ alıntı ile kart aynı olmalı.
 2. ...
 ```
 
+### Video (Reels) postunda
+
+Şema aynı — `caption_ayristir` medyadan bağımsız çalışır. İki fark var:
+
+1. **Alt text tek maddedir** (`1. ...`) ve **kart metnini alıntılamaz**;
+   alıntılayacak kart yok. Görüntüyü betimler: kim, nerede, ekranda ne akıyor.
+2. **Caption limiti 2000** (SaaS'ın limiti), 2200 değil. Video dalı bunu baştan
+   zorluyor — 2000'i aşan bir caption gönderim anında elenir.
+
+Caption'ı **her zaman burası yazar.** `subpipe`ın kendi caption üretici aşaması
+furi akışında kapalı (`caption.enabled: false`): jenerik bir hook/body/cta
+şeması üretiyordu ve sayfanın ev stiline oturmuyordu. subpipe genel amaçlı bir
+araç olarak kalsın diye marka kuralları oraya taşınmadı, aşama susturuldu.
+
+Video metnini yazarken kaynak, `subpipe`ın ürettiği çeviri dosyalarıdır:
+`out/<video>.tr.srt` ve `out/<video>.en.srt`. Videoda **geçmeyen** bilgi uydurma.
+
 ---
 
 ## Faz 7 — Puanlama
