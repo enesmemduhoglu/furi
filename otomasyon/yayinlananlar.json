@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-28T16:34:19+03:00",
+  "guncelleme": "2026-08-29T17:21:35+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -89,6 +89,16 @@
       "ig_media_id": "17881525665503418",
       "permalink": "https://www.instagram.com/p/DclAw8_ln70/",
       "yayin_zamani": "2026-08-28T09:12:21+00:00",
+      "not": "esitleme ile eklendi (SaaS yayinladi)"
+    },
+    {
+      "slug": "cumleyi-tamamla/edatlar",
+      "kategori": "cumleyi-tamamla",
+      "tur": "gorsel",
+      "slayt": 6,
+      "ig_media_id": "17918942967429794",
+      "permalink": "https://www.instagram.com/p/DcnuCHpkZPE/",
+      "yayin_zamani": "2026-08-29T10:26:26+00:00",
       "not": "esitleme ile eklendi (SaaS yayinladi)"
     }
   ]
