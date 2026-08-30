@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-28T16:34:19+03:00",
+  "guncelleme": "2026-08-30T12:07:55+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -90,6 +90,15 @@
       "permalink": "https://www.instagram.com/p/DclAw8_ln70/",
       "yayin_zamani": "2026-08-28T09:12:21+00:00",
       "not": "esitleme ile eklendi (SaaS yayinladi)"
+    },
+    {
+      "slug": "cumleyi-tamamla/edatlar",
+      "kategori": "cumleyi-tamamla",
+      "slayt": 6,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcnuCHpkZPE/",
+      "yayin_zamani": "2026-08-29T13:26:30+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
 }
