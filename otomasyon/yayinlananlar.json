@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-30T12:07:55+03:00",
+  "guncelleme": "2026-08-31T12:09:32+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -98,6 +98,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcnuCHpkZPE/",
       "yayin_zamani": "2026-08-29T13:26:30+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "turkce-tuzagi/ceviri-refleksi",
+      "kategori": "turkce-tuzagi",
+      "slayt": 5,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DcqOrNzFnDX/",
+      "yayin_zamani": "2026-08-30T12:50:14+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
