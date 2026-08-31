@@ -74,6 +74,7 @@ python marka/metin_denetle.py <kart.json>   # tek kart
 python marka/metin_denetle.py --tumu        # repodaki tüm kart.json'lar
 
 S=.claude/skills/insta-yayinla/scripts
+python $S/medya_yukle.py <mp4> --slug reels/<slug>  # video Blob'a, video.json yaz
 python $S/esitle.py --kuru                  # defteri Instagram'la karşılaştır, yazma
 python $S/esitle.py                         # farkları uygula
 python $S/aday_sec.py --durum               # havuz istatistiği + tam yayın sırası
@@ -105,6 +106,25 @@ Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi`,
 `cumleyi-tamamla` (kapaksız, 5 soru + cevap anahtarı, 2026-08-28),
 `phrasal`, `karistirilan`, `durumsal` (tekil kart —
 2026-08-22'de havuzdaki tüm `durumsal` postları silindi, klasör boş). `<slug>` ASCII ve tireli.
+
+**`reels` formatı ayrı çalışır** (2026-08-29). Klasör `caption.md` + `puan.json` +
+`video.json`; kart yok, `1.jpg` yok. **Video dosyası repoya asla commit edilmez** —
+`.git` zaten 96 görselle 103MB, her Reel 10–70MB. Dosya Vercel Blob'a yükleniyor,
+repoda yalnızca URL ve ölçümler kalıyor:
+
+```powershell
+# Videoyu Blob'a yükler ve reels/<slug>/video.json'i yazar (ffprobe gerekir).
+python .claude\skills\insta-yayinla\scripts\medya_yukle.py <video.mp4> --slug reels/<slug>
+python .claude\skills\insta-yayinla\scripts\medya_yukle.py <video.mp4> --slug reels/x --kuru
+```
+
+Video `subpipe` ile üretiliyor (`C:\Users\enesm\visual studio\subtitle-pipeline`);
+o projenin caption aşaması furi akışında **kapalı** — caption'ı `insta-ingilizce`
+ev stiliyle yazıyor.
+
+**Reels otomatik sıraya girmez.** Günlük kota, puan sırası ve kategori rotasyonu
+yalnızca karusel havuzunu yönetir (`aday_sec.otomatik_havuz`); Reel'ler elle
+`saas_gonder.py --slug reels/...` ile gönderilir.
 
 `puan.json` yayın sırasını **doğrudan** belirliyor: havuz en yüksek puandan
 aşağıya yayınlanıyor. Kategorinin iki rolü var — eşit puanlıları ayırmak, ve

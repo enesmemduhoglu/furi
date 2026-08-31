@@ -38,7 +38,11 @@ from furi_ortak import (
     MAX_HASHTAG,
     MAX_KARUSEL,
     MAX_ALT_TEXT,
+    MAX_VIDEO_BAYT,
+    MAX_VIDEO_SURE,
+    SAAS_MAX_CAPTION,
     STOK_ESIGI,
+    VIDEO_TURLERI,
     caption_ayristir,
     caption_birlestir,
     defter_oku,
@@ -72,6 +76,18 @@ def _dislanan_sluglar(durum: dict, defter: dict) -> dict[str, str]:
     if deneme and deneme.get("slug"):
         dislanan[deneme["slug"]] = "yayin denemesi devam ediyor"
     return dislanan
+
+
+def otomatik_havuz(postlar: list[dict]) -> list[dict]:
+    """Gozetimsiz calismanin dokunabilecegi postlar.
+
+    **Video postlari otomatik havuza GIRMEZ** (2026-08-29 karari). Reel'ler
+    duzensiz uretiliyor ve her biri elle bir kere gozden geciriliyor; otomatik
+    siraya girselerdi gunluk kotayi ve kategori rotasyonunu paylasip karusel
+    temposunu bozarlardi. Elle gonderim yolu acik: `saas_gonder.py --slug`
+    zaten bu havuza hic bakmiyor.
+    """
+    return [p for p in postlar if p.get("tur") != "video"]
 
 
 def _kategori_son_yayin(defter: dict) -> dict[str, float]:
@@ -158,12 +174,67 @@ def adaylari_sirala(kok, adaylar: list[dict], defter: dict, sonraki: str | None 
     return sorted(adaylar, key=sira_anahtari)
 
 
+def _video_verisi(
+    post: dict,
+    ayristirilmis: dict,
+    caption: str,
+    taban: str,
+    sorunlar: list[str],
+    url_kontrol: bool,
+) -> tuple[dict, list[str]]:
+    """Reel postunun yayin verisi. Karusel yerine tek video URL'i.
+
+    `video.json` uretimini `medya_yukle.py` yapiyor; burasi yalnizca alanlarin
+    yerinde oldugunu ve URL'in HALA erisilebilir oldugunu dogruluyor — blob
+    silinmis ya da yukleme yarim kalmis olabilir.
+    """
+    video = post.get("video") or {}
+    url = (video.get("video_url") or "").strip()
+
+    if not url:
+        sorunlar.append("video.json icinde 'video_url' yok (medya_yukle.py calistirildi mi?)")
+    elif not url.startswith("https://"):
+        sorunlar.append(f"video_url https olmali: {url}")
+
+    sure = video.get("sure")
+    if isinstance(sure, (int, float)) and sure > MAX_VIDEO_SURE:
+        sorunlar.append(f"video {sure:.1f} sn — limit {MAX_VIDEO_SURE:.0f} sn")
+
+    erisim = None
+    if url and url_kontrol:
+        tamam, erisim = url_erisilebilir(url, turler=VIDEO_TURLERI, max_bayt=MAX_VIDEO_BAYT)
+        if not tamam:
+            sorunlar.append(f"video: {erisim}")
+
+    # Videoda alt text tek maddedir — kart metnini alintilamaz, goruntuyu
+    # betimler (bkz. WORKFLOW.md Faz 6).
+    alt = (ayristirilmis["alt_text"].get(1) or "").strip()[:MAX_ALT_TEXT]
+
+    veri = {
+        "slug": post["slug"],
+        "kategori": post["kategori"],
+        "ad": post["ad"],
+        "tur": "video",
+        "slayt": 1,
+        "gorseller": [],
+        "video_url": url,
+        "video": {**video, "erisim": erisim},
+        "alt_text": alt,
+        "caption": caption,
+        "caption_uzunluk": len(caption),
+        "hashtagler": ayristirilmis["hashtagler"],
+        "raw_taban": taban,
+    }
+    return veri, sorunlar
+
+
 def veri_topla(kok, post: dict, taban: str, url_kontrol: bool = True) -> tuple[dict, list[str]]:
     """Bir postun yayin verisini kurar. (veri, sorunlar) doner."""
     sorunlar: list[str] = []
     slaytlar = post["slaytlar"]
+    video_mu = post.get("tur") == "video"
 
-    if len(slaytlar) > MAX_KARUSEL:
+    if not video_mu and len(slaytlar) > MAX_KARUSEL:
         sorunlar.append(f"{len(slaytlar)} slayt — Instagram karusel limiti {MAX_KARUSEL}")
 
     ayristirilmis = caption_ayristir(post["yol"] / "caption.md")
@@ -171,12 +242,19 @@ def veri_topla(kok, post: dict, taban: str, url_kontrol: bool = True) -> tuple[d
 
     if not ayristirilmis["aciklama"]:
         sorunlar.append("caption.md icinde '## Aciklama' bolumu bos veya yok")
-    if len(caption) > MAX_CAPTION:
-        sorunlar.append(f"caption {len(caption)} karakter — limit {MAX_CAPTION}")
+    # Video dalinda baglayici limit bastan SaaS'inki (2000). Gorsel dalinda
+    # 2200 olcup 2000'i `saas_gonder._saas_sorunlari`da yakalayan iki asamali
+    # kontrol duruyor — mevcut davranis degismesin diye.
+    caption_limiti = SAAS_MAX_CAPTION if video_mu else MAX_CAPTION
+    if len(caption) > caption_limiti:
+        sorunlar.append(f"caption {len(caption)} karakter — limit {caption_limiti}")
     if len(ayristirilmis["hashtagler"]) > MAX_HASHTAG:
         sorunlar.append(
             f"{len(ayristirilmis['hashtagler'])} hashtag — limit {MAX_HASHTAG}"
         )
+
+    if video_mu:
+        return _video_verisi(post, ayristirilmis, caption, taban, sorunlar, url_kontrol)
 
     gorseller = []
     for sira, dosya in enumerate(slaytlar, start=1):
@@ -194,6 +272,7 @@ def veri_topla(kok, post: dict, taban: str, url_kontrol: bool = True) -> tuple[d
         "slug": post["slug"],
         "kategori": post["kategori"],
         "ad": post["ad"],
+        "tur": "gorsel",
         "slayt": len(slaytlar),
         "gorseller": gorseller,
         "caption": caption,
@@ -209,7 +288,7 @@ def komut_sec(kok, args) -> int:
     defter = defter_oku(kok)
     taban = raw_taban(kok)
 
-    postlar = postlari_tara(kok)
+    postlar = otomatik_havuz(postlari_tara(kok))
     dislanan = _dislanan_sluglar(durum, defter)
     adaylar = [p for p in postlar if p["slug"] not in dislanan]
 
@@ -309,10 +388,23 @@ def komut_slug(kok, args) -> int:
 def komut_durum(kok, args) -> int:
     durum = durum_oku(kok)
     defter = defter_oku(kok)
-    postlar = postlari_tara(kok)
+    tum_postlar = postlari_tara(kok)
+    postlar = otomatik_havuz(tum_postlar)
     dislanan = _dislanan_sluglar(durum, defter)
     kalan_postlar = [p for p in postlar if p["slug"] not in dislanan]
     kalan = [p["slug"] for p in kalan_postlar]
+
+    # Video postlari havuz istatistigine KARISMAZ (otomatik siraya girmiyorlar),
+    # ama gorunmez de olmamalilar: elle gonderilecek stok burada listeleniyor.
+    video_postlar = [
+        {
+            "slug": p["slug"],
+            "yuklendi": bool((p.get("video") or {}).get("video_url")),
+            "durum": dislanan.get(p["slug"], "hazir"),
+        }
+        for p in tum_postlar
+        if p.get("tur") == "video"
+    ]
 
     kategori_dagilimi: dict[str, int] = {}
     for slug in kalan:
@@ -362,6 +454,9 @@ def komut_durum(kok, args) -> int:
             "en_dusuk_puan": min(toplamlar) if toplamlar else None,
             "en_yuksek_puan": max(toplamlar) if toplamlar else None,
             "kalan_sluglar": kalan,
+            # Otomatik siraya girmeyen Reel'ler — `saas_gonder.py --slug` ile
+            # elle gonderiliyorlar. Sayilari havuz istatistigine dahil DEGIL.
+            "video_postlar": video_postlar,
         }
     )
     return 0

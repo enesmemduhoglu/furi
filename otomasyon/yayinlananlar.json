@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-08-31T12:09:32+03:00",
+  "guncelleme": "2026-08-31T17:55:11+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -108,6 +108,16 @@
       "permalink": "https://www.instagram.com/p/DcqOrNzFnDX/",
       "yayin_zamani": "2026-08-30T12:50:14+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "cumleyi-tamamla/karisan-fiiller",
+      "kategori": "cumleyi-tamamla",
+      "tur": "gorsel",
+      "slayt": 6,
+      "ig_media_id": "18092952686198494",
+      "permalink": "https://www.instagram.com/p/DcsvLldG3WO/",
+      "yayin_zamani": "2026-08-31T09:12:40+00:00",
+      "not": "esitleme ile eklendi (SaaS yayinladi)"
     }
   ]
 }

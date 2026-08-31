@@ -180,7 +180,9 @@ def main() -> int:
         kayit = {
             "slug": post["slug"],
             "kategori": post["kategori"],
-            "slayt": len(post["slaytlar"]),
+            "tur": post.get("tur", "gorsel"),
+            # Video postunda repoda hic jpg yok; "0 slayt" yaniltici olurdu.
+            "slayt": 1 if post.get("tur") == "video" else len(post["slaytlar"]),
             "ig_media_id": m["id"],
             "permalink": m["permalink"],
             "yayin_zamani": iso(zaman) if zaman else None,

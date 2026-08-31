@@ -20,7 +20,7 @@ import sys
 import urllib.error
 import urllib.request
 
-from aday_sec import _dislanan_sluglar, adaylari_sirala, veri_topla
+from aday_sec import _dislanan_sluglar, adaylari_sirala, otomatik_havuz, veri_topla
 from furi_ortak import (
     SAAS_MAX_CAPTION,
     durum_oku,
@@ -53,7 +53,9 @@ def _adaylar(kok) -> list[dict]:
     """
     durum, defter = durum_oku(kok), defter_oku(kok)
     dislanan = _dislanan_sluglar(durum, defter)
-    adaylar = [p for p in postlari_tara(kok) if p["slug"] not in dislanan]
+    # `otomatik_havuz` video postlarini disarida birakir — Reel'ler yalnizca
+    # `--slug` ile elle gonderiliyor ve o yol bu fonksiyona hic ugramiyor.
+    adaylar = [p for p in otomatik_havuz(postlari_tara(kok)) if p["slug"] not in dislanan]
     if not adaylar:
         return []
     return adaylari_sirala(kok, adaylar, defter, durum.get("sonraki"))
@@ -67,6 +69,10 @@ def _saas_sorunlari(veri: dict) -> list[str]:
     calismada anlasilmasi zor bir 400'e donusuyordu.
     """
     sorunlar: list[str] = []
+    # Video dalinda `veri_topla` bastan SAAS_MAX_CAPTION ile olcuyor; burada
+    # tekrar bakmak ayni sorunu iki kez raporlardi.
+    if veri.get("tur") == "video":
+        return sorunlar
     if veri["caption_uzunluk"] > SAAS_MAX_CAPTION:
         sorunlar.append(
             f"caption {veri['caption_uzunluk']} karakter — SaaS limiti "
@@ -155,14 +161,20 @@ def main() -> int:
     govde = {
         "clientId": ortam["FURI_CLIENT_ID"],
         "caption": veri["caption"],
-        # SaaS duz string dizisi bekliyor; nesne sekli reddediliyor.
-        # Host allowlist'i dar: yalnizca raw.githubusercontent.com kabul ediliyor.
-        "imageUrls": [g["url"] for g in veri["gorseller"]],
-        # Ikisi de SaaS'ta destekleniyor (posts/route.ts > parseJsonBody):
-        # bos alt_text null'a cevriliyor, externalRef 500 karaktere kirpiliyor.
-        "altTexts": [g["alt_text"] for g in veri["gorseller"]],
+        # externalRef 500 karaktere kirpiliyor (posts/route.ts > parseJsonBody).
         "externalRef": veri["slug"],
     }
+    if veri.get("tur") == "video":
+        # SaaS `imageUrls` ve `videoUrl`dan TAM BIRINI kabul ediyor
+        # (validation.ts > validatePostMedia); ikisini birden yollamak 400 doner.
+        # Reel tek medya oldugu icin `altTexts` de yok — Instagram video
+        # container'i alt_text almiyor.
+        govde["videoUrl"] = veri["video_url"]
+    else:
+        # SaaS duz string dizisi bekliyor; nesne sekli reddediliyor.
+        # Host allowlist'i dar: yalnizca raw.githubusercontent.com kabul ediliyor.
+        govde["imageUrls"] = [g["url"] for g in veri["gorseller"]]
+        govde["altTexts"] = [g["alt_text"] for g in veri["gorseller"]]
 
     if args.kuru:
         rapor = {"durum": "kuru", "slug": veri["slug"], "slayt": veri["slayt"],
@@ -184,6 +196,7 @@ def main() -> int:
     durum["bekleyen"] = {
         "slug": veri["slug"],
         "kategori": veri["kategori"],
+        "tur": veri.get("tur", "gorsel"),
         "slayt": veri["slayt"],
         "saas_post_id": saas_post.get("id"),
         "onay_url": yanit.get("approvalUrl"),
@@ -203,6 +216,7 @@ def main() -> int:
         "durum": "gonderildi",
         "slug": veri["slug"],
         "kategori": veri["kategori"],
+        "tur": veri.get("tur", "gorsel"),
         "slayt": veri["slayt"],
         "saas_post_id": saas_post.get("id"),
         "onay_url": yanit.get("approvalUrl"),

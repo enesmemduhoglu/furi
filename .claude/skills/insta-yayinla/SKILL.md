@@ -57,7 +57,9 @@ Ayrinti: `SAAS-ENTEGRASYON-PLANI.md`
    Kota siraya konani sayar (`bugun.siraya_konan`), yayinlanani degil.
 4. **Hata olursa state'e dokunma.** Hata mailini at, oldugun yerde dur.
 5. **Sadece `otomasyon/*.json` commit edilir.** Gorseller, `caption.md`, skill
-   dosyalari bu akista asla degistirilmez. `--force` push yok.
+   dosyalari bu akista asla degistirilmez. `--force` push yok. **Video dosyasi
+   (`.mp4`/`.mov`) hicbir kosulda commit edilmez** — depo sisirir; video Blob'da
+   durur, repoda yalnizca `video.json` icindeki URL vardir.
 6. **`.env` asla commit edilmez.** Repo public. API anahtarini ve token'i
    hicbir yere (mail, log, commit mesaji) yazma.
 7. **Kullaniciya sorma.** Gozetimsiz calisiyorsun. `AskUserQuestion` cagirma —
@@ -297,6 +299,34 @@ Tum komutlar repo kokunden calistirilir.
 > yanlis sonuc uretmelerindense durmalari yeglenir.
 
 ---
+
+## Reels (video) — otomatik akista YOK
+
+`reels/<slug>/` postlari **aday havuzuna hic girmez** (`aday_sec.otomatik_havuz`,
+2026-08-29). Bu skill onlara dokunmaz: gunluk kota, puan sirasi ve kategori
+rotasyonu yalnizca karusel havuzunu yonetir.
+
+Sebep: Reel'ler duzensiz uretiliyor ve her biri elle bir kez gozden geciriliyor.
+Otomatik siraya girselerdi gunluk kotayi paylasip karusel temposunu bozarlardi.
+
+Elle gonderim (gozetimli, bu skill'in disinda):
+
+```bash
+python $S/medya_yukle.py <video.mp4> --slug reels/<slug>   # once Blob'a yukle
+python $S/saas_gonder.py --slug reels/<slug>               # sonra onaya gonder
+```
+
+`--slug` yolu `otomatik_havuz`a hic ugramadigi icin ek bir sey gerekmiyor.
+`--durum` ciktisindaki `video_postlar` alani bekleyen Reel'leri listeler ama
+havuz istatistigine karismaz.
+
+> **Video yayini iki fazlidir ve onay sayfasi acik kalmalidir.** Instagram
+> videoyu transcode ederken onay istegi tek turda bitiremiyor; yayini onay
+> sayfasinin yoklamasi tamamliyor (~saniyeler). Tarayici erken kapanirsa post
+> `publishing`de kalir ve SaaS'in gunluk emniyet agi cron'u devralir — yani
+> yayin bir gune kadar gecikebilir. Ilk gercek Reel'den sonra `esitle.py --kuru`
+> ile defterde eslestigini **dogrula**: eslesme caption metni uzerinden yurur ve
+> Reels bu yoldan hic gecmedi.
 
 ## Aday secimi
 
