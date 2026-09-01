@@ -1,12 +1,21 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "seviye-testi/c1",
+    "kategori": "seviye-testi",
+    "tur": "gorsel",
+    "slayt": 7,
+    "saas_post_id": "cmtig6n150001l205bof4mt4n",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/273bb0fbdcb844ffb76e0e4ebaf39dbc",
+    "gonderim_zamani": "2026-09-01T12:11:12+03:00",
+    "son_gecerlilik": "2026-09-02T12:11:12+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-08-31T12:12:43+03:00",
-  "son_gonderim": "2026-08-31T12:09:45+03:00",
+  "son_gonderim": "2026-09-01T12:11:12+03:00",
   "bugun": {
-    "tarih": "2026-08-31",
+    "tarih": "2026-09-01",
     "siraya_konan": 1,
-    "yayinlanan": 1
+    "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
