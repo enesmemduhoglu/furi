@@ -72,7 +72,7 @@ grep'lenebilir, denetlenebilir. Görsel ondan türetilir.
 
 ### Öğe türleri
 
-Tekil kart (tek görsel: phrasal, dizi, durumsal, karıştırılan):
+Tekil kart (tek görsel: `dizi`, `phrasal`, `karistirilan`):
 
 | `tur` | Rol | Renk | Punto | Sınır |
 |---|---|---|---|---|
@@ -83,7 +83,8 @@ Tekil kart (tek görsel: phrasal, dizi, durumsal, karıştırılan):
 | `ayrac` | İnce turuncu çizgi | Turuncu | 220×4 px | — |
 | `cta` | Çağrı satırı | Lacivert | 74 | 45 |
 
-Deste slaytları (seviye testi, hikâyeli, kitap-vs-gerçek):
+Deste slaytları (seviye testi, cümleyi tamamla, hikâyeli, kitap-vs-gerçek,
+türkçe tuzağı):
 
 | `tur` | Rol | Renk | Punto | Sınır |
 |---|---|---|---|---|
@@ -160,16 +161,44 @@ Hatırlatmak`, `NATİVE GİBİ KONUŞ`) `"dil": "karisik"` kullanılır: büyük
 
 1. **Eksik diyakritik** — `lazim` → `lazım`, `icin` → `için`. Sözlük elle
    tutulmuyor: repodaki `caption.md` dosyalarından türetiliyor (caption'lar
-   baştan beri düzgün Türkçe yazıldığı için doğal referans). Şu an 549 girdi.
+   baştan beri düzgün Türkçe yazıldığı için doğal referans).
 2. **Kanonik olmayan kategori etiketi.**
-3. **Büyük harf `I`/`İ`** — Türkçe'de küçük `i`nin büyüğü `İ`dir.
+3. **Büyük harf `I`/`İ`** — Türkçe'de küçük `i`nin büyüğü `İ`dir (`TESTI` →
+   `TESTİ`). Buna karşılık `KAYDIR` ve `ANAHTARI` doğrudur; küçükleri `ı`.
 4. **Uzunluk sınırları** — `WORKFLOW.md` Faz 2.
 
-Muaf tuttuğu tek şey Türkçe **soru eki**: `mi/mı/mu/mü` + şahıs eki
-paradigmasının dört uyum varyantından ikisi (`misiniz`, `musunuz`) zaten
-diyakritiksizdir ve ikisi de doğrudur — hangisinin geleceğini önceki hecenin
-ünlüsü belirler. ASCII katlaması dördünü tek torbaya attığı için `durur
-musunuz` → `müsünüz` gibi uydurma bulgu üretiyordu.
+### Üç bilinçli susturma
+
+Üçü de aynı sebepten: **ASCII katlaması iki farklı doğruyu tek torbaya
+atıyor.** Sözlük türetilmiş olduğu için hangisinin kastedildiğini bilemez.
+
+1. **Soru eki** (`SORU_EKI`) — `mi/mı/mu/mü` + şahıs eki paradigmasının dört
+   uyum varyantından ikisi (`misiniz`, `musunuz`) zaten diyakritiksizdir ve
+   ikisi de doğrudur; hangisinin geleceğini önceki hecenin ünlüsü belirler.
+   Katlama olmadan `durur musunuz` → `müsünüz` gibi uydurma bulgu çıkıyordu.
+
+2. **Eşsesli çiftler** (`ESSESLI`) — katlanınca başka bir gerçek Türkçe
+   kelimeye eşitlenen kelimeler: `onu`/`önü`, `ise`/`işe`, `iste`/`işte`.
+   Sözlüğe çiftin yalnızca diyakritikli yarısı girdiği için doğru yazılmış
+   diğer yarı "eksik diyakritik" diye işaretleniyordu. Liste bilerek dar —
+   her giriş bir denetim körlüğü; yalnızca fiilen çarpışan çift ekleniyor.
+
+3. **ASCII `I` içeren BÜYÜK harfli kelime sözlüğe girmez** (`sozluk_kur`).
+   Sebep caption şemasının kendisi: "Alt text" bölümü kartı birebir alıntılar
+   (`WORKFLOW.md` Faz 6), yani **her kart başlığı caption'a BÜYÜK harfle
+   düşer**. Büyük harfte `ı`/`i` ayrımı geri getirilemediği için sözlük
+   kelimeyi yanlış okuyup kartın kendisini suçlayabiliyordu: `SINIR` hem
+   `sınır` hem `sinir` diye okunur, ikisi de gerçek kelimedir, ve düz okunuş
+   sözlüğe girip **doğru yazılmış kartı** "SİNİR olmalı" diye işaretliyordu.
+   2026-09-03'te üç kart birden böyle patladı (`hikayeli/sinir-kapisinda`
+   `SINIR`+`KAPISINDA`, `kitap-vs-gercek/ofis-kaliplari` `ATMIYOR`) — üçü de
+   kendi alt text'inin sözlüğe soktuğu kelimeyle. Eleme dar: yalnızca ASCII
+   `I` içerenler düşer, `TESTİ` gibi zaten noktalı yazılmış büyük kelime
+   sözlükte kalır (yoksa 3 numaralı kontrol kapsam kaybederdi).
+
+> Ortak ilke: **sözlüğün içeriği değiştikçe denetimin sonucu değişmemeli.**
+> Bir kartın basılıp basılmaması, başka bir postun caption'ında hangi
+> kelimelerin geçtiğine bağlı olamaz.
 
 Yakalayamadığı: sözlükte hiç geçmeyen bir kelimenin yanlış yazılması. Faz 2'de
 metni okumanın yerini tutmaz, onu tamamlar.

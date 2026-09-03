@@ -76,6 +76,38 @@ yoksa skill eslesmesi ayrisir.
 
 ## Kapanan isler
 
+### [x] Denetim sozlugu kendi alt text'iyle zehirleniyordu — **duzeltildi (2026-09-03)**
+
+**Belirti:** `metin_denetle.py --tumu` uc karta birden yanlis bulgu verdi ve
+uc kartin da metni DOGRUYDU: `hikayeli/sinir-kapisinda` kapaginda `SINIR` icin
+"SİNİR olmali", `KAPISINDA` icin "KAPİSİNDA olmali"; `kitap-vs-gercek/ofis-kaliplari`
+kapaginda `ATMIYOR` icin "ATMİYOR olmali". Uc kelime de dotless `ı` ile dogru
+yazilmisti (sınır, kapısında, atmıyor).
+
+**Neden:** Sozluk `caption.md`'lerden turetiliyor, `WORKFLOW.md` Faz 6 ise alt
+text'in karti **birebir** alintilamasini zorunlu kiliyor — yani her kart basligi
+caption'a BUYUK harfle dusuyor. Buyuk harfte `ı`/`i` ayrimi geri getirilemedigi
+icin `sozluk_kur`un iki-okunus denemesi (`SINIR` → `sınır` mi `sinir` mi?)
+ikisi de gercek kelime oldugunda yanlis olani `nokta` sozlugune yaziyordu.
+Sonuc: **kart kendi alt text'i yuzunden bulgu uretiyor.** Kusur post yazarken
+degil, postun caption'i yazildiktan SONRA ortaya cikiyor; ilk basim geciyor,
+ikinci basim reddediliyor.
+
+**Duzeltme:** ASCII `I` iceren BUYUK harfli kelime sozluge girmiyor. Eleme
+bilerek dar — belirsizligin tek kaynagi o harf; `TESTİ` gibi zaten noktali
+yazilmis buyuk kelime sozlukte kaliyor, yoksa `TESTI` bulgusu kaybolurdu
+(dosyanin kendi ornegi). Ayrica `ESSESLI` muafiyeti eklendi: katlaninca baska
+bir gercek Turkce kelimeye esitlenen `onu`/`önü`, `ise`/`işe`, `iste`/`işte`.
+Ucu de ayni gun kart yazarken carpisti. `SORU_EKI` ile ayni mantik.
+
+**Ilke:** sozlugun icerigi degistikce denetimin sonucu degismemeli. Bir kartin
+basilip basilmamasi, baska bir postun caption'inda hangi kelimelerin gectigine
+bagli olamaz. Ayni ilke satir ici yorumda `SIK KARISTIRILANLAR` icin de yazili.
+
+**Nerede:** `marka/metin_denetle.py` > `sozluk_kur` ve `ESSESLI`; anlatimi
+`marka/README.md` > "Uc bilincli susturma".
+
+
 ### [x] `WORKFLOW.md` ve `HATA-RAPORU.md` tam Turkce'ye cevrildi
 
 2026-08-22. Duz yazinin tamami cevrildi. Cevrilmeyenler bilincli:
@@ -271,6 +303,15 @@ puanlandi.
 ---
 
 #### Puanlamanin ciktisi
+
+> ⚠ **Bu blok 2026-08-18 tarihli bir fotograf, guncel havuz DEGIL.** Sistemin
+> ilk turunda ne cikti onu gosteriyor; o gunden beri postlar yayinlandi,
+> silindi ve eklendi. Asagidaki listede artik var olmayan postlar geciyor
+> (`kitap-vs-gercek/native-kaliplar` cope atildi, `durumsal/*` klasoruyle
+> birlikte silindi, `karistirilan/make-vs-do` ve dort `phrasal` elendi).
+>
+> **Guncel sira icin tek kaynak:** `python .claude/skills/insta-yayinla/scripts/aday_sec.py --durum`
+> — `yayin_sirasi` alani. Buraya bakip "siradaki post su" deme.
 
 Puanlar kategori kategori (2026-08-18, olcut surumu 2). Yayin sirasi artik
 kategoriden bagimsiz, tepeden asagiya — asagida ayrica veriliyor.
