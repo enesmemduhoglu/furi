@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Onceki iki cumleyi-tamamla destesinin gerekcesinde iki kez eksi yazilan sey burada kapandi: deste artik kapakla basliyor ve kapak bir catisma kuruyor (IKISI DE DOGRU AMA AYNI DEGIL). Kanca da yanilgiyi tek cumlede aciyor: 'Biri sigarayi birakti, digeri sigara icmek icin durdu.' Yanlis sik olmadigi icin okur elemeyle gececegi bir soru degil, gercekten karar vermesi gereken bir soru goruyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort ayrimin dordu de kuralla veriliyor ve kurallar zaman/niyet ekseninde: remember + to gelecek, remember + -ing gecmis; try + to basarmak, try + -ing yontem denemek. Caption ayni mantikla calisan uc fiil daha ekliyor (regret, go on, mean). Cevap anahtari 'hangisi dogru'yu degil iki cumlenin de ne demek oldugunu yaziyor, yani yanlis secen okur da bir sey ogreniyor."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Onceki iki bolumun ozgunlugu 6'dan 5'e dusmustu, gerekcesi 'iskelet seviye-testi ile birebir ayni, mekanik olarak yeni bir sey yok' idi. Burada mekanik degisti: dort sik yerine iki sik, ve ikisi de dogru. Soru artik yanlisi elemek degil anlam farkini secmek; cevap anahtari da tek dogruyu degil iki anlami veriyor. Gerund/infinitive konusunun kendisi ders kitaplarinda cok islendigi icin tavan 9 degil."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Ayrim Turkce konusan icin gorunmez: Turkcede fiilin ardindan gelen yapinin anlami degistirdigi bir kategori yok, o yuzden okur sectigini fark etmiyor. Kucuk not bunu somut bir sosyal bedele baglıyor — 'I forgot meeting you' demek karsindakiyle tanistigini hatirlamadigini soylemek, ve ileri seviyede bu hata gramer hatasi degil ilgisizlik gibi duyuluyor. Ornekler gunluk (sigara, kapi, telefon), nis degil."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Dort soru slaytinin dordu de 1389 px blokta, birebir ayni iskelet — kaydirirken yalnizca cumle ve iki sik degisiyor. Cevap anahtari 2081 px'e 0.99 olcekle sigdi, turuncu ayraclar dort maddeyi ayirt edilir tutuyor. Eksi: iki sikli soru karti dort sikliya gore seyrek, blok 1389 px ile edatlar destesinin 1831 px'inin belirgin altinda; blok dikey olarak ortalandigi icin bosluk ust ve altta esit dagiliyor ama kart yine de hafif duruyor."
+    }
+  },
+  "toplam": 8.6
+}

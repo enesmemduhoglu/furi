@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca okurun muhtemelen kullandigi bir cumleyi cope atiyor: \"'I am hardworking' cumlesi bir is gorusmesinde hicbir sey anlatmaz.\" Bahis kategorinin en yuksegi — otel destesi konfor cumleleriydi ve 7.0 aldi, burada kaybedilecek sey is. Her kartin CTA'si bir sonraki sahneyi vaat ediyor ve son kart 'Ortak kural icin kaydir' diyerek desteyi sonuna kadar cektiriyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Kategorinin bilinen tavani burada kirildi: hikayeli desteleri simdiye kadar yalnizca kalip cumle siraliyordu, bu destede 6. slayt bir kural slayti — 'Sifat soyleme, kanit soyle' kurali iki cumle yan yana konarak gosteriliyor (I am hardworking / I've been working here for five years). Dort kartin dordu de o kuralin ornegi, yani deste ezber degil ilke veriyor. Caption kurali CV ve LinkedIn'e tasiyip uc kalip daha ekliyor."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Sahne sirasi formati hesabin kendi bicimi, ama buradaki yeni sey kapanis: arsivdeki dort hikayeli destesi de son cumle artı CTA ile bitiyordu, bu ilk kez bir kural slaytiyla bitiyor. Maas araligini sormanin normal karsilandigi notu ve 'Do you have any questions' sorusuna hazir cevap piyasadaki seyahat/gunluk kalip iceriginden ayrisiyor. Is gorusmesi Ingilizcesi kalabalik bir alan oldugu icin tavan 9 degil."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Hedef kitlenin Ingilizce ogrenme sebebinin buyuk kismi is; deste dogrudan o kazanimi hedefliyor. Maas sorusu notu Turkiye baglamini adiyla aniyor — 'Turkiye'de cekinilen bir sey ama Ingilizce gorusmelerde beklenen ve normal'. Kucuk not somut bir kiyas veriyor: Ingilizcesi zayif ama somut konusan aday, Ingilizcesi iyi ama sifat siralayan adaydan guclu duruyor."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Dort sahne slaytinin dordu de tam 1275 px blokta — birebir ayni, kaydirirken goz hicbir yerde yeniden konumlanmiyor. Ilk basimda 2. ve 3. kartin cumleleri iki satira kirilip digerlerinden 112 px uzundu; cumleler kisaltilip dordu de tek satira indirildi (en uzunu 39 karakterlik 'What is the salary range for this role?'). Kategorinin bilinen 'ic slaytlarda alt ucte bir bos' kusuru burada yok, blok dikey olarak dengeli oturuyor; kural slayti 1681 px ile bilerek daha dolu."
+    }
+  },
+  "toplam": 8.8
+}

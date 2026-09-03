@@ -1,0 +1,61 @@
+{
+  "slug": "turkce-tuzagi/kibarlik-tuzagi",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "kapak",  "metin": "CÜMLEN DOĞRU TONUN KABA" },
+        { "tur": "ornek",  "metin": "Kibar olmak istiyorsun, emir veriyorsun." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "KAHVE İSTEMEK" },
+        { "tur": "araetiket", "metin": "KABA", "alt": 8 },
+        { "tur": "cumle",  "metin": "Give me a coffee.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "KİBAR", "alt": 8 },
+        { "tur": "cumle",  "metin": "Could I get a coffee?", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(İngilizcede rica soru cümlesiyle kurulur.)" },
+        { "tur": "cta",    "metin": "Sırada: Davet etmek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "DAVET ETMEK" },
+        { "tur": "araetiket", "metin": "KABA", "alt": 8 },
+        { "tur": "cumle",  "metin": "You must come.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "KİBAR", "alt": 8 },
+        { "tur": "cumle",  "metin": "You should come.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Must zorunluluk der, should önerir.)" },
+        { "tur": "cta",    "metin": "Sırada: Müdür istemek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "MÜDÜR İSTEMEK" },
+        { "tur": "araetiket", "metin": "KABA", "alt": 8 },
+        { "tur": "cumle",  "metin": "I want to talk to the manager.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "KİBAR", "alt": 8 },
+        { "tur": "cumle",  "metin": "Could I speak to the manager?", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(I want emir gibi duyulur, Could I ricadır.)" },
+        { "tur": "cta",    "metin": "Sırada: Yer göstermek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "YER GÖSTERMEK" },
+        { "tur": "araetiket", "metin": "KABA", "alt": 8 },
+        { "tur": "cumle",  "metin": "Sit down.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "KİBAR", "alt": 8 },
+        { "tur": "cumle",  "metin": "Have a seat.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Emir kipi İngilizcede komuttur, rica değil.)" },
+        { "tur": "cta",    "metin": "Hangisini yapıyordun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

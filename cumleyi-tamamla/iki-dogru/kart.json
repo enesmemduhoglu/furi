@@ -1,0 +1,72 @@
+{
+  "slug": "cumleyi-tamamla/iki-dogru",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "kapak",  "metin": "İKİSİ DE DOĞRU AMA AYNI DEĞİL" },
+        { "tur": "ornek",  "metin": "Gramer ikisinde de doğru. Anlam bambaşka." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 01 / 04" },
+        { "tur": "soru",   "metin": "Sigara içmeyi bıraktı." },
+        { "tur": "sik",    "metin": "A) He stopped smoking.",  "dil": "en" },
+        { "tur": "sik",    "metin": "B) He stopped to smoke.", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 02 / 04" },
+        { "tur": "soru",   "metin": "Kapıyı kilitlemeyi unutma." },
+        { "tur": "sik",    "metin": "A) Remember to lock it.", "dil": "en" },
+        { "tur": "sik",    "metin": "B) Remember locking it.", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 03 / 04" },
+        { "tur": "soru",   "metin": "Bir de onu aramayı dene." },
+        { "tur": "sik",    "metin": "A) Try to call him.", "dil": "en" },
+        { "tur": "sik",    "metin": "B) Try calling him.", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevabını seç." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 04 / 04" },
+        { "tur": "soru",   "metin": "Onunla tanıştığımı unutmuşum." },
+        { "tur": "sik",    "metin": "A) I forgot to meet him.", "dil": "en" },
+        { "tur": "sik",    "metin": "B) I forgot meeting him.", "dil": "en", "alt": 190 },
+        { "tur": "cta",    "metin": "Cevaplar sırada →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "baslik", "metin": "CEVAP ANAHTARI" },
+        { "tur": "madde",  "metin": "01 - A) He stopped smoking.", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Stop + -ing eylemi bırakır; stop + to o eylemi yapmak için durmaktır.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "02 - A) Remember to lock it.", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Remember + to henüz yapılmamış işi, remember + -ing yapılmış olanı anlatır.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "03 - B) Try calling him.", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Try + to zor bir şeyi başarmaya çalışmak, try + -ing bir yöntemi denemektir.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "04 - B) I forgot meeting him.", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Forget + to yapmayı unutmak, forget + -ing yaşadığını unutmaktır.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "cta",    "metin": "Kaç doğrun var? Yorumlara yaz ↓" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Kanca okurun kazandigini sandigi bir ani geri aliyor: \"'Fair enough' duyduysan tartismayi kazanmadin — karsindaki sadece birakti.\" Guclu bir tersine cevirme, ama kalip 'no offense' kadar sasirtici degil cunku cogu okur zaten yaklasik anlamini biliyor; devrilen sey tam anlami degil derecesi."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Kalibi bir olcek uzerine oturtuyor: 'haklisin' ile 'peki madem' arasinda, tam onay degil ikna olma hic degil. Uc alternatif farkli soguklukta veriliyor (That's a good point / I'll give you that / If you say so). Kucuk not somut bir davranis kurali cikariyor — bu kalibi duyunca konuyu acmaya devam etmek kazanilani geri alir."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Piyasada bu kalip 'tamam, anladim' diye ogretiliyor; buradaki aci kalibi bir kapanis sinyali olarak cerceveliyor ve okuru konusmanin bittigini fark etmeye cagiriyor. Ayrica kategoride ikinci kez dizi baglami veriliyor (Ingiliz dizileri, pazarlik sahnesi, tartismanin son repligi) — arsivdeki on dizi postunda hic yoktu."
+    },
+    "hedef_kitle": {
+      "puan": 8,
+      "gerekce": "Ornek cumle genel ve gunluk ('let's do it your way'), nis degil. Kalip altyazi izleyen orta seviye takipcinin sik duydugu turden. Eksi: 'tartismayi kazandigini sanmak' senaryosu is ya da yurt disi ortaminda yasayan takipciye daha cok dokunuyor, gunluk Turkiye hayatinda karsiligi daha zayif."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "no-offense ile birebir ayni 1285 px blok ve ayni bes ogeli kademe: etiket, dev FAIR ENOUGH basligi, tek satirlik anlam, gri ornek, CTA. Anlam satiri cift ifadeli oldugu icin baslikla yarismiyor. Eksi: tekil kart sablonunun bilinen sorunu burada da var — ornek ile CTA arasindaki bosluk genis, kartin alt dortte biri bos."
+    }
+  },
+  "toplam": 8.2
+}

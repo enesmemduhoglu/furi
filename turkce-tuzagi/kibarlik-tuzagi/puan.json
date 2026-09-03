@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca gramer hatasi vaat etmeyip onu bilerek elden cikariyor: \"'Give me a coffee' cumlesinde tek bir gramer hatasi yok. Yine de kaba.\" Kapak ayni gerilimi tasiyor (CUMLEN DOGRU TONUN KABA). Okur yillardir dogru sandigi cumlelerin kendisini soguk gosterdigini ogreniyor; utanma refleksi yorumu getiren turden."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kartin dordu de kural veriyor, ornek degil: ricanin soru cumlesiyle kurulmasi, must'in zorunluluk should'un oneri yuklemesi, 'I want' kalibinin dayatma sinyali vermesi, emir kipinin komut olmasi. Caption her kurali genisletiyor (Could I / Can I / Would you ailesi, 'You're welcome to come'). Ozet slayti yok, bes slaytin dordu ders."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Serinin ilk iki bolumu uretim hatasini isledi (yanlis fiil, kayan anlam); bu bolum ekseni sosyal etkiye cevirip ara etiketleri YANLIS/DOGRU yerine KABA/KIBAR yapiyor — hata gramerde degil tonda. Piyasadaki 'Turklerin Ingilizce hatalari' icerigi tamamen uretim tarafinda oldugu icin bu eksen bos. Formatin ucuncu kullanimi olmasi tavani 9'a cikmasini engelliyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Dordu de Turkcedeki dogrudanligin birebir cevrilmesinden doguyor: 'bana bir kahve ver', 'gelmelisin', 'mudurle konusmak istiyorum', 'otur'. Turkcede bunlarin hicbiri kabalik degil, o yuzden hata gorunmez kaliyor. Kucuk not tam bu kitlenin kaygisina basiyor: is ortaminda Ingilizce konusan birinin neden mesafeli karsilandigini bilmemesi."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Dort ders slayti da 1500 px blokta, birebir ayni dikey ritim — baslik, KABA/KIBAR ara etiketleri, gri kural satiri ve CTA her kartta ayni y ekseninde. Dort baslik da tek satira sigdi, sekiz Ingilizce cumlenin hepsi tek satirda. 5. kartin kisa cumleleri (Sit down. / Have a seat.) hiyerarsiyi bozmuyor cunku cumle punto sabit, baslikla yarismiyor. Kapak iki satirda dengeli bolunmus."
+    }
+  },
+  "toplam": 8.8
+}

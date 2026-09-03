@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca okuru kendi maillerinde yakaliyor: \"'I would like to request that you...' diye baslayan bir mail, daha ilk satirda yazanin Ingilizceyi kitaptan ogrendigini soyler.\" Kapak ayni catismayi kuruyor (KIMSE BOYLE MAIL YAZMAZ). Ozet slayti yok, alti slaytin besi ders — deste kaydirildikca yeni bilgi vermeye devam ediyor, tekrar eden bir kapanisla yavaslamiyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Bes kartin yaninda caption'da on bes alternatif daha veriliyor (Apologies for the wait, Any chance you could, Circling back on this...). Ustune kartlarin otesine gecen bir kural: uzun giris cumlesi kibarlik degil mesafe olarak okunuyor, samimiyet arttikca mail kisaliyor. Her kart kendi kuralini tasiyor; sonuncusu en isleve donuk — 'I would like to remind you' sitem gibi durur, 'Just following up' kimseyi suclamaz."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Kitap-gercek karsitligi hesabin kendi formati ve bu bolum ilk bolumun caption'inda verilen 'ikinci bolumu hazirlayayim' sozunu oduyor. Ilk bolumden yapisal farki ozet slaytinin kaldirilmasi: orada deste bir tekrar slaytiyla bitiyordu, burada besinci ders kartiyla bitiyor. Is Ingilizcesi kaliplari piyasada islenmis bir konu oldugu icin tavan 9 degil."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Hedef kitlenin Ingilizce ogrenme sebebi buyuk olcude is; bes kalip da Turkiye'de okulda ya da kursta ogretilen, yurt disi yazismada hemen fark edilen kaliplar. Kucuk not somut bir kaybi tarif ediyor: 'I would like to request that you...' resmi sikayet ve IK yazismasinin dili oldugu icin kibar olmaya calisirken konu ciddilestirilmis oluyor."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Bes karsilastirma slaytinin blok yuksekligi 1401 / 1401 / 1401 / 1391 / 1401 px — on piksel icinde, kaydirirken yalnizca metin degisiyor. Kategoriye 5.0 yazdiran tasma kusuru yok: on KITAP/GERCEK satirinin hepsi tek satirda, en uzunu 36 karakterlik 'KITAP: Please find attached the file.'. Ara basimda 'I look forward to hearing from you' iki satira kirilmisti, cumle kisaltilip tek satira indirildi."
+    }
+  },
+  "toplam": 8.8
+}

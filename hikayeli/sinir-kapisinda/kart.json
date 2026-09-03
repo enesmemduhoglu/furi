@@ -1,0 +1,58 @@
+{
+  "slug": "hikayeli/sinir-kapisinda",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "kapak",  "metin": "SINIR KAPISINDA KURTARAN CÜMLELER" },
+        { "tur": "cta",    "metin": "Pasaportu verelim... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "PURPOSE OF VISIT", "dil": "en" },
+        { "tur": "cumle",  "metin": "I'm here on holiday for ten days.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(On günlüğüne tatil için geldim.)" },
+        { "tur": "cta",    "metin": "Nerede kalacaksın... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "WHERE I'M STAYING", "dil": "en" },
+        { "tur": "cumle",  "metin": "I'm staying at a hotel in the centre.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Merkezde bir otelde kalacağım.)" },
+        { "tur": "cta",    "metin": "Dönüş bileti... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "MY RETURN TICKET", "dil": "en" },
+        { "tur": "cumle",  "metin": "Here is my return ticket.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Dönüş biletim burada.)" },
+        { "tur": "cta",    "metin": "Ya iş için geldiysen... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "HERE ON BUSINESS", "dil": "en" },
+        { "tur": "cumle",  "metin": "I'm here for a conference.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Bir konferans için geldim.)" },
+        { "tur": "cta",    "metin": "Ortak kural için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "kapak",  "metin": "DÖRDÜNÜN ORTAK KURALI" },
+        { "tur": "cumle",  "metin": "Well, my friend invited me and...", "dil": "en", "alt": 14 },
+        { "tur": "cumle",  "metin": "Tourism. Ten days.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Uzun açıklama şüphe doğurur. Kısa cevap normaldir.)" },
+        { "tur": "cta",    "metin": "Yurt dışına çıkacaklara gönder ↓" }
+      ]
+    }
+  ]
+}

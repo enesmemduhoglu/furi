@@ -1,0 +1,14 @@
+{
+  "slug": "dizi/fair-enough",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DİZİ İNGİLİZCESİ" },
+        { "tur": "baslik", "metin": "FAIR ENOUGH", "dil": "en" },
+        { "tur": "anlam",  "metin": "Peki madem. / Anladım, haklısın." },
+        { "tur": "ornek",  "metin": "Fair enough, let's do it your way.", "dil": "en" },
+        { "tur": "cta",    "metin": "Sence Türkçesi ne? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

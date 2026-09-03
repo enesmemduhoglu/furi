@@ -1,0 +1,63 @@
+{
+  "slug": "kitap-vs-gercek/ofis-kaliplari",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "kapak",  "metin": "KİMSE BÖYLE MAİL YAZMAZ" },
+        { "tur": "ornek",  "metin": "Yanlış değil. Sadece otuz yıl geç." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "ÖZÜR DİLEMEK" },
+        { "tur": "cumle",  "metin": "KİTAP: I apologize for the delay.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Sorry for the late reply.", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Mailde apologize resmi, sorry standart.)" },
+        { "tur": "cta",    "metin": "Sırada: Rica etmek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "RİCA ETMEK" },
+        { "tur": "cumle",  "metin": "KİTAP: I would like to request this.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Could you do this?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Rica soru cümlesiyle kurulur, dilekçeyle değil.)" },
+        { "tur": "cta",    "metin": "Sırada: Dosya eklemek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "DOSYA EKLEMEK" },
+        { "tur": "cumle",  "metin": "KİTAP: Please find attached the file.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: I've attached the file.", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Find attached artık resmi yazışmada kaldı.)" },
+        { "tur": "cta",    "metin": "Sırada: Cevap beklemek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "CEVAP BEKLEMEK" },
+        { "tur": "cumle",  "metin": "KİTAP: I look forward to your reply.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Let me know what you think.", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Kalıpla kapatma, somut bir şey sor.)" },
+        { "tur": "cta",    "metin": "Sırada: Takip etmek" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "TAKİP ETMEK" },
+        { "tur": "cumle",  "metin": "KİTAP: I would like to remind you.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Just following up on this.", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Hatırlatmak sitem, takip etmek nötr durur.)" },
+        { "tur": "cta",    "metin": "Kaçını yazıyorsun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

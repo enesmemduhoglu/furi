@@ -1,0 +1,61 @@
+{
+  "slug": "turkce-tuzagi/zaman-kaymasi",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "kapak",  "metin": "ZAMANI TÜRKÇEDEN SEÇİYORSUN" },
+        { "tur": "ornek",  "metin": "Türkçede bir zaman, İngilizcede üçü var." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "BEŞ YILDIR BURADA" },
+        { "tur": "araetiket", "metin": "ZAMAN YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "I am living here for 5 years.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "ZAMAN DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "I have been living here for 5 years.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(For ve since gördüğün yerde perfect gerekir.)", "dil": "karisik" },
+        { "tur": "cta",    "metin": "Sırada: Henüz yemedim" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "HENÜZ YEMEDİM" },
+        { "tur": "araetiket", "metin": "ZAMAN YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "I didn't eat yet.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "ZAMAN DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "I haven't eaten yet.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Yet, already, just hep perfect ister.)", "dil": "karisik" },
+        { "tur": "cta",    "metin": "Sırada: Her gün çalışmak" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "HER GÜN ÇALIŞMAK" },
+        { "tur": "araetiket", "metin": "ZAMAN YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "I am working here every day.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "ZAMAN DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "I work here every day.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(Alışkanlık present simple, şu an continuous.)", "dil": "karisik" },
+        { "tur": "cta",    "metin": "Sırada: Ben geldiğimde" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "TÜRKÇE TUZAĞI" },
+        { "tur": "baslik", "metin": "BEN GELDİĞİMDE" },
+        { "tur": "araetiket", "metin": "ZAMAN YANLIŞ", "alt": 8 },
+        { "tur": "cumle",  "metin": "When I will come, we talk.", "dil": "en", "alt": 52 },
+        { "tur": "araetiket", "metin": "ZAMAN DOĞRU", "alt": 8 },
+        { "tur": "cumle",  "metin": "When I come, we'll talk.", "dil": "en", "alt": 48 },
+        { "tur": "ornek",  "metin": "(When ve if sonrasında will kullanılmaz.)", "dil": "karisik" },
+        { "tur": "cta",    "metin": "Kaç tanesini yapıyordun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}
