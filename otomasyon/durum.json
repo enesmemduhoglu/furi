@@ -1,19 +1,19 @@
 {
   "bekleyen": {
-    "slug": "hikayeli/takside",
-    "kategori": "hikayeli",
+    "slug": "karistirilan/remember-vs-remind",
+    "kategori": "karistirilan",
     "tur": "gorsel",
-    "slayt": 6,
-    "saas_post_id": "cmtjvjhpg0001jy04lcj3mn47",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/2c452ba65aa543e9a21fb885389a67c7",
-    "gonderim_zamani": "2026-09-02T12:08:52+03:00",
-    "son_gecerlilik": "2026-09-03T12:08:52+03:00"
+    "slayt": 1,
+    "saas_post_id": "cmtlb04c50001l604l2qlb606",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/7d0ed8fd266b4352947c407985c1c576",
+    "gonderim_zamani": "2026-09-03T12:09:29+03:00",
+    "son_gecerlilik": "2026-09-04T12:09:29+03:00"
   },
   "yayin_denemesi": null,
-  "son_yayin": "2026-09-01T12:14:29+03:00",
-  "son_gonderim": "2026-09-02T12:08:52+03:00",
+  "son_yayin": "2026-09-02T12:30:33+03:00",
+  "son_gonderim": "2026-09-03T12:09:29+03:00",
   "bugun": {
-    "tarih": "2026-09-02",
+    "tarih": "2026-09-03",
     "siraya_konan": 1,
     "yayinlanan": 0
   },

@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-02T12:08:44+03:00",
+  "guncelleme": "2026-09-03T12:09:21+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -126,6 +126,15 @@
       "ig_media_id": null,
       "permalink": "https://www.instagram.com/p/DcvULIulnCN/",
       "yayin_zamani": "2026-09-01T12:14:29+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "hikayeli/takside",
+      "kategori": "hikayeli",
+      "slayt": 6,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/Dcx6zxWFgEo/",
+      "yayin_zamani": "2026-09-02T12:30:33+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
