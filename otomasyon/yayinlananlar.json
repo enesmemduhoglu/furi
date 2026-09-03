@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-03T12:09:21+03:00",
+  "guncelleme": "2026-09-03T14:48:32+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -136,6 +136,16 @@
       "permalink": "https://www.instagram.com/p/Dcx6zxWFgEo/",
       "yayin_zamani": "2026-09-02T12:30:33+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "karistirilan/remember-vs-remind",
+      "kategori": "karistirilan",
+      "tur": "gorsel",
+      "slayt": 1,
+      "ig_media_id": "18559111660073654",
+      "permalink": "https://www.instagram.com/p/Dc0dSlLmyUp/",
+      "yayin_zamani": "2026-09-03T09:10:16+00:00",
+      "not": "esitleme ile eklendi (SaaS yayinladi)"
     }
   ]
 }

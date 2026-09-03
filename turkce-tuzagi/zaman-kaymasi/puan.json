@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca dort kelimede yanilgiyi kuruyor: \"Kelimelerin dogru, zamanin Turkce.\" Kapak ayni seyi soruya ceviriyor (ZAMANI TURKCEDEN SECIYORSUN). Asil kaydirtan sey konunun inatciligi — caption acikca 'kelime hatalarin biter, zaman secimin bitmez' diyor, yani ileri seviyedeki okur da kendini hedefte goruyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kart dort ayri kural veriyor: for/since perfect ister, yet/already/just perfect ister, aliskanlik present simple, when/if sonrasi will gelmez. Caption her kurali genisletiyor (I have known him for years; since tarih ister, for sure ister) ve karta sigmayan iki tuzagi ekliyor. Hicbiri ornek degil kural, ve dordu de birbirinden bagimsiz."
+    },
+    "ozgunluk": {
+      "puan": 7,
+      "gerekce": "Sizinti tespiti dogru ve seriye tam oturuyor — Turkcede tek cekimin Ingilizcede uce bolunmesi. Ama zaman uyumu piyasadaki Ingilizce ogretiminin en cok islenen konusu; present perfect anlatmayan hesap yok. Ayrisma sebebin Turkce grameriyle kurulmasinda ve 'kucuk gorunmek' bedelinde, mekanik olarak onceki bolumlerin YANLIS/DOGRU iskeleti korunuyor."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Dordu de Turkiye'de okulda Ingilizce ogrenmis birinin fiilen kurdugu cumle; ozellikle 'I am living here for 5 years' ve 'When I will come' bu kitlenin imzasi. Kucuk not somut bir kayip senaryosuna baglaniyor: is gorusmesinde bes yillik tecrubeyi anlatirken kurulan cumlenin kisiyi yeni baslamis gostermesi."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Dort ders slaytinin blok yuksekligi 1457 / 1500 / 1457 / 1500 px — basliklar 13-16 harf araligina sikistirildigi icin kayma 43 px'te kaliyor ve iki deger donusumlu, yani goz sabit bir ritim goruyor. Dort baslik da tek satira sigdi, sekiz Ingilizce cumlenin hepsi tek satirda (en uzunu 36 karakterlik 'I have been living here for 5 years.'). Kapak iki satirda dengeli bolunmus."
+    }
+  },
+  "toplam": 8.6
+}

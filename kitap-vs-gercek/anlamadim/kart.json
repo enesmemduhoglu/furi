@@ -1,0 +1,63 @@
+{
+  "slug": "kitap-vs-gercek/anlamadim",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "kapak",  "metin": "ANLAMADIĞINI SÖYLEYEMİYORSUN" },
+        { "tur": "ornek",  "metin": "En çok gereken cümle, en az öğretilen cümle." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "EMİN OLMADIĞINDA" },
+        { "tur": "cumle",  "metin": "KİTAP: Do I understand correctly?", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: So you're saying we wait?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Anlamadığını değil, anladığını söyle.)" },
+        { "tur": "cta",    "metin": "Sırada: Tekrarlar mısın" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "TEKRARLAR MISIN" },
+        { "tur": "cumle",  "metin": "KİTAP: Can you repeat that, please?", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Sorry, come again?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Repeat sınav dili, come again günlük dil.)" },
+        { "tur": "cta",    "metin": "Sırada: Duyamadığında" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "DUYAMADIĞINDA" },
+        { "tur": "cumle",  "metin": "KİTAP: I beg your pardon?", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Sorry, what was that?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(I beg your pardon bugün alınganlık bildirir.)" },
+        { "tur": "cta",    "metin": "Sırada: Hızlı konuşunca" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "HIZLI KONUŞUNCA" },
+        { "tur": "cumle",  "metin": "KİTAP: Please speak slowly.", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: Could you slow down a bit?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Emir yerine rica: aynı şey, farklı ton.)" },
+        { "tur": "cta",    "metin": "Sırada: Bilmediğin kelime" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "KİTAP vs GERÇEK" },
+        { "tur": "baslik", "metin": "BİLMEDİĞİN KELİME" },
+        { "tur": "cumle",  "metin": "KİTAP: What is the meaning of it?", "dil": "karisik", "alt": 14 },
+        { "tur": "cumle",  "metin": "GERÇEK: What does that mean?", "dil": "karisik" },
+        { "tur": "ornek",  "metin": "(Sormak ayıp değil, uydurmak risklidir.)" },
+        { "tur": "cta",    "metin": "Hangisini kullanıyorsun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

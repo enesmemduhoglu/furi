@@ -1,21 +1,12 @@
 {
-  "bekleyen": {
-    "slug": "karistirilan/remember-vs-remind",
-    "kategori": "karistirilan",
-    "tur": "gorsel",
-    "slayt": 1,
-    "saas_post_id": "cmtlb04c50001l604l2qlb606",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/7d0ed8fd266b4352947c407985c1c576",
-    "gonderim_zamani": "2026-09-03T12:09:29+03:00",
-    "son_gecerlilik": "2026-09-04T12:09:29+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-09-02T12:30:33+03:00",
+  "son_yayin": "2026-09-03T12:10:19+03:00",
   "son_gonderim": "2026-09-03T12:09:29+03:00",
   "bugun": {
     "tarih": "2026-09-03",
     "siraya_konan": 1,
-    "yayinlanan": 0
+    "yayinlanan": 1
   },
   "son_stok_uyarisi": null,
   "sonraki": null,

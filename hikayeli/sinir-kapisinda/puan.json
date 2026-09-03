@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca sezgiyi tersine ceviriyor: \"Pasaport kontrolunde uzun cevap vermek seni samimi degil, supheli gosterir.\" Bahis arsivin en yuksegi — yanlis cevabin bedeli geri cevrilmek. Otel destesi konfor cumleleriyle 7.0 almisti, buradaki sahne gercek bir panik ani. Her kartin CTA'si sonraki soruyu vaat ediyor, son kart kurala baglıyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Kural slayti kategorinin tavanini ikinci kez kiriyor ve bu sefer kural uzunluk ekseninde: uzun aciklama suphe dogurur, 'Tourism. Ten days.' iki kelime ve yeterli. Caption kartlarin otesine geciyor — 'nerede kalacaksin' sorusuna 'I don't know yet' demenin ek soru getirdigi uyarisi, yaninda bulundurulacak uc belge, ve anlamadiginda uydurmak yerine 'Sorry, could you repeat that?' demek. Somut ve kart disi kazanimlar."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Pasaport kontrolu sorgusu arsivde hic islenmedi — havaalaninda destesinde yalnizca gumruk karti vardi (nothing to declare). Kural slayti 9 numarali is-gorusmesinde destesiyle ayni mekanik ama farkli eksende: orada sifat yerine kanit, burada uzunluk. Seyahat Ingilizcesi kalabalik bir alan oldugu icin tavan 9 degil; ayrisma sahnenin darligi ve kisa cevap kuralinda."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Yurt disina ilk kez cikacak kitle sayfanin en cok kaydeden ve paylasan kesimi. Caption Turkce baglamini adiyla aniyor: Turkcede kibarlik uzun aciklamayla kuruldugu icin insan orada da anlatmaya basliyor. Belge listesi ve 'sehri ve semti soyle' tavsiyesi cumlelerin otesinde pratik deger tasiyor; ornekler nis degil."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Dort sahne slaytinin blogu 1253 / 1229 / 1239 / 1241 px — 24 piksel icinde. Ilk basimda 'RETURN TICKET' on uc harfle digerlerinden kisa oldugu icin punto buyuyup blok 1275'e cikmisti, baslik 'MY RETURN TICKET' yapilip dort baslik 16-17 harf araligina getirildi. Dort Ingilizce cumlenin hepsi tek satirda; kategorinin 'ic slaytlarda alt ucte bir bos' kusuru yok. Kural slayti 1681 px ile bilerek daha dolu."
+    }
+  },
+  "toplam": 8.8
+}

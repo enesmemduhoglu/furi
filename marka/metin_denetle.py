@@ -3,7 +3,7 @@
 Gorsel artik metni bozamiyor (marka/kart_bas.ps1 harfleri gercek fontla
 basiyor), bu yuzden tek risk metnin KENDISI. Bu betik onu okur.
 
-Iki kontrol:
+Dort kontrol:
 
 1. **Eksik diyakritik.** Sozluk elle tutulmuyor: repodaki caption.md
    dosyalarindan turetiliyor. Caption'lar bastan beri duzgun Turkce yazildigi
@@ -11,8 +11,19 @@ Iki kontrol:
    diyakritikli bir kelimeyle eslesiyor ama kendisi diyakritiksizse, ASCII
    kalintisidir: `lazim` -> `lazım`, `icin` -> `için`.
 
-2. **Uzunluk siniri.** WORKFLOW.md Faz 2: dev baslik <= 22, Ingilizce cumle
+2. **Kanonik olmayan kategori etiketi.** Sabit liste (ETIKETLER); kartin en
+   ustunde durdugu icin tek harf sapmasi tum feed'de goze carpar.
+
+3. **Buyuk harf I/İ.** Turkce'de kucuk `i`nin buyugu `İ`dir: `TESTI` degil
+   `TESTİ`. Buna karsilik `KAYDIR` ve `ANAHTARI` dogrudur (kucukleri `ı`).
+
+4. **Uzunluk siniri.** WORKFLOW.md Faz 2: dev baslik <= 22, Ingilizce cumle
    <= 60, Turkce ceviri <= 70 karakter.
+
+Sozlukten turetilen 1 ve 3 numarali kontroller iki yerde bilerek susturuluyor
+— ayrintisi SORU_EKI ve ESSESLI tanimlarinda, ve sozluk_kur icindeki BUYUK
+harf elemesinde. Ortak ilke: sozlugun icerigi degistikce denetimin sonucu
+degismemeli.
 
 Kullanim:
     python marka/metin_denetle.py <kart.json> [...]
@@ -77,6 +88,22 @@ SORU_EKI = {
     "musun", "musunuz", "muyum", "muyuz", "mudur", "muydu",
 }
 
+# ASCII'ye katlaninca baska bir Turkce kelimeye esitlenen kelimeler. Sozluk
+# caption'lardan turedigi icin cifin yalnizca diyakritikli yarisi sozluge
+# giriyor, sonra diyakritiksiz ama DOGRU yazilmis yari "eksik diyakritik" diye
+# isaretleniyor: `onu` -> "önü olmali", `ise` -> "işe olmali". Ikisi de gercek
+# kelime; hangisinin dogru oldugunu ancak cumle soyler, sozluk soyleyemez.
+#
+# Liste bilerek dar: her giris bir denetim korlugu demek, o yuzden yalnizca
+# fiilen carpisan cift ekleniyor. Ucu de 2026-09-03'te kart yazarken cikti.
+# SORU_EKI ile ayni mantik, farkli sebep — orada dort harmoni varyanti tek
+# torbaya dusuyordu, burada iki ayri kelime ayni torbaya dusuyor.
+ESSESLI = {
+    "onu",    # önü
+    "ise",    # işe
+    "iste",   # işte
+}
+
 
 def katla(s: str) -> str:
     return s.translate(KATLAMA)
@@ -100,6 +127,29 @@ def sozluk_kur() -> tuple[dict[str, set[str]], dict[str, str]]:
     nokta: dict[str, str] = {}
     for cap in KOK.glob("*/*/caption.md"):
         for kelime in re.findall(r"[A-Za-zçğıöşüÇĞİÖŞÜ]{3,}", cap.read_text(encoding="utf-8")):
+            # Tamami buyuk harf olan token sozluge GIRMEZ. Sebep caption
+            # semasinin kendisi: "Alt text" bolumu karti birebir alintiliyor
+            # (WORKFLOW.md Faz 6), yani her kart basligi caption'a BUYUK harfle
+            # dusuyor. Buyuk harfte `ı`/`i` ayrimi geri getirilemedigi icin
+            # asagidaki iki-okunus denemesi gercek bir kelimeyi yanlis okuyor:
+            # `SINIR` hem `sınır` hem `sinir` diye okunabiliyor, ikisi de gercek
+            # kelime, ve duz okunus `nokta`ya yazilip DOGRU yazilmis karti
+            # "SİNİR olmali" diye isaretliyordu. 2026-09-03'te uc kart birden
+            # boyle patladi (hikayeli/sinir-kapisinda `SINIR` + `KAPISINDA`,
+            # kitap-vs-gercek/ofis-kaliplari `ATMIYOR`) — hepsi kendi alt
+            # text'inin sozluge soktugu kelimeyle. Kart artik kendi alintisi
+            # yuzunden bulgu uretemez.
+            #
+            # Eleme dar tutuldu: yalnizca ASCII `I` iceren BUYUK kelime duser,
+            # cunku belirsizligin tek kaynagi o harf (`I` kucukken `ı` da
+            # olabilir `i` de). `TESTİ` gibi zaten noktali yazilmis buyuk
+            # kelimede belirsizlik yok, sozluge girmeye devam eder — yoksa
+            # satir 176'da ornek verilen `TESTI` bulgusu kaybolurdu.
+            # Ayni ilke satir 148'de de gecerli: sozlugun icerigi degistikce
+            # denetimin sonucu degismemeli.
+            if kelime == buyuk(kelime) and "I" in kelime:
+                continue
+
             duz = katla(kelime).lower()
             # Olcut kelimenin kendisi degil KUCUK hali: cumle basindaki `İyi`
             # diyakritikli gorunur ama kucugu `iyi`dir.
@@ -195,7 +245,7 @@ def denetle(yol: Path, sozluk: dict[str, set[str]], nokta: dict[str, str]) -> li
                 # Burada yalnizca `sozluk` konusur: `nokta` diyakritiksiz
                 # kelimelerin kendisini tutuyor, onu aday saymak her temiz
                 # kelimeyi kendisiyle karsilastirip bulgu uretirdi.
-                if kucuk(kelime) in SORU_EKI:
+                if kucuk(kelime) in SORU_EKI or kucuk(kelime) in ESSESLI:
                     continue
                 yazimlar = sozluk.get(duz)
                 if yazimlar:

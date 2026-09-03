@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca yanilgiyi tek cumlede kurup deviriyor: \"'No offense' bir ozur degil, uyari.\" Okurun kalibi nezaket sanmasi cok yaygin, dolayisiyla acilis dogrudan bir 'ben bunu yanlis biliyormusum' anina basiyor. CTA da kalibi okurun kendi hatirasina baglıyor (Sana en son kim dedi?), yani yorum bir bilgi degil bir anı istiyor."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Kalibin islevini veriyor (arkadan gelecek cumle icin pesin izin), konumunu veriyor (once gelir, sonra degil) ve uc alternatif listeliyor. Asil kazanim kucuk notta: kalibi eklemek karsindakini korumuyor, savunmaya geciriyor — ve yerine kullanilacak somut cumle veriliyor ('I'm not sure that'll work'). Kalibi ogretmekle kalmayip ne zaman kullanilmamasi gerektigini de soyluyor."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Kalip populer ama arsivdeki hicbir dizi postu yapmadigi bir seyi yapiyor: kalibi kullanmamayi oneriyor. Ayrica kategorinin adinin karsiligi ilk kez veriliyor — caption kalibin hangi sahne turunde duyuldugunu yaziyor (sitcom arkadas masasi, ofis dizisi toplanti sahnesi); arsivde on posta ragmen tek bir dizi baglami yoktu."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Ornek cumle is ortamindan ve genel ('I don't think that'll work') — kategoride hedef_kitle puanini dusuren nis ornek tuzagina (thermal paste, CS2 match) girmiyor. Kalip altyazi izleyen orta seviye takipcinin haftada birkac kez duydugu, ama islevini tersten bildigi turden."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Bes ogeli ferah kompozisyon: etiket, dev NO OFFENSE basligi, tek satirlik anlam, gri ornek, CTA — kademeler net, hicbir satir kirilmadi. Anlam satiri cift ifadeli oldugu icin (Alinma ama... / Kusura bakma ama...) baslikla yarismiyor, kategorinin dusuk puanlilarindaki tek kelimelik anlam sorunu yok. Eksi: ornek ile CTA arasindaki bosluk genis, kartin alt dortte biri bos kaliyor."
+    }
+  },
+  "toplam": 8.6
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "dizi/no-offense",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DİZİ İNGİLİZCESİ" },
+        { "tur": "baslik", "metin": "NO OFFENSE", "dil": "en" },
+        { "tur": "anlam",  "metin": "Alınma ama... / Kusura bakma ama..." },
+        { "tur": "ornek",  "metin": "No offense, but I don't think that'll work.", "dil": "en" },
+        { "tur": "cta",    "metin": "Sana en son kim dedi? ↓" }
+      ]
+    }
+  ]
+}

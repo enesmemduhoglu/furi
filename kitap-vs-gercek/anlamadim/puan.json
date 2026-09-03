@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca bir bosluga basiyor: \"En cok ihtiyacin olacak cumle, kitapta en az yer kaplayan cumle: anlamadim.\" Kapak ayni seyi okurun uzerine aliyor (ANLAMADIGINI SOYLEYEMIYORSUN). Konu her okurun yasadigi ama utandigi icin aramadigi bir sey oldugu icin kaydetme olasiligi yuksek. Ozet slayti yok, alti slaytin besi ders."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Ilk kart dogrudan bir strateji ogretiyor, kalip degil: anlamadigini soylemek yerine anladigini ozetleyip onaylatmak ('So you're saying we wait?'). Bes kartin yaninda caption'da on dort alternatif daha var. Kartlarin kendi kurallari isleve donuk — repeat sinav dili come again gunluk dil, I beg your pardon bugun alinganlik bildirir, sormak ayip degil uydurmak riskli."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Konu piyasadaki Ingilizce iceriginin neredeyse hic girmedigi bir yer: kaliplar anlatmayi ogretiyor, anlamadigini soylemeyi ogretmiyor. Ayrica deste sirasi ogretici — en guclu hamle (anladigini onaylatmak) basa konmus, en basiti (kelime sormak) sona. Kitap-gercek karsitliginin kendisi hesabin ucuncu kullanimi oldugu icin tavan 9 degil."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Okulda Ingilizce ogrenmis ama konusurken takilan kitlenin tam sorunu. Kucuk not iki somut kaybi ayirt ediyor: tek basina 'What?' Turkcedeki 'efendim?' sanildigi icin kaba duyuluyor, ve 'I don't understand' karsidakini basitlestirilmis Ingilizceye gecirip konusmanin kalaninda okura yeni ogrenen biri gibi davranmasina yol aciyor. Ornekler ofis ve gunluk konusmadan, nis degil."
+    },
+    "gorsel_kalite": {
+      "puan": 9,
+      "gerekce": "Bes karsilastirma slaytinin blogu 1355 / 1379 / 1394 / 1379 / 1357 px — 39 piksel icinde. On KITAP/GERCEK satirinin hepsi tek satira sigdi (en uzunu 35 karakterlik 'KITAP: Can you repeat that, please?'), yani kategoriye 5.0 yazdiran tasma kusuru yok. Bes baslik 13-17 harf araliginda tutuldugu icin baslik yuksekligi kartlar arasinda oynamiyor."
+    }
+  },
+  "toplam": 8.8
+}

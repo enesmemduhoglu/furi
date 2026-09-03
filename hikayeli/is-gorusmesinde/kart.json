@@ -1,0 +1,58 @@
+{
+  "slug": "hikayeli/is-gorusmesinde",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "kapak",  "metin": "İŞ GÖRÜŞMESİNDE KURTARAN CÜMLELER" },
+        { "tur": "cta",    "metin": "Görüşmeye girelim... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "A BIT ABOUT ME", "dil": "en" },
+        { "tur": "cumle",  "metin": "I've been in marketing for five years.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Beş yıldır pazarlama alanındayım.)" },
+        { "tur": "cta",    "metin": "Peki güçlü yanın... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "MY STRENGTH", "dil": "en" },
+        { "tur": "cumle",  "metin": "I've handled three product launches.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Üç ürün lansmanı yönettim.)" },
+        { "tur": "cta",    "metin": "Sıra maaşta... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "SALARY RANGE", "dil": "en" },
+        { "tur": "cumle",  "metin": "What is the salary range for this role?", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Bu pozisyonun maaş aralığı nedir?)" },
+        { "tur": "cta",    "metin": "Şimdi sen sor... Kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "baslik", "metin": "MY QUESTION", "dil": "en" },
+        { "tur": "cumle",  "metin": "What does success look like in this role?", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Bu işte başarı neye benziyor?)" },
+        { "tur": "cta",    "metin": "Ortak kural için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "DURUMSAL İNGİLİZCE" },
+        { "tur": "kapak",  "metin": "DÖRDÜNÜN ORTAK KURALI" },
+        { "tur": "cumle",  "metin": "I am hardworking.", "dil": "en", "alt": 14 },
+        { "tur": "cumle",  "metin": "I've been working here for five years.", "dil": "en" },
+        { "tur": "ornek",  "metin": "(Sıfat söyleme, kanıt söyle. Dördü de kanıt.)" },
+        { "tur": "cta",    "metin": "İş arayan arkadaşına gönder ↓" }
+      ]
+    }
+  ]
+}

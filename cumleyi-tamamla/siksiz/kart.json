@@ -1,0 +1,80 @@
+{
+  "slug": "cumleyi-tamamla/siksiz",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "kapak",  "metin": "ŞIK YOK CEVABI SEN YAZ" },
+        { "tur": "ornek",  "metin": "Şıkkı görünce hatırlıyorsun. Ya görmezsen?" },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 01 / 04" },
+        { "tur": "araetiket", "metin": "DURUM", "alt": 8 },
+        { "tur": "ornek",  "metin": "I waited two hours in the rain.", "dil": "en", "alt": 44 },
+        { "tur": "soru",   "metin": "You ___ have called me.", "dil": "en" },
+        { "tur": "araetiket", "metin": "İPUCU", "alt": 8 },
+        { "tur": "ornek",  "metin": "Beni arayabilirdin.", "alt": 150 },
+        { "tur": "cta",    "metin": "Cevabını yaz." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 02 / 04" },
+        { "tur": "araetiket", "metin": "DURUM", "alt": 8 },
+        { "tur": "ornek",  "metin": "She is not here yet.", "dil": "en", "alt": 44 },
+        { "tur": "soru",   "metin": "She ___ have missed the train.", "dil": "en" },
+        { "tur": "araetiket", "metin": "İPUCU", "alt": 8 },
+        { "tur": "ornek",  "metin": "Treni kaçırmış olmalı.", "alt": 150 },
+        { "tur": "cta",    "metin": "Cevabını yaz." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 03 / 04" },
+        { "tur": "araetiket", "metin": "DURUM", "alt": 8 },
+        { "tur": "ornek",  "metin": "He walked right past me.", "dil": "en", "alt": 44 },
+        { "tur": "soru",   "metin": "He ___ have seen you.", "dil": "en" },
+        { "tur": "araetiket", "metin": "İPUCU", "alt": 8 },
+        { "tur": "ornek",  "metin": "Seni görmüş olamaz.", "alt": 150 },
+        { "tur": "cta",    "metin": "Cevabını yaz." }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "sayac",  "metin": "SORU 04 / 04" },
+        { "tur": "araetiket", "metin": "DURUM", "alt": 8 },
+        { "tur": "ornek",  "metin": "Sorry, I forgot to tell you.", "dil": "en", "alt": 44 },
+        { "tur": "soru",   "metin": "You ___ have told me earlier.", "dil": "en" },
+        { "tur": "araetiket", "metin": "İPUCU", "alt": 8 },
+        { "tur": "ornek",  "metin": "Daha önce söylemeliydin.", "alt": 150 },
+        { "tur": "cta",    "metin": "Cevaplar sırada →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "CÜMLEYİ TAMAMLA" },
+        { "tur": "baslik", "metin": "CEVAP ANAHTARI" },
+        { "tur": "madde",  "metin": "01 - could have called", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Could have: olabilirdi ama olmadı. Kaçırılmış bir ihtimali anlatır.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "02 - must have missed", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Must have: kesine yakın tahmin. Kanıtın var, sonucu çıkarıyorsun.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "03 - can't have seen", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Can't have: olması mümkün değil dediğin tahmin. Must have'in zıddı.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "madde",  "metin": "04 - should have told", "dil": "karisik" },
+        { "tur": "aciklama", "metin": "Should have: yapman gerekirdi ama yapmadın. Pişmanlık ya da sitem bildirir.", "dil": "karisik" },
+        { "tur": "ayrac", "en": 1400 },
+        { "tur": "cta",    "metin": "Kaç doğrun var? Yorumlara yaz ↓" }
+      ]
+    }
+  ]
+}

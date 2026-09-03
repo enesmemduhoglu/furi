@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-03",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 9,
+      "gerekce": "Kanca okurun kendi celiskisini soyluyor: 'Siklari gorunce hepsini biliyorsun. Kapatinca hicbirini.' Kapak da mekanigin kendisini vaat ediyor (SIK YOK CEVABI SEN YAZ), yani feed'de goren kart onceki iki bolumdeki gibi ciplak bir soru degil. Sik olmadigi icin okur elemeyle gecemez, cevabi kafasindan kurmak zorunda — kaydirmayi durduran sey bu zorunluluk."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kalibin dordu de kullanim kosuluyla veriliyor: could have kacirilan ihtimal, must have kanita dayali tahmin, can't have onun tam ziddi, should have pismanlik. Kartlar ayrica her kalibi bir duruma oturtuyor (DURUM satiri), yani kalip baglamsiz ezberlenmiyor. Caption cerceveyi Turkce grameriyle kuruyor: '-mis olmali', '-ebilirdin', '-meliydin' Turkcede benzer, Ingilizcede dort ayri yapi."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Onceki uc bolumun hepsinde iskelet sayac + bosluklu cumle + kutulu siklar + cevap anahtariydi ve ozgunluk 6'dan 5'e dusmustu. Burada siklar tamamen kaldirildi ve yerine iki katmanli baglam geldi (DURUM ve IPUCU ara etiketleri). Soru artik tanima degil uretme testi. Modal perfect konusunun kendisi ders kitaplarinda standart oldugu icin tavan 9 degil."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Cerceve dogrudan Turkce konusanin sorunu: Turkcede '-mis olmali' ve '-meliydin' benzer kuruluyor, Ingilizce dordunu ayiriyor. Kucuk not somut bir sosyal ayrima baglanıyor — 'You could have called me' hatirlatma, 'You should have called me' suclama; kizgin olmadigin halde should have secmek karsindakini savunmaya geciriyor. Ornekler gunluk (yagmurda beklemek, tren kacirmak), nis degil."
+    },
+    "gorsel_kalite": {
+      "puan": 8,
+      "gerekce": "Dort soru slaytinin dordu de 1262 px blokta, birebir ayni iskelet; iki turuncu ara etiket (DURUM, IPUCU) karti uc parcali bir okumaya boluyor ve bosluklu cumle ortada tek lacivert odak olarak duruyor. Cevap anahtari 2038 px'e olceksiz sigdi. Eksi: siklar kalktigi icin blok edatlar destesinin 1831 px'inin belirgin altinda kaliyor — ilk basimda 1124 px'ti, baglam satiri eklenerek 1262'ye cikarildi ama kart hala kategorinin en seyrek karti."
+    }
+  },
+  "toplam": 8.6
+}
