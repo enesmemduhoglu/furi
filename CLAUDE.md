@@ -101,11 +101,23 @@ Shell state çağrılar arasında korunmadığı için her PowerShell komutunun 
 ## Post klasörü
 
 `<format>/<slug>/` = `1.jpg … N.jpg` + `caption.md` + `kart.json` + `puan.json`.
-Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi`,
-`kitap-vs-gercek`, `turkce-tuzagi` (kapak + 4 tuzak kartı, 2026-08-28),
-`cumleyi-tamamla` (kapaksız, 5 soru + cevap anahtarı, 2026-08-28),
-`phrasal`, `karistirilan`, `durumsal` (tekil kart —
-2026-08-22'de havuzdaki tüm `durumsal` postları silindi, klasör boş). `<slug>` ASCII ve tireli.
+Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi` (tekil kart),
+`kitap-vs-gercek` (kapak + karşılaştırma kartları), `turkce-tuzagi` (kapak +
+4 tuzak kartı, 2026-08-28), `cumleyi-tamamla` (soru destesi + cevap anahtarı,
+2026-08-28), `phrasal` (tekil kart), `karistirilan` (tekil kart).
+`<slug>` ASCII ve tireli.
+
+> `durumsal` **emekli** — 2026-08-22'de havuzdaki tüm `durumsal` postları
+> silindi, klasör de kaldırıldı. `WORKFLOW.md` Ek B'de iskeleti hâlâ duruyor
+> ama yeni post açılmıyor; tekil kart ihtiyacı `dizi` ve `karistirilan` ile
+> karşılanıyor.
+
+**Deste formatlarının iskeleti sabit değil, karar noktası.** `cumleyi-tamamla`
+kapaksız doğdu (`edatlar`, `karisan-fiiller`) ama kapaksızlık `ilgi_cekicilik`
+dalında iki kez eksi yazdırdı; 2026-09-03'te üretilen `iki-dogru` ve `siksiz`
+kapaklı. Aynı şekilde `kitap-vs-gercek` özet slaytıyla doğdu, sonra özet
+kaldırıldı. İskeleti kopyalamadan önce o kategorinin son postunun
+`puan.json`'undaki gerekçeleri oku — neyin neden değiştiği orada yazılı.
 
 **`reels` formatı ayrı çalışır** (2026-08-29). Klasör `caption.md` + `puan.json` +
 `video.json`; kart yok, `1.jpg` yok. **Video dosyası repoya asla commit edilmez** —

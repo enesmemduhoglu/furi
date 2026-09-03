@@ -70,21 +70,38 @@ FAL_KEY=...
 
 Kullanıcı ya net bir konuyla gelir ("otelde check-in cümleleri yapalım") ya da fikir ister ("ne paylaşsak").
 
-**Fikir isteniyorsa:** aşağıdaki 5 formatın arşivde ne kadar kullanıldığına bak, 3 somut öneri sun. Her öneri: *format + başlık + neden ilgi çeker* (tek satır). Tekrar eden konu önerme — arşivdeki klasör adları zaten işlenmiş konular.
+**Fikir isteniyorsa:** aşağıdaki formatların arşivde ne kadar kullanıldığına bak, 3 somut öneri sun. Her öneri: *format + başlık + neden ilgi çeker* (tek satır). Tekrar eden konu önerme — arşivdeki klasör adları zaten işlenmiş konular.
 
 **Konu netse:** doğrudan format + slayt sayısı öner.
 
 Sonra `AskUserQuestion` ile format ve slayt sayısını onaylat.
 
-### 5 post formatı
+### 8 post formatı
 
 | Format | Slayt | Arşiv örneği |
 |---|---|---|
-| Seviye testi (A1/A2/B1/B2) | 7 | `seviye-testi/a1/`, `seviye-testi/b2/` |
-| Durumsal İngilizce — seri | 5 | `hikayeli/otel/`, `hikayeli/havaalaninda/` |
-| Durumsal İngilizce — tekil kart | 1 | *(havuzda örnek kalmadı, Ek B'ye bak)* |
+| Seviye testi (A1…C1) | 7 | `seviye-testi/a1/`, `seviye-testi/b2/` |
+| Türkçe Tuzağı | 5 | `turkce-tuzagi/ceviri-refleksi/`, `.../kibarlik-tuzagi/` |
+| Kitap vs Gerçek | 6 | `kitap-vs-gercek/ofis-kaliplari/`, `.../anlamadim/` |
+| Cümleyi Tamamla | 6 | `cumleyi-tamamla/iki-dogru/`, `.../siksiz/` |
+| Durumsal İngilizce — seri | 5-6 | `hikayeli/havaalaninda/`, `hikayeli/is-gorusmesinde/` |
+| Dizi İngilizcesi | 1 | `dizi/tell-me-about-it/`, `dizi/no-offense/` |
 | Günün Phrasal Verb'ü | 1 | `phrasal/give-up/` |
 | Sık Karıştırılanlar (X vs Y) | 1 | `karistirilan/lose-vs-loose/` |
+
+> `durumsal` (tekil kart) **emekli** — 2026-08-22'de tüm postları silindi,
+> klasör kaldırıldı. İskeleti Ek B'de tarihsel kayıt olarak duruyor.
+>
+> **Reels sıraya girmez** — `aday_sec` yalnızca karusel havuzunu yönetir,
+> Reel'ler elle gönderilir. Ayrıntısı `CLAUDE.md`.
+
+**Format seçerken puana bak.** `aday_sec.py --durum` kategori dağılımını verir;
+hangi kategorinin geçmişte ne aldığı `<format>/<slug>/puan.json` dosyalarında.
+2026-09-03 ölçümü: `ozgunluk` dalı **format tekrarıyla çürüyor** — aynı
+iskeletle üretilen her yeni post öncekinden ~1 puan düşük özgünlük alıyor
+(`cumleyi-tamamla` 6 → 5). Var olan bir formattan yeni post açacaksan
+iskelette adı konmuş bir mekanik yenilik olsun; yoksa post havuzun dibine
+düşer.
 
 Slayt iskeletleri için → [Ek B](#ek-b--format-iskeletleri).
 
@@ -279,15 +296,21 @@ Marka düzeni ortalanmış ve kenar boşlukları geniş olduğu için 80px kırp
 
 `furi1\<format>\<konu-slug>\1.jpg`, `2.jpg`, ... — arşivdeki `seviye-testi/a1/1.jpg`, `hikayeli/otel/1.jpg` kuralının aynısı.
 
-`<format>` şu beşten biri:
+`<format>` şu sekizden biri:
 
 | `<format>` | Ne girer | Örnek |
 |---|---|---|
 | `seviye-testi` | CEFR testleri (kapak + 5 soru + cevap anahtarı) | `seviye-testi/b1/` |
-| `hikayeli` | Çok slaytlı, bir yolculuğu anlatan seriler | `hikayeli/havaalaninda/` |
-| `durumsal` | Durumsal İngilizce tekil kartları | *(klasör şu an boş)* |
+| `turkce-tuzagi` | Türkçenin İngilizceye sızdığı hatalar (kapak + 4 tuzak) | `turkce-tuzagi/kibarlik-tuzagi/` |
+| `kitap-vs-gercek` | Ders kitabı kalıbı vs gerçek kullanım | `kitap-vs-gercek/ofis-kaliplari/` |
+| `cumleyi-tamamla` | Soru destesi + cevap anahtarı | `cumleyi-tamamla/iki-dogru/` |
+| `hikayeli` | Çok slaytlı, bir sahneyi anlatan seriler | `hikayeli/havaalaninda/` |
+| `dizi` | Dizi/altyazı kalıbı, tekil kart | `dizi/no-offense/` |
 | `phrasal` | Günün Phrasal Verb'ü kartları | `phrasal/give-up/` |
 | `karistirilan` | Sık Karıştırılanlar (X vs Y) kartları | `karistirilan/lose-vs-loose/` |
+
+`reels` bunlardan ayrı çalışır (kart yok, `video.json` var) — `CLAUDE.md`.
+`durumsal` emekli, klasörü kaldırıldı (Ek B §7).
 
 `<konu-slug>` ASCII ve tireli olsun, konuyu tarif etsin: `give-up`, `lose-vs-loose`, `long-story-short`.
 
@@ -476,20 +499,92 @@ Dikey sıralama (tekil kart):
 > anahtarıyla biter, yani 7 slayt. Beş destenin hepsi 2026-08-22'de bu hâle
 > getirildi; arşivde artık 8 slaytlık test yok.
 
-### 2. Durumsal İngilizce — seri, 5 slayt (`hikayeli/otel/`, `hikayeli/havaalaninda/`)
+### 2. Türkçe Tuzağı — 5 slayt (`turkce-tuzagi/ceviri-refleksi/`, `.../kibarlik-tuzagi/`)
+| # | İçerik |
+|---|---|
+| 1 | Kapak: `TÜRKÇE TUZAĞI` / `CÜMLEN DOĞRU TONUN KABA` / `Kibar olmak istiyorsun, emir veriyorsun.` / `Başlamak için kaydır →` |
+| 2-5 | Tuzak kartı: etiket / başlık (`KAHVE İSTEMEK`) / turuncu ara etiket + yanlış cümle / turuncu ara etiket + doğru cümle / `(kuralı tek satırda)` / `Sırada: <sonraki başlık>` |
+
+> **Özet slaytı yok** — bölüm 1'de vardı (`birebir-ceviri`, 8.2), bölüm 2'de
+> kaldırıldı ve puan 8.6'ya çıktı: "beş slaytın dördü ders". Beş slaytın
+> dördü ders kalsın.
+>
+> **Ara etiket çifti eksenin adıdır, sabit değil.** `YANLIŞ`/`DOĞRU` (gramer),
+> `KABA`/`KİBAR` (ton), `ZAMAN YANLIŞ`/`ZAMAN DOĞRU` (zaman). Yeni bölüm yeni
+> eksen demek — aynı çiftle üçüncü kez gelmek `ozgunluk` dalını düşürür.
+
+### 3. Kitap vs Gerçek — 6 slayt (`kitap-vs-gercek/ofis-kaliplari/`, `.../anlamadim/`)
+| # | İçerik |
+|---|---|
+| 1 | Kapak: `KİTAP vs GERÇEK` / `KİMSE BÖYLE MAİL YAZMAZ` / `Yanlış değil. Sadece otuz yıl geç.` / `Başlamak için kaydır →` |
+| 2-6 | Karşılaştırma kartı: etiket / başlık (`ÖZÜR DİLEMEK`) / `KİTAP: I apologize for the delay.` / `GERÇEK: Sorry for the late reply.` / `(kuralı tek satırda)` / `Sırada: <sonraki başlık>` |
+
+> **`KİTAP:` ve `GERÇEK:` satırları ≤ 36 karakter** tutulmalı, yoksa satır
+> ikiye kırılır ve iki satır birbiriyle dengesizleşir. Kategorinin tek 5.0'lık
+> `gorsel_kalite` puanı (`gunluk-kaliplar`) bu yüzdendi.
+>
+> Özet/kapanış slaytı **kullanılmıyor** (2026-09-03): deste beşinci ders
+> kartıyla biter, tekrar eden bir kapanış kaydırmayı yavaşlatıyordu.
+
+### 4. Cümleyi Tamamla — 6 slayt (`cumleyi-tamamla/iki-dogru/`, `.../siksiz/`)
+| # | İçerik |
+|---|---|
+| 1 | Kapak: `CÜMLEYİ TAMAMLA` / `İKİSİ DE DOĞRU AMA AYNI DEĞİL` / kanca satırı / `Başlamak için kaydır →` |
+| 2-5 | Soru: etiket + `SORU 01 / 04` + soru gövdesi + `Cevabını seç.` (son soruda `Cevaplar sırada →`) |
+| 6 | **Cevap anahtarı**: `CEVAP ANAHTARI` + 4 madde (`01 - A) He stopped smoking.` + tek satır kural, aralarında ince turuncu ayraç) + `Kaç doğrun var? Yorumlara yaz ↓` |
+
+> **Kapak zorunlu.** Format kapaksız doğdu (`edatlar`, `karisan-fiiller`) ve
+> `ilgi_cekicilik` gerekçesinde iki kez eksi yazdı: "feed'de ilk gören kart
+> çıplak bir soru, kanca cümlesi yok."
+>
+> **Soru mekaniği her destede değişmeli** — iskelet `seviye-testi` ile aynı
+> olduğu için `ozgunluk` 6'dan 5'e düşmüştü. Denenmiş varyantlar: 4 şık
+> (`edatlar`), **2 şık ve ikisi de doğru** (`iki-dogru` — soru "yanlışı ele"
+> değil "anlam farkını gör"), **şık yok** (`siksiz` — `DURUM` bağlam satırı +
+> boşluklu cümle + `İPUCU` Türkçe ipucu, okur cevabı kendi yazar).
+>
+> Şıklar kalkınca kart seyrekleşir: `siksiz` ilk basımda 1124 px'ti, bağlam
+> satırı eklenerek 1262'ye çıkarıldı. Şıksız tasarımda blok yüksekliğine bak.
+
+### 5. Durumsal İngilizce — seri, 5-6 slayt (`hikayeli/havaalaninda/`, `hikayeli/is-gorusmesinde/`)
 | # | İçerik |
 |---|---|
 | 1 | Kapak: `DURUMSAL İNGİLİZCE` / `OTELDE HAYAT KURTARAN CÜMLELER` / `Check-in yapmak için kaydır →` |
-| 2-4 | Cümle kartı: etiket / `I HAVE A RESERVATION` / tam cümle / `(Türkçe çevirisi)` / geçiş CTA'sı (`Odaya çıkalım... Kaydır →`) |
-| 5 | Kapanış: son cümle + `Seyahat edeceklere gönder ↓` |
+| 2-5 | Cümle kartı: etiket / `I HAVE A RESERVATION` / tam cümle / `(Türkçe çevirisi)` / geçiş CTA'sı (`Odaya çıkalım... Kaydır →`) |
+| 6 | **Kural slaytı**: `DÖRDÜNÜN ORTAK KURALI` / karşıt örnek (`I am hardworking.`) / doğru örnek (`I've been working here for five years.`) / `(Sıfat söyleme, kanıt söyle.)` / `İş arayan arkadaşına gönder ↓` |
 
-### 3. Durumsal İngilizce — tekil kart (`durumsal/<konu>/`)
+> **Kural slaytı `ogretici_deger` tavanını kırar.** Arşivdeki ilk dört hikâyeli
+> destesi son cümle + CTA ile bitiyordu ve hiçbiri o dalda 9 alamadı; gerekçe
+> hep aynıydı: "ne kural var ne yanlış-doğru eşlemesi, ne söyleneceğini
+> öğretiyor neden öyle söylendiğini değil." Kural slaytı eklenen iki deste
+> (`is-gorusmesinde`, `sinir-kapisinda`) 8.8 aldı.
+>
+> **Sahnenin bahsi yüksek olmalı.** `otel` 7.0 aldı çünkü cümleleri konfor
+> cümlesiydi (`extra towels`, `what time is breakfast`); `havaalaninda` 8.0
+> aldı çünkü kayıp bagaj vardı. Kaybedilecek bir şey olan sahne seç.
+
+### 6. Dizi İngilizcesi — tekil kart (`dizi/<kalip>/`)
+`DİZİ İNGİLİZCESİ` / `NO OFFENSE` / `Alınma ama... / Kusura bakma ama...` / `No offense, but I don't think that'll work.` / `Sana en son kim dedi? ↓`
+
+> **`anlam` satırı tek kelime olamaz.** Çift ifadeli (`Benim hatam! / Kusura
+> bakma.`) ya da tam cümle olmalı; kısa `anlam` başlıkla aynı ağırlığa gelip
+> hiyerarşiyi çökertiyor (`long-story-short` "Kısacası." → görsel 5,
+> `suit-yourself` "Sen bilirsin." → görsel 6).
+>
+> **Türkçe çeviri satırı olmayan 5 öğeli kurulum** kategorinin en yüksek
+> puanlısında var (`tell-me-about-it` 8.4); ferah kompozisyon puan getiriyor.
+
+### 7. Durumsal İngilizce — tekil kart ⛔ EMEKLİ (`durumsal/<konu>/`)
 `DURUMSAL İNGİLİZCE` / `ON THE SIDE` / `Can I have the sauce on the side?` / `(Sosu yanında verir misiniz?)` / `Daha fazla kelime için beğen ↓`
 
-### 4. Günün Phrasal Verb'ü (`phrasal/<verb>/`)
+> 2026-08-22'de havuzdaki tüm `durumsal` postları silindi ve klasör kaldırıldı
+> (puanları 5.20-6.40, havuzun en düşükleri). Yeni post açılmıyor; iskelet
+> tarihsel kayıt olarak duruyor.
+
+### 8. Günün Phrasal Verb'ü (`phrasal/<verb>/`)
 `GÜNÜN PHRASAL VERB'Ü` / `FIGURE OUT` / `To understand or solve something.` / örnek cümle / `(Türkçe çevirisi)` / `Senin örnek cümlen nedir? ↓`
 
-### 5. Sık Karıştırılanlar (`karistirilan/<x>-vs-<y>/`)
+### 9. Sık Karıştırılanlar (`karistirilan/<x>-vs-<y>/`)
 `SIK KARIŞTIRILANLAR` / `MAKE vs DO` / `MAKE: Ortaya çıkarmak` + `Make a new Flutter app.` / `DO: Eylemi yapmak` + `Do some coding today.` / `Bu gönderiyi kaydet ↓`
 
 ---
