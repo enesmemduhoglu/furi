@@ -1,12 +1,21 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "kitap-vs-gercek/anlamadim",
+    "kategori": "kitap-vs-gercek",
+    "tur": "gorsel",
+    "slayt": 6,
+    "saas_post_id": "cmtmqfxyo0001l704ii5nvzdo",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/57361bf2953d4028b64d912d827beed7",
+    "gonderim_zamani": "2026-09-04T12:09:27+03:00",
+    "son_gecerlilik": "2026-09-05T12:09:27+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-09-03T12:10:19+03:00",
-  "son_gonderim": "2026-09-03T12:09:29+03:00",
+  "son_gonderim": "2026-09-04T12:09:27+03:00",
   "bugun": {
-    "tarih": "2026-09-03",
+    "tarih": "2026-09-04",
     "siraya_konan": 1,
-    "yayinlanan": 1
+    "yayinlanan": 0
   },
   "son_stok_uyarisi": null,
   "sonraki": null,
