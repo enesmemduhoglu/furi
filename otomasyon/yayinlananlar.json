@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-03T14:48:32+03:00",
+  "guncelleme": "2026-09-05T12:08:37+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -146,6 +146,15 @@
       "permalink": "https://www.instagram.com/p/Dc0dSlLmyUp/",
       "yayin_zamani": "2026-09-03T09:10:16+00:00",
       "not": "esitleme ile eklendi (SaaS yayinladi)"
+    },
+    {
+      "slug": "kitap-vs-gercek/anlamadim",
+      "kategori": "kitap-vs-gercek",
+      "slayt": 6,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/Dc3CWO1G5s3/",
+      "yayin_zamani": "2026-09-04T12:12:38+03:00",
+      "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
     }
   ]
 }
