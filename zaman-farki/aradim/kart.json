@@ -1,0 +1,61 @@
+{
+  "slug": "zaman-farki/aradim",
+  "slaytlar": [
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "ZAMAN FARKI" },
+        { "tur": "kapak",  "metin": "TEK CÜMLE DÖRT AYRI ANLAM" },
+        { "tur": "ornek",  "metin": "Aradım demenin dört yolu var, dördü ayrı." },
+        { "tur": "cta",    "metin": "Başlamak için kaydır →" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "ZAMAN FARKI" },
+        { "tur": "baslik", "metin": "I CALLED HER", "dil": "en" },
+        { "tur": "araetiket", "metin": "PAST SIMPLE", "dil": "en", "alt": 40 },
+        { "tur": "anlam",  "metin": "Dün aradım, konu kapandı." },
+        { "tur": "ayrac" },
+        { "tur": "araetiket", "metin": "NE ZAMAN", "alt": 20 },
+        { "tur": "ornek",  "metin": "Bitmiş, zamanı belli tek bir olay." },
+        { "tur": "cta",    "metin": "Sırada: I've called her", "dil": "karisik" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "ZAMAN FARKI" },
+        { "tur": "baslik", "metin": "I'VE CALLED HER", "dil": "en" },
+        { "tur": "araetiket", "metin": "PRESENT PERFECT", "dil": "en", "alt": 40 },
+        { "tur": "anlam",  "metin": "Aradım bile, sonucu ortada." },
+        { "tur": "ayrac" },
+        { "tur": "araetiket", "metin": "NE ZAMAN", "alt": 20 },
+        { "tur": "ornek",  "metin": "Ne zaman değil, şu ana etkisi önemliyse." },
+        { "tur": "cta",    "metin": "Sırada: I've been calling her", "dil": "karisik" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "ZAMAN FARKI" },
+        { "tur": "baslik", "metin": "I'VE BEEN CALLING HER", "dil": "en" },
+        { "tur": "araetiket", "metin": "PERFECT CONTINUOUS", "dil": "en", "alt": 40 },
+        { "tur": "anlam",  "metin": "Sabahtan beri arayıp duruyorum." },
+        { "tur": "ayrac" },
+        { "tur": "araetiket", "metin": "NE ZAMAN", "alt": 20 },
+        { "tur": "ornek",  "metin": "Süregelen, tekrarlayan, bitmemiş çaba." },
+        { "tur": "cta",    "metin": "Sırada: I was calling her", "dil": "karisik" }
+      ]
+    },
+    {
+      "ogeler": [
+        { "tur": "etiket", "metin": "ZAMAN FARKI" },
+        { "tur": "baslik", "metin": "I WAS CALLING HER", "dil": "en" },
+        { "tur": "araetiket", "metin": "PAST CONTINUOUS", "dil": "en", "alt": 40 },
+        { "tur": "anlam",  "metin": "Tam onu arıyordum ki..." },
+        { "tur": "ayrac" },
+        { "tur": "araetiket", "metin": "NE ZAMAN", "alt": 20 },
+        { "tur": "ornek",  "metin": "Başka bir şeyin ortasından kestiği an." },
+        { "tur": "cta",    "metin": "Hangisini kurmuştun? Yorum yaz ↓" }
+      ]
+    }
+  ]
+}

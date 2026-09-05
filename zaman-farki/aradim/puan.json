@@ -1,0 +1,28 @@
+{
+  "olcut_surumu": 2,
+  "tarih": "2026-09-05",
+  "model": "claude-opus-5",
+  "dallar": {
+    "ilgi_cekicilik": {
+      "puan": 8,
+      "gerekce": "Kanca cumlenin kendisinde: Turkcede \"aradim\" tek kelime, kapak \"TEK CUMLE DORT AYRI ANLAM\" diyor ve gri satir hangi kelime oldugunu soyluyor. Kaydetme degeri yuksek — dort kart birlikte bir referans tablosu. Eksisi su: deste \"dordu de dogru\" diyor, yani yanlisini yakalama gerilimi yok; arsivde en cok kaydirtan postlar (kibarlik-tuzagi, zaman-kaymasi) once bir yanilgi kuruyordu."
+    },
+    "ogretici_deger": {
+      "puan": 9,
+      "gerekce": "Dort kart dort ayri kullanim kurali veriyor, cekim tablosu degil: past simple bitmis ve zamani belli olay, present perfect su ana etki, perfect continuous suregelen caba, past continuous kesilen an. Caption karta sigmayan iki yapiyi ekliyor (had called sirali gecmis, present simple aliskanlik) ve bir sinir kuraliyla kapatiyor: belirli gecmis zaman zarfi gordugun an perfect duser (\"I've called her yesterday\" olmaz)."
+    },
+    "ozgunluk": {
+      "puan": 8,
+      "gerekce": "Mekanik arsivde yok: dort kartin basligi ayni cumlenin dort hali, kartlar arasinda yalnizca bir kelime degisiyor. Eksen de yeni — turkce-tuzagi/zaman-kaymasi ayni konuyu YANLIS/DOGRU ile isliyor, burada dort cumlenin dordu de dogru ve is anlami ayirt etmeye kaliyor. Eksisi konunun kendisi: zaman ogretimi piyasanin en doymus basligi, zaman-kaymasi da ayni sebeple 7 almisti."
+    },
+    "hedef_kitle": {
+      "puan": 9,
+      "gerekce": "Sizinti tam bu kitlenin: Turkcede tek cekimin (aradim) Ingilizcede dorde bolunmesi. Ornek gunluk ve dusuk esikli — birini aramak, ulasamamak. Zaman adlari (PAST SIMPLE, PERFECT CONTINUOUS) kucuk turuncu ara etikette duruyor, dersin kendisi Turkce anlam satirinda; yani gramer terimi bilmeyen de karti okuyabiliyor."
+    },
+    "gorsel_kalite": {
+      "puan": 7,
+      "gerekce": "Kurulus arsivde denenmis: etiket / dev baslik / turuncu ara etiket + lacivert anlam / ayrac / turuncu ara etiket + gri kural / cta — sekiz oge, zaman-kaymasi kartlarindakiyle ayni yogunluk. Zayif nokta baslik uzunlugunun 12-21 karakter arasinda oynamasi (I CALLED HER 12, I'VE BEEN CALLING HER 21): baslik hic bolunmedigi icin punto dorduncu kartta belirgin dusuyor, yani deste ici punto ritmi zaman-kaymasi kadar sabit degil. Anlam satirlari 23-31, kural satirlari 34-40 karakter — ikisi de tek satirda kaliyor."
+    }
+  },
+  "toplam": 8.2
+}

@@ -76,7 +76,7 @@ Kullanıcı ya net bir konuyla gelir ("otelde check-in cümleleri yapalım") ya 
 
 Sonra `AskUserQuestion` ile format ve slayt sayısını onaylat.
 
-### 8 post formatı
+### 9 post formatı
 
 | Format | Slayt | Arşiv örneği |
 |---|---|---|
@@ -84,6 +84,7 @@ Sonra `AskUserQuestion` ile format ve slayt sayısını onaylat.
 | Türkçe Tuzağı | 5 | `turkce-tuzagi/ceviri-refleksi/`, `.../kibarlik-tuzagi/` |
 | Kitap vs Gerçek | 6 | `kitap-vs-gercek/ofis-kaliplari/`, `.../anlamadim/` |
 | Cümleyi Tamamla | 6 | `cumleyi-tamamla/iki-dogru/`, `.../siksiz/` |
+| Zaman Farkı | 5 | `zaman-farki/aradim/` |
 | Durumsal İngilizce — seri | 5-6 | `hikayeli/havaalaninda/`, `hikayeli/is-gorusmesinde/` |
 | Dizi İngilizcesi | 1 | `dizi/tell-me-about-it/`, `dizi/no-offense/` |
 | Günün Phrasal Verb'ü | 1 | `phrasal/give-up/` |
@@ -296,7 +297,7 @@ Marka düzeni ortalanmış ve kenar boşlukları geniş olduğu için 80px kırp
 
 `furi1\<format>\<konu-slug>\1.jpg`, `2.jpg`, ... — arşivdeki `seviye-testi/a1/1.jpg`, `hikayeli/otel/1.jpg` kuralının aynısı.
 
-`<format>` şu sekizden biri:
+`<format>` şu dokuzdan biri:
 
 | `<format>` | Ne girer | Örnek |
 |---|---|---|
@@ -304,6 +305,7 @@ Marka düzeni ortalanmış ve kenar boşlukları geniş olduğu için 80px kırp
 | `turkce-tuzagi` | Türkçenin İngilizceye sızdığı hatalar (kapak + 4 tuzak) | `turkce-tuzagi/kibarlik-tuzagi/` |
 | `kitap-vs-gercek` | Ders kitabı kalıbı vs gerçek kullanım | `kitap-vs-gercek/ofis-kaliplari/` |
 | `cumleyi-tamamla` | Soru destesi + cevap anahtarı | `cumleyi-tamamla/iki-dogru/` |
+| `zaman-farki` | Tek cümlenin dört zamanı, dördü de doğru (kapak + 4 zaman) | `zaman-farki/aradim/` |
 | `hikayeli` | Çok slaytlı, bir sahneyi anlatan seriler | `hikayeli/havaalaninda/` |
 | `dizi` | Dizi/altyazı kalıbı, tekil kart | `dizi/no-offense/` |
 | `phrasal` | Günün Phrasal Verb'ü kartları | `phrasal/give-up/` |
@@ -586,6 +588,32 @@ Dikey sıralama (tekil kart):
 
 ### 9. Sık Karıştırılanlar (`karistirilan/<x>-vs-<y>/`)
 `SIK KARIŞTIRILANLAR` / `MAKE vs DO` / `MAKE: Ortaya çıkarmak` + `Make a new Flutter app.` / `DO: Eylemi yapmak` + `Do some coding today.` / `Bu gönderiyi kaydet ↓`
+
+### 10. Zaman Farkı — 5 slayt (`zaman-farki/aradim/`, 2026-09-05)
+| # | İçerik |
+|---|---|
+| 1 | Kapak: `ZAMAN FARKI` / `TEK CÜMLE DÖRT AYRI ANLAM` / omurga cümleyi adlandıran gri satır (`Aradım demenin dört yolu var, dördü ayrı.`) / `Başlamak için kaydır →` |
+| 2-5 | Zaman kartı: etiket / **başlık = cümlenin o zamandaki hâli** (`I'VE BEEN CALLING HER`) / turuncu `PAST SIMPLE` gibi zaman adı / lacivert Türkçe anlam (`Sabahtan beri arayıp duruyorum.`) / `ayrac` / turuncu `NE ZAMAN` / gri kural satırı / `Sırada: <sonraki cümle>` |
+
+> **Dört cümle de doğrudur.** Format `turkce-tuzagi`nin aynası değil: orada
+> eksen `YANLIŞ`/`DOĞRU`, burada dördü de gramer olarak doğru ve iş **anlamı
+> ayırt etmeye** kalıyor. Karta yanlış cümle koymak formatın sözünü bozar
+> (`zaman-kaymasi` zaten o işi yapıyor).
+>
+> **Omurga tek fiildir ve dört kartta değişmez.** Kaydırma boyunca yalnızca
+> zamanın taşıdığı kelime değişir (`I called her` → `I've called her` →
+> `I've been calling her` → `I was calling her`); fark tipografik olarak da
+> görünür. Fiil seçerken ölçü: dört hâli **Türkçede tek kelimeye** çöküyor mu.
+> Çökmüyorsa deste konusuz kalır.
+>
+> **Başlık uzunluğuna bak.** Başlık hiçbir zaman bölünmez, sığmazsa punto
+> düşer; perfect continuous hâli ötekilerden ~5 karakter uzun olduğu için
+> deste içinde punto kayması buradan gelir. Aralık 12-21 karakterde tutuldu.
+> Daralması gerekirse nesne o karttan düşürülür (`I'VE BEEN CALLING`).
+>
+> **Özet/kural slaytı yok.** Kural zaten dört kartın yan yana durmasında;
+> `turkce-tuzagi` ve `kitap-vs-gercek`te özet slaytı kaldırıldığında puan
+> yükselmişti. Beş slaytın dördü ders.
 
 ---
 

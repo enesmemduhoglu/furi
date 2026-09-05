@@ -104,8 +104,14 @@ Shell state çağrılar arasında korunmadığı için her PowerShell komutunun 
 Formatlar: `seviye-testi` (7 slayt), `hikayeli` (seri), `dizi` (tekil kart),
 `kitap-vs-gercek` (kapak + karşılaştırma kartları), `turkce-tuzagi` (kapak +
 4 tuzak kartı, 2026-08-28), `cumleyi-tamamla` (soru destesi + cevap anahtarı,
-2026-08-28), `phrasal` (tekil kart), `karistirilan` (tekil kart).
+2026-08-28), `zaman-farki` (kapak + aynı cümlenin 4 zamanı, 2026-09-05),
+`phrasal` (tekil kart), `karistirilan` (tekil kart).
 `<slug>` ASCII ve tireli.
+
+> `zaman-farki` ile `turkce-tuzagi/zaman-kaymasi` aynı konuya bakar, aynı işi
+> yapmaz: `zaman-kaymasi` yanlış cümleyi düzeltir, `zaman-farki`nin dört
+> cümlesi de doğrudur ve iş anlamı ayırt etmektir. Karta yanlış cümle koymak
+> yeni kategoriyi eskisinin kopyasına çevirir. İskelet: `WORKFLOW.md` Ek B §10.
 
 > `durumsal` **emekli** — 2026-08-22'de havuzdaki tüm `durumsal` postları
 > silindi, klasör de kaldırıldı. `WORKFLOW.md` Ek B'de iskeleti hâlâ duruyor

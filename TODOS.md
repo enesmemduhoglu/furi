@@ -1,6 +1,6 @@
 # TODOS
 
-Son guncelleme: 2026-08-20.
+Son guncelleme: 2026-09-05.
 
 Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 `otomasyon/durum.json` icinde.
@@ -75,6 +75,43 @@ yoksa skill eslesmesi ayrisir.
 ---
 
 ## Kapanan isler
+
+### [x] Yeni kategori: `zaman-farki` — **acildi (2026-09-05)**
+
+**Ne:** dokuzuncu post formati. Kapak + dort zaman karti; dort kartin basligi
+AYNI cumlenin dort hali (`I called her` / `I've called her` / `I've been
+calling her` / `I was calling her`), her kart o zamanin ne anlattigini ve ne
+zaman kullanildigini soyluyor. Kanonik etiket `ZAMAN FARKI`. Ilk post
+`zaman-farki/aradim` (8.20).
+
+**Neden ayri bir kategori, `turkce-tuzagi`nin bir bolumu degil:** eksen farkli.
+`turkce-tuzagi` YANLIS/DOGRU esleri kuruyor — okur hatasini yakaliyor. Burada
+dort cumlenin **dordu de dogru**; is hangisinin ne anlattigini ayirt etmek.
+Ayni iskeletle ayni seyi iki kez yapmak `ozgunluk` dalini asindiriyor
+(2026-09-03 olcumu: format tekrari post basina ~1 puan dusuruyor), o yuzden
+yeni eksen yeni kategori oldu. `turkce-tuzagi/zaman-kaymasi` (8.60) zaten zaman
+hatalarini isliyor ve orada kaliyor.
+
+**Kural — karta yanlis cumle girmez.** Girdigi an kategori `zaman-kaymasi`nin
+kopyasina doner ve iki kategori de degerini kaybeder.
+
+**Kural — omurga tek fiil.** Fiil secerken olcut: dort halinin **Turkcede tek
+kelimeye** cokmesi (`aradim`). Cokmuyorsa kartlarin karsilastirdigi bir sey
+yok. Baslik hic bolunmedigi icin punto uzun halde dusuyor; aralik 12-21
+karakterde tutuldu (bkz. `zaman-farki/aradim/puan.json` > `gorsel_kalite`).
+
+**Ozet slayti yok.** `turkce-tuzagi` ve `kitap-vs-gercek` ozeti kaldirinca puan
+yukselmisti; kural zaten dort kartin yan yana durmasinda.
+
+**Dokunulan yerler:** `marka/metin_denetle.py` (`ETIKETLER`),
+`marka/README.md`, `WORKFLOW.md` (Faz 1 tablosu, Faz 4 tablosu, Ek B §10),
+`CLAUDE.md`, `zaman-farki/aradim/`.
+
+**Acik kalan:** kartlar basilmadi — basim Windows'ta (`kart_bas.ps1`, Impact).
+`1.jpg … 5.jpg` yazilana kadar post havuza girmez (`postlari_tara` numarali jpg
+ariyor), yani siraya da girmez. Basimdan sonra Faz 5 yerlesim denetimi ve
+`puanla.py --yaz zaman-farki/aradim` ile puanin dogrulanmasi gerekiyor.
+
 
 ### [x] Denetim sozlugu kendi alt text'iyle zehirleniyordu — **duzeltildi (2026-09-03)**
 
