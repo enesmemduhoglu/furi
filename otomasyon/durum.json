@@ -4,16 +4,16 @@
     "kategori": "turkce-tuzagi",
     "tur": "gorsel",
     "slayt": 5,
-    "saas_post_id": "cmto5v12o0001kz047soy5yte",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/ae4e36bd92034914a04bc4f4ee8d6bb8",
-    "gonderim_zamani": "2026-09-05T12:08:52+03:00",
-    "son_gecerlilik": "2026-09-06T12:08:52+03:00"
+    "saas_post_id": "cmtpldnzn0001jp04t4tru026",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/53b62bf9cf1843baaf761d84eae6e5a0",
+    "gonderim_zamani": "2026-09-06T12:11:02+03:00",
+    "son_gecerlilik": "2026-09-07T12:11:02+03:00"
   },
   "yayin_denemesi": null,
   "son_yayin": "2026-09-04T12:12:38+03:00",
-  "son_gonderim": "2026-09-05T12:08:52+03:00",
+  "son_gonderim": "2026-09-06T12:11:02+03:00",
   "bugun": {
-    "tarih": "2026-09-05",
+    "tarih": "2026-09-06",
     "siraya_konan": 1,
     "yayinlanan": 0
   },
@@ -26,5 +26,7 @@
       "sebep": "onay sayfasinda reddedildi (kalite yetersiz); SaaS kaydi da silindi"
     }
   ],
-  "sure_dolanlar": {}
+  "sure_dolanlar": {
+    "turkce-tuzagi/kibarlik-tuzagi": 1
+  }
 }
