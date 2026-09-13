@@ -1,10 +1,19 @@
 {
-  "bekleyen": null,
+  "bekleyen": {
+    "slug": "hikayeli/is-gorusmesinde",
+    "kategori": "hikayeli",
+    "tur": "gorsel",
+    "slayt": 6,
+    "saas_post_id": "cmtzos0vn0001jp04rokww6rw",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/0877a280a0064212a04ddee4e7a60b7e",
+    "gonderim_zamani": "2026-09-13T13:43:52+03:00",
+    "son_gecerlilik": "2026-09-14T15:43:52+03:00"
+  },
   "yayin_denemesi": null,
   "son_yayin": "2026-09-06T12:11:02+03:00",
-  "son_gonderim": "2026-09-06T12:11:02+03:00",
+  "son_gonderim": "2026-09-13T13:43:52+03:00",
   "bugun": {
-    "tarih": "2026-09-06",
+    "tarih": "2026-09-13",
     "siraya_konan": 1,
     "yayinlanan": 0
   },
