@@ -1,6 +1,6 @@
 # TODOS
 
-Son guncelleme: 2026-08-20.
+Son guncelleme: 2026-09-13.
 
 Bu dosya furi1'in acik islerini tutar. Otomasyonun anlik durumu burada degil,
 `otomasyon/durum.json` icinde.
@@ -75,6 +75,57 @@ yoksa skill eslesmesi ayrisir.
 ---
 
 ## Kapanan isler
+
+### [x] `duplicate` gozetimsiz calismayi durdurdu — **duzeltildi (2026-09-13)**
+
+**Belirti:** 13.09 rutini `[FURI-HATA] bekleyen post belge disi SaaS durumunda`
+maili atip karar vermeden cikti. `turkce-tuzagi/kibarlik-tuzagi` icin SaaS
+`status: approved`, `publishStatus: "duplicate"` donuyordu; `esitle.py` uc deger
+biliyordu (`published` / `failed` / `skipped`), hicbir dala girmedi, defter
+yazilmadi. 06.09'dan beri defter bayatti: post Instagram'da yayindaydi
+(`p/DdBVA_jFnhT`) ama `yayinlananlar.json`'da yoktu.
+
+**Neden — iki ayri kusur ust uste:**
+
+1. **Sozlesme kaymasi.** `duplicate`, SaaS'a 17.08'de eklendi
+   (`content-approval-saas@737cae5`), furi'nin sozlugune hic girmedi. Bir ay
+   patlamadi cunku tetikleyen yol (ayni slug'in ikinci kez gonderilmesi) ilk kez
+   06.09'da yasandi.
+2. **Onay penceresi rutinin kosma yuvasiyla cakisiyordu.** Pencere 24 saatti,
+   rutin her gun ayni saatte kosuyor: 05.09'da 12:08:52'de gonderildi, 06.09
+   calismasi 12:11:02'de basladi. Pencere **2 dakika 10 saniye** once dolmustu;
+   hala onay bekleyen post "suresi doldu" sayildi, ayni slug ikinci kez
+   gonderildi ve ayni `externalRef`ten iki canli onay linki olustu. Ikisi de
+   onaylandi: ilki yayinlandi, ikincisi SaaS'in mukerrer korumasina carpti.
+
+Ayni kok (iki canli onay linki) 19.08'de Instagram spam kisitini tetiklemisti —
+SKILL.md > Sorun giderme'de yazili. O sefer sebep elle duzeltilmis surumdu, bu
+sefer rutinin kendi saat kaymasi.
+
+**Duzeltme:**
+
+- `esitle.py` `duplicate`i `published` gibi isler. Damga yalnizca kardes
+  medyanin Graph API'den **canli** dogrulandigi zaman yaziliyor
+  (`publish-post.ts > markDuplicate`; belirsizde yayina izin veriliyor), yani
+  "icerik Instagram'da" demek. Kayit `mukerrer: true` bayragiyla raporlanir,
+  yayin saati okunamadigi icin `zaman_kaynagi: "tespit"` kalir.
+- **Taninmayan her bileske artik adiyla raporlanir** (`bilinmeyen_saas_durumu`)
+  ve SaaS'a hic ulasilamamasi (`saas_okunamadi`, 410 dahil) sessiz bir "karar
+  yok"tan ayrilir. Asil ders bu: SaaS'in sozlugu bu repodan bagimsiz buyuyor,
+  o yuzden `esitle.py` bilmedigi degerde **susmak yerine adini soylemeli**.
+  `revision_requested`, `scheduled`, `publishing`, `pending` de ayni turda
+  bosluktu, hepsi dallandi.
+- `ONAY_PENCERESI_SAAT` 24 → **26**. Bedeli bilincli: cevapsiz kalan post ertesi
+  gunku calismayi bos gecirir, bir sonrakinde dusup yerini siradaki posta
+  birakir. Eskiden tempo korunuyordu ama ayni icerik icin ikinci onay maili
+  gidiyordu.
+- Defter elle onarildi: `kibarlik-tuzagi` kaydi eklendi, `bekleyen` kapatildi.
+  **Yayin ani bilinmiyor** — 06.09 12:11 ile 13.09 12:08 arasi; kayda alt sinir
+  yazildi, kesin damga SaaS panelinde kardes kaydin `publishedAt` alaninda.
+
+**Acik kalan:** rutinin cron'u 06.09'da haftalik (`7 9 * * 0`) oldu, 07–12.09
+arasi hic kosmadi. Gunluk tempo isteniyorsa cron geri alinmali — kod tarafinda
+yapacak bir sey yok.
 
 ### [x] Denetim sozlugu kendi alt text'iyle zehirleniyordu — **duzeltildi (2026-09-03)**
 

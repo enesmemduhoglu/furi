@@ -1,5 +1,5 @@
 {
-  "guncelleme": "2026-09-05T12:08:37+03:00",
+  "guncelleme": "2026-09-13T12:30:00+03:00",
   "kayitlar": [
     {
       "slug": "seviye-testi/a1",
@@ -155,6 +155,16 @@
       "permalink": "https://www.instagram.com/p/Dc3CWO1G5s3/",
       "yayin_zamani": "2026-09-04T12:12:38+03:00",
       "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)"
+    },
+    {
+      "slug": "turkce-tuzagi/kibarlik-tuzagi",
+      "kategori": "turkce-tuzagi",
+      "tur": "gorsel",
+      "slayt": 5,
+      "ig_media_id": null,
+      "permalink": "https://www.instagram.com/p/DdBVA_jFnhT/",
+      "yayin_zamani": "2026-09-06T12:11:02+03:00",
+      "not": "elle onarildi (13.09): SaaS bu slug'in IKINCI kaydini 'duplicate' damgaladi, yani ilk kayit yayinlanmis ve medyasi Graph API'den canli dogrulanmis. Gercek yayin ani BILINMIYOR: 2026-09-06T12:11+03:00 ile 2026-09-13T12:08+03:00 arasinda; buraya alt sinir yazildi. Kesin damga SaaS panelinde kardes kaydin publishedAt alaninda."
     }
   ]
 }

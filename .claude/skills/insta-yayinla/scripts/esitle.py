@@ -66,29 +66,41 @@ def _kod(permalink: str) -> str:
     return (permalink or "").rstrip("/").split("/")[-1]
 
 
-def _saas_durum(onay_url: str) -> dict | None:
+def _saas_durum(onay_url: str) -> tuple[dict | None, str | None]:
     """Bekleyen postun SaaS'taki durumu. Token yeterli, oturum gerekmiyor.
 
     Caption eslestirmesi bir cikarim; bu ise kesin bilgi. Ozellikle "yayinlandi
     ama sonra silindi" durumunu ancak buradan ogrenebiliriz — Instagram'a
     bakmak o postu hic yayinlanmamis gibi gosterir.
+
+    `(veri, hata)` doner. Hatanin sebebi ayrica dondurulur cunku "SaaS bir sey
+    soylemedi" ile "SaaS'a hic sorulamadi" ayni sey degil: ikincisinde bekleyen
+    postun akibeti hakkinda ELIMIZDE BILGI YOK, sessizce "onaylanmadi" varsaymak
+    yanlis olur. Ozellikle onay linki 7 gunluk omrunu doldurunca (410) bu cagri
+    kalici olarak susar ve defter bir daha asla gercegi ogrenemez.
     """
     if not onay_url:
-        return None
+        return None, "onay_url bos"
     parca = onay_url.rstrip("/").split("/")
     token = parca[-1] if parca else ""
     if not token:
-        return None
+        return None, "onay_url'de token yok"
     taban = onay_url.split("/approve/")[0]
     try:
         istek = urllib.request.Request(f"{taban}/api/approve/{token}", method="GET")
         istek.add_header("User-Agent", "furi-insta-yayinla/2.0")
         with urllib.request.urlopen(istek, timeout=30) as yanit:
             veri = json.loads(yanit.read().decode("utf-8"))
-    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError,
-            OSError, json.JSONDecodeError):
-        return None
-    return veri.get("post") or veri
+    except urllib.error.HTTPError as e:
+        # 410 = onay linkinin 7 gunluk omru doldu (tokens.ts). Token'i hicbir
+        # sey diriltmiyor; bu kayit artik yalnizca SaaS panelinden okunabilir.
+        sebep = "onay linkinin suresi doldu (410)" if e.code == 410 else f"HTTP {e.code}"
+        return None, sebep
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return None, f"SaaS'a ulasilamadi ({type(e).__name__})"
+    except json.JSONDecodeError:
+        return None, "SaaS yaniti JSON degil"
+    return (veri.get("post") or veri), None
 
 
 def _saas_zaman(metin):
@@ -207,8 +219,16 @@ def main() -> int:
     #    gelir cunku kesin bilgidir.
     durum_dosyasi = durum_oku(kok)
     bekleyen = durum_dosyasi.get("bekleyen") or {}
-    saas = _saas_durum(bekleyen.get("onay_url", "")) if bekleyen else None
+    saas, saas_hatasi = _saas_durum(bekleyen.get("onay_url", "")) if bekleyen \
+        else (None, None)
     bekleyen_karari = None
+
+    if bekleyen and saas is None:
+        # Cevap alinamadi: KARAR YOK. Bekleyen korunur, defter degismez —
+        # akibeti bilinmeyen bir postu "onaylanmadi" sayip sessizce havuza
+        # geri koymak, SaaS onu yayinlamissa mukerrer gonderime yol acar.
+        bekleyen_karari = {"sonuc": "saas_okunamadi", "slug": bekleyen["slug"],
+                           "sebep": saas_hatasi}
 
     if saas:
         yayin = saas.get("publishStatus")
@@ -216,13 +236,31 @@ def main() -> int:
         link = saas.get("igPermalink") or ""
         if onay == "rejected":
             bekleyen_karari = {"sonuc": "reddedildi", "slug": bekleyen["slug"]}
-        elif yayin == "published":
+        elif yayin == "duplicate" and not link:
+            # Damga var ama kardesin linki yok: icerigin yayinda oldugunu
+            # biliyoruz, NEREDE oldugunu bilmiyoruz. Deftere linksiz kayit
+            # yazmak bir sonraki tam esitlemede dusurulur; karar vermek yerine
+            # bekleyeni koruyup bildiriyoruz.
+            bekleyen_karari = {"sonuc": "mukerrer_link_yok", "slug": bekleyen["slug"]}
+        elif yayin in ("published", "duplicate"):
+            # duplicate = SaaS'in mukerrer korumasi: ayni externalRef'li BASKA
+            # bir kayit canlida bulundugu icin bu kayit yayinlanmadi
+            # (publish-post.ts > markDuplicate). Damga yalnizca Graph API
+            # medyayi "live" dogruladiginda yaziliyor — yani icerik Instagram'da
+            # ve `igPermalink` o canli kardesin linki. Repo acisindan sonuc
+            # `published` ile ayni: icerik yayinda, deftere girmeli, havuzdan
+            # cikmali. Ayrim `mukerrer` bayragiyla raporda korunur.
+            mukerrer = yayin == "duplicate"
             # Instagram sorgulanmadiysa "silinmis mi" bilinemez; yayinlanmis kabul
             # edilir. Yanlissa bir sonraki tam esitleme kaydi dusurur.
             canli = True if ig_atlandi else (_kod(link) in canli_kodlar)
             # Yayin ani SaaS'in kaydi; bu esitlemenin kostugu an DEGIL. Eslesme
             # cogu zaman ertesi gunun cron'unda kuruldugu icin "simdi" yazmak
             # her kaydi bir gun ileri kaydiriyordu.
+            #
+            # duplicate'te bu kayit hic yayinlanmadigi icin `publishedAt` bos
+            # gelir; yayin ani kardes kaydin verisi ve token'la okunamiyor, o
+            # yuzden tespit anina dusuluyor (kayitta `zaman_kaynagi: tespit`).
             yayin_ani = _saas_zaman(saas.get("publishedAt"))
             bekleyen_karari = {
                 "sonuc": "yayinlandi" if canli else "yayinlandi_sonra_silindi",
@@ -231,6 +269,8 @@ def main() -> int:
                 "yayin_zamani": iso(yayin_ani or simdi()),
                 "zaman_kaynagi": "saas" if yayin_ani else "tespit",
             }
+            if mukerrer:
+                bekleyen_karari["mukerrer"] = True
             # Yayinlanmis ama silinmisse deftere YAZILMAZ: icerik havuza donsun.
             # Yine de kota sayilir ve bekleyen kapanir.
             if canli and not any(k["slug"] == bekleyen["slug"] for k in eklenen) \
@@ -242,7 +282,10 @@ def main() -> int:
                     "ig_media_id": None,
                     "permalink": link,
                     "yayin_zamani": iso(yayin_ani or simdi()),
-                    "not": "SaaS yayinladi (onay endpoint'inden dogrulandi)" if yayin_ani
+                    "not": ("SaaS mukerrer damgaladi: icerik zaten canlida, link "
+                            "canli kardes kaydin; yayin saati okunamadi, tespit "
+                            "ani yazildi") if mukerrer else
+                           "SaaS yayinladi (onay endpoint'inden dogrulandi)" if yayin_ani
                            else "SaaS yayinladi; yayin saati gelmedi, tespit ani yazildi",
                 })
         elif yayin == "failed":
@@ -250,6 +293,35 @@ def main() -> int:
         elif yayin == "skipped":
             bekleyen_karari = {"sonuc": "atlandi_instagram_bagli_degil",
                                "slug": bekleyen["slug"]}
+        elif onay == "revision_requested":
+            bekleyen_karari = {"sonuc": "revizyon_istendi", "slug": bekleyen["slug"]}
+        elif yayin == "scheduled":
+            bekleyen_karari = {"sonuc": "yayin_zamanlandi", "slug": bekleyen["slug"]}
+        elif yayin == "publishing":
+            bekleyen_karari = {"sonuc": "yayin_suruyor", "slug": bekleyen["slug"]}
+        elif onay == "pending":
+            bekleyen_karari = {"sonuc": "onay_bekliyor", "slug": bekleyen["slug"]}
+        elif onay == "approved" and yayin == "idle":
+            # SaaS'in "awaitingPublish" hali: onay verilmis ama yayin hic
+            # denenmemis. Normal akista imkansiz (onay transaction'i biter
+            # bitmez yayin calisir), yani buraya dusen post SaaS tarafinda
+            # takilmis demektir — onay sayfasindaki "tekrar dene" isi gorur.
+            bekleyen_karari = {"sonuc": "onaylandi_yayin_denenmedi",
+                               "slug": bekleyen["slug"]}
+        else:
+            # SaaS'in sozlugu bu repodan bagimsiz buyuyor. Taninmayan bir deger
+            # gelince SESSIZ KALMAK en kotusu: 13.09'da `duplicate` boyle bir
+            # degerdi, hicbir dala girmedi, rapor bos dondu ve gozetimsiz
+            # calisma "ne oldugunu bilmiyorum" diyemeden durdu. Artik bilinmeyen
+            # her bileske adiyla raporlanir; karar yine verilmez (bekleyen
+            # korunur, defter degismez) ama en azindan gorunur olur.
+            bekleyen_karari = {
+                "sonuc": "bilinmeyen_saas_durumu",
+                "slug": bekleyen["slug"],
+                "status": onay,
+                "publishStatus": yayin,
+                "permalink": link or None,
+            }
 
     fark = bool(eklenen or dusen)
     rapor = {
