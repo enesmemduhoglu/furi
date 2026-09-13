@@ -13,14 +13,16 @@ Yaptigi iki sey:
 1. En yuksek puanli postu secip onaya gonderir
 2. Yayin defterini Instagram ile esitler
 
-Hedef tempo: **gunde 1 post** (oglen).
+Tempo: **haftada 1 post**, Pazar ogleni (cron `7 9 * * 0`, 2026-09-13'te
+teyit edildi). Gunluk kota kurallari yerinde duruyor — calisma basina 1 oneri,
+takvim gunu basina 1 gonderim — ama cron haftada bir tetikliyor.
 
 ---
 
 ## Akis
 
 ```
-  BU SKILL (cron, gunde 1 kez)
+  BU SKILL (cron, haftada 1 kez)
     aday sec  ->  POST /api/posts  ->  SaaS musteriye onay maili atar
                                               |
                                               v
@@ -201,8 +203,8 @@ Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 > bugun oglen calismasini durdurmaz.**
 
 > **Onay penceresi 26 saat, 24 degil** (`saas_gonder.ONAY_PENCERESI_SAAT`).
-> Rutin her gun ayni yuvada kostugu icin 24 saatlik pencere tam o yuvanin
-> uzerine kapaniyordu: 06.09'da pencere calisma basladiktan 2 dakika 10 saniye
+> Rutin sabit bir yuvada kosuyor; gunluk temposundayken 24 saatlik pencere tam
+> o yuvanin uzerine kapaniyordu: 06.09'da pencere calisma basladiktan 2 dakika 10 saniye
 > once doldu, hala onay bekleyen post "suresi doldu" sayildi ve ayni slug
 > ikinci kez gonderildi. Ayni `externalRef`'ten iki SaaS kaydi cikinca ikincisi
 > `duplicate` damgasi yedi. Bedeli bilincli: cevapsiz kalan post ertesi gunku
@@ -280,8 +282,9 @@ ayni postu tekrar siraya koyabilir. Push hatasini **hata maili ile bildir**.
 `son_stok_uyarisi` bugun degilse:
 
 - subject: `[FURI-STOK] N post kaldi`
-- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 1), yeni post
-  uretilmesi gerektigi
+- govde: kalan sayi, kategori dagilimi, kac HAFTA yeter (haftada 1 post; esik
+  `stok_esigi: 6` gunluk tempodan kaldi, yani uyari artik ~6 hafta onceden
+  dusuyor — erken, zararsiz), yeni post uretilmesi gerektigi
 - sonra `son_stok_uyarisi` = bugunun tarihi, Faz 4'te commit et
 
 > Gmail arac adlari ortama gore degisir: yerelde `mcp__claude_ai_Gmail__*`,
@@ -491,7 +494,7 @@ Instagram baglantisini yenilemek gerekir.
 | Parca | Deger |
 |---|---|
 | Rutin | `trig_01TtprvNfdZd5DDEfR8uDCRj` ([panel](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)) |
-| Cron | `7 9 * * *` UTC = 12:07 Istanbul (gunde 1 calisma) |
+| Cron | `7 9 * * 0` UTC = Pazar 12:07 Istanbul (haftada 1 calisma, 2026-09-13) |
 | SaaS | https://content-approval-saas.vercel.app |
 | Instagram hesabi | `furkanteacherteaching` (`17841441566401393`) |
 | Onay -> yayin | ~11 saniye (production'da olculdu) |

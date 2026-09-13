@@ -41,18 +41,23 @@ from datetime import timedelta
 # Onay 7 gun gecerli (SaaS token omru). Biz daha kisa tutuyoruz: bu surede
 # yanit gelmezse siradaki posta gecilir, kuyruk tek postta tikanmaz.
 #
-# **24 DEGIL 26.** Rutin her gun sabit bir yuvada kosuyor; 24 saatlik pencere
-# tam da o yuvanin uzerine kapaniyordu. 06.09'da gonderim 12:08:52'de yapildi,
-# ertesi gunun calismasi 12:11:02'de basladi: pencere 2 dakika 10 saniye once
-# dolmustu, post daha onay bekliyorken "suresi doldu" sayilip ayni slug ikinci
-# kez gonderildi. Iki SaaS kaydi ayni externalRef'i tasiyinca ikincisi
-# `duplicate` damgasi yedi ve 13.09'a kadar gozetimsiz calismayi durdurdu.
-# Iki saatlik pay, rutinin kendi kosma saatindeki oynamayi pencerenin disinda
-# tutar. Bedeli bilincli: gercekten cevapsiz kalan bir post ertesi gunku
-# calismayi bos gecirir (pencere o yuvada henuz kapali degil), bir sonrakinde
-# dusup yerini SIRADAKI posta birakir. Eskiden o gun ayni slug ikinci kez
-# gonderiliyordu — tempo korunuyordu ama kullanici ayni icerik icin ikinci bir
-# onay maili aliyor, iki canli link ayni anda tiklanabiliyordu.
+# **24 DEGIL 26.** Rutin sabit bir yuvada kosuyor; gunluk temposundayken 24
+# saatlik pencere tam da o yuvanin uzerine kapaniyordu. 06.09'da gonderim
+# 12:08:52'de yapildi, ertesi gunun calismasi 12:11:02'de basladi: pencere 2
+# dakika 10 saniye once dolmustu, post daha onay bekliyorken "suresi doldu"
+# sayilip ayni slug ikinci kez gonderildi. Iki SaaS kaydi ayni externalRef'i
+# tasiyinca ikincisi `duplicate` damgasi yedi ve 13.09'a kadar gozetimsiz
+# calismayi durdurdu. Iki saatlik pay o oynamayi pencerenin disinda tutar.
+#
+# Tempo 13.09'da haftaliga gectigi icin pencere su an pratikte konusuz — iki
+# calisma arasinda 7 gun var, pencere her halukarda cok once kapaniyor. Pay
+# yine de duruyor ki tempo gunluge geri alinirsa kusur geri gelmesin.
+#
+# Bedeli bilincli (gunluk tempoda): cevapsiz kalan post ertesi gunku calismayi
+# bos gecirir, bir sonrakinde dusup yerini SIRADAKI posta birakir. Eskiden o gun
+# ayni slug ikinci kez gonderiliyordu — tempo korunuyordu ama kullanici ayni
+# icerik icin ikinci bir onay maili aliyor, iki canli link ayni anda
+# tiklanabiliyordu.
 ONAY_PENCERESI_SAAT = 26
 
 
