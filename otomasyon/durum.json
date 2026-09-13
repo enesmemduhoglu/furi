@@ -1,16 +1,7 @@
 {
-  "bekleyen": {
-    "slug": "turkce-tuzagi/kibarlik-tuzagi",
-    "kategori": "turkce-tuzagi",
-    "tur": "gorsel",
-    "slayt": 5,
-    "saas_post_id": "cmtpldnzn0001jp04t4tru026",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/53b62bf9cf1843baaf761d84eae6e5a0",
-    "gonderim_zamani": "2026-09-06T12:11:02+03:00",
-    "son_gecerlilik": "2026-09-07T12:11:02+03:00"
-  },
+  "bekleyen": null,
   "yayin_denemesi": null,
-  "son_yayin": "2026-09-04T12:12:38+03:00",
+  "son_yayin": "2026-09-06T12:11:02+03:00",
   "son_gonderim": "2026-09-06T12:11:02+03:00",
   "bugun": {
     "tarih": "2026-09-06",
@@ -26,7 +17,5 @@
       "sebep": "onay sayfasinda reddedildi (kalite yetersiz); SaaS kaydi da silindi"
     }
   ],
-  "sure_dolanlar": {
-    "turkce-tuzagi/kibarlik-tuzagi": 1
-  }
+  "sure_dolanlar": {}
 }

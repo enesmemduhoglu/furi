@@ -13,14 +13,16 @@ Yaptigi iki sey:
 1. En yuksek puanli postu secip onaya gonderir
 2. Yayin defterini Instagram ile esitler
 
-Hedef tempo: **gunde 1 post** (oglen).
+Tempo: **haftada 1 post**, Pazar ogleni (cron `7 9 * * 0`, 2026-09-13'te
+teyit edildi). Gunluk kota kurallari yerinde duruyor — calisma basina 1 oneri,
+takvim gunu basina 1 gonderim — ama cron haftada bir tetikliyor.
 
 ---
 
 ## Akis
 
 ```
-  BU SKILL (cron, gunde 1 kez)
+  BU SKILL (cron, haftada 1 kez)
     aday sec  ->  POST /api/posts  ->  SaaS musteriye onay maili atar
                                               |
                                               v
@@ -133,13 +135,32 @@ Script iki kaynaga birden bakar ve gerekli state guncellemelerini kendi yapar.
 **1. Bekleyen postun SaaS'taki durumu** (kesin bilgi — `bekleyen.onay_url`
 uzerinden, token yeterli, oturum gerekmiyor):
 
-| SaaS ne diyor | Ne olur |
-|---|---|
-| `publishStatus: published` | Deftere islenir, `bekleyen` kapanir, yayin BUGUNSE `bugun.yayinlanan` artar (bilgi sayaci) |
-| `published` ama Instagram'da yok | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir |
-| `status: rejected` | `atlananlar`'a eklenir, `bekleyen` kapanir |
-| `publishStatus: failed` | **`bekleyen` KORUNUR** — onay sayfasindan tekrar denenebilir. Hata mailini at. |
-| `publishStatus: skipped` | Musteride Instagram bagli degil. `bekleyen` kapanir, post havuzda kalir, durumu mail ile bildir. |
+| SaaS ne diyor | Rapordaki `bekleyen.sonuc` | Ne olur |
+|---|---|---|
+| `publishStatus: published` | `yayinlandi` | Deftere islenir, `bekleyen` kapanir, yayin BUGUNSE `bugun.yayinlanan` artar (bilgi sayaci) |
+| `published` ama Instagram'da yok | `yayinlandi_sonra_silindi` | **Deftere islenmez** (silinmis, icerik havuza doner) ama `bekleyen` kapanir |
+| `publishStatus: duplicate` | `yayinlandi` + `mukerrer: true` | `published` ile ayni islem. Icerik yayinda, link canli kardes kaydin. Yayin saati okunamaz (`zaman_kaynagi: tespit`). |
+| `duplicate` ama `igPermalink` bos | `mukerrer_link_yok` | Icerik yayinda ama nerede bilinmiyor. **`bekleyen` KORUNUR**, mail at. |
+| `status: rejected` | `reddedildi` | `atlananlar`'a eklenir, `bekleyen` kapanir |
+| `publishStatus: failed` | `yayin_hatasi` | **`bekleyen` KORUNUR** — onay sayfasindan tekrar denenebilir. Hata mailini at. |
+| `publishStatus: skipped` | `atlandi_instagram_bagli_degil` | Musteride Instagram bagli degil. `bekleyen` kapanir, post havuzda kalir, durumu mail ile bildir. |
+| `status: revision_requested` | `revizyon_istendi` | Musteri revizyon istedi. **`bekleyen` KORUNUR**, mail at — is `insta-ingilizce` tarafinda. |
+| `publishStatus: scheduled` / `publishing` | `yayin_zamanlandi` / `yayin_suruyor` | Gecici durum, karar yok. **`bekleyen` KORUNUR**, sessizce Faz 2'ye gec. |
+| `status: pending` | `onay_bekliyor` | Normal hal: onay bekliyor. **`bekleyen` KORUNUR**, sessizce Faz 2'ye gec. |
+| `approved` + `publishStatus: idle` | `onaylandi_yayin_denenmedi` | Onaylandi ama yayin hic denenmemis — SaaS'ta takilmis. **`bekleyen` KORUNUR**, mail at; onay sayfasindaki "tekrar dene" isi gorur. |
+| SaaS'a sorulamadi (410 / ag hatasi) | `saas_okunamadi` | **KARAR YOK.** `bekleyen` KORUNUR, defter degismez. `sebep` alanini mail'e yaz. |
+| Taninmayan bir bileske | `bilinmeyen_saas_durumu` | **KARAR YOK.** `bekleyen` KORUNUR. `status` + `publishStatus` degerleriyle mail at ve cik. |
+
+> **`sonuc` alani yoksa bekleyen de yoktur.** Yukaridaki her satirda `bekleyen`
+> raporda cikar; `onay_bekliyor`, `yayin_zamanlandi` ve `yayin_suruyor` bilgi
+> amaclidir, hata DEGIL — mail yazma, Faz 2'ye gec.
+>
+> **`duplicate` neden `published` gibi isleniyor?** SaaS o damgayi ancak ayni
+> `externalRef`li kardes postun medyasini Graph API'den **canli** dogruladiktan
+> sonra yaziyor (`publish-post.ts > markDuplicate`); belirsizde yayina izin
+> veriyor. Yani damga "icerik Instagram'da" demek. Repo icin sonuc ayni: post
+> yayinda, deftere girmeli, havuzdan cikmali. Aksi halde icerik sonsuza kadar
+> aday kalir ve her turda yeniden gonderilir.
 
 **2. Instagram ile defter karsilastirmasi** (caption eslestirmesi):
 
@@ -180,6 +201,14 @@ Cikis sartlari — herhangi biri saglaniyorsa hicbir sey yapmadan Faz 4'e gec:
 > `son_yayin`'i gunceliyor, ayni calismanin Faz 2'si de "daha yeni yayin
 > oldu" deyip cikiyordu. **Dun onaylanip bugun sabah yayinlanmis bir post,
 > bugun oglen calismasini durdurmaz.**
+
+> **Onay penceresi 26 saat, 24 degil** (`saas_gonder.ONAY_PENCERESI_SAAT`).
+> Rutin sabit bir yuvada kosuyor; gunluk temposundayken 24 saatlik pencere tam
+> o yuvanin uzerine kapaniyordu: 06.09'da pencere calisma basladiktan 2 dakika 10 saniye
+> once doldu, hala onay bekleyen post "suresi doldu" sayildi ve ayni slug
+> ikinci kez gonderildi. Ayni `externalRef`'ten iki SaaS kaydi cikinca ikincisi
+> `duplicate` damgasi yedi. Bedeli bilincli: cevapsiz kalan post ertesi gunku
+> calismayi bos gecirir, bir sonrakinde dusup yerini SIRADAKI posta birakir.
 
 **`bekleyen` dolu ve suresi gecmisse** — post cope atilmaz:
 
@@ -253,8 +282,9 @@ ayni postu tekrar siraya koyabilir. Push hatasini **hata maili ile bildir**.
 `son_stok_uyarisi` bugun degilse:
 
 - subject: `[FURI-STOK] N post kaldi`
-- govde: kalan sayi, kategori dagilimi, kac gun yeter (kalan / 1), yeni post
-  uretilmesi gerektigi
+- govde: kalan sayi, kategori dagilimi, kac HAFTA yeter (haftada 1 post; esik
+  `stok_esigi: 6` gunluk tempodan kaldi, yani uyari artik ~6 hafta onceden
+  dusuyor — erken, zararsiz), yeni post uretilmesi gerektigi
 - sonra `son_stok_uyarisi` = bugunun tarihi, Faz 4'te commit et
 
 > Gmail arac adlari ortama gore degisir: yerelde `mcp__claude_ai_Gmail__*`,
@@ -423,6 +453,20 @@ ve her "tekrar dene" yeni bir media container acip kisiti besliyor. Yapilacak:
 > **Ders: bir postun duzeltilmis surumu gonderilecekse, once eski SaaS kaydi
 > panelden silinmeli.** Iki canli onay linki = iki yayin riski.
 
+**`publishStatus: duplicate`** — SaaS'in mukerrer korumasi: ayni `externalRef`li
+kardes post Instagram'da **canli** bulundu, bu kayit yayinlanmadi. Hata degil,
+bilincli atlama; `igPermalink` canli kardesin linki. `esitle.py` bunu
+`published` gibi isler (bkz. Faz 1 tablosu) — deftere yazar, `bekleyen`i kapatir.
+Yayin saati okunamaz, kayitta `zaman_kaynagi: "tespit"` kalir; gercek damga
+SaaS panelinde kardes kaydin `publishedAt` alanindadir.
+
+> 2026-09-13'te bu deger gozetimsiz calismayi durdurdu: `duplicate` SaaS'a
+> 17.08'de eklenmisti (`737cae5`) ama `esitle.py`'nin sozlugune hic girmedi.
+> Hicbir dala girmeyen deger sessizce "karar yok" uretti, defter yazilmadi ve
+> rutin hata mailiyle cikti. Script artik **taninmayan her bileskeyi**
+> `bilinmeyen_saas_durumu` olarak adiyla raporluyor — SaaS'in sozlugu bu
+> repodan bagimsiz buyudugu icin bir daha sessiz kalinmasin diye.
+
 **Defter ile Instagram ayrismis** — `esitle.py` iki yonlu duzeltir. Silinen bir
 post defterden dusurulup tekrar aday olur.
 
@@ -450,7 +494,7 @@ Instagram baglantisini yenilemek gerekir.
 | Parca | Deger |
 |---|---|
 | Rutin | `trig_01TtprvNfdZd5DDEfR8uDCRj` ([panel](https://claude.ai/code/routines/trig_01TtprvNfdZd5DDEfR8uDCRj)) |
-| Cron | `7 9 * * *` UTC = 12:07 Istanbul (gunde 1 calisma) |
+| Cron | `7 9 * * 0` UTC = Pazar 12:07 Istanbul (haftada 1 calisma, 2026-09-13) |
 | SaaS | https://content-approval-saas.vercel.app |
 | Instagram hesabi | `furkanteacherteaching` (`17841441566401393`) |
 | Onay -> yayin | ~11 saniye (production'da olculdu) |
