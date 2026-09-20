@@ -4,16 +4,16 @@
     "kategori": "hikayeli",
     "tur": "gorsel",
     "slayt": 6,
-    "saas_post_id": "cmtzos0vn0001jp04rokww6rw",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/0877a280a0064212a04ddee4e7a60b7e",
-    "gonderim_zamani": "2026-09-13T13:43:52+03:00",
-    "son_gecerlilik": "2026-09-14T15:43:52+03:00"
+    "saas_post_id": "cmu9lhogk0001la04aqcio07t",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/c249e24095264dc0a4471e4b7fe43742",
+    "gonderim_zamani": "2026-09-20T12:09:32+03:00",
+    "son_gecerlilik": "2026-09-21T14:09:32+03:00"
   },
   "yayin_denemesi": null,
   "son_yayin": "2026-09-06T12:11:02+03:00",
-  "son_gonderim": "2026-09-13T13:43:52+03:00",
+  "son_gonderim": "2026-09-20T12:09:32+03:00",
   "bugun": {
-    "tarih": "2026-09-13",
+    "tarih": "2026-09-20",
     "siraya_konan": 1,
     "yayinlanan": 0
   },
@@ -26,5 +26,7 @@
       "sebep": "onay sayfasinda reddedildi (kalite yetersiz); SaaS kaydi da silindi"
     }
   ],
-  "sure_dolanlar": {}
+  "sure_dolanlar": {
+    "hikayeli/is-gorusmesinde": 1
+  }
 }
