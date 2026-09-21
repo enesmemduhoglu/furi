@@ -62,27 +62,35 @@ bu yuzden hic yazilmadi. 2026-08-22'de karar `a1`, `b1`, `b2`'de de uygulandi:
 `8.jpg`'ler silindi, 7. slaytin CTA'si kapanis CTA'si oldu, uc deste yeniden
 basildi. Bes testin hepsi artik 7 slayt.
 
-### [ ] Haftalik tempoda onay linki her hafta kil payi okunuyor
+### [x] Haftalik tempoda onay linki her hafta kil payi okunuyordu — **cozuldu (2026-09-21)**
 
-**Haftalik cron, SaaS onay linkinin 7 gunluk omruyle ayni periyotta.** Link
+**Haftalik cron, SaaS onay linkinin 7 gunluk omruyle ayni periyottaydi.** Link
 `APPROVAL_LINK_TTL_DAYS = 7` (SaaS `tokens.ts`), gonderim de okuma da Pazar
-~09:08'de oluyor: yani bekleyen postun durumu **tam dolma aninda** okunuyor.
+~09:08'de oluyor: yani bekleyen postun durumu **tam dolma aninda** okunuyordu.
 13.09'da fark 3 dakikaydi — rutin 09:08'de okudu, token 09:11'de oldu. Ters
 tarafa dusen ilk hafta `esitle.py` 410 alir (`saas_okunamadi`), karar
 veremez; Faz 2 suresi gecmis bekleyeni temizler ve **o hafta yayinlanan post
-deftere hic girmez.** Bulutta caption eslestirmesi de calismadigi icin
-(proxy `graph.instagram.com`'a izin vermiyor) kendiliginden duzelmez.
+deftere hic girmezdi.** Bulutta caption eslestirmesi de calismadigi icin
+(proxy `graph.instagram.com`'a izin vermiyor) kendiliginden duzelmiyordu.
 
-Kok sebep: defterin tek dogruluk kanali **kisa omurlu public token**.
-`FURI_API_KEY`'in okuma yolu yok — `GET /api/posts` yalnizca cerezli oturum
-kabul ediyor (`route.ts:18`), makine anahtari sadece POST'ta gecerli.
+Kok sebep: defterin tek dogruluk kanali **kisa omurlu public token**di.
+`FURI_API_KEY`'in okuma yolu yoktu — `GET /api/posts` yalnizca cerezli oturum
+kabul ediyor (`route.ts:18`), makine anahtari sadece POST'ta gecerliydi.
 
-Secenekler:
-- **SaaS'a anahtarla okuma yolu ac** (tercih): `GET /api/posts`e
-  `authenticateApiKey` ekle ya da `externalRef`/id ile tek kayit donen dar bir
-  uc yaz. Token omrunden bagimsiz, kalici cozum.
-- Cron'u gonderim yuvasindan birkac saat oteye al — fark birkac dakikadan
-  birkac saate cikar ama yine ayni periyot; erteler, cozmez.
+**Secilen cozum: SaaS'a anahtarli okuma ucu** (secenek listesindeki tercih).
+`GET /api/posts/[id]` acildi (SaaS #58); `esitle.py > _saas_durum` once o ucu
+dener, cevap gelmezse public token'a duser. Geri dusme bilincli: `saas_post_id`
+tasimayan eski `bekleyen` kayitlari ve anahtarin tanimsiz oldugu yerel
+calismalar icin — SaaS surumu eskiyse davranis aynen korunur, 404 alinir ve
+token yolu devreye girer. Iki yol da susarsa rapordaki `sebep` ikisinin de ne
+dedigini tasir.
+
+Elenen secenek: cron'u gonderim yuvasindan birkac saat oteye almak. Fark
+birkac dakikadan birkac saate cikardi ama periyot yine ayni kalirdi; erteler,
+cozmezdi.
+
+**Bagimlilik:** uc prod'a cikana kadar (SaaS #58 merge) furi eski yoldan
+okumaya devam eder; merge sonrasi ilk Pazar calismasi anahtarli yolu kullanir.
 
 ### [ ] `TODOS.md` duz yaziyi tam Turkce'ye cevir
 

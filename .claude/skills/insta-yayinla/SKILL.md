@@ -106,8 +106,10 @@ iptal edilir.
 Instagram'a bakilamayan bir oturumda — token cekilemedi ya da cagri basarisiz
 oldu, fark etmez — `esitle.py` karsilastirmayi atlar ve **defteri oldugu gibi
 birakir** (raporda `instagram: ... atlandi` + sebep). Bekleyen postun akibetini
-zaten SaaS'in public onay endpoint'inden kesin olarak ogreniyor; o cagri
-Instagram'a hic dokunmuyor.
+zaten SaaS'tan kesin olarak ogreniyor; o cagri Instagram'a hic dokunmuyor.
+Once makine anahtariyla `GET /api/posts/<saas_post_id>` denenir — onay
+linkinin 7 gunluk omrunden bagimsiz olan yol budur; cevap gelmezse public
+onay token'ina (`/api/approve/<token>`) dusulur.
 
 > **`esitle.py` hata verip Faz 2'yi dusurmez.** Bir kez dusurdu: bulut
 > oturumunun cikis proxy'si `graph.instagram.com`'a CONNECT'i 403 ile kesince
@@ -148,7 +150,7 @@ uzerinden, token yeterli, oturum gerekmiyor):
 | `publishStatus: scheduled` / `publishing` | `yayin_zamanlandi` / `yayin_suruyor` | Gecici durum, karar yok. **`bekleyen` KORUNUR**, sessizce Faz 2'ye gec. |
 | `status: pending` | `onay_bekliyor` | Normal hal: onay bekliyor. **`bekleyen` KORUNUR**, sessizce Faz 2'ye gec. |
 | `approved` + `publishStatus: idle` | `onaylandi_yayin_denenmedi` | Onaylandi ama yayin hic denenmemis — SaaS'ta takilmis. **`bekleyen` KORUNUR**, mail at; onay sayfasindaki "tekrar dene" isi gorur. |
-| SaaS'a sorulamadi (410 / ag hatasi) | `saas_okunamadi` | **KARAR YOK.** `bekleyen` KORUNUR, defter degismez. `sebep` alanini mail'e yaz. |
+| SaaS'a sorulamadi (anahtarli uc de token de sustu) | `saas_okunamadi` | **KARAR YOK.** `bekleyen` KORUNUR, defter degismez. `sebep` alanini mail'e yaz. |
 | Taninmayan bir bileske | `bilinmeyen_saas_durumu` | **KARAR YOK.** `bekleyen` KORUNUR. `status` + `publishStatus` degerleriyle mail at ve cik. |
 
 > **`sonuc` alani yoksa bekleyen de yoktur.** Yukaridaki her satirda `bekleyen`
