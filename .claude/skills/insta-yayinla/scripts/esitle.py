@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -66,8 +67,50 @@ def _kod(permalink: str) -> str:
     return (permalink or "").rstrip("/").split("/")[-1]
 
 
-def _saas_durum(onay_url: str) -> tuple[dict | None, str | None]:
-    """Bekleyen postun SaaS'taki durumu. Token yeterli, oturum gerekmiyor.
+def _saas_veri(url: str, anahtar: str | None = None) -> tuple[dict | None, str | None]:
+    """Tek bir SaaS GET'i. `(veri, hata)` doner, asla firlatmaz."""
+    try:
+        istek = urllib.request.Request(url, method="GET")
+        istek.add_header("User-Agent", "furi-insta-yayinla/2.0")
+        if anahtar:
+            istek.add_header("Authorization", f"Bearer {anahtar}")
+        with urllib.request.urlopen(istek, timeout=30) as yanit:
+            veri = json.loads(yanit.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # 410 = onay linkinin 7 gunluk omru doldu (tokens.ts). Token'i hicbir
+        # sey diriltmiyor; bu kayit artik yalnizca anahtarli ucdan okunabilir.
+        sebep = "onay linkinin suresi doldu (410)" if e.code == 410 else f"HTTP {e.code}"
+        return None, sebep
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        return None, f"SaaS'a ulasilamadi ({type(e).__name__})"
+    except json.JSONDecodeError:
+        return None, "SaaS yaniti JSON degil"
+    return (veri.get("post") or veri), None
+
+
+def _saas_anahtarli(post_id: str) -> tuple[dict | None, str | None]:
+    """Bekleyen postu makine anahtariyla okur — token omrunden BAGIMSIZ yol.
+
+    Public onay ucu (`/api/approve/<token>`) 7 gunde oluyor, haftalik cron da
+    ayni periyotta kosuyor: 13.09'da okuma ile token'in olmesi arasinda 3 dakika
+    vardi. Ters tarafa dusen ilk hafta 410 gelir ve o haftanin postu deftere hic
+    girmez. `GET /api/posts/<id>` bu yuzden acildi (SaaS #58); anahtar zaten
+    elimizde, tek eksik okuma yoluydu.
+
+    Ortam eksikse ya da uc yoksa `(None, sebep)` doner — cagiran public uca
+    duser, yani eski bir SaaS surumunde davranis aynen korunur.
+    """
+    if not post_id:
+        return None, "saas_post_id yok"
+    taban = os.environ.get("FURI_SAAS_URL", "").rstrip("/")
+    anahtar = os.environ.get("FURI_API_KEY", "")
+    if not taban or not anahtar:
+        return None, "FURI_SAAS_URL/FURI_API_KEY yok"
+    return _saas_veri(f"{taban}/api/posts/{post_id}", anahtar)
+
+
+def _saas_durum(bekleyen: dict) -> tuple[dict | None, str | None]:
+    """Bekleyen postun SaaS'taki durumu. Once anahtarli uc, sonra public token.
 
     Caption eslestirmesi bir cikarim; bu ise kesin bilgi. Ozellikle "yayinlandi
     ama sonra silindi" durumunu ancak buradan ogrenebiliriz — Instagram'a
@@ -76,31 +119,30 @@ def _saas_durum(onay_url: str) -> tuple[dict | None, str | None]:
     `(veri, hata)` doner. Hatanin sebebi ayrica dondurulur cunku "SaaS bir sey
     soylemedi" ile "SaaS'a hic sorulamadi" ayni sey degil: ikincisinde bekleyen
     postun akibeti hakkinda ELIMIZDE BILGI YOK, sessizce "onaylanmadi" varsaymak
-    yanlis olur. Ozellikle onay linki 7 gunluk omrunu doldurunca (410) bu cagri
-    kalici olarak susar ve defter bir daha asla gercegi ogrenemez.
+    yanlis olur.
+
+    Sira onemli: anahtarli uc token omrunden bagimsiz oldugu icin ONCE o
+    denenir. Public token yolu geri dusme olarak duruyor — `saas_post_id`
+    tasimayan eski `bekleyen` kayitlari ve anahtarin tanimsiz oldugu yerel
+    calismalar icin.
     """
+    veri, anahtarli_hata = _saas_anahtarli(str(bekleyen.get("saas_post_id") or ""))
+    if veri is not None:
+        return veri, None
+
+    onay_url = bekleyen.get("onay_url", "")
     if not onay_url:
-        return None, "onay_url bos"
+        return None, anahtarli_hata or "onay_url bos"
     parca = onay_url.rstrip("/").split("/")
     token = parca[-1] if parca else ""
     if not token:
         return None, "onay_url'de token yok"
     taban = onay_url.split("/approve/")[0]
-    try:
-        istek = urllib.request.Request(f"{taban}/api/approve/{token}", method="GET")
-        istek.add_header("User-Agent", "furi-insta-yayinla/2.0")
-        with urllib.request.urlopen(istek, timeout=30) as yanit:
-            veri = json.loads(yanit.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        # 410 = onay linkinin 7 gunluk omru doldu (tokens.ts). Token'i hicbir
-        # sey diriltmiyor; bu kayit artik yalnizca SaaS panelinden okunabilir.
-        sebep = "onay linkinin suresi doldu (410)" if e.code == 410 else f"HTTP {e.code}"
-        return None, sebep
-    except (urllib.error.URLError, TimeoutError, OSError) as e:
-        return None, f"SaaS'a ulasilamadi ({type(e).__name__})"
-    except json.JSONDecodeError:
-        return None, "SaaS yaniti JSON degil"
-    return (veri.get("post") or veri), None
+    veri, hata = _saas_veri(f"{taban}/api/approve/{token}")
+    if veri is not None:
+        return veri, None
+    # Iki yol da sustu: hangisinin ne dedigi teshis icin birlikte raporlanir.
+    return None, f"{hata} (anahtarli uc: {anahtarli_hata})"
 
 
 def _saas_zaman(metin):
@@ -127,8 +169,8 @@ def main() -> int:
     ortam_yukle(kok)
 
     # Instagram karsilastirmasi OPSIYONEL: bir emniyet agi, ana mekanizma degil.
-    # Bekleyen postun akibetini SaaS'in public onay endpoint'i kesin olarak
-    # soyluyor ve o kimlik bilgisi istemiyor. Bu yuzden Instagram'a bakilamadigi
+    # Bekleyen postun akibetini SaaS kesin olarak soyluyor (anahtarli uc, ya da
+    # cevap vermezse public onay token'i). Bu yuzden Instagram'a bakilamadigi
     # HICBIR durumda esitleme durmaz — ne token alinamadiginda (asagida) ne de
     # cagri basarisiz oldugunda (bir sonraki blok). Sadece karsilastirma atlanir
     # ve NEDEN atlandigi rapora yazilir, sessiz kalmaz.
@@ -219,8 +261,7 @@ def main() -> int:
     #    gelir cunku kesin bilgidir.
     durum_dosyasi = durum_oku(kok)
     bekleyen = durum_dosyasi.get("bekleyen") or {}
-    saas, saas_hatasi = _saas_durum(bekleyen.get("onay_url", "")) if bekleyen \
-        else (None, None)
+    saas, saas_hatasi = _saas_durum(bekleyen) if bekleyen else (None, None)
     bekleyen_karari = None
 
     if bekleyen and saas is None:
