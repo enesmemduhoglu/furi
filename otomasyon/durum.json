@@ -4,16 +4,16 @@
     "kategori": "hikayeli",
     "tur": "gorsel",
     "slayt": 6,
-    "saas_post_id": "cmu9lhogk0001la04aqcio07t",
-    "onay_url": "https://content-approval-saas.vercel.app/approve/c249e24095264dc0a4471e4b7fe43742",
-    "gonderim_zamani": "2026-09-20T12:09:32+03:00",
-    "son_gecerlilik": "2026-09-21T14:09:32+03:00"
+    "saas_post_id": "cmujllt6m0001l004ikea2x73",
+    "onay_url": "https://content-approval-saas.vercel.app/approve/cc5e64ddb8ea4a258f55fbcae2ac3607",
+    "gonderim_zamani": "2026-09-27T12:10:27+03:00",
+    "son_gecerlilik": "2026-09-28T14:10:27+03:00"
   },
   "yayin_denemesi": null,
   "son_yayin": "2026-09-06T12:11:02+03:00",
-  "son_gonderim": "2026-09-20T12:09:32+03:00",
+  "son_gonderim": "2026-09-27T12:10:27+03:00",
   "bugun": {
-    "tarih": "2026-09-20",
+    "tarih": "2026-09-27",
     "siraya_konan": 1,
     "yayinlanan": 0
   },
@@ -27,6 +27,6 @@
     }
   ],
   "sure_dolanlar": {
-    "hikayeli/is-gorusmesinde": 1
+    "hikayeli/is-gorusmesinde": 2
   }
 }
